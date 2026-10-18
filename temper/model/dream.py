@@ -63,6 +63,7 @@ class ParticleResult:
     wall_s: float = 0.0
     per_step_s: List[float] = field(default_factory=list)
     committed_tokens_per_step: List[int] = field(default_factory=list)
+    committed_tokens_total: int = 0
     step_confidences: List[float] = field(default_factory=list)
     mean_commit_conf: Optional[float] = None  # NaN-safe mean of step confidences
     truncated: bool = False     # mask tokens still present at end of canvas
@@ -212,10 +213,18 @@ def _generate_one(
         gen_ids = gen_ids[: gen_ids.index(eos)]
     raw_text = tokenizer.decode(gen_ids, skip_special_tokens=True)
 
-    # committed tokens per step from output_history (x clone after each step)
-    committed = []
+    # committed tokens per step from output_history (x clone after each step);
+    # history holds CUMULATIVE committed-so-far -> convert to per-step deltas
+    committed_cumulative = []
     for h in out.history or []:
-        committed.append(max(0, int((h[0] != MASK_TOKEN_ID).sum()) - prompt_len))
+        committed_cumulative.append(
+            max(0, int((h[0] != MASK_TOKEN_ID).sum()) - prompt_len)
+        )
+    committed = []
+    prev = 0
+    for c in committed_cumulative:
+        committed.append(c - prev)
+        prev = c
 
     confs = state["step_confs"]
     finite = [c for c in confs if math.isfinite(c)]
@@ -233,6 +242,7 @@ def _generate_one(
         wall_s=round(wall_s, 2),
         per_step_s=[round(s, 3) for s in state["step_times"]],
         committed_tokens_per_step=committed,
+        committed_tokens_total=(committed_cumulative[-1] if committed_cumulative else 0),
         step_confidences=[round(c, 4) if math.isfinite(c) else None for c in confs],
         mean_commit_conf=round(mean_conf, 4) if mean_conf is not None else None,
         truncated=truncated,

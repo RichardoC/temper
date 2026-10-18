@@ -1,0 +1,4 @@
+#!/bin/sh
+# temper CLI wrapper: always uses the project venv python from the repo root.
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec "$REPO_ROOT/temper/.venv/bin/python" -m temper.cli "$@"

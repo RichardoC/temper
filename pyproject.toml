@@ -21,5 +21,8 @@ classifiers = [
     "Topic :: Software Development :: Code Generators",
 ]
 
+[project.scripts]
+temper = "temper.cli:main"
+
 [tool.setuptools]
-packages = ["temper", "temper.harness", "temper.feedback"]
+packages = ["temper", "temper.harness", "temper.feedback", "temper.model", "temper.steer", "temper.authoring"]
