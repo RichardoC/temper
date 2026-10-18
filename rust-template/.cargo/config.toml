@@ -1,0 +1,13 @@
+# temper rust-template cargo configuration — committed alongside vendor/.
+# Replaces crates.io with the vendored directory so all generated-crate builds
+# are fully offline and reproducible. The vendor/ tree + Cargo.lock are pinned
+# at template-preparation time.
+
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[net]
+offline = true

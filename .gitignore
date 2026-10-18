@@ -1,0 +1,8 @@
+# Rust build artifacts (vendor/ is deliberately COMMITTED for offline builds)
+target/
+# temper workdirs (emitted crates + caches)
+.work/
+# python
+__pycache__/
+*.pyc
+.venv/

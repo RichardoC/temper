@@ -1,0 +1,23 @@
+[package]
+name = "temper-gen"
+version = "0.0.0"
+edition = "2021"
+publish = false
+description = "temper-generated candidate crate: a tiny harness running proptest against generated code"
+
+# The generated harness binary. candidate.rs / properties.rs are injected by
+# temper.harness.emit; main.rs implements the "temper result protocol v1".
+[[bin]]
+name = "harness"
+path = "src/main.rs"
+
+[profile.dev]
+debug = 0
+strip = "debuginfo"
+
+# SECURITY: proptest is the ONLY third-party dependency permitted in generated
+# crates. No build.rs, no proc-macros, no serde_json (protocol JSON is
+# hand-serialized). This keeps the vendored, offline build surface minimal and
+# removes build.rs / proc-macro RCE classes entirely.
+[dependencies]
+proptest = { version = "=1.12.0", default-features = false, features = ["std"] }
