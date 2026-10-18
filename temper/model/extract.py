@@ -18,7 +18,7 @@ from dataclasses import dataclass
 __all__ = ["ExtractResult", "extract_rust"]
 
 _FENCE_RE = re.compile(r"```([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n(.*?)```", re.DOTALL)
-_MASK_RE = re.compile(r"<\|?mask\|?>|<masked>")  # any decoded mask-token residue
+_MASK_RE = re.compile(r"<\|?mask\|?>|\|mask\||<masked>")  # decoded mask-token residue
 _ITEM_RE = re.compile(r"^\s*(?:pub(?:\([^)]*\))?\s+)?(?:fn|struct|enum|impl|use|type|const|trait)\b")
 _DEFINE_RE_TMPL = r"\b(?:fn|struct|enum|impl|trait)\s+{name}\b"
 
