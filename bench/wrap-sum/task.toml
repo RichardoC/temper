@@ -1,0 +1,23 @@
+[task]
+name = "wrap-sum"
+signature = "pub fn wrapping_sum(xs: &[u64]) -> u64"
+doc = """Returns the sum of all elements of `xs` modulo 2^64, i.e. computed with WRAPPING u64 arithmetic. The function must never panic: ordinary `+` panics on overflow in debug builds (which is how this crate is compiled and tested), so the implementation must use `wrapping_add` (or equivalent). The empty slice sums to 0.
+The canonical bug shape is using non-wrapping arithmetic, which panics under the debug profile as soon as the property feeds large u64 values."""
+must_define = ["wrapping_sum"]
+prompt_template = """You are writing a Rust module for a crate that will be property-tested. Implement exactly this public API:
+
+```rust
+{signature}
+```
+
+Specification: {doc}
+
+Rules:
+- The code must compile as a standalone `src/candidate.rs` in a crate where ONLY the Rust standard library is available (no external crates, no `mod` declarations, no `fn main`, no tests, no printing).
+- Define exactly the requested public item(s); private helper items are allowed.
+- The crate is compiled in DEBUG profile: integer overflow PANICS. Your function must never panic for any input.
+- Answer with ONE ```rust fenced code block and nothing else.
+"""
+
+[properties]
+approved = true

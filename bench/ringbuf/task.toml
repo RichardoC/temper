@@ -1,0 +1,28 @@
+[task]
+name = "ringbuf"
+signature = """pub struct RingBuf { /* fields of your choosing */ }
+pub fn ring_new(capacity: usize) -> RingBuf
+pub fn ring_push(rb: &mut RingBuf, v: i64)
+pub fn ring_pop(rb: &mut RingBuf) -> Option<i64>"""
+doc = """A capacity-bounded FIFO ring buffer over i64.
+- `ring_new(capacity)` creates an empty buffer holding at most `capacity` elements (capacity >= 1 in all tests).
+- `ring_push(rb, v)` appends `v` at the back; if the buffer is FULL, the OLDEST element is silently dropped (overwritten) so the buffer keeps only the newest `capacity` elements.
+- `ring_pop(rb)` removes and returns the front (oldest) element, or `None` if the buffer is empty.
+The canonical bug shape is empty/full confusion (e.g. push dropping the newest, pop returning the newest, or off-by-one capacity)."""
+must_define = ["RingBuf", "ring_new", "ring_push", "ring_pop"]
+prompt_template = """You are writing a Rust module for a crate that will be property-tested. Implement exactly this public API:
+
+```rust
+{signature}
+```
+
+Specification: {doc}
+
+Rules:
+- The code must compile as a standalone `src/candidate.rs` in a crate where ONLY the Rust standard library is available (no external crates, no `mod` declarations, no `fn main`, no tests, no printing).
+- Define exactly the requested public item(s); private helper items are allowed.
+- Answer with ONE ```rust fenced code block and nothing else.
+"""
+
+[properties]
+approved = true

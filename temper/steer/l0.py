@@ -339,7 +339,11 @@ def run_l0(
 # --------------------------------------------------------------------------
 
 def eval_runs(task_dir: Path | str, k: int, repeat: int) -> dict:
-    """Empirical pass@k over the last `repeat` run records with K==k."""
+    """Unbiased pass@k over the last `repeat` run records with K==k.
+
+    Per run with n candidates, c passing: pass@j = 1 - C(n-c, j)/C(n, j)
+    (Chen et al. 2021, product form for stability), averaged over runs.
+    """
     task_dir = Path(task_dir)
     if not task_dir.is_absolute():
         task_dir = Path.cwd() / task_dir
@@ -364,9 +368,16 @@ def eval_runs(task_dir: Path | str, k: int, repeat: int) -> dict:
     for kk in ks:
         vals = []
         for run in runs:
-            first_k = run["candidates"][:kk]
-            vals.append(1.0 if any(c["test_status"] == "pass" for c in first_k) else 0.0)
-        table[kk] = round(sum(vals) / len(vals), 3)
+            n = len(run["candidates"])
+            c = sum(1 for c2 in run["candidates"] if c2["test_status"] == "pass")
+            if kk > n:
+                continue
+            # 1 - C(n-c, kk)/C(n, kk) in product form
+            prod = 1.0
+            for i in range(kk):
+                prod *= (n - c - i) / (n - i)
+            vals.append(1.0 - prod)
+        table[kk] = round(sum(vals) / len(vals), 3) if vals else None
 
     per_run = [{
         "file": run["file"],

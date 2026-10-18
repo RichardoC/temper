@@ -1,0 +1,9 @@
+{
+  "seed": "cc d3a39701ae515fc229678787797865a017461c7221d47908c4e27ae99fb115f5",
+  "minimal_input": "[839768995, 0]",
+  "reason": "sort_i32(v) != sorted(v): got [839768995, 0], want [0, 839768995]",
+  "task": "sort",
+  "strategy_hash": "9aa9bbc164a5554672588affab365fb59e8bdbda8597b1fdd41154eefcdcb2c0",
+  "particle": 0,
+  "run": "20261018T205151Z"
+}
