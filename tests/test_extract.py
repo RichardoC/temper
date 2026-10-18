@@ -131,6 +131,78 @@ class TestExtract(unittest.TestCase):
         r2 = extract_rust(code, must_define=["ring_push"])
         self.assertFalse(r2.ok)
 
+    IMPL_METHOD_ANSWER = '''```rust
+pub struct RingBuf {
+    cap: usize,
+    buf: Vec<i64>,
+}
+
+impl RingBuf {
+    pub fn ring_new(capacity: usize) -> RingBuf {
+        RingBuf { cap: capacity, buf: Vec::new() }
+    }
+
+    pub fn ring_push(&mut self, v: i64) {
+        if self.buf.len() == self.cap {
+            self.buf.remove(0);
+        }
+        self.buf.push(v);
+    }
+
+    pub fn ring_pop(&mut self) -> Option<i64> {
+        self.buf.pop()
+    }
+}
+```
+'''
+
+    def test_impl_method_answer_rejected_with_api_shape_reason(self):
+        # the M1 ringbuf failure class: right logic, wrong API shape —
+        # required fns present but only as methods inside `impl RingBuf`
+        r = extract_rust(self.IMPL_METHOD_ANSWER,
+                         must_define=["RingBuf", "ring_new", "ring_push", "ring_pop"])
+        self.assertFalse(r.ok)
+        self.assertIn("inherent impl method", r.reason)
+        self.assertIn("ring_new", r.reason)
+        # struct IS at module scope -> must not be flagged
+        self.assertNotIn("'RingBuf'", r.reason)
+
+    def test_renamed_methods_rejected_as_undefined(self):
+        # methods renamed to new/push/pop: the required symbol truly is absent
+        code = self.IMPL_METHOD_ANSWER.replace(
+            "ring_new", "new").replace("ring_push", "push").replace("ring_pop", "pop")
+        r = extract_rust(code, must_define=["ring_new"])
+        self.assertFalse(r.ok)
+        self.assertIn("not defined anywhere", r.reason)
+
+    def test_impl_block_plus_module_fns_accepted(self):
+        # a private impl method must not shadow or block module-level fns
+        code = '''```rust
+pub struct RingBuf { cap: usize, buf: Vec<i64> }
+
+impl RingBuf {
+    fn capacity(&self) -> usize {
+        if self.cap == 0 { 0 } else { self.cap }
+    }
+}
+
+pub fn ring_new(capacity: usize) -> RingBuf { RingBuf { cap: capacity, buf: Vec::new() } }
+pub fn ring_push(rb: &mut RingBuf, v: i64) { rb.buf.push(v); }
+pub fn ring_pop(rb: &mut RingBuf) -> Option<i64> { rb.buf.pop() }
+```
+'''
+        r = extract_rust(code,
+                         must_define=["RingBuf", "ring_new", "ring_push", "ring_pop"])
+        self.assertTrue(r.ok, r.reason)
+
+    def test_all_missing_symbols_listed(self):
+        code = "```rust\npub fn helper() {}\n```"
+        r = extract_rust(code, must_define=["ring_new", "ring_push"])
+        self.assertFalse(r.ok)
+        self.assertIn("not defined anywhere", r.reason)
+        self.assertIn("ring_new", r.reason)
+        self.assertIn("ring_push", r.reason)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

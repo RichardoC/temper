@@ -20,7 +20,8 @@ Specification: {doc}
 
 Rules:
 - The code must compile as a standalone `src/candidate.rs` in a crate where ONLY the Rust standard library is available (no external crates, no `mod` declarations, no `fn main`, no tests, no printing).
-- Define exactly the requested public item(s); private helper items are allowed.
+- API SHAPE: the items in the signature block are MODULE-LEVEL items — three FREE FUNCTIONS `ring_new`, `ring_push`, `ring_pop`, plus the one `pub struct RingBuf` the signature declares. Define them as standalone items at module scope. Do NOT put them inside an `impl` block: inherent impl methods such as `RingBuf::new` or `self.push` do NOT satisfy the signature and will be REJECTED.
+- Define EXACTLY the items listed in the signature block — same names, same kinds, nothing else public. Do NOT add any struct beyond the one in the signature. Private helper functions are allowed if you need them.
 - Answer with ONE ```rust fenced code block and nothing else.
 """
 

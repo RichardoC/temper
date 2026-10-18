@@ -14,7 +14,8 @@ Specification: {doc}
 
 Rules:
 - The code must compile as a standalone `src/candidate.rs` in a crate where ONLY the Rust standard library is available (no external crates, no `mod` declarations, no `fn main`, no tests, no printing).
-- Define exactly the requested public item(s); private helper items are allowed.
+- API SHAPE: the item in the signature block is a MODULE-LEVEL FREE FUNCTION. Define it as a standalone `pub fn` at module scope. Do NOT put it inside an `impl` block: inherent impl methods do NOT satisfy the signature and will be REJECTED.
+- Define EXACTLY the items listed in the signature block — same names, same kinds, nothing else public. Do NOT define any struct (the signature does not declare one). Private helper functions are allowed if you need them.
 - The crate is compiled in DEBUG profile: integer overflow PANICS. Your function must never panic for any input.
 - Answer with ONE ```rust fenced code block and nothing else.
 """
