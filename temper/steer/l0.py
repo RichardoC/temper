@@ -7,7 +7,10 @@ Per task:
   4. M0 harness run per candidate (seatbelt default; harness-side wall time),
   5. score = 100*1[compiles] + 1000*1[tests pass] - 5*reject_fraction,
      tie-break: higher mean commit confidence, then lower index,
-  6. JSONL run record `bench/<task>/runs/<ts>.jsonl` (one row per candidate),
+  6. JSONL run record `bench/<task>/runs/<ts>.jsonl` (one row per candidate;
+     raw model text kept OUT of the JSONL in run-adjacent sidecars
+     `bench/<task>/runs/<ts>.raw/p<i>.txt`, referenced by relative path +
+     sha256 from each candidate row — extract rejections stay debuggable),
   7. failing seeds persisted into `bench/<task>/corpus/<strategy_hash>/`.
 
 M0 harness API untouched — this module is a pure consumer of
@@ -16,6 +19,7 @@ M0 harness API untouched — this module is a pure consumer of
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from dataclasses import asdict, dataclass, field
@@ -74,7 +78,6 @@ def load_task(task_dir: Path | str) -> Task:
             f"{task_dir}: properties are NOT approved "
             "(task.toml properties.approved != true) — human sign-off required"
         )
-    import hashlib
 
     return Task(
         name=meta["name"],
@@ -130,6 +133,17 @@ class CandidateRow:
     harness_wall_s: Optional[float] = None
     score: float = 0.0
     selected: bool = False
+    # M1.5: raw model output sidecar (bench/<task>/runs/<ts>.raw/p<i>.txt)
+    raw_path: Optional[str] = None
+    raw_sha256: Optional[str] = None
+
+
+def _repo_rel(p: Path) -> str:
+    """Path relative to the repo root (absolute fallback if outside it)."""
+    try:
+        return str(p.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(p)
 
 
 def _diag_summary(outcome) -> (List[str], List[dict]):
@@ -205,8 +219,19 @@ def run_l0(
     )
     model_wall_s = time.perf_counter() - t0
 
+    model_wall_s = time.perf_counter() - t0
+
+    # M2 issue 5: raw model output per candidate as run-adjacent sidecars
+    # (NOT inline in the JSONL) — bench/<task>/runs/<ts>.raw/p<i>.txt,
+    # referenced from the candidate row by relative path + sha256.
+    raw_dir = task.dir / "runs" / f"{run_ts}.raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    (raw_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
+
     rows: List[CandidateRow] = []
     for p in particles:
+        raw_file = raw_dir / f"p{p.index}.txt"
+        raw_file.write_text(p.raw_text, encoding="utf-8")
         row = CandidateRow(
             i=p.index,
             temperature=p.temperature,
@@ -220,7 +245,11 @@ def run_l0(
             truncated=p.truncated,
             gen_error=p.error,
             extract_ok=False, extract_reason="not attempted",
-            code_chars=0, compile_status="not_attempted",
+            code_chars=0,
+            raw_path=_repo_rel(raw_file),
+            raw_sha256=hashlib.sha256(
+                p.raw_text.encode("utf-8")).hexdigest(),
+            compile_status="not_attempted",
         )
         if p.error:
             row.extract_reason = f"skipped (generation error: {p.error})"
