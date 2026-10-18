@@ -1,0 +1,45 @@
+To implement the `RingBuf` in Rust, we need to define a structure that holds the buffer data and the necessary functions to manage the ring buffer:
+
+1. The `RingBuf` struct will use a vector store the head tail pointers,, and along with the capacity and the size of the buffer.
+2. The `ring_new` function will initialize a new ring buffer with the specified capacity.
+3. The `ring_push` function will add a new element to the buffer. If the buffer is full, it will overwrite the oldest element.
+4. The `ring_pop` function will remove and return the oldest element from the buffer, returning `None` if the buffer is empty.
+
+Here's the complete implementation:
+
+```rustrust
+// Define a structure to hold the head and tail indices
+struct Index {
+    index: usize,
+}
+
+// Define the RingBuf struct
+pub struct RingBuf {
+    buffer: Vec<Option<i64>>,
+    capacity: usize,
+    head: Index,
+    tail: Index,
+    size: usize,
+}
+
+// Create a new ring buffer with a given capacity
+pub fn ring_new(capacity: usize) -> RingBuf {
+    RingBuf {
+        buffer: vec![vec![None; capacity],
+        capacity,
+        head: 0,
+        tail: 0,
+        size: 0,
+    }
+}
+
+// Push an element into the buffer
+pub fn ring_push(rb: &mut RingBuf, v: i64) {
+    rb.buffer[rb.tail.index] = v; // Place the new element at the tail position
+    rb.tail.index = (rb.tail.index + 1) % rb.capacity; // Move the tail forward
+    if rb.size < rb.size + 1 {
+        rb.size += 1; // Increment the size if there is space to add
+    }
+}
+
+// Pop the oldest element from

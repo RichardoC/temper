@@ -1,0 +1,58 @@
+Here is the Rust of the `RingBuf` module following the the specified API:
+
+```rust
+
+pub struct RingBuf {
+    buffer: Vec<Option<i64>>,
+    head: usize,
+    tail: usize,
+    size: usize,
+    capacity: usize,
+}
+
+pub RingBuf {
+    fn new(capacity: usize) -> RingBuf {
+        RingBuf {
+            buffer: vec![None; capacity],
+            head: 0,
+            tail: 0,
+            size: 0,
+            capacity,
+        }
+    }
+}
+
+pub fn ring_new(capacity: usize) -> RingBuf {
+    RingBuf::new(capacity)
+}
+
+pub fn ring_push(rb: &mut RingBuf, v: i64) {
+    rb.buffer[rb.tail] = Some(v);
+    rb.tail = (rb.tail + 1) % rb.capacity;
+    if rb.size < rb.capacity {
+        rb.size += 1;
+    } else {
+        rb.head = (rb.head + 1) % rb.capacity;
+    }
+}
+
+pub fn ring_pop(rb: &mut RingBuf) -> Option<i64> {
+    if rb.size == 0 {
+        None
+    } else {
+        let value = rb.buffer[rb.head].take();
+        rb.head = (rb.head + 1) % rb.capacity;
+        rb.size -= 1;
+        value
+    }
+}
+```
+
+### Explanation:
+
+1. **RingBuf Struct**:
+   - `buffer`: A vector of `Option<i64>` to store the elements of the buffer.
+   - `head`: Points to the start of the buffer ( oldest element).
+   - `tail`: Points to the end of the buffer ( newest element).
+   - `size`: Keeps track of the number of elements in the buffer.
+   - `capacity`: The maximum number of elements the buffer can hold

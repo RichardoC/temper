@@ -1,0 +1,44 @@
+To implement the ring buffer (circular buffer) with the described, we'll, we need to define a `RingBuf` struct and the functions to manipulate the buffer.. Let's outline the implementation:
+
+1. `RingBuf struct`: This struct will have a vector to store the elements, and fields to track the capacity, the head and tail, and the current size of the buffer.
+
+2. `ring_new`: This function initializes a new ring buffer with a specified capacity.
+
+3. `ring_push`: This function adds a new element to the back of the buffer. If the buffer is full, it overwrites the oldest element.
+
+4. `ring_pop`: This function removes and the oldest element from the front of the buffer, returning `None` if the buffer is empty.
+
+Here's the Rust implementation:
+
+```rust
+// Define the ring buffer structure
+pub struct RingBuf {
+    buffer: Vec<i64>,
+    capacity: usize,
+    head: usize,
+    tail: usize,
+    size: usize,
+}
+
+// Function to create a new ring buffer with a given capacity
+pub fn ring_new(capacity: usize) -> RingBuf {
+    RingBuf {
+        buffer: vec![0; capacity],
+        capacity,
+        head: 0,
+        tail: 0,
+        size: 0,
+    }
+}
+
+// Function to push a new value into the buffer
+pub fn ring_push(rb: &mut RingBuf, v: i64) {
+    if rb.capacity == 0 {
+        return; // If the capacity is zero, don't push
+    }
+    rb.buffer[rb.tail] = v;
+    rb.tail = (rb.tail + 1) % rb.capacity;
+    if rb.size < rb.capacity {
+        rb.size += 1;
+    } else {
+        rb.head = (rb.head + 1)

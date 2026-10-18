@@ -1,0 +1,27 @@
+```rust
+pub struct RingBuf {
+    buffer: Vec<Option<i64>>,
+    head: usize,
+    tail: usize,
+    capacity: usize,
+}
+
+impl RingBuf {
+    pub fn new(capacity: usize) -> Self {
+        RingBuf {
+            buffer: vec![::None; capacity],
+            head: 0,
+            tail: 0,
+            capacity,
+        }
+    }
+}
+
+pub fn push(&mut self, v: i64) {
+    self.buffer[self.tail] = Some(v);
+    self.tail = (self.tail + 1) % self.capacity;
+}
+
+pub fn pop(&mut self) -> Option<i64> {
+    self.buffer[self.head].take().map(|v| {
+        self.head = (
