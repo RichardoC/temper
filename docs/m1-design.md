@@ -1,7 +1,32 @@
 # M1 design — L0: Best-of-K sampling + verifier reranking
 
-Status: DRAFT (parent-authored, 2026-10-18). Gate: M1.0 spike go/no-go.
+Status: ACTIVE (parent-authored, 2026-10-18). Gate PASSED: M1.0 spike
+conditional-GO (see `../../temper-spike-m1/REPORT.md`; measured facts below).
 Supersedes nothing; M0 (`m0-report.md`) is complete and verified.
+
+## 0. Spike-measured corrections (binding on this milestone)
+
+From the Dream-Coder-v0-Instruct-7B MPS spike (torch 2.8.0, transformers
+4.57.6, accelerate 1.10.1, Python 3.9.6 system):
+
+- **K=1 only.** Batched K>1 forwards corrupt padded-row logits (MPS bf16 NaNs)
+  and give zero throughput gain. L0 particles = **sequential canvases**, one
+  `diffusion_generate` call each. K means "K sequential candidates".
+- **Speed:** 0.53–0.59 s per denoise step, linear in steps (slope 0.566 s).
+  steps=256 &canvas=256 → ~150 s with clean output; steps=32 → degraded.
+  M1 default: **steps=128** (~75 s/candidate); sweep {64,96,128} in one task
+  before fixing. K=8 at steps=128 ≈ 10 min/task — acceptable for dev.
+- **Mandatory runtime fixes (bake into temper/model/runtime.py):**
+  1. `model.config.use_cache = False` after load (transformers ≥4.47 builds a
+     DynamicCache per step and pollutes attention → degenerate text).
+  2. env `PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0` BEFORE torch import, +
+     `torch.mps.empty_cache()` at every denoise step (via tokens hook) —
+     Metal driver cache otherwise accumulates 20+ GB/step transients → OOM.
+- **No fork needed (yet).** `diffusion_generate` natively exposes
+  `generation_tokens_hook_func(step, x, logits)`,
+  `generation_logits_hook_func(step, x, logits)`, and
+  `output_history=True` (committed tokens per step). Use hooks for all L0
+  instrumentation; never clone full logits in a hook (~89 MB/step).
 
 ## 1. Objective
 
@@ -82,11 +107,21 @@ New modules (add to repo; do NOT modify m0 modules' public APIs):
 
 ## 4. Diversity across particles (L0's only steering knob)
 
-Diffusion sampler diversity is not just temperature — remask ORDER changes:
+Particles are sequential (spike §0), identical config except diversity knobs:
 - per-particle `temperature` sampled from {0.2, 0.4, 0.6, 0.8},
 - alternating remasking algorithms if exposed (`entropy` vs low-confidence),
 - distinct system-prompt suffixes NO (confounds scoring) — keep prompt fixed.
-Record per-particle config in the run record for later analysis.
+Record per-particle config (seed/temp/alg/steps/canvas) in the run record.
+
+## 4a. GLM-5.3 property drafting access
+
+OpenAI-compatible endpoint `https://api.synthetic.new/openai/v1`; API key read
+(in order) from env `SYNTHETIC_API_KEY`, else `providers.synthetic.apiKey` in
+`~/.pi/agent/models.json`. Model id `hf:zai-org/GLM-5.3`. If the key cannot be
+read at runtime, `temper draft` fails with setup instructions — it must never
+silently skip drafting. M1 still ships all 3 bench tasks with PARENT-authored
+properties (already approved); drafting is exercised on one of them as a
+demo, not required for the loop to run.
 
 ## 5. Scoring (what "best" means at L0)
 
