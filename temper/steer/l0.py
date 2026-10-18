@@ -11,7 +11,9 @@ Per task:
      raw model text kept OUT of the JSONL in run-adjacent sidecars
      `bench/<task>/runs/<ts>.raw/p<i>.txt`, referenced by relative path +
      sha256 from each candidate row — extract rejections stay debuggable),
-  7. failing seeds persisted into `bench/<task>/corpus/<strategy_hash>/`.
+  7. failing seeds persisted into `bench/<task>/corpus/<strategy_hash>/`
+     (M1.5: identical seeds deduped within a strategy_hash — first-seen file
+     wins; each JSON carries candidate_index, particle_config and run_id).
 
 M0 harness API untouched — this module is a pure consumer of
 ``temper.harness.runner.run_candidate``.
@@ -162,11 +164,29 @@ def _diag_summary(outcome) -> (List[str], List[dict]):
     return codes, spans[:4]
 
 
-def _persist_failing_seed(task: Task, row: CandidateRow, run_ts: str) -> Optional[str]:
+def _persist_failing_seed(
+    task: Task, row: CandidateRow, run_ts: str, steps: Optional[int] = None,
+) -> Optional[str]:
+    """Persist a failing proptest seed into the per-strategy corpus.
+
+    M1.5: (a) DEDUP — an identical seed already persisted under the same
+    strategy_hash is NOT rewritten; the first-seen file (its name carries the
+    first-seen timestamp) stays authoritative and is returned instead.
+    (b) LINEAGE — each corpus JSON carries candidate_index,
+    particle_config (temperature/alg/steps) and run_id alongside the seed.
+    """
     if row.failing_seed is None:
         return None
     corpus = task.dir / "corpus" / task.strategy_hash
     corpus.mkdir(parents=True, exist_ok=True)
+    # dedup within strategy_hash: same seed -> keep the first-seen file
+    for old in sorted(corpus.glob("*.json")):
+        try:
+            old_payload = json.loads(old.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if old_payload.get("seed") == row.failing_seed:
+            return _repo_rel(old)
     fname = f"p{row.i}-{run_ts}.json"
     payload = {
         "seed": row.failing_seed,
@@ -174,11 +194,19 @@ def _persist_failing_seed(task: Task, row: CandidateRow, run_ts: str) -> Optiona
         "reason": row.reason,
         "task": task.name,
         "strategy_hash": task.strategy_hash,
+        "candidate_index": row.i,
+        "particle_config": {
+            "temperature": row.temperature,
+            "alg": row.alg,
+            "steps": steps,
+        },
+        "run_id": run_ts,
+        # legacy aliases (M1 format) kept for tooling continuity
         "particle": row.i,
         "run": run_ts,
     }
     (corpus / fname).write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    return str((corpus / fname).relative_to(REPO_ROOT))
+    return _repo_rel(corpus / fname)
 
 
 def run_l0(
@@ -217,8 +245,6 @@ def run_l0(
             flush=True,
         ),
     )
-    model_wall_s = time.perf_counter() - t0
-
     model_wall_s = time.perf_counter() - t0
 
     # M2 issue 5: raw model output per candidate as run-adjacent sidecars
@@ -305,7 +331,7 @@ def run_l0(
     # ---- persist failing seeds into the corpus -----------------------------
     seed_files = []
     for r in rows:
-        path = _persist_failing_seed(task, r, run_ts)
+        path = _persist_failing_seed(task, r, run_ts, steps=steps)
         if path:
             seed_files.append(path)
 
