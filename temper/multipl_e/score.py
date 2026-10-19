@@ -184,7 +184,7 @@ def _read_results_dir(res_dir: Path) -> dict:
     return out
 
 
-_KS = (1, 10, 100)
+_KS = (1, 4, 10, 100)  # 4: the K=4 pilot's best-of-K point (M2.2)
 
 
 def score_dir(

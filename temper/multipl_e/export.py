@@ -209,10 +209,18 @@ def export_runs(
     out_dir: Path,
     benchmark: Optional[str] = None,
     also_unsteered_guise: bool = False,
+    repair: bool = True,
 ) -> dict:
     """Export candidate rows of the given run records into MultiPL-E
     completion files under ``out_dir``; returns the manifest dict (also
-    written to ``out_dir/manifest.json``)."""
+    written to ``out_dir/manifest.json``).
+
+    repair=True (default, M2.1 behavior): rows whose extraction failed but is
+    repairable — or whose record verdict says compile_error — get one
+    deterministic L0.5 repair round before being counted as extraction
+    failures. repair=False (M2.2 ablation column) skips the repair pass
+    entirely: the unsteered model's raw extraction quality, no salvage.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     bench = load_benchmark(benchmark) if benchmark else {}
 
@@ -305,7 +313,7 @@ def export_runs(
                 continue
             ex = extract_rust(raw, must_define=must_define)
             repaired_at_export = False
-            if not ex.ok and ex.code:
+            if repair and not ex.ok and ex.code:
                 # L0.5 salvage, same pipeline as l0: a repairable span is
                 # retried through the deterministic repair pass before being
                 # counted as an extraction failure
@@ -314,7 +322,7 @@ def export_runs(
                     ex = type(ex)(ok=True, code=rp.code,
                                   reason="ok [L0.5 repair applied]")
                     repaired_at_export = True
-            elif ex.ok and c.get("compile_status") == "compile_error":
+            elif repair and ex.ok and c.get("compile_status") == "compile_error":
                 # the record's harness verdict says this code fails rustc
                 # (e.g. run-B p0's stray block) — same L0.5 repair round
                 rp = repair_code(ex.code, must_define=must_define)
@@ -386,6 +394,7 @@ def export_runs(
         "type": "multipl-e-export-manifest",
         "exported_at": datetime.now(timezone.utc).isoformat(),
         "benchmark_arg": benchmark,
+        "repair": repair,
         "runs": [str(r) for r in runs],
         "problems": written,
         "excluded": excluded,

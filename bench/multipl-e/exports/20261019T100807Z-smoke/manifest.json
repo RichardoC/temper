@@ -1,0 +1,34 @@
+{
+  "type": "multipl-e-export-manifest",
+  "exported_at": "2026-10-19T10:11:41.126144+00:00",
+  "benchmark_arg": "humaneval-rs",
+  "repair": true,
+  "runs": [
+    "bench/multipl-e/runs/20261019T100807Z-smoke.jsonl"
+  ],
+  "problems": [
+    {
+      "file": "HumanEval_0_has_close_elements.json",
+      "name": "HumanEval_0_has_close_elements",
+      "flavor": "multipl-e",
+      "completions": 1,
+      "source_rows": [
+        {
+          "run": "20261019T100807Z-smoke.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T100807Z-smoke.jsonl.raw/HumanEval_0_has_close_elements__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 239
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "counts": {
+    "candidate_rows": 1,
+    "exported_completions": 1,
+    "excluded_rows": 0
+  },
+  "note": "excluded rows are scored failures under honest counting (pass@k is recomputable with n=exported+excluded)"
+}

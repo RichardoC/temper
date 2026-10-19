@@ -1,0 +1,116 @@
+{
+ "type": "multipl-e-results",
+ "created_utc": "2026-10-19T10:11:43.474497+00:00",
+ "input_dir": "/Users/richardf/temper/bench/multipl-e/exports/20261019T100807Z-smoke",
+ "versions": [
+  "official",
+  "normalized"
+ ],
+ "container": {
+  "official": {
+   "image": "ghcr.io/nuprl/multipl-e-evaluation",
+   "platform": "linux/amd64",
+   "rustc": "1.75.0",
+   "edition": "2015",
+   "wall_s": 1.0
+  },
+  "normalized": {
+   "image": "ghcr.io/nuprl/multipl-e-evaluation",
+   "platform": "linux/amd64",
+   "rustc": "1.75.0",
+   "edition": "2021",
+   "wall_s": 0.8
+  }
+ },
+ "per_problem": [
+  {
+   "name": "HumanEval_0_has_close_elements",
+   "n_scored": 1,
+   "n_excluded": 0,
+   "statuses_official": [
+    "SyntaxError"
+   ],
+   "pass_at_k_official": {
+    "pass@1": 0.0,
+    "pass@4": null,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_official": {
+    "pass@1": 0.0,
+    "pass@4": null,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "statuses_normalized": [
+    "SyntaxError"
+   ],
+   "pass_at_k_normalized": {
+    "pass@1": 0.0,
+    "pass@4": null,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_normalized": {
+    "pass@1": 0.0,
+    "pass@4": null,
+    "pass@10": null,
+    "pass@100": null
+   }
+  }
+ ],
+ "aggregate": {
+  "official": {
+   "pass@1": 0.0,
+   "pass@4": null,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 1,
+    "pass@4": 0,
+    "pass@10": 0,
+    "pass@100": 0
+   }
+  },
+  "honest-official": {
+   "pass@1": 0.0,
+   "pass@4": null,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 1,
+    "pass@4": 0,
+    "pass@10": 0,
+    "pass@100": 0
+   },
+   "n_excluded_rows": 0,
+   "n_excluded_by_problem": {}
+  },
+  "normalized": {
+   "pass@1": 0.0,
+   "pass@4": null,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 1,
+    "pass@4": 0,
+    "pass@10": 0,
+    "pass@100": 0
+   }
+  },
+  "honest-normalized": {
+   "pass@1": 0.0,
+   "pass@4": null,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 1,
+    "pass@4": 0,
+    "pass@10": 0,
+    "pass@100": 0
+   },
+   "n_excluded_rows": 0,
+   "n_excluded_by_problem": {}
+  }
+ }
+}

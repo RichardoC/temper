@@ -192,6 +192,27 @@ class TestExportTemperFlavor(unittest.TestCase):
         self.assertNotIn("pub RingBuf {", data["completions"][0])
         self.assertTrue(m["problems"][0]["source_rows"][0]["repaired_at_export"])
 
+    def test_no_repair_flag_skips_salvage(self):
+        # M2.2 ablation column: repair=False exports the model's raw
+        # extraction quality — the same row the repair=on path saves is
+        # exported UNREPAIRED and the container fails it (honest)
+        stray = ("```rust\npub struct RingBuf { cap: usize }\n"
+                 "pub RingBuf { fn new(c: usize) -> RingBuf { RingBuf { cap: c } } }\n"
+                 "pub fn sort_i32(v: &mut Vec<i32>) { v.sort_unstable(); }\n```\n")
+        run = self._run("20261019T000700Z", [
+            {"i": 0, "extract_ok": True, "compile_status": "compile_error",
+             "raw_path": str(self.tmp / "20261019T000700Z.raw" / "p0.txt")},
+        ])
+        (self.tmp / "20261019T000700Z.raw" / "p0.txt").write_text(stray)
+        m = export_runs([run], self.out, repair=False)
+        self.assertEqual(m["counts"]["exported_completions"], 1)
+        self.assertEqual(m["counts"]["excluded_rows"], 0)
+        self.assertFalse(m["repair"])
+        data = json.loads((self.out / "temper-sort.json").read_text())
+        self.assertEqual(len(data["completions"]), 1)
+        self.assertIn("pub RingBuf {", data["completions"][0])
+        self.assertFalse(m["problems"][0]["source_rows"][0]["repaired_at_export"])
+
     def test_pre_m15_record_excluded(self):
         run = self._run("20261019T000200Z", [{"i": 0, "extract_ok": True}])
         m = export_runs([run], self.out)

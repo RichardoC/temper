@@ -64,9 +64,11 @@ def cmd_export_multipl_e(args) -> int:
         Path(args.out),
         benchmark=args.benchmark,
         also_unsteered_guise=args.also_unsteered_guise,
+        repair=args.repair,
     )
     c = manifest["counts"]
-    print(f"export: {c['exported_completions']} completions, "
+    print(f"export (repair={'on' if manifest.get('repair') else 'off'}): "
+          f"{c['exported_completions']} completions, "
           f"{c['excluded_rows']} excluded rows (honest counting, see manifest)")
     for p in manifest["problems"]:
         print(f"  {p['file']}: {p['completions']} completions ({p['flavor']})")
@@ -87,6 +89,26 @@ def cmd_score_multipl_e(args) -> int:
     print(f"scored {res['input']} version={res['versions']} "
           f"-> {res['results_path']}")
     return 0
+
+
+def cmd_bench_multipl_e(args) -> int:
+    from temper.multipl_e.bench import run_bench
+
+    n = None if args.problems == "all" else int(args.problems)
+    res = run_bench(
+        args.benchmark,
+        n_problems=n,
+        k=args.K,
+        steps=args.steps,
+        canvas=args.canvas,
+        base_seed=args.seed,
+        temperature=args.temperature,
+        alg=args.alg,
+        out=Path(args.out),
+        resume=args.resume,
+    )
+    s = res["summary"]
+    return 0 if s["n_rows"] else 1
 
 
 def cmd_draft(args) -> int:
@@ -144,6 +166,9 @@ def build_parser() -> argparse.ArgumentParser:
     x.add_argument("--also-unsteered-guise", action="store_true",
                    help="also emit the same completions under an 'unsteered model' "
                         "guise name (format-blindness demo)")
+    x.add_argument("--no-repair", dest="repair", action="store_false",
+                   help="disable the L0.5 repair round at export (M2.2 ablation "
+                        "column: repair=off vs the default repair=on)")
     x.set_defaults(func=cmd_export_multipl_e)
 
     s = sub.add_parser(
@@ -157,6 +182,32 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--results-dir", default=None,
                    help="results dir (default bench/multipl-e/results)")
     s.set_defaults(func=cmd_score_multipl_e)
+
+    b = sub.add_parser(
+        "bench-multipl-e",
+        help="MultiPL-E generation driver (unsteered baseline, M2.2 row B2)",
+    )
+    b.add_argument("--benchmark", required=True,
+                   help="vendored benchmark (humaneval-rs | mbpp-rs)")
+    b.add_argument("--problems", default="all",
+                   help="first N problems in vendored (stable) order, or 'all'")
+    b.add_argument("-K", type=int, default=4, help="samples per problem")
+    b.add_argument("--steps", type=int, default=96, help="denoise steps per canvas")
+    b.add_argument("--canvas", type=int, default=384, help="canvas length (new tokens)")
+    b.add_argument("--seed", type=int, default=0,
+                   help="base seed; sample i of every problem uses seed+i")
+    b.add_argument("--temperature", type=float, default=0.2,
+                   help="sampling temperature for ALL samples (MultiPL-E pass@1 "
+                        "convention: T=0.2; the pass@10/100 convention T=0.8 is "
+                        "for larger-K runs)")
+    b.add_argument("--alg", default="entropy",
+                   help="remasking algorithm (model card default: entropy)")
+    b.add_argument("--out", required=True,
+                   help="run record .jsonl path (raw sidecars at <out>.raw/)")
+    b.add_argument("--resume", action="store_true",
+                   help="continue an existing record: skip already-sampled "
+                        "(problem, sample) pairs; config must match")
+    b.set_defaults(func=cmd_bench_multipl_e)
     return p
 
 
