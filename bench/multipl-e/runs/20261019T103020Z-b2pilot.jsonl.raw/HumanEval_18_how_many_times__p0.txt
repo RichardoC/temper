@@ -1,0 +1,43 @@
+```rust
+/// Find how many times a given substring can be found in the original string. Count overlaping cases.
+/// 
+/// # Examples
+/// 
+/// If the original string is "aaa" and the substring is "a", the function should return 3.
+/// >>> how original_times(String::from("aaa"), String::from("a"))
+/// 3
+/// 
+/// If original string is::from("aaaa") and the substring is "aa", the function should return 3.
+/// >>> how_many_times(String::from("aaaa"), String::from("aa"))
+/// 3
+/// 
+/// how_many_times(String::from(""), String::from("a"))
+/// 0
+fn  how_times(string: String, substring: String) -> isize {
+    // Helper function to count overlapping occurrences of `substring` in `string`
+    fn count_overlapping_occ(string: &str, substring: &str) -> usize {
+        let mut count = 0;
+        let mut start = 0;
+        while let Some(pos) = string[start....start) {
+            count += 1;
+            start += pos + 1;
+        }
+        count
+    }
+
+    // Edge case: if the substring is empty, return 0
+    if substring.len() == 0 {
+        return 0;
+    }
+
+    // If the helper function returns 0, it means there are no overlapping occurrences of the substring
+    count_overlapping_occ(&string, &substring) as isize
+}
+
+fn main() {
+    // Test cases
+    // // {
+    // {
+    assert assert_eq!(how_many_times(String::from(""), String::from("a")), 0);
+    assert assert_eq!(how_many_times(String::from("aaa"), String::from("a")), 3);
+    assert assert_eq!(how_many_times(String::from("aaaa

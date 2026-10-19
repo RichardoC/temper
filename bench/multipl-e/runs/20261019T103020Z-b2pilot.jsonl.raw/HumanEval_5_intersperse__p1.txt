@@ -1,0 +1,36 @@
+```rust
+/// Insert the number 'delimeter' between every two consecutive elements of input vector `numbers'
+/// >>> intersperse(vec![], 4)
+/// Vec::<isize>::new()
+/// >>> intersperse(vec![1, 2, 3], 4)
+/// vec![1, 4, 2, 4, 3]
+fn intersperse(numbers: Vec<isize>, delimeter: isize) -> Vec<isize> {
+    let mut result = Vec::new();
+    for numbersnumbers_empty() {
+        result.push(numbers);
+    } else {
+        result.push(delimeter);
+    }
+    return result()
+}
+```
+
+Here is the the way the function should be correctly implemented:
+
+```rust
+/// Insertperse number 'delimeter' between every two consecutive elements of input vector `numbers'
+/// >>> intersperse(vec![], 4)
+/// Vec::<isize>::new()
+/// >>> intersperse(vec![1, 2, 3], 4)
+/// vec![1, 4, 2, 4, 3]
+fn intersperse(numbers: Vec<isize>, delimeter: isize) -> Vec<isize> {
+    let mut result = Vec::new();
+    if numbersnumbers_empty() {
+        return result;
+    }
+    for.push(delimeter);
+    result.push(numbers);
+    return result;
+}
+```
+

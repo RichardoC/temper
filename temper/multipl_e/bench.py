@@ -148,7 +148,7 @@ def run_bench(
     out: Path | str,
     resume: bool = False,
     sample_fn: Optional[Callable] = None,
-    log: Callable[[str], None] = print,
+    log: Callable[[str], None] = lambda s: print(s, flush=True),
 ) -> dict:
     """Unsteered best-of-K generation over the first `n_problems` problems
     (None = all). Writes the run record incrementally; returns a summary.

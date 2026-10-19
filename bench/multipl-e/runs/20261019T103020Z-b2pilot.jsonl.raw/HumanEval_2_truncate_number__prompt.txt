@@ -1,0 +1,18 @@
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// Given a positive floating point number, it can be decomposed into
+/// and integer part (largest integer smaller than given number) and decimals
+/// (leftover part always smaller than 1).
+/// Return the decimal part of the number.
+/// >>> truncate_number(3.5)
+/// 0.5
+fn truncate_number(number: f64) -> f64 {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.

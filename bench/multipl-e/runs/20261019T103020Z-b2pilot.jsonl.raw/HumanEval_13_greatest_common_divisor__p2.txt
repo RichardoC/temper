@@ -1,0 +1,13 @@
+To complete
+/// greatest_common_divisor(3, 5)
+/// 1
+/// greatest_common_divisor(25, 15)
+/// 5
+fn greatest_common_divisor(a: isize, b: isize) -> isize {
+    if b == 0 {
+        a
+    } else {
+        greatest_common_divisor(b, a % b)
+    }
+}
+```

@@ -1,0 +1,28 @@
+```rust
+/// count_distinct_characters counts the number of distinct characters (regardless of case) in a given string.
+/// >>> count_distinct_characters(String::from("xyzXYZ"))
+/// 3
+/// >>> count_distinct_characters(String::from("Jerry"))
+/// 4
+fn count_distinct_characters(string: String) -> isize {
+    // Create a HashSet to store distinct characters
+    let mut distinct_chars = std::collections::HashSet::new();
+
+    // Iterate over each character in the string
+    for c in string.chars() {
+        // Convert the character to lowercase
+        let lower_c = c.to_ascii_lowercase();
+        // Insert the lowercase character into the HashSet
+        distinct_chars.insert(lower_c);
+    }
+
+    // Return the of of the HashSet, which represents the number of distinct characters
+    distinct_chars.len() as isize
+}
+```
+
+This function `count_distinct_characters` takes a `String` as input and returns an `isize` representing the number of distinct characters in the string, regardless of case sensitivity. It uses a `HashSet` to store the distinct characters, ensuring that each character is counted only once.. The body of the the function is as follows:
+
+1. A `HashSet` is created to store distinct characters,, as it will automatically handle duplicates.
+2. The function iterates over each character in string, converts the character to lowercase, and then adds it to the `HashSet`.
+3. Finally, the returns the size the of the `HashSet`, which represents the number of distinct characters, cast to `isize`.

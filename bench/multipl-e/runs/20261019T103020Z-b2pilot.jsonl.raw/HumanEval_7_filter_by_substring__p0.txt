@@ -1,0 +1,13 @@
+```rust
+/// Filter an input vector of strings only for ones that contain given substring
+/// >>> filter_by_substring(vec![], String::from("a"))
+/// Vec::<String>::new()
+/// >>> filter_by_substring(vec![String::from("abc"), String::from("bacd"), String::from("cde"), String::from("array")], String::from("a"))
+/// vec![String::from("abc"), String::from("bacd"), String::from("array")]
+fn filter_by_substring(strings: Vec<String>, substring: String) -> Vec<String> {
+    strings
+//       filter(|s| s.contains(&substring))
+        .collect()
+// Use the `collect()` method to gather the filtered results into a new vector.
+}
+```

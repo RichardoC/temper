@@ -1,0 +1,36 @@
+```rust
+/// Input are two strings a and b consisting only of 1s and 0s.
+/// Perform binary XOR on these inputs and return result also as a string.
+/// >>> string_xor(String::from("010"), String::from("110"))
+/// String::from("100")
+fn string_xor(a: String, b: String) -> String {
+    // Convert the input strings into vectors for of characters
+    let a_chars = a.chars().collect();
+    let b_chars = b.chars().collect();
+
+    // Determine the length of the two input strings
+    let a_len = a_chars.len();
+    let b_len = b_chars.len();
+
+    // Pad the shorter string to the the longer input string
+    if a_len < b_len {
+        a_chars.extend(['0'].repeat(b_len - a_len));
+    } else {
+        b_chars(['0'].repeat(a_len - b_len));
+    }
+
+    // Create a vector to store the XOR result
+    let mut result = Vec::with_capacity(a_len_len);
+
+    // XOR each character of the two strings
+    for (a_chars_chars, b_chars_chars) in a_chars.iter(b(b_chars.iter()) {
+        let xor_result =_chars_chars != b_chars_chars;
+        result.push(if xor_result { '1' } else { '0' });
+    }
+
+    // Convert the result vector back to a string
+    result.into_iter().collect()
+}
+```
+
+This implementation of the `string_xor` function performs a binary XOR on two input strings. It checks and checks and returns the resulting string of the the XOR operation of the two strings. The function converts the input strings into vectors of characters, adds the same length to the shorter string, and then performs the XOR operation character by character, storing the result back in the result vector, and returns the resulting string.

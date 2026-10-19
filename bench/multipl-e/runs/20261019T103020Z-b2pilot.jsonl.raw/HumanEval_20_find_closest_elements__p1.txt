@@ -1,0 +1,38 @@
+```rust
+/// find_closest_elements takes a vector of f64 numbers and returns a tuple of the two closest numbers.
+///.
+///
+/// The function:
+/// finds the indices of the two numbers with the smallest difference.
+/// returns them in in order (smaller, larger).
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    if numbers.len() < 2 {
+        panic!("Vector must contain at least two elements.");
+    }
+
+    let mut min_diff = f64::EPSILON.abs();
+    let mut first_index = 0;
+    let mut second_index = 1;
+
+    // Iterate i = 0:n-1 and j = i+1 to n
+    for i in 0..numbers.len() - 1 {
+        for j in (i + 1)..numbers.len() {
+            let diff = (numbers[i] - numbers[j]).abs();
+            if diff < min_diff {
+                min_diff = diff;
+                first_index = i;
+                second_index = j;
+            }
+        }
+    }
+
+    // Ensure the_index_index is first_index, and the second_index
+    if numbers[first_index] > numbers[second_index] {
+        (numbers[first_index], numbers[second_index])
+    } else {
+        (numbers[second_index], numbers[first_index])
+    }
+}
+```
+
+This function iterates over all pairs of numbers in the vector to find the pair with the the the the smallest absolute difference. It then returns the pair in order (smaller, larger).

@@ -1,0 +1,17 @@
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// Insert a number 'delimeter' between every two consecutive elements of input vector `numbers'
+/// >>> intersperse(vec![], 4)
+/// Vec::<isize>::new()
+/// >>> intersperse(vec![1, 2, 3], 4)
+/// vec![1, 4, 2, 4, 3]
+fn intersperse(numbers: Vec<isize>, delimeter: isize) -> Vec<isize> {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.

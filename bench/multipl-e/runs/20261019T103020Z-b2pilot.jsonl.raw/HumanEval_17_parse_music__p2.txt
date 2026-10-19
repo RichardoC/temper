@@ -1,0 +1,15 @@
+```rust
+/// Parses the input string representing musical notes and returns a vector of integers
+/// representing the beats each note lasts.
+/// Here is the legend:
+/// 'o' - whole note, lasts four beats
+/// 'o|' - half note, lasts two beats
+/// '.|' - quater note, lasts one beat
+/// >>> parse_music(String::from("o o| .|o|o| .| .| .| .| o o"))
+/// vec![4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]
+fn parse_music(music_string: String) -> Vec<isize> {
+    let mut beats = Vec::new();
+    let mut i = 0;
+
+    while i < music_string.len() {
+        match music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music music
