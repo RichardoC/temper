@@ -45,7 +45,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from temper.model.extract import extract_rust
+from temper.model.extract import extract_rust, repair_code
 
 __all__ = ["export_runs", "load_run_record", "load_benchmark"]
 
@@ -304,6 +304,14 @@ def export_runs(
                     "reason": "raw text unavailable (pre-M1.5 record: no raw_path sidecar)"})
                 continue
             ex = extract_rust(raw, must_define=must_define)
+            if not ex.ok and ex.code:
+                # L0.5 salvage, same pipeline as l0: a repairable span is
+                # retried through the deterministic repair pass before being
+                # counted as an extraction failure
+                rp = repair_code(ex.code, must_define=must_define)
+                if rp.valid:
+                    ex = type(ex)(ok=True, code=rp.code,
+                                  reason="ok [L0.5 repair applied]")
             if not ex.ok:
                 excluded.append({**base,
                     "reason": f"extract rejected at export: {ex.reason}",

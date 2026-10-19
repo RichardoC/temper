@@ -31,7 +31,7 @@ from typing import List, Optional
 
 from temper.harness.runner import run_candidate
 from temper.model.dream import sample
-from temper.model.extract import extract_rust
+from temper.model.extract import extract_rust, repair_code
 
 __all__ = ["CandidateRow", "load_task", "run_l0", "eval_runs"]
 
@@ -141,6 +141,10 @@ class CandidateRow:
     # M1.5: raw model output sidecar (bench/<task>/runs/<ts>.raw/p<i>.txt)
     raw_path: Optional[str] = None
     raw_sha256: Optional[str] = None
+    # M2.1 L0.5 repair pass: per-strategy attempt records + whether any repair
+    # changed the code (never a model re-prompt — deterministic text repair)
+    repair_attempts: List[dict] = field(default_factory=list)
+    repaired: bool = False
 
 
 def _repo_rel(p: Path) -> str:
@@ -289,30 +293,61 @@ def run_l0(
         ex = extract_rust(p.raw_text, must_define=task.must_define)
         row.extract_ok = ex.ok
         row.extract_reason = ex.reason
-        if not ex.ok:
+        active_code = ex.code if ex.ok else None
+        if not ex.ok and ex.code:
+            # L0.5 salvage: extraction rejected, but a repairable span exists
+            # (e.g. must_define failure fixable by degenerate-item repair).
+            rp = repair_code(ex.code, must_define=task.must_define)
+            row.repair_attempts = rp.attempts
+            if rp.valid:
+                row.repaired = rp.repaired
+                active_code = rp.code
+                row.extract_reason = ex.reason + " [L0.5 repair applied]"
+        if active_code is None:
             rows.append(row)
             continue
-        row.code_chars = len(ex.code)
+        row.code_chars = len(active_code)
 
-        t_h = time.perf_counter()
-        outcome = run_candidate(
-            ex.code, task.properties_source,
-            cases=cases, timeout_ms=timeout_ms, sandbox=sandbox,
-        )
-        row.harness_wall_s = round(time.perf_counter() - t_h, 3)
-        row.compile_status = outcome.compile.status
-        row.diag_codes, row.diag_spans = _diag_summary(outcome)
-        if outcome.test is not None:
-            rep = outcome.test.report or {}
-            row.test_status = outcome.test.status
-            row.reason = outcome.test.reason or None
-            row.successes = rep.get("successes")
-            if rep:
-                row.rejects = int(rep.get("local_rejects", 0)) + int(
-                    rep.get("global_rejects", 0))
-            if outcome.test.status == "fail":
-                row.minimal_input = outcome.test.minimal_input
-                row.failing_seed = outcome.test.seed or None
+        def _verify(code_str: str):
+            t_h = time.perf_counter()
+            out = run_candidate(
+                code_str, task.properties_source,
+                cases=cases, timeout_ms=timeout_ms, sandbox=sandbox,
+            )
+            wall = round(time.perf_counter() - t_h, 3)
+            return out, wall
+
+        outcome, harness_wall = _verify(active_code)
+        row.harness_wall_s = harness_wall
+
+        def _absorb(out):
+            row.compile_status = out.compile.status
+            row.diag_codes, row.diag_spans = _diag_summary(out)
+            if out.test is not None:
+                rep = out.test.report or {}
+                row.test_status = out.test.status
+                row.reason = out.test.reason or None
+                row.successes = rep.get("successes")
+                if rep:
+                    row.rejects = int(rep.get("local_rejects", 0)) + int(
+                        rep.get("global_rejects", 0))
+                if out.test.status == "fail":
+                    row.minimal_input = out.test.minimal_input
+                    row.failing_seed = out.test.seed or None
+
+        _absorb(outcome)
+        if row.compile_status == "compile_error":
+            # L0.5 salvage: one deterministic repair round, then re-verify
+            # (never a model re-prompt)
+            rp2 = repair_code(active_code, must_define=task.must_define)
+            row.repair_attempts = row.repair_attempts + rp2.attempts
+            if rp2.repaired:
+                row.repaired = True
+                outcome, harness_wall = _verify(rp2.code)
+                row.harness_wall_s = round(
+                    (row.harness_wall_s or 0.0) + harness_wall, 3)
+                row.code_chars = len(rp2.code)
+                _absorb(outcome)
         row.score = score_of(
             row.compile_status == "ok",
             row.test_status == "pass",
