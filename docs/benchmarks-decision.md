@@ -114,3 +114,13 @@ scoring + NFE accounting) ships before any L1 steering**, because (a) every late
 - Yona et al.: NAACL 2025 (skew control). "Don't Pass@k": Bayesian CIs.
 - Riddell et al. 2024: contamination quantification.
 - Dream-Coder: arXiv 2509.01142 (HKU/Huawei); Qwen2.5-Coder-7B init; 322B adapt tokens.
+
+
+## Addendum: successor check (Ag-LiveCodeBench-X "Agnostics"), mined from timed-out free-tier lane log
+- Exists: paper arXiv 2508.04865 (ICLR 2026, Northeastern et al.); site + leaderboard live; HF orgs nuprl/agnostics + abgruszecki/agnostics host executor images.
+- Leaderboard languages: main = Lua/Julia/R, secondary = OCaml/Fortran (+Python/Java/C++ bases). Goal is low-resource-language RL scale-out, not Rust.
+- Rust: stub only — found `rust.py` (PROMPT_RUST_SUFFIX, executor_image_name='agnostics-rust-executor') but Rust is NOT registered and no rust executor image is published on HF.
+- External completions: appears supported (`--completions-path/--generations-path` CLI flags seen in scripts) — UNVERIFIED in detail.
+- Contamination: LiveCodeBench heritage (release-date windowing).
+- **Ruling: adopt MultiPL-E now; revisit Agnostics only if Rust gains a registered track.**
+
