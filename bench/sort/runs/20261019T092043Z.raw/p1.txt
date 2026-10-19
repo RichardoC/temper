@@ -1,0 +1,8 @@
+To implement the `sort_i32` function in Rust, we can use the `sort` method provided by the `Vec<i32>`. This method sorts the vector in ascending order in place, preserving the multiset property of the duplicates. Here's the the implementation:
+
+```rustrust
+rust
+pub fn sort_i32(v: &mut Vec<i32>) {
+    v.sort();
+}
+```

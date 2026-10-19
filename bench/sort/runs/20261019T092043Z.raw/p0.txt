@@ -1,0 +1,13 @@
+To implement the `sort_i32` function in Rust, we need to follow the the specification and and provided. The function needs to a vector of of 32-bit integers in place, ascending order, and preserve duplicates. The sorting can be either unstable or stable, and we only use the Rust standard library.
+
+Here is the implementation of the `sort_i32` function:
+
+```rust
+// sort sort_i32 function sorts a vector of integers in ascending order
+pub fn sort_i32(v: &mut Vec<i32>) {
+    //.sort the vector in place
+    v.sort();
+}
+```
+
+This implementation uses the standard `sort` method provided by `VecVec<i32>`, which sorts the vector in in ascending order automatically. The method preserves the the multiset of elements, meaning duplicates are kept.

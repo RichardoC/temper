@@ -1,0 +1,38 @@
+{
+  "type": "multipl-e-export-manifest",
+  "exported_at": "2026-10-19T09:37:05.097467+00:00",
+  "benchmark_arg": "humaneval-rs",
+  "runs": [
+    "bench/sort/runs/20261019T092043Z.jsonl",
+    "bench/sort/runs/20261019T090541Z.jsonl"
+  ],
+  "problems": [
+    {
+      "file": "temper-sort.json",
+      "name": "temper-sort",
+      "flavor": "temper",
+      "completions": 4
+    },
+    {
+      "file": "temper-sort-unsteered-guise.json",
+      "name": "temper-sort-unsteered-guise",
+      "flavor": "temper+unsteered-guise",
+      "completions": 4
+    }
+  ],
+  "excluded": [
+    {
+      "run": "20261019T090541Z.jsonl",
+      "i": 0,
+      "problem": "temper-sort",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/sort/runs/20261019T090541Z.raw/p0.txt"
+    }
+  ],
+  "counts": {
+    "candidate_rows": 5,
+    "exported_completions": 4,
+    "excluded_rows": 1
+  },
+  "note": "excluded rows are scored failures under honest counting (pass@k is recomputable with n=exported+excluded)"
+}

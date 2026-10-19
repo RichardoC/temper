@@ -1,0 +1,12 @@
+{
+ "name": "temper-sort",
+ "language": "rs",
+ "prompt": "",
+ "tests": "// MultiPL-E-container scoring tests for bench/sort (M2.0).\n//\n// Deterministic port of the APPROVED held-in property\n// (bench/sort/properties.rs: `sort_i32(v) == sorted(v)`, multiset preserved)\n// to fixed cases, because the scoring container is offline and carries no\n// proptest. properties.rs remains the held-in verifier for temper's own\n// loop; this file only feeds the external scorer and MUST assert the same\n// contract. The first two data cases are the shrunk failing seeds recorded\n// in bench/sort/corpus (runs 20261018T203659Z p0/p2).\n//\n// NOTE: plain `//` comments only \u2014 this file is concatenated AFTER the\n// completion by the scorer (program = prompt + completion + '\\n' + tests),\n// so inner `//!` doc comments would be misplaced and fail to compile.\n\nfn main() {\n    let cases: Vec<Vec<i32>> = vec![\n        vec![],\n        vec![0],\n        vec![1, 2, 3],\n        vec![3, 2, 1],\n        vec![279524015, 0],                 // shrunk failing seed (p0)\n        vec![0, -1],                        // shrunk failing seed (p2)\n        vec![5, -1, 5, 0, -1, 5],           // duplicates + negatives\n        vec![-2147483648, 2147483647, 0],   // i32 extremes\n        vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 0], // reverse-sorted\n    ];\n    for v in cases {\n        let mut got = v.clone();\n        sort_i32(&mut got);\n        let mut want = v.clone();\n        want.sort_unstable();\n        assert_eq!(got, want, \"sort_i32({:?}) -> {:?}, want {:?}\", v, got, want);\n    }\n}\n",
+ "completions": [
+  "// sort sort_i32 function sorts a vector of integers in ascending order\npub fn sort_i32(v: &mut Vec<i32>) {\n    //.sort the vector in place\n    v.sort();\n}",
+  "rust\npub fn sort_i32(v: &mut Vec<i32>) {\n    v.sort();\n}",
+  "pub fn sort_i32(v: &mut Vec<i32>) {\n    v.sort();\n}",
+  "pub fn sort_i32(v: &mut Vec<i32>) {\n    v.sort();\n}"
+ ]
+}
