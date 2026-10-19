@@ -1,4 +1,4 @@
-"""temper CLI (M1): gen / eval / draft.
+"""temper CLI (M2): gen / eval / draft / export-multipl-e / score-multipl-e.
 
 Run with the project venv:  temper/.venv/bin/python -m temper.cli <cmd> ...
 (or the bin/temper wrapper).
@@ -50,6 +50,39 @@ def cmd_eval(args) -> int:
     return 0
 
 
+def cmd_export_multipl_e(args) -> int:
+    from temper.multipl_e.export import export_runs
+
+    manifest = export_runs(
+        [Path(p) for p in args.runs],
+        Path(args.out),
+        benchmark=args.benchmark,
+        also_unsteered_guise=args.also_unsteered_guise,
+    )
+    c = manifest["counts"]
+    print(f"export: {c['exported_completions']} completions, "
+          f"{c['excluded_rows']} excluded rows (honest counting, see manifest)")
+    for p in manifest["problems"]:
+        print(f"  {p['file']}: {p['completions']} completions ({p['flavor']})")
+    for e in manifest["excluded"]:
+        print(f"  EXCLUDED run={e['run']} i={e['i']}: {e['reason'][:110]}")
+    return 0
+
+
+def cmd_score_multipl_e(args) -> int:
+    from temper.multipl_e.score import score_dir
+
+    res = score_dir(
+        Path(args.input),
+        version=args.version,
+        max_workers=args.max_workers,
+        results_dir=Path(args.results_dir) if args.results_dir else None,
+    )
+    print(f"scored {res['input']} version={res['versions']} "
+          f"-> {res['results_path']}")
+    return 0
+
+
 def cmd_draft(args) -> int:
     from temper.authoring.draft import draft_properties
 
@@ -92,6 +125,32 @@ def build_parser() -> argparse.ArgumentParser:
                         "and stamps task.toml properties.approved=true")
     d.add_argument("--model", default="hf:zai-org/GLM-5.3")
     d.set_defaults(func=cmd_draft)
+
+    x = sub.add_parser(
+        "export-multipl-e",
+        help="map temper run records to MultiPL-E completion files",
+    )
+    x.add_argument("--benchmark", default=None,
+                   help="vendored benchmark to join against (humaneval-rs | mbpp-rs); "
+                        "temper bench tasks are exported as synthetic problems instead")
+    x.add_argument("--runs", nargs="+", required=True, help="run record .jsonl files")
+    x.add_argument("--out", required=True, help="output dir for completion files + manifest.json")
+    x.add_argument("--also-unsteered-guise", action="store_true",
+                   help="also emit the same completions under an 'unsteered model' "
+                        "guise name (format-blindness demo)")
+    x.set_defaults(func=cmd_export_multipl_e)
+
+    s = sub.add_parser(
+        "score-multipl-e",
+        help="score a completion-file dir through the official MultiPL-E container",
+    )
+    s.add_argument("--input", required=True, help="dir of completion files (export-multipl-e out)")
+    s.add_argument("--version", default="both", choices=["official", "normalized", "both"],
+                   help="official (Rust 2015 default) and/or normalized (--edition=2021)")
+    s.add_argument("--max-workers", type=int, default=2)
+    s.add_argument("--results-dir", default=None,
+                   help="results dir (default bench/multipl-e/results)")
+    s.set_defaults(func=cmd_score_multipl_e)
     return p
 
 

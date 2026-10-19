@@ -25,4 +25,4 @@ classifiers = [
 temper = "temper.cli:main"
 
 [tool.setuptools]
-packages = ["temper", "temper.harness", "temper.feedback", "temper.model", "temper.steer", "temper.authoring"]
+packages = ["temper", "temper.harness", "temper.feedback", "temper.model", "temper.steer", "temper.authoring", "temper.multipl_e"]
