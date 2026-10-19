@@ -204,5 +204,100 @@ pub fn ring_pop(rb: &mut RingBuf) -> Option<i64> { rb.buf.pop() }
         self.assertIn("ring_push", r.reason)
 
 
+# --- M2.3 phase-0: fenced→bare-span fallback ------------------------------
+# Real fixture: the M2.2 B2 pilot's HumanEval_15_string_sequence p0 raw
+# sidecar, verbatim (all 4 samples of this problem failed extraction the
+# same way). The model re-rendered the doc comments with `/// ``` `
+# example fences; those embedded ``` pairs terminate the outer ```rust
+# fence early, so the "largest fenced block" is prose — while the complete
+# `fn string_sequence` sits right after it and was thrown away.
+EMBEDDED_FENCE_DOC_ECHO = '''```rust
+/// Return a string containing the sequence from 0 to n inclusive, space-separated.
+.
+/// # Examples
+////// ```
+ string_sequence(0)
+/// String::from("0")
+/// ```
+ string_sequence(5)
+///String::from("0 1 2 3 4 5")
+/// ```
+fn string_sequence(n: isize) -> String {
+    // Create a vector to hold the numbers
+    let mut numbers = Vec::new();
+    
+    // Iterate from 0 to n inclusive
+    for i in ..=n {
+        numbers.push(i);
+    }
+    
+    // Convert the numbers into a string and join them with a space
+    let result = numbers.into_iter().collect(" ");
+    result
+}
+'''
+
+
+class TestFenceFallbackToBareSpan(unittest.TestCase):
+    def test_embedded_fence_doc_echo_recovered(self):
+        # the exact M2.2 pilot exclusion class (4 rows): fenced path poisoned
+        # by ``` inside doc-comment echo; bare span must recover the fn
+        r = extract_rust(EMBEDDED_FENCE_DOC_ECHO, must_define=["string_sequence"])
+        self.assertTrue(r.ok, r.reason)
+        self.assertTrue(r.code.startswith("fn string_sequence"))
+        self.assertIn("for i in", r.code)
+        # the doc-comment echo must NOT leak into the extracted code
+        self.assertNotIn("///", r.code)
+
+    def test_unbalanced_fenced_block_with_later_bare_span_recovered(self):
+        # fenced block unbalanced (truncated fence), complete fn after it
+        text = (
+            "```rust\nsure here is some prose { without closing\n"
+            "```\n\n"
+            "pub fn sort_i32(v: &mut Vec<i32>) {\n    v.sort_unstable();\n}\n"
+        )
+        r = extract_rust(text, must_define=["sort_i32"])
+        self.assertTrue(r.ok, r.reason)
+        self.assertIn("sort_unstable", r.code)
+
+    def test_unbalanced_fenced_no_bare_span_still_rejected(self):
+        # TRUNCATED_CANVAS shape: fenced + unbalanced, no item header+balance
+        # anywhere -> still rejected (historical combined message)
+        r = extract_rust(TRUNCATED_CANVAS, must_define=["sort_i32"])
+        self.assertFalse(r.ok)
+        self.assertIn("no fenced rust block", r.reason)
+
+    def test_mask_residue_keeps_incomplete_canvas_diagnosis(self):
+        # the fallback must NOT swallow the mask-token class (regression
+        # guard for the bench driver's failure-path contract)
+        r = extract_rust("```rust\n<|mask|>\n```", must_define=["sort_i32"])
+        self.assertFalse(r.ok)
+        self.assertIn("incomplete canvas", r.reason)
+
+    def test_fallback_never_degrades_passing_extraction(self):
+        # a healthy fenced block must be used as-is (fallback not even
+        # considered) — the pre-existing fenced tests already pin this;
+        # this one asserts it with prose AFTER the fence that a naive
+        # largest-bare-span would prefer
+        text = FENCED + "\nfn decoy() { { }\n"
+        r = extract_rust(text, must_define=["sort_i32"])
+        self.assertTrue(r.ok, r.reason)
+        self.assertIn("sort_unstable", r.code)
+        self.assertNotIn("decoy", r.code)
+
+    def test_recovered_span_exports_as_body_fragment(self):
+        # end-to-end instrument check on the real disease: the recovered
+        # extraction must convert to the official completion shape via
+        # export.to_body_fragment (prompt from the vendored dataset)
+        from temper.multipl_e.export import load_benchmark, to_body_fragment
+        td = load_benchmark("humaneval-rs")["HumanEval_15_string_sequence"]
+        r = extract_rust(EMBEDDED_FENCE_DOC_ECHO, must_define=["string_sequence"])
+        self.assertTrue(r.ok, r.reason)
+        body = to_body_fragment(r.code, td["prompt"])
+        self.assertIsNotNone(body)
+        self.assertNotIn("fn string_sequence", body)  # body fragment, no sig
+        self.assertIn("numbers.push(i);", body)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

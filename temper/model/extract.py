@@ -10,6 +10,18 @@ echo / chat residue / wrong-problem answers; a symbol defined only as an
 inherent `impl` method is a distinct, greppable rejection class — the task
 signatures require module-level FREE functions), mask-token rejection
 (incomplete canvas). Returns an ExtractResult; never raises.
+
+M2.3 phase-0 addition (fenced→bare fallback): the fenced path is poisoned
+when the model re-renders doc comments containing triple backticks (e.g.
+HumanEval_15_string_sequence in the M2.2 B2 pilot: `/// ```` example lines
+terminate the outer ```rust fence early, so the "largest fenced block" is
+prose and the real `fn` after it is never seen). When the fenced candidate
+fails the Rust-shape check, the bare-span path is retried before giving up.
+The bare span keeps its own gates (item header + balanced braces), so the
+fallback can only turn a guaranteed rejection into a checked candidate —
+never degrade a passing extraction. When both paths fail, the rejection
+reason stays the historical "no fenced rust block and no plausible bare
+code span" so exclusion-class histograms remain comparable.
 """
 
 from __future__ import annotations
@@ -185,6 +197,18 @@ def extract_rust(text: str, must_define=()) -> ExtractResult:
     if blocks:
         rustish = [body for lang, body in blocks if lang.lower() in ("", "rust", "rs")]
         code = _largest(rustish) or _largest([body for _, body in blocks])
+        if code is not None and not _looks_like_rust(code.strip("\n").strip()) \
+                and not _MASK_RE.search(code):
+            # M2.3 phase-0 fallback (module docstring): the fenced path can
+            # be poisoned (prose block via embedded ``` in doc-comment echo,
+            # or an unbalanced span) while a complete, brace-balanced fn is
+            # still present later in the text — retry the bare-span path,
+            # which keeps its own gates (item header + balanced braces),
+            # before giving up. Mask-token residue is exempt: the mask check
+            # in _check_code is the sharper diagnosis (incomplete canvas),
+            # and a bare span is meaningless there. Never degrades a
+            # passing extraction.
+            code = None
     if code is None:
         code = _bare_span(text)
         if code is None:

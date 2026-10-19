@@ -1,0 +1,999 @@
+{
+  "type": "multipl-e-export-manifest",
+  "exported_at": "2026-10-19T18:27:36.992423+00:00",
+  "benchmark_arg": "humaneval-rs",
+  "repair": false,
+  "runs": [
+    "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl"
+  ],
+  "problems": [
+    {
+      "file": "HumanEval_0_has_close_elements.json",
+      "name": "HumanEval_0_has_close_elements",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_0_has_close_elements__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 245
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_0_has_close_elements__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 239
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_0_has_close_elements__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 239
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_0_has_close_elements__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 240
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_1_separate_paren_groups.json",
+      "name": "HumanEval_1_separate_paren_groups",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_1_separate_paren_groups__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 849
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_1_separate_paren_groups__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 849
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_1_separate_paren_groups__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 849
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_1_separate_paren_groups__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 849
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_2_truncate_number.json",
+      "name": "HumanEval_2_truncate_number",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_2_truncate_number__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 237
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_2_truncate_number__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 237
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_2_truncate_number__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 237
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_2_truncate_number__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 237
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_3_below_zero.json",
+      "name": "HumanEval_3_below_zero",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_3_below_zero__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 124
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_3_below_zero__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 124
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_3_below_zero__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 124
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_3_below_zero__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 124
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_4_mean_absolute_deviation.json",
+      "name": "HumanEval_4_mean_absolute_deviation",
+      "flavor": "multipl-e",
+      "completions": 0,
+      "source_rows": []
+    },
+    {
+      "file": "HumanEval_5_intersperse.json",
+      "name": "HumanEval_5_intersperse",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_5_intersperse__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 83
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_5_intersperse__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 83
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_5_intersperse__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 83
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_5_intersperse__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 83
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_6_parse_nested_parens.json",
+      "name": "HumanEval_6_parse_nested_parens",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_6_parse_nested_parens__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 172
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_6_parse_nested_parens__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 172
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_6_parse_nested_parens__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 172
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_6_parse_nested_parens__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 172
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_7_filter_by_substring.json",
+      "name": "HumanEval_7_filter_by_substring",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_7_filter_by_substring__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 154
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_7_filter_by_substring__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 154
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_7_filter_by_substring__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 155
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_7_filter_by_substring__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 154
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_8_sum_product.json",
+      "name": "HumanEval_8_sum_product",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_8_sum_product__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_8_sum_product__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_8_sum_product__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_8_sum_product__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_9_rolling_max.json",
+      "name": "HumanEval_9_rolling_max",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_9_rolling_max__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 46
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_9_rolling_max__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 46
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_9_rolling_max__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 46
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_9_rolling_max__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 46
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_10_make_palindrome.json",
+      "name": "HumanEval_10_make_palindrome",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_10_make_palindrome__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 125
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_10_make_palindrome__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 125
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_10_make_palindrome__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 125
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_10_make_palindrome__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 125
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_11_string_xor.json",
+      "name": "HumanEval_11_string_xor",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_11_string_xor__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 359
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_11_string_xor__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 359
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_11_string_xor__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 359
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_11_string_xor__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 359
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_12_longest.json",
+      "name": "HumanEval_12_longest",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_12_longest__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 34
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_12_longest__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 34
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_12_longest__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 34
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_12_longest__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 34
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_13_greatest_common_divisor.json",
+      "name": "HumanEval_13_greatest_common_divisor",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_13_greatest_common_divisor__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 17
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_13_greatest_common_divisor__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 17
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_13_greatest_common_divisor__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 17
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_13_greatest_common_divisor__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 17
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_14_all_prefixes.json",
+      "name": "HumanEval_14_all_prefixes",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_14_all_prefixes__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_14_all_prefixes__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_14_all_prefixes__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_14_all_prefixes__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 101
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_15_string_sequence.json",
+      "name": "HumanEval_15_string_sequence",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_15_string_sequence__p0.txt",
+          "record_extract_ok": false,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_15_string_sequence__p1.txt",
+          "record_extract_ok": false,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_15_string_sequence__p2.txt",
+          "record_extract_ok": false,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_15_string_sequence__p3.txt",
+          "record_extract_ok": false,
+          "repaired_at_export": false,
+          "chars": 139
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_16_count_distinct_characters.json",
+      "name": "HumanEval_16_count_distinct_characters",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_16_count_distinct_characters__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 354
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_16_count_distinct_characters__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 354
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_16_count_distinct_characters__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 354
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_16_count_distinct_characters__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 354
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_17_parse_music.json",
+      "name": "HumanEval_17_parse_music",
+      "flavor": "multipl-e",
+      "completions": 0,
+      "source_rows": []
+    },
+    {
+      "file": "HumanEval_18_how_many_times.json",
+      "name": "HumanEval_18_how_many_times",
+      "flavor": "multipl-e",
+      "completions": 0,
+      "source_rows": []
+    },
+    {
+      "file": "HumanEval_19_sort_numbers.json",
+      "name": "HumanEval_19_sort_numbers",
+      "flavor": "multipl-e",
+      "completions": 0,
+      "source_rows": []
+    },
+    {
+      "file": "HumanEval_20_find_closest_elements.json",
+      "name": "HumanEval_20_find_closest_elements",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_20_find_closest_elements__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 80
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_20_find_closest_elements__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 80
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_20_find_closest_elements__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 79
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_20_find_closest_elements__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 79
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_21_rescale_to_unit.json",
+      "name": "HumanEval_21_rescale_to_unit",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_21_rescale_to_unit__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 88
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_21_rescale_to_unit__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 88
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_21_rescale_to_unit__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 88
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_21_rescale_to_unit__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 88
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_23_strlen.json",
+      "name": "HumanEval_23_strlen",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_23_strlen__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 21
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_23_strlen__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 21
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_23_strlen__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 21
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_23_strlen__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 21
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_24_largest_divisor.json",
+      "name": "HumanEval_24_largest_divisor",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_24_largest_divisor__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 86
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_24_largest_divisor__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 86
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_24_largest_divisor__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 86
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_24_largest_divisor__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 86
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_25_factorize.json",
+      "name": "HumanEval_25_factorize",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_25_factorize__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 115
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_25_factorize__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 115
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_25_factorize__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 115
+        },
+        {
+          "run": "20261019T103020Z-b2pilot.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_25_factorize__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 115
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 0,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_4_mean_absolute_deviation__p0.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 1,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_4_mean_absolute_deviation__p1.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 2,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_4_mean_absolute_deviation__p2.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 3,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_4_mean_absolute_deviation__p3.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 0,
+      "problem": "HumanEval_17_parse_music",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_17_parse_music__p0.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 1,
+      "problem": "HumanEval_17_parse_music",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_17_parse_music__p1.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 2,
+      "problem": "HumanEval_17_parse_music",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_17_parse_music__p2.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 3,
+      "problem": "HumanEval_17_parse_music",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_17_parse_music__p3.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 0,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: required symbol(s) 'how_many_times' not defined anywhere in extracted code (prompt echo or wrong problem?)",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_18_how_many_times__p0.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 1,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: required symbol(s) 'how_many_times' not defined anywhere in extracted code (prompt echo or wrong problem?)",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_18_how_many_times__p1.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 2,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: required symbol(s) 'how_many_times' not defined anywhere in extracted code (prompt echo or wrong problem?)",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_18_how_many_times__p2.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 3,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: required symbol(s) 'how_many_times' not defined anywhere in extracted code (prompt echo or wrong problem?)",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_18_how_many_times__p3.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 0,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_19_sort_numbers__p0.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 1,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_19_sort_numbers__p1.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 2,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_19_sort_numbers__p2.txt"
+    },
+    {
+      "run": "20261019T103020Z-b2pilot.jsonl",
+      "i": 3,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl.raw/HumanEval_19_sort_numbers__p3.txt"
+    }
+  ],
+  "counts": {
+    "candidate_rows": 100,
+    "exported_completions": 84,
+    "excluded_rows": 16
+  },
+  "note": "excluded rows are scored failures under honest counting (pass@k is recomputable with n=exported+excluded)"
+}
