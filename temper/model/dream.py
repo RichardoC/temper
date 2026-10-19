@@ -60,6 +60,7 @@ class ParticleResult:
     prompt_len: int = 0
     canvas_len: int = 0
     steps: int = 0
+    nfe: Optional[int] = None   # M2.0 schema v1.2: forward passes executed
     wall_s: float = 0.0
     per_step_s: List[float] = field(default_factory=list)
     committed_tokens_per_step: List[int] = field(default_factory=list)
@@ -239,6 +240,9 @@ def _generate_one(
         prompt_len=prompt_len,
         canvas_len=canvas_len,
         steps=steps,
+        # M2.0 schema v1.2: one forward pass per denoise step actually
+        # executed (per_step_s carries exactly one timing entry per step).
+        nfe=len(state["step_times"]),
         wall_s=round(wall_s, 2),
         per_step_s=[round(s, 3) for s in state["step_times"]],
         committed_tokens_per_step=committed,

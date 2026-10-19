@@ -124,6 +124,9 @@ class CandidateRow:
     extract_reason: str
     code_chars: int
     compile_status: str
+    # M2.0 schema v1.2: explicit NFE accounting (x-axis for every curve;
+    # nullable for pre-v1.2 records)
+    nfe: Optional[int] = None
     diag_codes: List[str] = field(default_factory=list)
     diag_spans: List[dict] = field(default_factory=list)
     test_status: str = "not_attempted"
@@ -272,6 +275,7 @@ def run_l0(
             gen_error=p.error,
             extract_ok=False, extract_reason="not attempted",
             code_chars=0,
+            nfe=p.nfe,
             raw_path=_repo_rel(raw_file),
             raw_sha256=hashlib.sha256(
                 p.raw_text.encode("utf-8")).hexdigest(),
@@ -343,7 +347,8 @@ def run_l0(
 
     meta = {
         "type": "run",
-        "milestone": "M1-L0",
+        "schema_version": "1.2",
+        "milestone": "M2-L0",
         "task": task.name,
         "task_dir": str(task.dir),
         "strategy_hash": task.strategy_hash,
@@ -351,8 +356,14 @@ def run_l0(
         "steps": steps,
         "canvas": canvas,
         "base_seed": base_seed,
+        "must_define": list(task.must_define),
         "model": "Dream-org/Dream-Coder-v0-Instruct-7B",
         "model_wall_s": round(model_wall_s, 2),
+        # M2.0 schema v1.2: NFE + verifier wall-clock accounting (nullable
+        # fields on candidate rows for pre-v1.2 records)
+        "nfe_total": sum(r.nfe or 0 for r in rows),
+        "verifier_wall_s_total": round(
+            sum(r.harness_wall_s or 0.0 for r in rows), 3),
         "sandbox": sandbox or "default(seatbelt)",
         "cases": cases,
         "timeout_ms": timeout_ms,
@@ -378,6 +389,9 @@ def run_l0(
         "best": asdict(best) if best else None,
         "n_pass": sum(1 for r in rows if r.test_status == "pass"),
         "n_compile_ok": sum(1 for r in rows if r.compile_status == "ok"),
+        "nfe_total": sum(r.nfe or 0 for r in rows),
+        "verifier_wall_s_total": round(
+            sum(r.harness_wall_s or 0.0 for r in rows), 3),
         "model_wall_s": round(model_wall_s, 2),
         "harness_wall_s": round(sum(r.harness_wall_s or 0 for r in rows), 2),
         "seed_files": seed_files,
