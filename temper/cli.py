@@ -47,6 +47,12 @@ def cmd_eval(args) -> int:
     for r in res["per_run"]:
         print(f"  run {r['file']} steps={r['steps']} n_pass={r['n_pass']} "
               f"best_score={r['best_score']} selected={r['best_selected_test']}")
+    fc = res.get("failure_classes") or {}
+    if fc.get("task"):
+        agg = " ".join(f"{k}={v}" for k, v in sorted(fc["task"].items()))
+        print(f"failure classes (task, last {res['runs_used']} runs): {agg}")
+        for fname, h in fc.get("per_run", {}).items():
+            print(f"  run {fname}: " + " ".join(f"{k}={v}" for k, v in sorted(h.items())))
     return 0
 
 

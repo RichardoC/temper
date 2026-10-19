@@ -77,10 +77,11 @@ def _prompt_echo_fraction(raw: str, prompt: Optional[str]) -> float:
 
 def classify_row(row: dict, raw_text: Optional[str] = None,
                  prompt: Optional[str] = None) -> dict:
-    """Classify one candidate row. Returns {"class": str|None, "evidence": []}.
+    """Classify one candidate row.
 
-    class None = not a model-output failure (test pass, or infrastructure
-    error) — the caller's histogram skips it under `unclassified`.
+    Returns {"class": str|None, "kind": success|infrastructure|failure|
+    unclassified, "evidence": []}. Only kind=failure rows carry a taxonomy
+    class; histogram() skips the rest.
     """
     ev: List[str] = []
     test_status = row.get("test_status")
@@ -90,11 +91,11 @@ def classify_row(row: dict, raw_text: Optional[str] = None,
 
     # --- successes are not failures ---------------------------------------
     if test_status == "pass":
-        return {"class": None, "evidence": ["tests pass"]}
+        return {"class": None, "kind": "success", "evidence": ["tests pass"]}
 
     # --- generation errors are infrastructure, not model-output classes ----
     if row.get("gen_error"):
-        return {"class": None,
+        return {"class": None, "kind": "infrastructure",
                 "evidence": [f"generation error (infrastructure): {row['gen_error'][:120]}"]}
 
     # --- post-extract failure classes ---------------------------------------
@@ -103,42 +104,46 @@ def classify_row(row: dict, raw_text: Optional[str] = None,
             ev.append("diag codes: " + ",".join(row["diag_codes"]))
         if row.get("repaired"):
             ev.append("L0.5 repair attempted but did not fix compilation")
-        return {"class": "compile_error", "evidence": ev}
+        return {"class": "compile_error", "kind": "failure", "evidence": ev}
 
     if compile_status == "timeout":
         ev.append("harness timeout during run")
-        return {"class": "test_fail", "evidence": ev}
+        return {"class": "test_fail", "kind": "failure", "evidence": ev}
 
     if test_status in ("fail", "abort", "error", "timeout"):
         if row.get("reason"):
             ev.append(f"verifier reason: {str(row['reason'])[:160]}")
-        return {"class": "test_fail", "evidence": ev}
+        return {"class": "test_fail", "kind": "failure", "evidence": ev}
 
     # --- extraction rejections ----------------------------------------------
+    # "not defined" covers both the M1.5 wording ("...not defined anywhere in
+    # extracted code (prompt echo or wrong problem?)") and the M1 wording
+    # ("required symbol 'x' not defined (prompt echo or wrong problem?)")
+    not_defined = re.search(r"not defined\b", reason_l) is not None
     if "defined only as inherent impl method" in reason_l:
         ev.append("required symbols exist only as inherent impl methods")
-        return {"class": "impl_method", "evidence": ev}
+        return {"class": "impl_method", "kind": "failure", "evidence": ev}
 
     raw = raw_text or ""
 
-    if "not defined anywhere" in reason_l:
+    if not_defined:
         if raw:
             if _SELF_PARAM_RE.search(raw):
                 ev.append("module-level fn with &self/&mut self parameter in raw output")
-                return {"class": "renamed_or_self", "evidence": ev}
+                return {"class": "renamed_or_self", "kind": "failure", "evidence": ev}
             cousins = _rename_cousins(row.get("missing_symbols", []), raw)
             # fall back to parsing the missing names out of the reason string
             if not cousins:
-                m = re.search(r"required symbol\(s\) (.+?) not defined", reason)
+                m = re.search(r"required symbol(?:\(s\))? (.+?) not defined", reason)
                 if m:
                     names = re.findall(r"'([^']+)'", m.group(1))
                     cousins = _rename_cousins(names, raw)
             if cousins:
                 ev.append(f"renamed cousins present in raw: fn {', fn '.join(cousins)}(")
-                return {"class": "renamed_or_self", "evidence": ev}
+                return {"class": "renamed_or_self", "kind": "failure", "evidence": ev}
         if not raw:
             ev.append("no raw sidecar; reason wording defaults to echo")
-            return {"class": "echo", "evidence": ev}
+            return {"class": "echo", "kind": "failure", "evidence": ev}
 
     if raw:
         fences, bare, markers = _code_spans(raw)
@@ -161,46 +166,51 @@ def classify_row(row: dict, raw_text: Optional[str] = None,
         echo_frac = _prompt_echo_fraction(raw, prompt)
         if echo_frac >= 0.6 and not (fences or bare):
             ev.append(f"{echo_frac:.0%} of prompt lines repeated verbatim, no code span")
-            return {"class": "echo", "evidence": ev}
+            return {"class": "echo", "kind": "failure", "evidence": ev}
         if truncated:
-            return {"class": "truncated_canvas", "evidence": ev}
+            return {"class": "truncated_canvas", "kind": "failure", "evidence": ev}
         if not (fences or bare):
             if "no fenced rust block" in reason_l or "no plausible bare code span" in reason_l:
                 ev.append("no code span in raw output; prose present"
                           if raw.strip() else "raw output empty")
-                return {"class": "prose_only", "evidence": ev}
+                return {"class": "prose_only", "kind": "failure", "evidence": ev}
         # zero-brace span = signature-only echo (or prose snippet)
         if span and span.count("{") == 0:
-            m = re.search(r"required symbol\(s\) (.+?) not defined", reason)
+            m = re.search(r"required symbol(?:\(s\))? (.+?) not defined", reason)
             names = re.findall(r"'([^']+)'", m.group(1)) if m else []
             if names and all(re.search(rf"\bfn\s+{re.escape(n)}\b", span) for n in names):
                 ev.append("signature-only echo: required names appear as bare fn headers")
-                return {"class": "echo", "evidence": ev}
+                return {"class": "echo", "kind": "failure", "evidence": ev}
             ev.append("no braces in code span; not identifiable as code")
-            return {"class": "prose_only", "evidence": ev}
+            return {"class": "prose_only", "kind": "failure", "evidence": ev}
         if "does not look like rust" in reason_l:
             ev.append("span rejected by extract without a sharper signature")
-            return {"class": "prose_only", "evidence": ev}
+            return {"class": "prose_only", "kind": "failure", "evidence": ev}
 
     if "no fenced rust block" in reason_l or "no plausible bare code span" in reason_l:
         ev.append("no raw sidecar; extract found no code span")
-        return {"class": "prose_only", "evidence": ev}
+        return {"class": "prose_only", "kind": "failure", "evidence": ev}
     if "mask tokens" in reason_l:
         ev.append("mask tokens in extracted code (canvas never completed)")
-        return {"class": "truncated_canvas", "evidence": ev}
+        return {"class": "truncated_canvas", "kind": "failure", "evidence": ev}
     if "does not look like rust" in reason_l:
         ev.append("extracted span not Rust-shaped; no raw sidecar to refine")
-        return {"class": "prose_only", "evidence": ev}
+        return {"class": "prose_only", "kind": "failure", "evidence": ev}
 
     ev.append(f"unclassified: extract_reason={reason[:140]!r}")
-    return {"class": None, "evidence": ev}
+    return {"class": None, "kind": "unclassified", "evidence": ev}
 
 
 def histogram(classifications: List[dict]) -> dict:
-    """Counts per class; 'unclassified' buckets rows whose class is None."""
+    """Counts per class over kind=failure rows; 'unclassified' buckets
+    failure-shaped rows the classifier could not place. Successes and
+    infrastructure errors are NOT failures and are not counted."""
     h = {c: 0 for c in CLASSES}
     h["unclassified"] = 0
     for c in classifications:
+        kind = c.get("kind", "unclassified" if c.get("class") is None else "failure")
+        if kind in ("success", "infrastructure"):
+            continue
         cls = c.get("class")
         h[cls if cls in CLASSES else "unclassified"] += 1
     return {k: v for k, v in h.items() if v}

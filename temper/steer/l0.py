@@ -30,6 +30,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from temper.harness.runner import run_candidate
+from temper.model.classify import classify_row, histogram
 from temper.model.dream import sample
 from temper.model.extract import extract_rust, repair_code
 
@@ -442,6 +443,36 @@ def run_l0(
 # temper eval: pass@k aggregation across run records
 # --------------------------------------------------------------------------
 
+def _classify_run_rows(runs: List[dict]) -> dict:
+    """M2.1 item 3: failure-class taxonomy per run + per task aggregate.
+
+    Raw sidecar text (and the run's prompt.txt) are passed to the classifier
+    when available; pre-M1.5 rows classify from record fields only.
+    """
+    per_run = {}
+    all_cls = []
+    for run in runs:
+        raw_dir = REPO_ROOT / run["file"].replace(".jsonl", ".raw")
+        prompt = None
+        prompt_file = raw_dir / "prompt.txt"
+        if prompt_file.exists():
+            prompt = prompt_file.read_text(encoding="utf-8")
+        cls = []
+        for c in run["candidates"]:
+            raw_text = None
+            rp = c.get("raw_path")
+            if rp:
+                p = Path(rp)
+                if not p.is_absolute():
+                    p = REPO_ROOT / p
+                if p.exists():
+                    raw_text = p.read_text(encoding="utf-8")
+            cls.append(classify_row(c, raw_text=raw_text, prompt=prompt))
+        per_run[run["file"]] = histogram(cls)
+        all_cls.extend(cls)
+    return {"per_run": per_run, "task": histogram(all_cls)}
+
+
 def eval_runs(task_dir: Path | str, k: int, repeat: int) -> dict:
     """Unbiased pass@k over the last `repeat` run records with K==k.
 
@@ -494,6 +525,7 @@ def eval_runs(task_dir: Path | str, k: int, repeat: int) -> dict:
     } for run in runs]
 
     n_pass_runs = sum(1 for r in per_run if r["n_pass"] > 0)
+    failure_classes = _classify_run_rows(runs)
     return {
         "task": task_dir.name,
         "K": k,
@@ -501,4 +533,5 @@ def eval_runs(task_dir: Path | str, k: int, repeat: int) -> dict:
         "runs_with_at_least_one_pass": n_pass_runs,
         "pass_at_k": table,
         "per_run": per_run,
+        "failure_classes": failure_classes,
     }
