@@ -173,6 +173,25 @@ class TestExportTemperFlavor(unittest.TestCase):
         data = json.loads((self.out / "temper-sort.json").read_text())
         self.assertEqual(data["completions"], [])
 
+    def test_compile_error_row_repaired_at_export(self):
+        # record says compile_error (e.g. run-B p0's stray block): the export
+        # applies the same L0.5 repair round and exports the repaired code
+        stray = ("```rust\npub struct RingBuf { cap: usize }\n"
+                 "pub RingBuf { fn new(c: usize) -> RingBuf { RingBuf { cap: c } } }\n"
+                 "pub fn sort_i32(v: &mut Vec<i32>) { v.sort_unstable(); }\n```\n")
+        run = self._run("20261019T000600Z", [
+            {"i": 0, "extract_ok": True, "compile_status": "compile_error",
+             "raw_path": str(self.tmp / "20261019T000600Z.raw" / "p0.txt")},
+        ])
+        (self.tmp / "20261019T000600Z.raw" / "p0.txt").write_text(stray)
+        m = export_runs([run], self.out)
+        self.assertEqual(m["counts"]["exported_completions"], 1)
+        data = json.loads((self.out / "temper-sort.json").read_text())
+        self.assertEqual(len(data["completions"]), 1)
+        self.assertIn("impl RingBuf {", data["completions"][0])
+        self.assertNotIn("pub RingBuf {", data["completions"][0])
+        self.assertTrue(m["problems"][0]["source_rows"][0]["repaired_at_export"])
+
     def test_pre_m15_record_excluded(self):
         run = self._run("20261019T000200Z", [{"i": 0, "extract_ok": True}])
         m = export_runs([run], self.out)

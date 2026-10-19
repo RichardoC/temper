@@ -304,6 +304,7 @@ def export_runs(
                     "reason": "raw text unavailable (pre-M1.5 record: no raw_path sidecar)"})
                 continue
             ex = extract_rust(raw, must_define=must_define)
+            repaired_at_export = False
             if not ex.ok and ex.code:
                 # L0.5 salvage, same pipeline as l0: a repairable span is
                 # retried through the deterministic repair pass before being
@@ -312,6 +313,15 @@ def export_runs(
                 if rp.valid:
                     ex = type(ex)(ok=True, code=rp.code,
                                   reason="ok [L0.5 repair applied]")
+                    repaired_at_export = True
+            elif ex.ok and c.get("compile_status") == "compile_error":
+                # the record's harness verdict says this code fails rustc
+                # (e.g. run-B p0's stray block) — same L0.5 repair round
+                rp = repair_code(ex.code, must_define=must_define)
+                if rp.repaired and rp.valid:
+                    ex = type(ex)(ok=True, code=rp.code,
+                                  reason="ok [L0.5 repair applied post-compile]")
+                    repaired_at_export = True
             if not ex.ok:
                 excluded.append({**base,
                     "reason": f"extract rejected at export: {ex.reason}",
@@ -340,6 +350,7 @@ def export_runs(
                 "run": run_path.name, "i": c.get("i"),
                 "raw_path": c.get("raw_path"),
                 "record_extract_ok": c.get("extract_ok"),
+                "repaired_at_export": repaired_at_export,
                 "chars": len(code),
             })
 
@@ -355,7 +366,8 @@ def export_runs(
         f.write_text(json.dumps(payload, indent=1), encoding="utf-8")
         written.append({"file": f.name, "name": prob["name"],
                         "flavor": prob["flavor"],
-                        "completions": len(prob["completions"])})
+                        "completions": len(prob["completions"]),
+                        "source_rows": prob["source_rows"]})
         if also_unsteered_guise and prob["completions"]:
             # Qwen-twin format demo: the SAME completions re-emitted under a
             # plain "unsteered model" guise — scoring must be identical,
