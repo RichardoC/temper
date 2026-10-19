@@ -130,6 +130,9 @@ class CandidateRow:
     nfe: Optional[int] = None
     diag_codes: List[str] = field(default_factory=list)
     diag_spans: List[dict] = field(default_factory=list)
+    # M2.1 item 4: primary rustc error string (truncated 500 chars) — keeps
+    # E-code-less errors visible
+    diag_msg: Optional[str] = None
     test_status: str = "not_attempted"
     minimal_input: Optional[str] = None
     failing_seed: Optional[str] = None
@@ -156,9 +159,18 @@ def _repo_rel(p: Path) -> str:
         return str(p)
 
 
-def _diag_summary(outcome) -> (List[str], List[dict]):
+def _diag_summary(outcome) -> (List[str], List[dict], str):
+    """(codes, spans, primary-message) from a compile outcome.
+
+    M2.1 item 4: the primary rustc error STRING (truncated to 500 chars)
+    so E-code-less errors ('missing `enum` for enum definition', linker
+    failures) stop being invisible in run records. Falls back to the
+    compiler stderr tail when no structured diagnostic parsed.
+    """
     codes, spans = [], []
-    for d in outcome.compile.diagnostics or []:
+    primary_msg = ""
+    diags = outcome.compile.diagnostics or []
+    for d in diags:
         if d.code and d.code not in codes:
             codes.append(d.code)
         for sp in getattr(d, "spans", []) or []:
@@ -169,7 +181,15 @@ def _diag_summary(outcome) -> (List[str], List[dict]):
                     "line_end": getattr(sp, "line_end", None),
                     "is_primary": True,
                 })
-    return codes, spans[:4]
+        if not primary_msg and d.is_error:
+            primary_msg = (f"{d.code}: {d.message}" if d.code else d.message)
+    if not primary_msg and diags:
+        d = diags[0]
+        primary_msg = (f"{d.code}: {d.message}" if d.code else d.message)
+    if not primary_msg and outcome.compile.stderr:
+        primary_msg = outcome.compile.stderr.strip().splitlines()[-1] \
+            if outcome.compile.stderr.strip() else ""
+    return codes, spans[:4], (primary_msg or "")[:500]
 
 
 def _persist_failing_seed(
@@ -323,7 +343,7 @@ def run_l0(
 
         def _absorb(out):
             row.compile_status = out.compile.status
-            row.diag_codes, row.diag_spans = _diag_summary(out)
+            row.diag_codes, row.diag_spans, row.diag_msg = _diag_summary(out)
             if out.test is not None:
                 rep = out.test.report or {}
                 row.test_status = out.test.status
