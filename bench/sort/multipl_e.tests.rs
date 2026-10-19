@@ -1,12 +1,16 @@
-//! MultiPL-E-container scoring tests for bench/sort (M2.0).
-//!
-//! Deterministic port of the APPROVED held-in property
-//! (bench/sort/properties.rs: `sort_i32(v) == sorted(v)`, multiset preserved)
-//! to fixed cases, because the scoring container is offline and carries no
-//! proptest. properties.rs remains the held-in verifier for temper's own
-//! loop; this file only feeds the external scorer and MUST assert the same
-//! contract. The first two data cases are the shrunk failing seeds recorded
-//! in bench/sort/corpus (runs 20261018T203659Z p0/p2).
+// MultiPL-E-container scoring tests for bench/sort (M2.0).
+//
+// Deterministic port of the APPROVED held-in property
+// (bench/sort/properties.rs: `sort_i32(v) == sorted(v)`, multiset preserved)
+// to fixed cases, because the scoring container is offline and carries no
+// proptest. properties.rs remains the held-in verifier for temper's own
+// loop; this file only feeds the external scorer and MUST assert the same
+// contract. The first two data cases are the shrunk failing seeds recorded
+// in bench/sort/corpus (runs 20261018T203659Z p0/p2).
+//
+// NOTE: plain `//` comments only — this file is concatenated AFTER the
+// completion by the scorer (program = prompt + completion + '\n' + tests),
+// so inner `//!` doc comments would be misplaced and fail to compile.
 
 fn main() {
     let cases: Vec<Vec<i32>> = vec![

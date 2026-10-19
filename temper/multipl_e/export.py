@@ -238,6 +238,7 @@ def export_runs(
                 if pname not in bench:
                     excluded.append({
                         "run": run_path.name, "i": c.get("i"),
+                        "problem": pname,
                         "reason": f"problem {pname!r} not in vendored benchmark {benchmark!r}",
                     })
                     continue
@@ -291,7 +292,8 @@ def export_runs(
                 stop_tokens = ()
                 must_define = _task_must_define(task_dir)
 
-            base = {"run": run_path.name, "i": c.get("i")}
+            base = {"run": run_path.name, "i": c.get("i"),
+                    "problem": prob["name"]}
             if c.get("gen_error"):
                 excluded.append({**base,
                     "reason": f"generation error: {c['gen_error']}"})
