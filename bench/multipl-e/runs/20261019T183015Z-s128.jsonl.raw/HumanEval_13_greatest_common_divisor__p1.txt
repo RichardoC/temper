@@ -1,0 +1,23 @@
+To complete
+/// Return a greatest common divisor of two integers a and b
+/// >>> greatest_common_divisor(3, 5)
+/// 1
+/// >>> greatest_common_divisor(25, 15)
+/// 5
+fn greatest_common_divisor(a: isize, b: isize) -> isize {
+    // Define a helper function to perform the Euclidean algorithm
+    fn gcd(mut x: isize, mut y: isize) -> isize {
+        while y != 0 {
+            let temp = y;
+            y = x % y;
+            x = temp;
+        }
+        x
+    }
+
+    // Call the helper function with the input parameters
+    gcd(a, b)
+}
+``` 
+
+This implementation of the G function uses the Euclidean algorithm, which is efficient for finding the greatest common divisor of two numbers. The helper function is the function that performs the the algorithm, repeatedly taking the remainder of the division of the two numbers until the remainder is zero. The last number before the remainder is the gcd.

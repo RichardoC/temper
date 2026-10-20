@@ -1,0 +1,17 @@
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// Return a greatest common divisor of two integers a and b
+/// >>> greatest_common_divisor(3, 5)
+/// 1
+/// >>> greatest_common_divisor(25, 15)
+/// 5
+fn greatest_common_divisor(a: isize, b: isize) -> isize {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.

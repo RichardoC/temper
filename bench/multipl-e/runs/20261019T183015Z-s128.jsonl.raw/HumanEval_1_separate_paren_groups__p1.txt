@@ -1,0 +1,53 @@
+Here's the complete implementation of the `separate_paren_groups` function:
+
+```rust
+/// Input to this function is a string containing multiple groups of nested parentheses.
+/// The goal is to separate those groups into separate strings and return the vector of those.
+/// Separate groups are balanced (each open brace is properly closed) and not nested within each other.
+/// Ignore any spaces in the input string.
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    // Remove all spaces to simplify the processing
+    let paren_stringed_string_string = paren_string.replace(" ", "");
+    let mut groups = Vec::new();
+    let mut current_group = String::new();
+    let mut balance_p = 0;
+
+    for ch in paren_stringed_string_string.chars() {
+        match ch {
+            '(' => balance_p += 1,
+            ')' => balance_p -= 1,
+            _ => continue, // Ignore non-paren
+        }
+
+        current_group.push(ch);
+
+        // Check if the current forms a balanced group
+        if balance_p == 0 {
+            groups.push(current_group.clone());
+            current_group = String::new();
+        }
+    }
+
+    groups
+}
+
+fn main() {
+    // Example usage
+    let result = separate_paren_groups(String::from("( ) (( )) (( )( ))"));
+    println!("{:?}", result);
+}
+```
+
+### Explanation:
+
+1. **Input Processing**: 
+   - We first remove all spaces from the input string to simplify the processing.
+
+2. **Variables**:
+   - `groups` is a vector to store the separated groups of parentheses.
+   - `current_group` is a string corresponding to the current group being processed.
+   - The `balance_p` variable keeps track of the balance of parentheses. 
+
+3. **Iteration Over Characters**:
+   - Iterate through each character in the string.
+   - For

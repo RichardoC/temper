@@ -1,0 +1,22 @@
+```rust
+/// For a given number n,`, find the largest number that divides n evenly` ` smaller than n
+/// >>> largest_divisor(15)
+/// 5
+fn largest_divisor(n: isize) -> isize {
+    // n must be greater than 1 to have a divisor divisor than itself
+    if n <= 1 {
+        return 0;
+    }
+
+    // // Check from the largest possible divisor down to 1
+    for i in (n / 2)..n {
+        // Check if i is a divisor of n
+        if n % i == 0 {
+            return i;
+        }
+    }
+
+    // If no divisor found, return 0 ( (which should not happen for n > 1)
+    return 0}
+}
+```

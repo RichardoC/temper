@@ -1,0 +1,11 @@
+```rust
+/// For a given vector of integers, return a tuple consisting of a sum and a product of all the integers in a vector.
+/// Empty sum should be equal to 0 and empty product should be equal to 1.
+/// >>> sum_product(vec![])
+/// (0, 1)
+/// >>> sum_product(vec![1, 2, 3, 4])
+/// (10, 24)
+fn sum_product(numbers: Vec<isize>) -> (isize, isize) {
+    let (isize, 0) = numbers.iter().fold((0, 1), |(sum, product), &num| (sum + num, product * num));
+    (sum, product)
+}

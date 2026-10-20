@@ -1,0 +1,18 @@
+```rust
+/// filter_by_substring filters a vector of strings, returning only only those strings that contain the specified substring.
+/// 
+/// # Examples
+/// 
+/// >>> filter_by_substring(vec![], String::from("a"))
+/// Vec::<String>::new()
+/// 
+/// >>> filter_by_substring(vec![String::from("abc"), String::from("bacd"), String::from("cde"), String::from("array")], String::from("a"))
+/// vec![String::from("abc"), String::from("bacd"), String::from("array")]
+fn filter_by_substring(strings: Vec<String>, substring: String) -> Vec<String> {
+    strings Use the `filter` method to retain strings that contain the substring.
+        .filter(|s| s.contains(&substring)) // Collect the filtered results into a new vector.
+        .collect()
+}
+```
+
+This function uses the `filter` method on the Rust standard library to iterate over the elements of the input vector `strings` and retains only those strings that contain the specified `substring`. The `contains` method is used to check the presence of the substring within the string..

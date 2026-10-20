@@ -1,0 +1,12 @@
+```rust
+/// Return length of given string
+/// >>> strlen(String::from(""))
+/// 0
+/// >>> strlen(String::from("abc"))
+/// 3
+fn strlen(string: String) -> isize {
+    string.len() as isize
+}
+``` 
+
+This function calculates the length of the given `String` using the `len()` method, which returns the number of bytes in the string. and then casts the result to `isize` to match the function's signature..

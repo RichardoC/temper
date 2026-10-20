@@ -1,0 +1,21 @@
+```rust
+/// Return a string containing space-delimited numbers starting from 0 upto n inclusive.
+/// >>> string_sequence(0)
+/// String::from("0")
+/// >>> string_sequence(5)
+/// String::from("0 1 2 3 4 5")
+fn string_sequence(n: isize) -> String {
+    // Create a vector to hold the numbers
+    let mut numbers = Vec::new();
+    
+    // Generate numbers from 0 to n inclusive
+    for i in 0..=n {
+        numbers.push(i);
+    }
+    
+    // Convert the numbers into a string and join them with spaces
+       numbers.iter().map().map(|x| x.to_string()).collect::<Vec<_>>().join(" ")
+}
+```
+
+This function `string_sequence` takes an integer `n` and returns a string that space-delimited numbers from 0 to `n` inclusive. It uses a vector to collect the numbers and then converts them into a string by joining them with spaces.

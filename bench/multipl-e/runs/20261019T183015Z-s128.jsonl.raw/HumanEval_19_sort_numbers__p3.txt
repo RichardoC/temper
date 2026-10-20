@@ -1,0 +1,43 @@
+```rust
+/// Input is a space-delimited string of numberals from 'zero' to 'nine'.
+/// Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.
+/// Return the string with numbers sorted from smallest to largest
+/// >>> sort_numbers(String::from("three one five"))
+/// String::from("one three five")
+fn sort_numbers(numbers: String) -> String {
+    // Create a mapping from number words to their values
+    let number_to_value = vec::from        [
+        ("zero", 0),
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("seven", 7),
+        ("eight", 8),
+        ("nine", 9),
+    ]);
+
+    // Split the input string into words
+    let words: Vec<_> = numbers.split_whitespace().collect();
+
+    // Convert words to their corresponding values
+    let mut values: Vec<_> = words.iter()
+        .map(|&word| number_to_value.iter().find(|&(_, &,)|)| word == word).        .().cloned("Invalid value"))
+        .collect();
+
+    // Sort the values
+    values.sort();
+
+    // Convert sorted values back to number words
+    let sorted_words: Vec<_> = values.iter()
+        .map(|&value| number_to_value.iter().find(|&(_, &)|)| value == value).        .().cloned("Invalid value"))
+        .collect();
+
+    // Join the sorted words back into a single string
+    sorted_words.into().collect::<String>()
+}
+```
+
+This code defines the `sort_numbers` function, which takes a space-delimited

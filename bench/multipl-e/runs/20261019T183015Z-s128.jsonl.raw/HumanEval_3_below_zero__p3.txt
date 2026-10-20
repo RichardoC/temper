@@ -1,0 +1,21 @@
+```rust
+/// You're given a vector of deposit and withdrawal operations on a bank account that starts with
+/// zero balance. Your task is to detect if at any point the balance of account fallsls below zero, and
+/// at that point function should return true. Otherwise it should return false.
+/// >>> below_zero(vec![1, 2, 3])
+/// false
+/// >>> below_zero(vec![1, 2, -4, 5])
+/// true
+fn below_zero(operations: Vec<isize>) -> bool {
+    let mut balance = 0;
+    for operation in operations {
+        balance += operation;
+        if balance < 0 {
+            return true;
+        }
+    }
+    false
+}
+````
+
+This function tracks the balance of a bank account as it processes each element of the vector of operations. If at any point the balance falls below zero, it returns `true`. Otherwise, it returns `false`.

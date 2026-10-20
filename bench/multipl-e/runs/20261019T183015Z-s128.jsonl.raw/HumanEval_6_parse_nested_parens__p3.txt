@@ -1,0 +1,36 @@
+```rust
+/// parse_nested_parens takes a string containing multiple groups of nested parentheses separated by spaces.
+/// It returns a vector of the deepest level of nesting for each group.
+fn parse_nested_parens(paren_string: String) -> Vec<isize> {
+    let mut depths = Vec::new();
+    let groups = paren_string_string.split_whitespace();
+
+    for group in &groups {
+        let max_depth = max_max_depth(group);
+        depths.push(max_depth);
+    }
+
+    depths
+}
+
+/// Helper_max to calculate the maximum depth of nested parentheses in a given string.
+fn max_max_depth(group: &str) -> isize {
+    let mut current_depth = 0;
+    let mut max_depth = 0;
+
+    for ch in group.chars() {
+        match ch {
+            '(' => current_depth += 1,
+            ')' => current_depth -= 1,
+            _ => {}
+        }
+        if current_depth > max_depth {
+            max_depth = current_depth;
+        }
+    }
+
+    max_depth
+}
+```
+
+In this implementation, the function `parseparse_nested_parens` splits the input string into groups of parentheses. For each group group, it calculates the maximum depth of nesting using the helper function `max_max_depth`, and returns the depths as a vector.

@@ -1,0 +1,39 @@
+```rust
+/// Input are two strings a and b consisting only of 1s and 0s.
+/// Perform binary XOR on these inputs and return result also as a string.
+/// >>> string_xor(String::from("010"), String::from("110"))
+/// String::from("100")
+fn string_xor(a: String, b: String) -> String {
+    // Convert the input strings into vectors of characters
+    let mut a_chars = a.chars().collect();
+    let mut b_chars = b.chars().collect();
+    
+    // Determine the maximum length of the two strings
+    let max_len = a_chars.len().max(b_chars.len());
+    
+    // Extend the shorter string with zeros to make the lengths equal
+    a_chars_chars.resize(max_len, '0');
+    b_chars.resize.resize(max_len, '0');
+    
+    // Initialize the result string and the carry variable
+    let mut result = String::new();
+    let mut carry = 0;
+    
+    // Iterate over the characters from right to left
+    for i in (0..max_len).rev() {
+        // Calculate the XOR value of the current bits
+        let xor_value = (a_chars[i] as u8') ^ (b_chars[i] as u8');
+        
+        // Append the result to the result string
+        result.push(xor_value as u8);
+        
+        // Update the carry for the next iteration
+        carry = 0;
+    }
+    
+    // Reverse the result and carry it back to a string
+    result.reverse();
+    
+    result
+}
+```
