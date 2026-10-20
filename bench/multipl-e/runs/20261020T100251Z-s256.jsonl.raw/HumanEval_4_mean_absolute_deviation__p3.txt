@@ -1,0 +1,27 @@
+```rust
+/// For a given vector of input numbers, calculate Mean Absolute Deviation
+/// around the mean of this dataset.
+/// Mean Absolute Deviation is the average absolute difference between each
+/// element and a centerpoint (mean in this case):
+/// MAD = average | x - x_mean |
+/// >>> mean_absolute_deviation(vec![1.0, 2.0, 3.0, 4.0])
+/// 1.0
+fn mean_absolute_deviation(numbers: Vec<f64>) -> f64 {
+    if numbers.is_empty() {
+        return 0.0;
+    }
+
+    // Calculate the mean of the numbers
+    let mean = numbers.iter().sum() / numbers.len() as f64;
+
+    // Calculate the sum of absolute deviations from the mean
+    let sum_of_abss = numbers.iter().map(|&x| (x - mean).abs()).sum();
+
+    // Calculate the Mean Absolute Deviation
+    let mad = sum_of_abss / numbers.len() as f64;
+
+    mad
+}
+```
+
+This function calculates the Mean Absolute Deviation (MAD) of a vector of given f64 numbers. It computes the mean of the numbers, then calculates the sum of the absolute differences of each number from the mean, and finally divides the sum by the number of elements to get the MAD. If the input vector is empty, it returns 0.0.

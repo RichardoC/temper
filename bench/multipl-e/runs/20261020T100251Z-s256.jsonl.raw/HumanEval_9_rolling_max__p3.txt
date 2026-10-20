@@ -1,0 +1,26 @@
+```rust
+/// From a given vector of integers, generate a vector of rolling maximum element found until given moment
+/// in the sequence.
+/// >>> rolling_max(vec![1, 2, 3, 2, 3, 4, 2])
+/// vec![1, 2, 3, 3, 3, 4, 4]
+fn rolling_max(numbers: Vec<isize>) -> Vec<isize> {
+    if numbers.is_empty() {
+        return Vec::new();
+    }
+
+    let mut current_max = numbers[0];
+    let mut result = Vec::new();
+    result.push(current_max);
+
+    for &num in &numbers[1.. {
+        if num > current_max {
+            current_max = num;
+        }
+        result.push(current_max);
+    }
+
+    result
+}
+```
+
+This function iter aates over the input vector, maintaining a running maximum, and appends this maximum to the result vector. If the input vector is empty, it returns an empty vector. Otherwise, it initializes thecurrent maximum with the first element and iterates through the rest of the elements, updating the current maximum as needed.

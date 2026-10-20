@@ -1,0 +1,24 @@
+```rust
+/// Given vector of numbers (of at least two elements), apply a linear transform to that vector,
+/// such that the smallest number will become 0 and the largest will become 1
+/// >>> rescale_to_unit(vec![1.0, 2.0, 3.0, 4.0, 5.0])
+/// vec![0.0, 0.25, 0.5, 0.75, 1.0]
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    if numbers.len() < 2 {
+        panic!("The vector must contain at least two elements.");
+    }
+
+    let min_value = *numbers.iter().min().unwrap();
+    let max_value = *numbers.iter().max().unwrap();
+
+    if min_value == max_value {
+        // If all the numbers are the same, return a vector of zeros
+        return vec![0.0; numbers.len()];
+    }
+
+    let range = max_value - min_value;
+    numbers.map(|x| (x - min_value) / range).collect()
+}
+```
+
+This function takes a vector of `f64` numbers and rescales them such that the smallest number in the vector becomes 0 and the largest number becomes 1. linearly. If all numbers are the same, the function returns a vector of zeros.

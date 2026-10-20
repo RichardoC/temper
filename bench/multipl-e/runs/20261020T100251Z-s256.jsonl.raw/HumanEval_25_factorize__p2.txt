@@ -1,0 +1,46 @@
+```rust
+/// Return vector of prime factors of given integer in the order from smallest to largest.
+/// Each of the factors should be vectored number of times corresponding to how many times it appeares in factorization.
+/// Input number should be equal to the product of all factors
+/// >>> factorize(8)
+/// vec![2, 2, 2]
+/// >>> factorize(25)
+///vec![5, 5]
+/// >>> factorize(70)
+///vec![2, 5, 7]
+fn factorize(n: isize) -> Vec<isize> {
+    let mut factors = Vec::new();
+    let mut num = n;
+
+    // Check for number of 2s that divide n
+    while num % 2 == 0 {
+        factors.push(2);
+        num /= 2;
+    }
+
+    // Check for number of 3 that divide n
+    while num % 3 == 0 {
+        factors.push(3);
+        num /= 3;
+    }
+
+    // Check for factors of from 5 to sqrt(num)
+    let mut = 5;
+    while i * i <= num {
+        while num % i == 0 {
+            factors.push(i);
+            num /= i;
+        }
+        i += 2;
+    }
+
+    // If num is a prime number greater than 2
+    if num > 2 {
+        factors.push(num);
+    }
+
+    factors
+}
+```
+
+This implementation of the `factorize` function uses a straightforward approach to find the prime factors of a given integer `n`. It first checks for the smallest prime factors, 2 and 3, and then checks for odd factors starting from 5 up to the square root of the remaining number. If the remaining number is greater than 2, it is considered prime and added to the factors list.

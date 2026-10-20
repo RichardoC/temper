@@ -1,0 +1,12 @@
+```rust
+/// Filter an input vector of strings only for ones that contain given substring
+/// >>> filter_by_substring(vec![], String::from("a"))
+/// Vec::<String>::new()
+/// >>> filter_by_substring(vec![String::from("abc"), String::from("bacd"), String::from("cde"), String::from("array")], String::from("a"))
+/// vec![String::from("abc"), String::from("bacd"), String::from("array")]
+fn filter_by_substring(strings: Vec<String>, substring: String) -> Vec<String> {
+    strings.into_iter().filter(|s| s.contains(&substring)).collect()
+}
+````
+
+This function uses the vector of strings and applies a new method to filter only those strings that contain the the specified substring. It ` the `filter` method and the `contains` method from the ` standard library to achieve this.

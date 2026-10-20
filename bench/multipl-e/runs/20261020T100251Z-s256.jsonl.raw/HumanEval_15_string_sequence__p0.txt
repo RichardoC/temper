@@ -1,0 +1,20 @@
+```rust
+/// Return a string containing space-delimited numbers starting from 0 upto n inclusive.
+/// >>> string_sequence(0)
+/// String::from("0")
+/// >>> string_sequence(5)
+/// String::from("0 1 2 3 4 5")
+fn string_sequence(n: isize) -> String {
+    // Create an iterator of numbers from 0 to n (inclusive)
+    (0..=n)
+        // Convert each number to a string
+        .map(|num| num.to_string())
+        // Collect the strings into a vector
+        .collect::<Vec<String>>()
+        // Join the strings with a space to form the final result
+
+        .join(" ")
+}
+````
+
+This function takes an integer `n` and returns a string that contains numbers from `0` to `n` inclusive, separated by spaces. It uses Rust's standard library features like iterators, mapping, and collecting to to achieve this efficiently.

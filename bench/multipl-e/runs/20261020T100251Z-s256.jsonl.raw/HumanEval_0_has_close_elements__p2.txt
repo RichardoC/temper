@@ -1,0 +1,27 @@
+```rust
+/// Check if in given vector of numbers, are any two numbers closer to each other than
+/// given threshold.
+/// >>> has_close_elements(vec![1.0, 2.0, 3.0], 0.5)
+/// false
+/// >>> has_close_elements(vec![1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+/// true
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    // Sort the numbers to make it easier to find for close elements
+    let mut sorted = numbers.clone();
+    sorted.sort();
+
+    // Iterate through the sorted numbers and compare each pair
+    for i in 0..sorted.len() - 1 {
+        // Calculate the difference between the current element and the next one
+        let difference = (sorted[i + 1] - sorted[i]).abs();
+        // If the difference is less than the threshold, return true
+        if difference < threshold {
+            return true;
+        }
+    }
+    // If no pair of numbers is within the threshold, return false
+    false
+}
+```
+
+This function sorts the input vector, and then iterates through the sorted vector, checking the difference between each consecutive pair of elements. If any difference is less than the specified threshold, the function returns `true`. If no such pair is found, it returns `false`.

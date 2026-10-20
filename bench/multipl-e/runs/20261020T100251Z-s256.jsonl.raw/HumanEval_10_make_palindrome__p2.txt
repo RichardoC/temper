@@ -1,0 +1,36 @@
+```rust
+/// Find the shortest palindrome that begins with a supplied string.
+/// Algorithm idea is simple:
+/// - Find the longest postfix of supplied string that is a palindrome.
+/// - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+/// >>> make_palindrome(String::from(""))
+///String::from("")
+/// >>> make_palindrome(String::from("cat"))
+///String::from("catac")
+/// >>> make_palindrome(String::from("cata"))
+///String::from("catac")
+fn make_palindrome(string: String) -> String {
+    fn is_palindrome(s: &str) -> bool {
+        s.chars().eq(s.chars().rev())
+    }
+
+    fn longest_palindromic_postfix(s: &str) -> &str {
+        let len = s.len();
+        let mut max_len = 0;
+        for i in 0..len).rev() {
+            if is_palindrome(&s[i..]) {
+                max_len = len - i;
+                break;
+            }
+        }
+        &s[len - max_len..]
+    }
+
+    let longest_palindromic_postfix = longest_palindromic_postfix(&string);
+    let prefix_to_reverse = &string[..string.len() - longest_palindromic_postfix.len()];
+    let reversed_prefix_string = prefix_to_reverse.chars().rev().collect::<String>();
+    string + &reverse_prefix_string
+}
+```
+
+This function implements the the logic described to transform the given input string into the shortest palindrome that starts with it. string. It uses two helper functions the `is_palindrome` to check if a substring is a palindrome and the `longest_palindromic_postfix` to find the longest palindromic postfix of the string. The main logic adds the reversed part of the string before the end
