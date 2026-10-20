@@ -30,6 +30,7 @@ from typing import Callable, List, Optional
 
 import torch
 
+from temper.model.dream_fixed import apply_fixed_shape_sampler
 from temper.model.runtime import get_model, mps_memory_snapshot
 
 __all__ = ["ParticleResult", "sample"]
@@ -290,6 +291,14 @@ def sample(
     if particles < 1:
         raise ValueError("particles must be >= 1")
     tokenizer, model = get_model()
+    # M2.3 phase-3 leak fix: MPSGraph recompiles ~20 executables per denoise
+    # step for the ever-changing [n_mask, V] shapes and each pins driver
+    # memory; at steps=256 the canvas crosses macOS's ~335 GB kill cap
+    # (docs/m2.3-phase3-forensics.md). The fixed-shape sampler runs the
+    # entropy tail at a padded [canvas, V] shape (compiles once, plateaus)
+    # with bit-identical tokens (row-prefix multinomial property, verified).
+    # TEMPER_NATIVE_DREAM_SAMPLE=1 restores the native path.
+    apply_fixed_shape_sampler(model)
     device = str(next(model.parameters()).device)
     temps, algs_out = _normalize_particles(
         temperature, alg, particles, temperatures, algs
