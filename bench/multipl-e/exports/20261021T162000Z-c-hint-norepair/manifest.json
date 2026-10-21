@@ -1,0 +1,174 @@
+{
+  "type": "multipl-e-export-manifest",
+  "exported_at": "2026-10-21T20:16:58.476651+00:00",
+  "benchmark_arg": "humaneval-rs",
+  "repair": false,
+  "runs": [
+    "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl"
+  ],
+  "problems": [
+    {
+      "file": "HumanEval_0_has_close_elements.json",
+      "name": "HumanEval_0_has_close_elements",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_0_has_close_elements__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 499
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_0_has_close_elements__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 499
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_0_has_close_elements__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 499
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_0_has_close_elements__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 499
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_4_mean_absolute_deviation.json",
+      "name": "HumanEval_4_mean_absolute_deviation",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_4_mean_absolute_deviation__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 326
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_4_mean_absolute_deviation__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 326
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_4_mean_absolute_deviation__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 326
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_4_mean_absolute_deviation__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 326
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_20_find_closest_elements.json",
+      "name": "HumanEval_20_find_closest_elements",
+      "flavor": "multipl-e",
+      "completions": 0,
+      "source_rows": []
+    },
+    {
+      "file": "HumanEval_21_rescale_to_unit.json",
+      "name": "HumanEval_21_rescale_to_unit",
+      "flavor": "multipl-e",
+      "completions": 4,
+      "source_rows": [
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_21_rescale_to_unit__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 613
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_21_rescale_to_unit__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 613
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_21_rescale_to_unit__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 613
+        },
+        {
+          "run": "20261021T160000Z-c-hint.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_21_rescale_to_unit__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 613
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "run": "20261021T160000Z-c-hint.jsonl",
+      "i": 0,
+      "problem": "HumanEval_20_find_closest_elements",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_20_find_closest_elements__p0.txt"
+    },
+    {
+      "run": "20261021T160000Z-c-hint.jsonl",
+      "i": 1,
+      "problem": "HumanEval_20_find_closest_elements",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_20_find_closest_elements__p1.txt"
+    },
+    {
+      "run": "20261021T160000Z-c-hint.jsonl",
+      "i": 2,
+      "problem": "HumanEval_20_find_closest_elements",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_20_find_closest_elements__p2.txt"
+    },
+    {
+      "run": "20261021T160000Z-c-hint.jsonl",
+      "i": 3,
+      "problem": "HumanEval_20_find_closest_elements",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl.raw/HumanEval_20_find_closest_elements__p3.txt"
+    }
+  ],
+  "counts": {
+    "candidate_rows": 16,
+    "exported_completions": 12,
+    "excluded_rows": 4
+  },
+  "note": "excluded rows are scored failures under honest counting (pass@k is recomputable with n=exported+excluded)"
+}

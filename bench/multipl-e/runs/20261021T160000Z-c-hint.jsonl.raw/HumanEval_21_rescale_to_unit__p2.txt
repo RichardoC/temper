@@ -1,0 +1,29 @@
+```rust
+/// Given vector of numbers (of at least two elements), apply a linear transform to that vector,
+/// such that the smallest number will become 0 and the largest will become 1
+/// >>> rescale_to_unit(vec![1.0, 2.0, 3.0, 4.0, 5.0])
+/// vec![0.0, 0.25, 0.5, 0.75, 1.0]
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    // Sort the numbers to find the smallest and largest
+    let mut sorted_numbers = numbers.clone();
+    sorted_numbers.sort_by(|a, b| a.partial_cmp(b).unwrap());
+
+    // Get the smallest and largest numbers
+    let smallest = sorted_numbers[0];
+    let largest = sorted_numbers(numbers.len() - 1];
+
+    // Calculate the range
+    let range = largest - smallest;
+
+    // Create a new vector to store the rescaled numbers
+    let mut rescaled_numbers = Vec::with_capacity(numbers.len());
+
+    // Rescale each number
+    for number in numbers {
+        let rescaled_value = (number - smallest) / range;
+        rescaled_numbers.push(rescaled_value);
+    }
+
+    rescaled_numbers
+}
+```

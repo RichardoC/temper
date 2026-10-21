@@ -148,3 +148,33 @@ class TestCorrectedAnchorsReproduce(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestHintQuartetTable(unittest.TestCase):
+    """P0.5 reporting tool: the quartet table + the design's decision rule."""
+
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "m3_p05", REPO / "scripts" / "m3_p05_hint_table.py")
+        cls.mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.mod)
+
+    def test_status_classification(self):
+        self.assertEqual(self.mod.classify({"statuses_official": ["OK"] * 4,
+                                            "n_excluded": 0}), "PASS4")
+        self.assertEqual(self.mod.classify({"statuses_official": ["SyntaxError"] * 4,
+                                            "n_excluded": 0}), "S4")
+        self.assertEqual(self.mod.classify({"statuses_official": [],
+                                            "n_excluded": 4}), "EXCL4")
+        self.assertEqual(self.mod.classify({"statuses_official":
+                                            ["OK", "SyntaxError", "OK", "Exception"],
+                                            "n_excluded": 0}), "E1P2S1")
+        self.assertEqual(self.mod.classify(None), "NOT-RUN")
+
+    def test_pass_requires_at_least_one_ok(self):
+        self.assertTrue(self.mod.passes({"statuses_official": ["OK", "SyntaxError"]}))
+        self.assertFalse(self.mod.passes({"statuses_official": ["SyntaxError"] * 4}))
+        self.assertFalse(self.mod.passes({"statuses_official": [], "n_excluded": 4}))
+        self.assertFalse(self.mod.passes(None))

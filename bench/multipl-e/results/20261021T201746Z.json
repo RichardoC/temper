@@ -1,0 +1,229 @@
+{
+ "type": "multipl-e-results",
+ "created_utc": "2026-10-21T20:17:46.842821+00:00",
+ "input_dir": "/Users/richardf/temper/bench/multipl-e/exports/20261021T162000Z-c-hint-norepair",
+ "versions": [
+  "official",
+  "normalized"
+ ],
+ "container": {
+  "official": {
+   "image": "ghcr.io/nuprl/multipl-e-evaluation",
+   "platform": "linux/amd64",
+   "rustc": "1.75.0",
+   "edition": "2015",
+   "wall_s": 1.9
+  },
+  "normalized": {
+   "image": "ghcr.io/nuprl/multipl-e-evaluation",
+   "platform": "linux/amd64",
+   "rustc": "1.75.0",
+   "edition": "2021",
+   "wall_s": 1.8
+  }
+ },
+ "per_problem": [
+  {
+   "name": "HumanEval_0_has_close_elements",
+   "n_scored": 4,
+   "n_excluded": 0,
+   "statuses_official": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "pass_at_k_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "statuses_normalized": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "pass_at_k_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   }
+  },
+  {
+   "name": "HumanEval_20_find_closest_elements",
+   "n_scored": 0,
+   "n_excluded": 4,
+   "statuses_official": [],
+   "pass_at_k_official": {},
+   "pass_at_k_honest_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "statuses_normalized": [],
+   "pass_at_k_normalized": {},
+   "pass_at_k_honest_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   }
+  },
+  {
+   "name": "HumanEval_21_rescale_to_unit",
+   "n_scored": 4,
+   "n_excluded": 0,
+   "statuses_official": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "pass_at_k_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "statuses_normalized": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "pass_at_k_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   }
+  },
+  {
+   "name": "HumanEval_4_mean_absolute_deviation",
+   "n_scored": 4,
+   "n_excluded": 0,
+   "statuses_official": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "pass_at_k_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_official": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "statuses_normalized": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "pass_at_k_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   },
+   "pass_at_k_honest_normalized": {
+    "pass@1": 0.0,
+    "pass@4": 0.0,
+    "pass@10": null,
+    "pass@100": null
+   }
+  }
+ ],
+ "aggregate": {
+  "official": {
+   "pass@1": 0.0,
+   "pass@4": 0.0,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 3,
+    "pass@4": 3,
+    "pass@10": 0,
+    "pass@100": 0
+   }
+  },
+  "honest-official": {
+   "pass@1": 0.0,
+   "pass@4": 0.0,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 4,
+    "pass@4": 4,
+    "pass@10": 0,
+    "pass@100": 0
+   },
+   "n_excluded_rows": 4,
+   "n_excluded_by_problem": {
+    "HumanEval_20_find_closest_elements": 4
+   }
+  },
+  "normalized": {
+   "pass@1": 0.0,
+   "pass@4": 0.0,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 3,
+    "pass@4": 3,
+    "pass@10": 0,
+    "pass@100": 0
+   }
+  },
+  "honest-normalized": {
+   "pass@1": 0.0,
+   "pass@4": 0.0,
+   "pass@10": null,
+   "pass@100": null,
+   "n_problems_with_n_ge_k": {
+    "pass@1": 4,
+    "pass@4": 4,
+    "pass@10": 0,
+    "pass@100": 0
+   },
+   "n_excluded_rows": 4,
+   "n_excluded_by_problem": {
+    "HumanEval_20_find_closest_elements": 4
+   }
+  }
+ }
+}

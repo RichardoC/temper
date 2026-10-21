@@ -1,0 +1,1 @@
+Implementation hint: for `Vec<f64>` sorting use `sort_by(|a, b| a.partial_cmp(b).unwrap())`; prefer explicit type annotations on every `let` binding whose type is not obvious from the initializer.
