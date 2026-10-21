@@ -240,44 +240,49 @@ def _generate_one(
     peak_alloc, peak_driver = _mps_snapshot()
     t_gen = time.perf_counter()
 
-    # ---- prefill: one forward over the whole prompt -----------------------
-    t0 = time.perf_counter()
-    out = model(input_ids, use_cache=True)
-    res.nfe_prefill = 1
-    res.per_step_s = [round(time.perf_counter() - t0, 3)]  # slot 0 = prefill
-
-    past = out.past_key_values
-    logits = out.logits[:, -1, :]
-
-    # ---- decode: [1,1] forwards, one per generated token -------------------
-    gen_ids: List[int] = []
-    confs: List[float] = []
-    n_decode_forwards = 0
-    for _ in range(max_new_tokens):
+    # inference-only loop: no autograd graph (the probe showed transformers
+    # otherwise builds one per decode step — slower and memory-hungry).
+    with torch.no_grad():
+        # ---- prefill: one forward over the whole prompt -------------------
         t0 = time.perf_counter()
-        tok, conf = _sample_token(logits, temperature=temperature, top_p=top_p)
-        gen_ids.append(tok)
-        confs.append(conf)
-        if torch.backends.mps.is_available():
-            a, d = _mps_snapshot()
-            peak_alloc = max(peak_alloc or 0.0, a or 0.0)
-            peak_driver = max(peak_driver or 0.0, d or 0.0)
-        if tok in eos:
-            # the forward that produced EOS already ran (counted in nfe);
-            # no further forward is needed.
-            res.per_step_s.append(round(time.perf_counter() - t0, 3))
-            break
-        if len(gen_ids) >= max_new_tokens:
-            # budget exhausted: this token was the last — no further forward
-            # (and no phantom compute in the wall-clock).
-            res.per_step_s.append(round(time.perf_counter() - t0, 3))
-            break
-        out = model(torch.tensor([[tok]], dtype=torch.long, device=device),
-                    past_key_values=past, use_cache=True)
-        n_decode_forwards += 1
+        out = model(input_ids, use_cache=True)
+        res.nfe_prefill = 1
+        res.per_step_s = [round(time.perf_counter() - t0, 3)]  # slot 0 = prefill
+
         past = out.past_key_values
         logits = out.logits[:, -1, :]
-        res.per_step_s.append(round(time.perf_counter() - t0, 3))
+
+        # ---- decode: [1,1] forwards, one per generated token ---------------
+        gen_ids: List[int] = []
+        confs: List[float] = []
+        n_decode_forwards = 0
+        for _ in range(max_new_tokens):
+            t0 = time.perf_counter()
+            tok, conf = _sample_token(logits, temperature=temperature,
+                                      top_p=top_p)
+            gen_ids.append(tok)
+            confs.append(conf)
+            if torch.backends.mps.is_available():
+                a, d = _mps_snapshot()
+                peak_alloc = max(peak_alloc or 0.0, a or 0.0)
+                peak_driver = max(peak_driver or 0.0, d or 0.0)
+            if tok in eos:
+                # the forward that produced EOS already ran (counted in nfe);
+                # no further forward is needed.
+                res.per_step_s.append(round(time.perf_counter() - t0, 3))
+                break
+            if len(gen_ids) >= max_new_tokens:
+                # budget exhausted: this token was the last — no further
+                # forward (and no phantom compute in the wall-clock).
+                res.per_step_s.append(round(time.perf_counter() - t0, 3))
+                break
+            out = model(torch.tensor([[tok]], dtype=torch.long,
+                                     device=device),
+                        past_key_values=past, use_cache=True)
+            n_decode_forwards += 1
+            past = out.past_key_values
+            logits = out.logits[:, -1, :]
+            res.per_step_s.append(round(time.perf_counter() - t0, 3))
 
     res.wall_s = round(time.perf_counter() - t_gen, 2)
     res.nfe = len(gen_ids)              # 1 token per forward (task capture)
