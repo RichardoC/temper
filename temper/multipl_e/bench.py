@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -85,10 +86,47 @@ def build_prompt(problem_prompt: str) -> str:
     return INSTRUCTION_TEMPLATE.format(prompt=problem_prompt)
 
 
+def load_problems_by_number(benchmark: str, numbers: List[int]) -> List[dict]:
+    """Select problems by their HUMANEVAL NUMBER (the name prefix), not by
+    position in the vendored file.
+
+    These are NOT the same index space: HumanEval_22 is absent from the
+    vendored humaneval-rs file, so ``HumanEval_24_largest_divisor`` sits at
+    vendored index 23. The M3 cohort tables (design §1.2/§5) name problems by
+    HumanEval number ("the type-trap quartet 0/4/20/21", "the semantic three
+    11/18/24"), so a cohort selected by position would silently run the wrong
+    problem past 21. This resolver makes the intended number explicit and
+    refuses loudly when a requested number is not vendored.
+
+    Order follows `numbers`; duplicates collapse.
+    """
+    tasks = load_benchmark(benchmark)
+    problems = list(tasks.values())
+    by_number = {}
+    for td in problems:
+        m = re.match(r"^HumanEval_(\d+)_", td["name"])
+        if m:
+            by_number[int(m.group(1))] = td
+    picked = []
+    seen = set()
+    for num in numbers:
+        if num in seen:
+            continue
+        if num not in by_number:
+            available = sorted(by_number)
+            raise ValueError(
+                f"HumanEval_{num} is not in the vendored {benchmark} "
+                f"(vendored numbers: {available[:5]}...{available[-5:]})")
+        seen.add(num)
+        picked.append(by_number[num])
+    return picked
+
+
 def load_problems(
     benchmark: str,
     n: Optional[int] = None,
     problem_indices: Optional[List[int]] = None,
+    problem_numbers: Optional[List[int]] = None,
 ) -> List[dict]:
     """The first n problems of the vendored benchmark, in vendored file order
     (stable across runs — the datasets-server row order), or exactly the
@@ -98,7 +136,17 @@ def load_problems(
     type-trap quartet {0,4,20,21}, the P1 probe's 9) without editing the
     vendored dataset or silently re-slicing `--problems N`. Order is the
     order given, deduplicated, so the run record's problem list stays stable.
+
+    ``problem_numbers`` selects by HumanEval NUMBER instead (see
+    :func:`load_problems_by_number`) — the space the M3 cohort tables use. The
+    two selectors are mutually exclusive.
     """
+    if problem_indices is not None and problem_numbers is not None:
+        raise ValueError(
+            "--problem-indices (vendored position) and --problem-numbers "
+            "(HumanEval number) are different index spaces; pass one")
+    if problem_numbers is not None:
+        return load_problems_by_number(benchmark, problem_numbers)
     tasks = load_benchmark(benchmark)
     problems = list(tasks.values())  # dicts keep insertion (file) order
     if problem_indices is not None:
@@ -183,6 +231,7 @@ def run_bench(
     model: Optional[str] = None,
     milestone: Optional[str] = None,
     problem_indices: Optional[List[int]] = None,
+    problem_numbers: Optional[List[int]] = None,
     extra_meta: Optional[dict] = None,
     temperatures: Optional[List[float]] = None,
     hint_line: Optional[str] = None,
@@ -219,7 +268,8 @@ def run_bench(
     """
     out = Path(out)
     problems = load_problems(benchmark, n_problems,
-                             problem_indices=problem_indices)
+                             problem_indices=problem_indices,
+                             problem_numbers=problem_numbers)
     # per-canvas temperatures replace "K identical canvases" when given
     per_part = list(temperatures) if temperatures else [temperature] * k
     k_eff = len(per_part)
@@ -254,6 +304,8 @@ def run_bench(
             expect["hint_sha256"] = _sha256(hint_line)
         if temperatures:
             expect["temperatures"] = list(temperatures)
+        if problem_numbers is not None:
+            expect["problem_numbers"] = list(problem_numbers)
         for key, val in (extra_meta or {}).items():
             expect[key] = val
         mismatched = [key for key, val in expect.items() if old_meta.get(key) != val]
@@ -289,6 +341,9 @@ def run_bench(
         }
         if problem_indices is not None:
             meta["problem_indices"] = list(problem_indices)
+        if problem_numbers is not None:
+            meta["problem_numbers"] = list(problem_numbers)
+            meta["problem_names"] = [td["name"] for td in problems]
         if temperatures:
             meta["temperatures"] = list(temperatures)
             meta["K_effective"] = k_eff

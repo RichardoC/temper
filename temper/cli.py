@@ -110,6 +110,9 @@ def cmd_bench_multipl_e(args) -> int:
     problem_indices = None
     if args.problem_indices:
         problem_indices = [int(x) for x in args.problem_indices.split(",") if x.strip()]
+    problem_numbers = None
+    if args.problem_numbers:
+        problem_numbers = [int(x) for x in args.problem_numbers.split(",") if x.strip()]
     temps = None
     if args.temperatures:
         temps = [float(x) for x in args.temperatures.split(",") if x.strip()]
@@ -131,6 +134,7 @@ def cmd_bench_multipl_e(args) -> int:
         model=model,
         milestone=milestone,
         problem_indices=problem_indices,
+        problem_numbers=problem_numbers,
         temperatures=temps,
         hint_line=hint_line,
     )
@@ -274,9 +278,16 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--problems", default="all",
                    help="first N problems in vendored (stable) order, or 'all'")
     b.add_argument("--problem-indices", default=None,
-                   help="explicit cohort: comma-separated 0-based vendored "
-                        "indices, e.g. '0,4,20,21' (M3 cohort cells). "
-                        "Mutually exclusive with a numeric --problems")
+                   help="explicit cohort by POSITION in the vendored file "
+                        "(comma-separated 0-based). NOTE: position != HumanEval "
+                        "number past 21 (HumanEval_22 is absent from the "
+                        "vendored file) — use --problem-numbers for cohort "
+                        "tables named after HumanEval numbers")
+    b.add_argument("--problem-numbers", default=None,
+                   help="explicit cohort by HUMANEVAL NUMBER, e.g. "
+                        "'0,4,20,21' or '11,18,24' (the M3 cohort tables' "
+                        "index space). Mutually exclusive with "
+                        "--problem-indices")
     b.add_argument("--temperatures", default=None,
                    help="per-canvas temperature list, comma-separated, e.g. "
                         "'0.4,0.8,1.2' — gives each problem len(list) canvases "

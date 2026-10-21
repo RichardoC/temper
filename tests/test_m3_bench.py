@@ -198,3 +198,64 @@ class TestHintLine(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestProblemNumbersVsIndices(unittest.TestCase):
+    """The M3 cohort tables name problems by HumanEval NUMBER; the vendored
+    file's POSITION diverges after 21 (HumanEval_22 is absent). Selecting by
+    position would silently run the wrong problem — pinned here."""
+
+    def test_position_and_number_diverge_past_21(self):
+        by_pos = load_problems("humaneval-rs", problem_indices=[23])
+        by_num = load_problems("humaneval-rs", problem_numbers=[24])
+        self.assertEqual(by_pos[0]["name"], "HumanEval_24_largest_divisor")
+        self.assertEqual(by_num[0]["name"], "HumanEval_24_largest_divisor")
+        # ...and position 24 is a DIFFERENT problem from number 24
+        other = load_problems("humaneval-rs", problem_indices=[24])
+        self.assertEqual(other[0]["name"], "HumanEval_25_factorize")
+        self.assertNotEqual(other[0]["name"], by_num[0]["name"])
+
+    def test_number_selection_resolves_the_design_cohorts(self):
+        quartet = load_problems("humaneval-rs", problem_numbers=[0, 4, 20, 21])
+        self.assertEqual([t["name"] for t in quartet],
+                         ["HumanEval_0_has_close_elements",
+                          "HumanEval_4_mean_absolute_deviation",
+                          "HumanEval_20_find_closest_elements",
+                          "HumanEval_21_rescale_to_unit"])
+        probe = load_problems(
+            "humaneval-rs", problem_numbers=[0, 4, 20, 21, 11, 18, 24, 17, 19])
+        self.assertEqual([t["name"] for t in probe], [
+            "HumanEval_0_has_close_elements",
+            "HumanEval_4_mean_absolute_deviation",
+            "HumanEval_20_find_closest_elements",
+            "HumanEval_21_rescale_to_unit",
+            "HumanEval_11_string_xor",
+            "HumanEval_18_how_many_times",
+            "HumanEval_24_largest_divisor",
+            "HumanEval_17_parse_music",
+            "HumanEval_19_sort_numbers",
+        ])
+
+    def test_absent_number_is_refused_loudly(self):
+        with self.assertRaises(ValueError) as ctx:
+            load_problems("humaneval-rs", problem_numbers=[22])
+        self.assertIn("HumanEval_22", str(ctx.exception))
+
+    def test_both_selectors_at_once_is_refused(self):
+        with self.assertRaises(ValueError):
+            load_problems("humaneval-rs", problem_indices=[0],
+                          problem_numbers=[0])
+
+    def test_cohort_run_records_numbers_and_names(self):
+        import tempfile, shutil
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        out = tmp / "r.jsonl"
+        run_bench("humaneval-rs", n_problems=None, k=1, steps=4, canvas=8,
+                  out=out, sample_fn=_fake_sample, problem_numbers=[24, 17],
+                  log=lambda s: None)
+        meta = json.loads(out.read_text(encoding="utf-8").splitlines()[0])
+        self.assertEqual(meta["problem_numbers"], [24, 17])
+        self.assertEqual(meta["problem_names"],
+                         ["HumanEval_24_largest_divisor",
+                          "HumanEval_17_parse_music"])
