@@ -1,0 +1,32 @@
+```rust
+/// From a supplied vector of numbers (of length at least two) select and return two that are the closest to each
+/// other and return them in order (smaller number, larger number).
+/// >>> find_closest_elements(vec![1.0, 2.0, 3.0, 4.0, 5.0, 2.2])
+/// (2.0, 2.2)
+/// >>> find_closest_elements(vec![1.0, 2.0, 3.0, 4.0, 5.0, 2.0])
+/// (2.0, 2.0)
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    // Sort the numbers to make it easier to find the closest pair of elements
+    let mut sorted = numbers.clone();
+    sorted.sort();
+    
+    // Initialize the minimum difference and the closest pair
+    let mut min_diff = f64::INFINITY;
+    let mut closest_pair = (0.0, 0.0);
+    
+    // Iterate over the sorted numbers to find the closest pair
+    for i in 0..sorted.len() - 1 {
+        // Calculate the difference between consecutive numbers
+        let diff = (sorted[i + 1] - sorted[i]).abs();
+        
+        // Update the minimum difference and closest pair if a closer pair is found
+        if diff < min_diff {
+            min_diff = diff;
+            closest_pair = (sorted[i], sorted[i + 1]);
+        }
+    }
+    
+    // Return the closest pair of numbers
+    closest_pair
+}
+```

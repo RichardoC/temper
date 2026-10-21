@@ -1,0 +1,14 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    let mut min_index = 0;
+    let mut closest_index = 1;
+
+    for i in 1..numbers.len() {
+        if numbers[i] - numbers[i] < numbers[closest_index] - numbers[min_index] {
+            min_index = closest_index;
+            closest_index = i;
+        }
+    }
+
+    (numbers[min_index].min(), numbers[closest_index])
+}

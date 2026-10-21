@@ -1,0 +1,20 @@
+```rust
+/// Check if in given vector of numbers, are any two numbers closer to each other than
+/// given threshold.
+/// >>> has_close_elements(vec![1.0, 2.0, 3.0], 0.5)
+/// false
+/// >>> has_close_elements(vec![1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+/// true
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    numbers.sort();
+    let len = numbers.len();
+    for i in 0..len {
+        for j in (i + 1)..len {
+            if (numbers].abs() < threshold {
+                return true;
+            }
+        }
+    }
+    false
+}
+```

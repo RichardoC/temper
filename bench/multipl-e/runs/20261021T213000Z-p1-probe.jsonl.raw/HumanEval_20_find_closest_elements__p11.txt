@@ -1,0 +1,50 @@
+To implement the `find_closest_elements` function, we need to consider:
+
+1. It receives two of numbers in the provided at least return them (thiser number, larger number).
+3. Sort and vector to 
+4. Iterate two elements over the sorted vector to compare the gaps between them. 
+5. Keep track of the smallest difference.
+6. Return the pair with the smallest difference.
+
+ The following code is how you to do this:
+
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    // Iterate through the vector to find the first pair of closest numbers
+    if numbers.len() < 2 {
+        panic!("Input vector must contain at least two elements");
+    }
+
+    // Use the first two elements to initialize the closest pair
+    let mut min1 = numbers[0];
+    let mut min2 = numbers[1];
+
+    // Iterate through the vector to the third element as the starting
+    for &num in &numbers[2..] {
+        // Compare the number with with both closest elements
+        // If the number is between than min1 and min2, update min2.
+        // If the number is less than both min1 and min2, then update min1.
+        if num != min1 {
+            if num <= min1 {
+                min2 = min1;
+                min1 = num;
+            } else if num < min2 {
+                min2 = num;
+            }
+        } else {
+            if num < min1 {
+                min2 = min1;
+                min1 = num;
+            } else if num > min1 {
+                min2 = num;
+            }
+        }
+    }
+
+    // Return the two closest numbers
+    (min1, min2)
+}
+```
+
+### Explanation
+- The function starts with `min1` and

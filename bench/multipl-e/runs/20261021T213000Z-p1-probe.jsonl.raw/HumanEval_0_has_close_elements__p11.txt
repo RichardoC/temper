@@ -1,0 +1,35 @@
+Here is a complete Rust function that adheres to the documentation comments and its signature.
+
+```rust
+/// Check if in given vector of numbers, are any two numbers closer to each other than
+/// given threshold.
+/// >>> has_close_elements(vec![1.0, 2.0, 3.0], 0.5)
+/// false
+/// >>> has_close_elements(vec![1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+/// true
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    let n = numbers.len();
+    if n < 2 {
+        return false;
+    }
+    
+    for i in o..n {
+        for j in i+1..n {
+            if (numbers[i] - numbers[j]).abs() <= threshold {
+                return true;
+            }
+        }
+    }
+    
+    false
+}
+```
+
+### Explanation:
+1. The function `has_close_elements` is defined vector of `f64` numbers and a `threshold`2. It checks checks if the vector has fewer than two elements; if so, it instantly returns `false`.
+3. It uses two nested loops to compare all distinct of numbers in the vector.   - The outer loop iterates over each element, using`, `i - The` inner loop considers over the elements that follow it, i.e., `i+1..n`.
+4. For each candidate pair, it checks if the absolute difference between the numbers is less than or equal to the `threshold`.
+5. If the condition is satisfied for any pair, it immediately returns `true`.
+6. If no such pair is found after all comparisons, it returns `false`.
+
+This code encapsulates the logic needed for the function description.

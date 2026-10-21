@@ -1,0 +1,15 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    numbers.sort();
+    let mut min_diff = f::MAX;
+    let mut closest_pair = (  ,  );
+
+    for i in 0..numbers.len() - 1 {
+        if numbers[i + 1] - numbers[i].abs() < min_diff {
+            closest_pair = (numbers[i], numbers[i + 1]);
+        }
+    }
+
+    closest_pair
+}
+```

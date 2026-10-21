@@ -1,0 +1,18 @@
+```rust
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    // Sort the numbers to bring closer values close to each other
+    numbers.sort();
+
+    // Compare each adjacent pair to see if they than the threshold
+    let len = numbers.len();
+    if len > 1 {
+        for i in 0..len-1 {
+            if (numbers[i + 1] - numbers[i]) < threshold {
+                return true;
+            }
+        }
+    }
+
+    false
+}
+```

@@ -1,0 +1,14 @@
+```rust
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    // Sort the numbers to make it easier to find close elements
+    numbers.sort();
+    // Compare each pair of adjacent elements to see if they are close to each other
+    for i in 0..numberslen() {
+        for j in i + 1..numberslen() {
+            if (numbers[i] - numbers[j]) < threshold {
+                return true;
+            }
+        }
+    }
+    false
+}

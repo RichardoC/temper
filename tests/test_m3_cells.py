@@ -178,3 +178,90 @@ class TestHintQuartetTable(unittest.TestCase):
         self.assertFalse(self.mod.passes({"statuses_official": ["SyntaxError"] * 4}))
         self.assertFalse(self.mod.passes({"statuses_official": [], "n_excluded": 4}))
         self.assertFalse(self.mod.passes(None))
+
+
+class TestP1Reachability(unittest.TestCase):
+    """P1 reporting tool: reachability curve + the rev1 stratified gate."""
+
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "m3_p1", REPO / "scripts" / "m3_p1_reachability.py")
+        cls.mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.mod)
+
+    def _row(self, num, cohort, reachable_per_temp):
+        return {"problem": f"HumanEval_{num}_x", "number": num,
+                "cohort": cohort,
+                "per_temp": {t: {"pass": p, "n_ok": 1 if p else 0,
+                                 "n_canvases": 4}
+                             for t, p in reachable_per_temp.items()},
+                "reachable": any(reachable_per_temp.values()),
+                "max_pass_temp": max((t for t, p in reachable_per_temp.items()
+                                      if p), default=None),
+                "reachability_curve": [1 if p else 0
+                                       for p in reachable_per_temp.values()]}
+
+    def test_go_needs_all_three_conditions(self):
+        rows = [self._row(0, "type_quartet", {0.4: False, 0.8: True, 1.2: True}),
+                self._row(4, "type_quartet", {0.4: False, 0.8: False, 1.2: True}),
+                self._row(20, "type_quartet", {0.4: False, 0.8: False, 1.2: False}),
+                self._row(21, "type_quartet", {0.4: False, 0.8: False, 1.2: False}),
+                self._row(11, "non_type", {0.4: False, 0.8: False, 1.2: True}),
+                self._row(18, "non_type", {0.4: False, 0.8: False, 1.2: True}),
+                self._row(24, "non_type", {0.4: False, 0.8: False, 1.2: False}),
+                self._row(17, "non_type", {0.4: False, 0.8: False, 1.2: False}),
+                self._row(19, "non_type", {0.4: False, 0.8: False, 1.2: False})]
+        v = self.mod.verdict(rows)
+        self.assertEqual(v["call"], "GO")
+        self.assertEqual(v["n_reachable"], 4)
+        self.assertEqual(v["n_quartet"], 2)
+        self.assertEqual(v["n_non_type"], 2)
+
+    def test_quartet_only_does_not_earn_go(self):
+        rows = [self._row(n, "type_quartet",
+                          {0.4: False, 0.8: True, 1.2: True})
+                for n in (0, 4, 20, 21)]
+        rows += [self._row(n, "non_type",
+                           {0.4: False, 0.8: False, 1.2: False})
+                 for n in (11, 18, 24, 17, 19)]
+        v = self.mod.verdict(rows)
+        self.assertEqual(v["call"], "PARTIAL",
+                         "4/4 quartet but zero non-type must NOT be GO")
+        self.assertEqual(v["n_quartet"], 4)
+        self.assertEqual(v["n_non_type"], 0)
+
+    def test_partial_forces_ev_rewrite_language(self):
+        rows = [self._row(17, "non_type", {0.4: False, 0.8: False, 1.2: True}),
+                self._row(19, "non_type", {0.4: False, 0.8: True, 1.2: True})]
+        v = self.mod.verdict(rows)
+        self.assertEqual(v["call"], "PARTIAL")
+        self.assertIn("REWRITTEN", v["text"])
+
+    def test_no_go_cites_the_s512_clause_without_running_it(self):
+        rows = [self._row(n, "non_type",
+                          {0.4: False, 0.8: False, 1.2: False})
+                for n in (11, 18, 24, 17, 19)]
+        v = self.mod.verdict(rows)
+        self.assertEqual(v["call"], "NO-GO")
+        self.assertIn("s512", v["text"])
+        self.assertIn("OUT OF THIS LANE", v["text"])
+
+    def test_seed_join_maps_excluded_canvases(self):
+        run = {"rows": [
+            {"problem": "HumanEval_0_x", "i": 0, "temperature": 0.4,
+             "seed": 0, "extract_ok": True},
+            {"problem": "HumanEval_0_x", "i": 1, "temperature": 0.4,
+             "seed": 1, "extract_ok": False},
+            {"problem": "HumanEval_0_x", "i": 2, "temperature": 0.4,
+             "seed": 2, "extract_ok": True},
+        ]}
+        results = {"HumanEval_0_x": {"statuses_official": ["SyntaxError", "OK"],
+                                    "n_excluded": 1}}
+        grid = self.mod.build_grid(run, results)
+        cell = grid[("HumanEval_0_x", 0.4)]
+        self.assertEqual(cell["statuses"],
+                         ["SyntaxError", "EXCLUDED", "OK"])
+        self.assertEqual(cell["n_ok"], 1)
+        self.assertTrue(cell["pass"])

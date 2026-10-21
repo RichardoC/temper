@@ -1,0 +1,37 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    if numbers.len() < 2 {
+        panic!("The input vector must contain at least two elements.");
+    }
+
+    let mut closest_pair = (numbers[0], numbers[1]);
+    let mut smallest_diff = (numbers[1] - numbers[0]).abs();
+
+    for i in 0..numbers.len() - 1 {
+        for j in (i + 1)..numbers.len() {
+            let diff = (numbers[j] - numbers[i]).abs();
+            if diff < smallest_diff {
+                smallest_diff = diff;
+                closest_pair = (numbers[i], numbers[j]);
+            }
+        }
+    }
+
+    let (a, b) = closest_pair;
+    if a < b {
+        (a, b)
+    } else {
+        (b, a)
+    }
+}
+```
+
+### of the Code:
+1. The function `find_closest_elements` accepts a vector of `f64` numbers as input and returns a tuple of two `f64` values.
+2. The function first checks if the input vector contains fewer than two elements. If this case is encountered, it logically will not panic because the problem assumes the vector will always contain at least two elements.
+3. The uses a tuple `closest_pair` to store two elements that the closest value the least.
+4. It initializes `smallest_diff` to the absolute difference between the first two elements.
+5 vector. Then outer loop iterates to find a pair of numbers with a smallest difference found.
+6. The inner loop iterates over the combination of pairs `(i, j)` where `i!=j`.
+7. During the loop, `closest_pair` is set to the the smallest pair by updating a new variables it accordingly.
+8.
