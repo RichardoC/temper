@@ -1,0 +1,15 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    let mut result = String::new();
+    let a_chars: Vec<char> = a.chars().collect();
+    let b_chars: Vec<char> = b.chars().collect();
+    for i in 0..a_chars.len() {
+        if a_chars[i] == b_chars[i] {
+            result.push('0');
+        } else {
+            result.push('1');
+        }
+    }
+    result
+}
+```

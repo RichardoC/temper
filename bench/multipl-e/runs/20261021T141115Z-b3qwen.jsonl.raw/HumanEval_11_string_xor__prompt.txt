@@ -1,0 +1,16 @@
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// Input are two strings a and b consisting only of 1s and 0s.
+/// Perform binary XOR on these inputs and return result also as a string.
+/// >>> string_xor(String::from("010"), String::from("110"))
+/// String::from("100")
+fn string_xor(a: String, b: String) -> String {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.

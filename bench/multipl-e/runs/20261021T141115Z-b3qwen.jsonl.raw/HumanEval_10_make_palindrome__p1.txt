@@ -1,0 +1,13 @@
+```rust
+fn make_palindrome(string: String) -> String {
+    let mut result = string.clone();
+    let len = string.len();
+    for i in 0..len {
+        if string[i..].chars().eq(string[i..].chars().rev()) {
+            result.push_str(&string[0..i].chars().rev().collect::<String>());
+            break;
+        }
+    }
+    result
+}
+```

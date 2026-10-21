@@ -1,0 +1,8 @@
+```rust
+fn count_distinct_characters(string: String) -> isize {
+    let mut chars = string.to_lowercase().chars().collect::<Vec<char>>();
+    chars.sort_unstable();
+    chars.dedup();
+    chars.len() as isize
+}
+```

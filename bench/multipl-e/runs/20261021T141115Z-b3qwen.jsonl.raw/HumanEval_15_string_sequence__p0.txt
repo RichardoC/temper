@@ -1,0 +1,5 @@
+```rust
+fn string_sequence(n: isize) -> String {
+    (0..=n).map(|i| i.to_string()).collect::<Vec<String>>().join(" ")
+}
+```

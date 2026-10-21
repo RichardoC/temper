@@ -1,0 +1,29 @@
+```rust
+fn factorize(n: isize) -> Vec<isize> {
+    let mut factors = Vec::new();
+    let mut num = n;
+
+    // Factor out powers of 2
+    while num % 2 == 0 {
+        factors.push(2);
+        num /= 2;
+    }
+
+    // Factor out odd numbers
+    let mut factor = 3;
+    while factor * factor <= num {
+        while num % factor == 0 {
+            factors.push(factor);
+            num /= factor;
+        }
+        factor += 2;
+    }
+
+    // If num is a prime number greater than 2
+    if num > 2 {
+        factors.push(num);
+    }
+
+    factors
+}
+```

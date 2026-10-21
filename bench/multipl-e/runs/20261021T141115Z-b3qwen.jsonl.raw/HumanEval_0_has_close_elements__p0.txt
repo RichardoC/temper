@@ -1,0 +1,12 @@
+```rust
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    for i in 0..numbers.len() {
+        for j in i + 1..numbers.len() {
+            if (numbers[i] - numbers[j]).abs() < threshold {
+                return true;
+            }
+        }
+    }
+    false
+}
+```

@@ -1,0 +1,7 @@
+```rust
+fn sum_product(numbers: Vec<isize>) -> (isize, isize) {
+    let sum = numbers.iter().sum();
+    let product = numbers.iter().fold(1, |acc, &x| acc * x);
+    (sum, product)
+}
+```

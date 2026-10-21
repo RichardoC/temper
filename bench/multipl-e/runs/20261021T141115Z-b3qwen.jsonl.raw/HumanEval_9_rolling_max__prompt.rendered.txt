@@ -1,0 +1,21 @@
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// From a given vector of integers, generate a vector of rolling maximum element found until given moment
+/// in the sequence.
+/// >>> rolling_max(vec![1, 2, 3, 2, 3, 4, 2])
+/// vec![1, 2, 3, 3, 3, 4, 4]
+fn rolling_max(numbers: Vec<isize>) -> Vec<isize> {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.
+<|im_end|>
+<|im_start|>assistant

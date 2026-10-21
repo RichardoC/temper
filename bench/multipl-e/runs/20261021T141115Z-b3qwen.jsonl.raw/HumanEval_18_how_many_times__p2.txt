@@ -1,0 +1,11 @@
+```rust
+fn how_many_times(string: String, substring: String) -> isize {
+    let mut count = 0;
+    let mut start = 0;
+    while let Some(position) = string[start..].find(&substring) {
+        count += 1;
+        start += position + 1;
+    }
+    count
+}
+```

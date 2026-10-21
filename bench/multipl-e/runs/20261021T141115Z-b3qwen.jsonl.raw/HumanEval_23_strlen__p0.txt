@@ -1,0 +1,5 @@
+```rust
+fn strlen(string: String) -> isize {
+    string.len() as isize
+}
+```

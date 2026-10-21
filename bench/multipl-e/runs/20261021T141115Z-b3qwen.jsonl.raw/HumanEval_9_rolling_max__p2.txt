@@ -1,0 +1,16 @@
+```rust
+fn rolling_max(numbers: Vec<isize>) -> Vec<isize> {
+    let mut result = Vec::new();
+    if numbers.is_empty() {
+        return result;
+    }
+    let mut current_max = numbers[0];
+    for &number in &numbers {
+        if number > current_max {
+            current_max = number;
+        }
+        result.push(current_max);
+    }
+    result
+}
+```

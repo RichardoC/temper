@@ -1,0 +1,22 @@
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    let mut result = Vec::new();
+    let mut stack = Vec::new();
+    let mut current = String::new();
+
+    for c in paren_string.chars().filter(|c| !c.is_whitespace()) {
+        current.push(c);
+        if c == '(' {
+            stack.push(c);
+        } else if c == ')' {
+            stack.pop();
+        }
+        if stack.is_empty() {
+            result.push(current.clone());
+            current.clear();
+        }
+    }
+
+    result
+}
+```

@@ -1,0 +1,9 @@
+```rust
+fn count_distinct_characters(string: String) -> isize {
+    let mut chars_set = std::collections::HashSet::new();
+    for c in string.to_lowercase().chars() {
+        chars_set.insert(c);
+    }
+    chars_set.len() as isize
+}
+```

@@ -1,0 +1,11 @@
+```rust
+fn sum_product(numbers: Vec<isize>) -> (isize, isize) {
+    let mut sum = 0;
+    let mut product = 1;
+    for &number in &numbers {
+        sum += number;
+        product *= number;
+    }
+    (sum, product)
+}
+```

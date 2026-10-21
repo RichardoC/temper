@@ -1,0 +1,24 @@
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// Find how many times a given substring can be found in the original string. Count overlaping cases.
+/// >>> how_many_times(String::from(""), String::from("a"))
+/// 0
+/// >>> how_many_times(String::from("aaa"), String::from("a"))
+/// 3
+/// >>> how_many_times(String::from("aaaa"), String::from("aa"))
+/// 3
+fn how_many_times(string: String, substring: String) -> isize {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.
+<|im_end|>
+<|im_start|>assistant

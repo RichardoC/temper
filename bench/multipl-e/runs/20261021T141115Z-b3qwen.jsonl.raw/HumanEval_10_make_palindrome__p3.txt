@@ -1,0 +1,25 @@
+```rust
+fn make_palindrome(string: String) -> String {
+    let mut chars: Vec<char> = string.chars().collect();
+    let len = chars.len();
+    let mut i = 0;
+
+    // Find the longest palindromic suffix
+    while i < len {
+        if chars[i..].iter().eq(chars[i..].iter().rev()) {
+            break;
+        }
+        i += 1;
+    }
+
+    // If the entire string is a palindrome, return it as is
+    if i == len {
+        return string;
+    }
+
+    // Append the reverse of the prefix before the palindromic suffix to the end
+    let prefix = &chars[..i];
+    let reversed_prefix: String = prefix.iter().rev().cloned().collect();
+    format!("{}{}", string, reversed_prefix)
+}
+```

@@ -1,0 +1,17 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    let mut result = String::new();
+    let a_chars: Vec<char> = a.chars().collect();
+    let b_chars: Vec<char> = b.chars().collect();
+    let max_len = a_chars.len().max(b_chars.len());
+
+    for i in 0..max_len {
+        let bit_a = a_chars.get(i).cloned().unwrap_or('0');
+        let bit_b = b_chars.get(i).cloned().unwrap_or('0');
+        let xor_bit = if bit_a == bit_b { '0' } else { '1' };
+        result.push(xor_bit);
+    }
+
+    result
+}
+```

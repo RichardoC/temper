@@ -1,0 +1,16 @@
+```rust
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    if numbers.len() < 2 {
+        panic!("Vector must contain at least two elements");
+    }
+
+    let min_num = numbers.iter().cloned().fold(f64::INFINITY, f64::min);
+    let max_num = numbers.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+    let range = max_num - min_num;
+
+    numbers
+        .iter()
+        .map(|&num| (num - min_num) / range)
+        .collect()
+}
+```

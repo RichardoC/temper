@@ -1,0 +1,9 @@
+```rust
+fn all_prefixes(string: String) -> Vec<String> {
+    let mut prefixes = Vec::new();
+    for i in 0..string.len() {
+        prefixes.push(string[0..=i].to_string());
+    }
+    prefixes
+}
+```
