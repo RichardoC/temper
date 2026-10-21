@@ -135,6 +135,10 @@ def _validate_problem(td: dict) -> str:
     return m.group(1)
 
 
+DREAM_MODEL = "Dream-org/Dream-Coder-v0-Instruct-7B"
+DREAM_MILESTONE = "M2.2-B2"
+
+
 def run_bench(
     benchmark: str,
     *,
@@ -148,6 +152,8 @@ def run_bench(
     out: Path | str,
     resume: bool = False,
     sample_fn: Optional[Callable] = None,
+    model: Optional[str] = None,
+    milestone: Optional[str] = None,
     log: Callable[[str], None] = lambda s: print(s, flush=True),
 ) -> dict:
     """Unsteered best-of-K generation over the first `n_problems` problems
@@ -155,8 +161,13 @@ def run_bench(
 
     resume=True: if `out` exists and its meta matches this invocation's
     config (benchmark, problem list, K, steps, canvas, temperature, alg,
-    seed, instruction template), already-sampled (problem, sample) pairs are
-    skipped and generation continues from the first missing one.
+    seed, model, instruction template), already-sampled (problem, sample)
+    pairs are skipped and generation continues from the first missing one.
+
+    model/milestone (M2.4b): meta-line labels for alternative engines via
+    the sample_fn injection point (e.g. the Qwen AR twin, row B3) — they
+    default to the Dream dLLM values. The engine itself is whatever the
+    injected sample_fn implements.
     """
     out = Path(out)
     problems = load_problems(benchmark, n_problems)
@@ -180,6 +191,7 @@ def run_bench(
         expect = {
             "benchmark": benchmark, "K": k, "steps": steps, "canvas": canvas,
             "temperature": temperature, "alg": alg, "base_seed": base_seed,
+            "model": model or DREAM_MODEL,
             "instruction_template_sha256": template_sha,
             "n_problems": len(problems),
             "problem_names": [td["name"] for td in problems],
@@ -199,7 +211,7 @@ def run_bench(
         meta = {
             "type": "run",
             "schema_version": "1.2",
-            "milestone": "M2.2-B2",
+            "milestone": milestone or DREAM_MILESTONE,
             "mode": "unsteered",
             "benchmark": benchmark,
             "K": k,
@@ -211,7 +223,7 @@ def run_bench(
             "top_p": 0.95,
             "n_problems": len(problems),
             "problem_names": [td["name"] for td in problems],
-            "model": "Dream-org/Dream-Coder-v0-Instruct-7B",
+            "model": model or DREAM_MODEL,
             "instruction_template_sha256": template_sha,
             "utc": datetime.now(timezone.utc).isoformat(),
         }
@@ -238,8 +250,10 @@ def run_bench(
             f"alg={alg} steps={steps}")
 
         def _progress(i, r):
-            log(f"    sample {i}: wall={r.wall_s}s nfe={r.nfe} "
-                f"truncated={r.truncated} err={r.error or 'none'}")
+            prefill = getattr(r, "nfe_prefill", None)
+            log(f"    sample {i}: wall={r.wall_s}s nfe={r.nfe}"
+                + (f" (prefill {prefill})" if prefill is not None else "")
+                + f" truncated={r.truncated} err={r.error or 'none'}")
 
         t0 = time.perf_counter()
         particles = sample_fn(
@@ -259,6 +273,15 @@ def run_bench(
                 continue
             sidecar = raw_dir / f"{name}__p{p.index}.txt"
             sidecar.write_text(p.raw_text, encoding="utf-8")
+            # M2.4b (additive, schema v1.2): engines that render the chat
+            # prompt internally (Qwen twin) carry it on the particle — record
+            # the rendered prompt verbatim + its sha so the model-visible
+            # prompt is pinned in the record, not just the user-turn text.
+            rendered = getattr(p, "rendered_prompt", None)
+            rendered_sha = _sha256(rendered) if rendered else None
+            if rendered:
+                (raw_dir / f"{name}__prompt.rendered.txt").write_text(
+                    rendered, encoding="utf-8")
             row = {
                 "type": "candidate",
                 "problem": name,
@@ -284,6 +307,14 @@ def run_bench(
                 "repaired": False,
                 "prompted_fn": fn_names[name],
             }
+            nfe_prefill = getattr(p, "nfe_prefill", None)
+            if nfe_prefill is not None:
+                row["nfe_prefill"] = nfe_prefill
+            n_fwd = getattr(p, "n_forward_total", None)
+            if n_fwd is not None:
+                row["n_forward_total"] = n_fwd
+            if rendered_sha is not None:
+                row["rendered_prompt_sha256"] = rendered_sha
             if p.error:
                 row["extract_ok"] = False
                 row["extract_reason"] = f"skipped (generation error: {p.error})"
@@ -310,6 +341,8 @@ def run_bench(
         "utc": datetime.now(timezone.utc).isoformat(),
         "n_rows": len(rows),
         "nfe_total": sum(r.get("nfe") or 0 for r in rows),
+        "nfe_prefill_total": sum(r.get("nfe_prefill") or 0 for r in rows),
+        "n_forward_total": sum(r.get("n_forward_total") or 0 for r in rows),
         "gen_wall_s_total": round(sum(r.get("gen_wall_s") or 0.0 for r in rows), 2),
         "driver_wall_s": round(total_wall, 2),
         "extract_ok_rows": sum(1 for r in rows if r.get("extract_ok")),

@@ -95,6 +95,18 @@ def cmd_bench_multipl_e(args) -> int:
     from temper.multipl_e.bench import run_bench
 
     n = None if args.problems == "all" else int(args.problems)
+    sample_fn = None
+    model = milestone = None
+    if args.engine == "qwen":
+        # M2.4b row B3: the AR twin through the SAME driver + record format.
+        if args.steps != 0:
+            raise SystemExit(
+                "--steps must be 0 for the qwen engine (AR has no denoise "
+                "steps; --canvas is the max_new_tokens budget)")
+        from temper.model.qwen import MODEL_ID as QWEN_MODEL_ID, sample as qwen_sample
+        sample_fn = qwen_sample
+        model = QWEN_MODEL_ID
+        milestone = "M2.4b-B3"
     res = run_bench(
         args.benchmark,
         n_problems=n,
@@ -106,6 +118,9 @@ def cmd_bench_multipl_e(args) -> int:
         alg=args.alg,
         out=Path(args.out),
         resume=args.resume,
+        sample_fn=sample_fn,
+        model=model,
+        milestone=milestone,
     )
     s = res["summary"]
     return 0 if s["n_rows"] else 1
@@ -192,7 +207,12 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--problems", default="all",
                    help="first N problems in vendored (stable) order, or 'all'")
     b.add_argument("-K", type=int, default=4, help="samples per problem")
-    b.add_argument("--steps", type=int, default=96, help="denoise steps per canvas")
+    b.add_argument("--steps", type=int, default=96, help="denoise steps per canvas "
+                   "(Dream engine; must be 0 for the qwen AR engine)")
+    b.add_argument("--engine", default="dream", choices=["dream", "qwen"],
+                   help="sampling engine: dream (dLLM diffusion canvas, B2) or "
+                        "qwen (Qwen2.5-Coder-7B-Instruct AR decode, B3 twin) — "
+                        "same driver, prompt template, seeds and record schema")
     b.add_argument("--canvas", type=int, default=384, help="canvas length (new tokens)")
     b.add_argument("--seed", type=int, default=0,
                    help="base seed; sample i of every problem uses seed+i")
