@@ -292,6 +292,7 @@ def sample(
     temperatures: Optional[List[float]] = None,
     algs: Optional[List[str]] = None,
     base_seed: int = 0,
+    seeds: Optional[List[int]] = None,
     progress: Optional[Callable[[int, "ParticleResult"], None]] = None,
 ) -> List[ParticleResult]:
     """Sample `particles` canvases SEQUENTIALLY (K=1 per forward, spike §0).
@@ -299,7 +300,9 @@ def sample(
     Per-particle config: temperature cycled through the design §4 set
     {0.2, 0.4, 0.6, 0.8} (or explicit `temperatures`), remasking algorithm
     alternating entropy/topk_margin (or explicit `algs`). Determinism: each
-    particle seeds torch with base_seed + i.
+    particle seeds torch with base_seed + i, unless an explicit `seeds` list is
+    given (M3 P1's paired-across-temperatures design, where canvas j at every
+    temperature reuses one seed so temperature is the only varying factor).
 
     Returns one ParticleResult per particle; a failing particle carries
     `error` and does not abort the remaining ones.
@@ -320,6 +323,14 @@ def sample(
         temperature, alg, particles, temperatures, algs
     )
 
+    if seeds is not None:
+        if len(seeds) < particles:
+            raise ValueError(
+                f"seeds list has {len(seeds)} entries for {particles} particles")
+        seed_of = [int(s) for s in seeds[:particles]]
+    else:
+        seed_of = [base_seed + i for i in range(particles)]
+
     results: List[ParticleResult] = []
     for i in range(particles):
         r = ParticleResult(index=i)
@@ -332,7 +343,7 @@ def sample(
                 steps=steps,
                 temperature=temps[i],
                 alg=algs_out[i],
-                seed=base_seed + i,
+                seed=seed_of[i],
                 device=device,
             )
             r.index = i
@@ -340,7 +351,7 @@ def sample(
             r.index = i
             r.temperature = temps[i]
             r.alg = algs_out[i]
-            r.seed = base_seed + i
+            r.seed = seed_of[i]
             r.error = f"{type(exc).__name__}: {exc}"
         if progress is not None:
             progress(i, r)

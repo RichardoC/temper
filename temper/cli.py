@@ -136,6 +136,7 @@ def cmd_bench_multipl_e(args) -> int:
         problem_indices=problem_indices,
         problem_numbers=problem_numbers,
         temperatures=temps,
+        seed_paired_across_temps=args.seed_paired_across_temps,
         hint_line=hint_line,
     )
     s = res["summary"]
@@ -292,6 +293,11 @@ def build_parser() -> argparse.ArgumentParser:
                    help="per-canvas temperature list, comma-separated, e.g. "
                         "'0.4,0.8,1.2' — gives each problem len(list) canvases "
                         "and records each row's temperature (M3 P1 probe)")
+    b.add_argument("--seed-paired-across-temps", action="store_true",
+                   help="with --temperatures: lay canvases out as K per temp and "
+                        "give canvas j the seed base_seed+(j mod K), so each "
+                        "temperature's K canvases share a seed set (M3 P1: temp "
+                        "is then the only varying factor)")
     b.add_argument("--hint-file", default=None,
                    help="file whose first line-block is appended to the chat "
                         "prompt as ONE extra line; text+sha256 land in the run "

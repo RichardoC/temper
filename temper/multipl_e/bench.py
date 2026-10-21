@@ -234,6 +234,7 @@ def run_bench(
     problem_numbers: Optional[List[int]] = None,
     extra_meta: Optional[dict] = None,
     temperatures: Optional[List[float]] = None,
+    seed_paired_across_temps: bool = False,
     hint_line: Optional[str] = None,
     log: Callable[[str], None] = lambda s: print(s, flush=True),
 ) -> dict:
@@ -258,9 +259,18 @@ def run_bench(
 
     temperatures (M3.0 P1 probe): an explicit per-CANVAS temperature list. When
     given, a problem gets len(temperatures) canvases (instead of K), canvas j at
-    temperatures[j] with seed base_seed + j, and every row records its own
-    temperature — so one run record carries the whole (problem, temp, k) grid
-    the reachability curve is read from.
+    temperatures[j], and every row records its own temperature — so one run
+    record carries the whole (problem, temp, k) grid the reachability curve is
+    read from.
+
+    seed_paired_across_temps (M3.0 P1, operator ruling): canvases are laid out
+    as ``[temp0 x K, temp1 x K, ...]`` and canvas j at temperature block t uses
+    seed ``base_seed + (j mod K)``. Temperature is then the ONLY varying factor
+    across the K canvases at each temp: k=0 at T=0.4 / 0.8 / 1.2 all start from
+    the same RNG stream. Without it the flat base_seed+j rule confounds temp with
+    seed (T=1.2's "reach" could just be seeds 8-11), which is precisely the
+    confound a per-temp reachability curve must not have. Recorded as
+    ``seed_paired_across_temps`` in the run meta so analysis can assert it.
 
     hint_line (M3.0 P0.5 C-hint): ONE extra line appended to the chat prompt.
     The exact text and its sha256 go into the run meta, so the knowledge-
@@ -273,6 +283,10 @@ def run_bench(
     # per-canvas temperatures replace "K identical canvases" when given
     per_part = list(temperatures) if temperatures else [temperature] * k
     k_eff = len(per_part)
+    if seed_paired_across_temps and temperatures and len(temperatures) % k:
+        raise ValueError(
+            f"--seed-paired-across-temps needs len(temperatures) ({len(temperatures)}) "
+            f"to be a whole multiple of K ({k}): the grid is K canvases per temp")
     # validate every problem shape up front (cheap, before any GPU time)
     fn_names = {}
     for td in problems:
@@ -304,6 +318,7 @@ def run_bench(
             expect["hint_sha256"] = _sha256(hint_line)
         if temperatures:
             expect["temperatures"] = list(temperatures)
+            expect["seed_paired_across_temps"] = bool(seed_paired_across_temps)
         if problem_numbers is not None:
             expect["problem_numbers"] = list(problem_numbers)
         for key, val in (extra_meta or {}).items():
@@ -347,6 +362,7 @@ def run_bench(
         if temperatures:
             meta["temperatures"] = list(temperatures)
             meta["K_effective"] = k_eff
+            meta["seed_paired_across_temps"] = bool(seed_paired_across_temps)
         if hint_line is not None:
             meta["hint_text"] = hint_line
             meta["hint_sha256"] = _sha256(hint_line)
@@ -380,16 +396,31 @@ def run_bench(
                 + f" truncated={r.truncated} err={r.error or 'none'}")
 
         t0 = time.perf_counter()
-        particles = sample_fn(
-            chat_prompt,
-            canvas_len=canvas,
-            steps=steps,
-            particles=k_eff,
-            temperatures=per_part,
-            algs=[alg] * k,
-            base_seed=base_seed,
-            progress=_progress,
-        )
+        if seed_paired_across_temps:
+            # canvases are [temp0 x K, temp1 x K, ...]; canvas j uses
+            # base_seed + (j mod K) so each temp's K canvases share a seed set
+            seeds = [base_seed + (j % k) for j in range(k_eff)]
+            particles = sample_fn(
+                chat_prompt,
+                canvas_len=canvas,
+                steps=steps,
+                particles=k_eff,
+                temperatures=per_part,
+                algs=[alg] * k_eff,
+                seeds=seeds,
+                progress=_progress,
+            )
+        else:
+            particles = sample_fn(
+                chat_prompt,
+                canvas_len=canvas,
+                steps=steps,
+                particles=k_eff,
+                temperatures=per_part,
+                algs=[alg] * k,
+                base_seed=base_seed,
+                progress=_progress,
+            )
         gen_wall = time.perf_counter() - t0
 
         for p in particles:
@@ -414,7 +445,8 @@ def run_bench(
                 "problem_vendored_index": (
                     problem_indices[pidx] if problem_indices is not None
                     else pidx),
-                "seed": base_seed + p.index,
+                "seed": (seeds[p.index] if seed_paired_across_temps
+                         else base_seed + p.index),
                 "temperature": p.temperature,
                 "alg": p.alg,
                 "steps": steps,

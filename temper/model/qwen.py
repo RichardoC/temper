@@ -316,6 +316,7 @@ def sample(
     temperatures: Optional[List[float]] = None,
     algs: Optional[List[str]] = None,   # accepted for interface parity; AR
     base_seed: int = 0,                 #   rows are always labeled "ar"
+    seeds: Optional[List[int]] = None,  # explicit per-sample seeds (M3 P1)
     temperature: Optional[float] = None,
     top_p: float = DEFAULT_TOP_P,
     progress: Optional[Callable[[int, QwenParticle], None]] = None,
@@ -344,9 +345,17 @@ def sample(
     rendered = build_rendered_prompt(tokenizer, prompt)
     device = str(next(model.parameters()).device)
 
+    if seeds is not None:
+        if len(seeds) < particles:
+            raise ValueError(
+                f"seeds list has {len(seeds)} entries for {particles} particles")
+        seed_of = [int(s) for s in seeds[:particles]]
+    else:
+        seed_of = [base_seed + i for i in range(particles)]
+
     results: List[QwenParticle] = []
     for i in range(particles):
-        r = QwenParticle(index=i, seed=base_seed + i, temperature=temps[i],
+        r = QwenParticle(index=i, seed=seed_of[i], temperature=temps[i],
                          alg=AR_ALG_LABEL, rendered_prompt=rendered)
         try:
             r = _generate_one(
@@ -354,7 +363,7 @@ def sample(
                 max_new_tokens=canvas_len,
                 temperature=temps[i],
                 top_p=top_p,
-                seed=base_seed + i,
+                seed=seed_of[i],
                 device=device,
             )
             r.index = i

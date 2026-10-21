@@ -259,3 +259,78 @@ class TestProblemNumbersVsIndices(unittest.TestCase):
         self.assertEqual(meta["problem_names"],
                          ["HumanEval_24_largest_divisor",
                           "HumanEval_17_parse_music"])
+
+
+class TestSeedPairedAcrossTemps(unittest.TestCase):
+    """P1 probe design (operator ruling): the K canvases at EACH temperature use
+    the same seed set, so temperature is the only varying factor."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.out = self.tmp / "run.jsonl"
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def test_seed_sets_repeat_per_temperature_block(self):
+        # 3 temps x K=4 -> canvases laid out [T0 x4, T1 x4, T2 x4]
+        run_bench("humaneval-rs", n_problems=None, k=4, steps=4, canvas=8,
+                  base_seed=7, out=self.out, sample_fn=_fake_seed_sample,
+                  problem_numbers=[0],
+                  temperatures=[0.4] * 4 + [0.8] * 4 + [1.2] * 4,
+                  seed_paired_across_temps=True, log=lambda s: None)
+        cands = [json.loads(l) for l in
+                 self.out.read_text(encoding="utf-8").splitlines()
+                 if json.loads(l)["type"] == "candidate"]
+        self.assertEqual(len(cands), 12)
+        by_temp = {}
+        for c in cands:
+            by_temp.setdefault(c["temperature"], []).append(c["seed"])
+        # every temperature sees the SAME seed set {7,8,9,10}
+        for temp, seeds in by_temp.items():
+            self.assertEqual(seeds, [7, 8, 9, 10], f"T={temp}")
+
+    def test_unpaired_is_the_flat_status_quo(self):
+        run_bench("humaneval-rs", n_problems=None, k=4, steps=4, canvas=8,
+                  base_seed=7, out=self.out, sample_fn=_fake_seed_sample,
+                  problem_numbers=[0],
+                  temperatures=[0.4] * 4 + [0.8] * 4 + [1.2] * 4,
+                  log=lambda s: None)
+        seeds = [json.loads(l)["seed"] for l in
+                 self.out.read_text(encoding="utf-8").splitlines()
+                 if json.loads(l)["type"] == "candidate"]
+        self.assertEqual(seeds, list(range(7, 19)))
+
+    def test_meta_records_the_pairing_flag(self):
+        run_bench("humaneval-rs", n_problems=None, k=2, steps=4, canvas=8,
+                  out=self.out, sample_fn=_fake_seed_sample, problem_numbers=[0],
+                  temperatures=[0.4, 0.4, 0.8, 0.8],
+                  seed_paired_across_temps=True, log=lambda s: None)
+        meta = json.loads(self.out.read_text(encoding="utf-8").splitlines()[0])
+        self.assertTrue(meta["seed_paired_across_temps"])
+        self.assertEqual(meta["temperatures"], [0.4, 0.4, 0.8, 0.8])
+
+    def test_partial_temperature_block_is_refused(self):
+        # 3 temperatures with K=4 is not a whole grid -> refuse, do not guess
+        with self.assertRaises(ValueError):
+            run_bench("humaneval-rs", n_problems=None, k=4, steps=4, canvas=8,
+                      out=self.out, sample_fn=_fake_seed_sample,
+                      problem_numbers=[0], temperatures=[0.4, 0.8, 1.2],
+                      seed_paired_across_temps=True, log=lambda s: None)
+
+
+def _fake_seed_sample(prompt, *, particles, temperatures, algs, base_seed=None,
+                      seeds=None, progress=None, **kw):
+    """Fake engine honouring an explicit seed list (models dream.sample's seam)."""
+    if seeds is not None:
+        seed_of = list(seeds)[:particles]
+    else:
+        seed_of = [base_seed + i for i in range(particles)]
+    out = []
+    for i in range(particles):
+        p = _FakeParticle(i, temperature=temperatures[i])
+        p.seed = seed_of[i]
+        out.append(p)
+        if progress:
+            progress(i, p)
+    return out
