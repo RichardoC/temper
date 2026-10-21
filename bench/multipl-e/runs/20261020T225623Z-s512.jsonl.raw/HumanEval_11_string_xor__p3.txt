@@ -1,0 +1,41 @@
+```rust
+/// Input are two strings a and b consisting only of 1s and 0s.
+/// Perform binary XOR on these inputs and return result also as a string.
+/// >>> string_xor(String::from("010"), String::from("110"))
+/// String::from("100")
+fn string_xor(a: String, b: String) -> String {
+    let mut result = String::new();
+    let mut a_chars = a.chars();
+    let mut b_chars = b.chars();
+
+    while (a_chars.next(), b_chars.next()) != (None, None) {
+        let a_char = a_chars.next().unwrap();
+        let b_char = b_chars.next().unwrap();
+
+        if a_char != b_char {
+            result.push('1');
+        } else {
+            result.push('0');
+        }
+    }
+
+    // If one string is longer than the other, append the remaining characters
+    while let Some(a_char) = a_chars.next() {
+        if a_char != '0' {
+            result.push('1');
+        } else {
+            result.push('0');
+        }
+    }
+
+    while let Some(b_char) = b_chars.next() {
+        if b_char != '0' {
+            result.push('1');
+        } else {
+            result.push('0');
+        }
+    }
+
+    result
+}
+```

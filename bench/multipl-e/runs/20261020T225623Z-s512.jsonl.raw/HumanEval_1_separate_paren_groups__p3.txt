@@ -1,0 +1,54 @@
+Here's the complete implementation of the `separate_paren_groups` function:
+
+```rust
+/// Input to this function is a string containing multiple groups of nested parentheses. The goal is to
+/// separate those group into separate strings and return the vector of those.
+/// Separate groups are balanced (each open brace is properly closed) and not nested within each other
+/// Ignore any spaces in the input string.
+/// >>> separate_paren_groups(String::from("( ) (( )) (( )( ))"))
+/// vec![String::from("()"), String::from("(())"), String::from("(()())")]
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    let mut groups = Vec::new();
+    let mut current_group = String::new();
+    let mut open_count = 0;
+
+    for ch in paren_string.chars() {
+        if ch == ' ' {
+            continue; // Ignore spaces
+        }
+
+        match ch {
+            '(' => {
+                open_count += 1;
+                current_group.push(ch);
+            }
+            ')' => {
+                if open_count > 0 {
+                    open_count -= 1;
+                    current_group.push(ch);
+                }
+            }
+            _ => {}
+        }
+
+        if open_count == 0 && !current_group.is_empty() {
+            groups.push(current_group.clone());
+            current_group.clear();
+        }
+    }
+
+    groups
+}
+```
+
+### Explanation:
+
+1. **Initialization**:
+   - `groups`: A vector to store the separated groups of balanced parentheses.
+   - `current_group`: A string to build the current group of parentheses.
+   - `open_count`: A counter to track the number of open parentheses `(`.
+
+2. **Iterate Over Characters**:
+   - For each character in the input string:
+     - If the character is a space, it is ignored.
+     - If the character is `(`,

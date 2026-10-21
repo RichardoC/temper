@@ -1,0 +1,43 @@
+```rust
+/// Input is a space-delimited string of numberals from 'zero' to 'nine'.
+/// Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.
+/// Return the string with numbers sorted from smallest to largest
+/// >>> sort_numbers(String::from("three onefive"))
+/// String::from("onethreefive")
+fn sort_numbers(numbers: String) -> String {
+    // Create a map from number words to their integer values
+    let number_map: std::collections::HashMap<&'static str, usize> = [
+        ("zero", 0),
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("seven", 7),
+        ("eight", 8),
+        ("nine", 9),
+    ].into_iter().collect();
+
+    // Split the input string into words
+    let words: Vec<&str> = numbers.split_whitespace().collect();
+
+    // Convert words to numbers using the map
+    let mut numbers: Vec<usize> = words.iter().map(|&word| number_map.get(word).unwrap_or(&usize::MAX)).collect();
+
+    // Sort the numbers
+    numbers.sort();
+
+    // Convert sorted numbers back to words
+    let sorted_words: Vec<&str> = numbers.iter().map(|&num| {
+        match num {
+            0 => "zero",
+            1 => "one",
+            2 => "two",
+            3 => "three",
+            4 => "four",
+            5 => "five",
+            6 => "six",
+            7 => "seven",
+            8 => "eight",
+            9 =>

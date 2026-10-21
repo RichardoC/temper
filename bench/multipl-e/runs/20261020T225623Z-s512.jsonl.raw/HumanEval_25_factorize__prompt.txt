@@ -1,0 +1,21 @@
+Continue the following Rust function. You are given the function's documentation comments and its exact signature line; the body is missing.
+
+```rust
+/// Return vector of prime factors of given integer in the order from smallest to largest.
+/// Each of the factors should be vectored number of times corresponding to how many times it appeares in factorization.
+/// Input number should be equal to the product of all factors
+/// >>> factorize(8)
+/// vec![2, 2, 2]
+/// >>> factorize(25)
+/// vec![5, 5]
+/// >>> factorize(70)
+/// vec![2, 5, 7]
+fn factorize(n: isize) -> Vec<isize> {
+```
+
+Write the COMPLETE function: repeat the signature line exactly as given above (same function name, same parameter names and types, same return type), followed by an implementation body. Output exactly ONE ```rust fenced code block containing only this function and nothing else: no explanations, no tests, no `fn main`, no example usage, no additional top-level items.
+
+Rules:
+- Use only the Rust standard library; no external crates.
+- If you need a helper function, define it INSIDE the function body.
+- Do not print anything.

@@ -1,0 +1,33 @@
+To implement the `greatest_common_divisor` function in Rust, we can use the Euclidean algorithm, which is an efficient method for computing the greatest common divisor (GCD) of two integers. The algorithm is based on the principle that the GCD of two numbers also divides their difference. Here's how you can implement it in Rust:
+
+```rust
+/// Return a greatest common divisor of two integers a and b
+/// >>> greatest_common_divisor(3, 5)
+/// 1
+/// >>> greatest_common_divisor(25, 15)
+/// 5
+fn greatest_common_divisor(a: isize, b: isize) -> isize {
+    fn gcd(a: isize, b: isize) -> isize {
+        if b == 0 {
+            a
+        } else {
+            gcd(b, a % b)
+        }
+    }
+    gcd(a, b)
+}
+```
+
+### Explanation:
+
+1. **Function Signature**: The function `greatest_common_divisor` takes two `isize` parameters, `a` and `b`, and returns an `isize`.
+
+2. **Helper Function `gcd`**: Inside the main function, we define a helper function `gcd` that performs the Euclidean algorithm recursively.
+
+3. **Base Case**: If `b` is zero, the GCD is `a`.
+
+4. **Recursive Case**: Otherwise, call `gcd` with `b` and `a % b`.
+
+5. **Return Value**: The `greatest_common_divisor` function returns the result of calling `gcd(a, b)`.
+
+This implementation uses the Euclidean algorithm, which is efficient and straightforward for computing the GCD. The helper function `gcd` is defined within the `greatest_common_divisor` function to keep the code organized and clean. The function returns the correct GCD for the given pairs of test cases.
