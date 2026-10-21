@@ -107,6 +107,15 @@ def cmd_bench_multipl_e(args) -> int:
         sample_fn = qwen_sample
         model = QWEN_MODEL_ID
         milestone = "M2.4b-B3"
+    problem_indices = None
+    if args.problem_indices:
+        problem_indices = [int(x) for x in args.problem_indices.split(",") if x.strip()]
+    temps = None
+    if args.temperatures:
+        temps = [float(x) for x in args.temperatures.split(",") if x.strip()]
+    hint_line = None
+    if args.hint_file:
+        hint_line = Path(args.hint_file).read_text(encoding="utf-8").rstrip("\n")
     res = run_bench(
         args.benchmark,
         n_problems=n,
@@ -121,9 +130,56 @@ def cmd_bench_multipl_e(args) -> int:
         sample_fn=sample_fn,
         model=model,
         milestone=milestone,
+        problem_indices=problem_indices,
+        temperatures=temps,
+        hint_line=hint_line,
     )
     s = res["summary"]
     return 0 if s["n_rows"] else 1
+
+
+def cmd_steer_replay(args) -> int:
+    """Re-derive every steer decision from a game log, with NO GPU (D2)."""
+    from temper.steer.log import ReplayMismatch, read_game_log, replay_game
+    from temper.steer.verdict import VerdictConfigError, load_verdict_config
+
+    try:
+        cfg = load_verdict_config(args.config)
+    except VerdictConfigError as exc:
+        print(f"temper steer-replay: verdict config refused: {exc}",
+              file=sys.stderr)
+        return 2
+    paths = [Path(p) for p in args.logs]
+    if args.dir:
+        paths.extend(sorted(Path(args.dir).glob("*.jsonl")))
+    if not paths:
+        print("temper steer-replay: no logs given (pass paths or --dir)",
+              file=sys.stderr)
+        return 2
+    rc = 0
+    for path in paths:
+        events = read_game_log(path)
+        meta = next((e for e in events if e.get("kind") == "meta"), {})
+        recorded = meta.get("verdict_config_sha256")
+        if recorded and recorded != cfg.sha256:
+            print(f"  {path.name}: REFUSED — log was produced under verdict "
+                  f"config sha {recorded}, current is {cfg.sha256} "
+                  "(replay under the same freeze or fetch the versioned one)")
+            rc = 1
+            continue
+        try:
+            decisions = replay_game(events, cfg)
+        except ReplayMismatch as exc:
+            print(f"  {path.name}: REPLAY MISMATCH — {exc}")
+            rc = 1
+            continue
+        counts = {}
+        for d in decisions:
+            counts[d.action] = counts.get(d.action, 0) + 1
+        summary = " ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+        print(f"  {path.name}: {len(decisions)} decisions replay green "
+              f"({summary or 'none'})")
+    return rc
 
 
 def cmd_draft(args) -> int:
@@ -160,6 +216,17 @@ def build_parser() -> argparse.ArgumentParser:
     e.add_argument("--repeat", type=int, default=3,
                    help="use the last N run records with matching K")
     e.set_defaults(func=cmd_eval)
+
+    r = sub.add_parser(
+        "steer-replay",
+        help="re-derive steer decisions from a schema-1.3 game log (no GPU, D2)")
+    r.add_argument("logs", nargs="*", help="<out>.steer/<problem>.jsonl files")
+    r.add_argument("--dir", default=None,
+                   help="also replay every *.jsonl in this steer-log dir")
+    r.add_argument("--config", default=None,
+                   help="verdict config to replay under (default: the frozen "
+                        "repo-root steer_verdict_config.json)")
+    r.set_defaults(func=cmd_steer_replay)
 
     d = sub.add_parser("draft", help="GLM-5.3 drafts properties.rs via Synthetic")
     d.add_argument("--task", required=True)
@@ -206,6 +273,18 @@ def build_parser() -> argparse.ArgumentParser:
                    help="vendored benchmark (humaneval-rs | mbpp-rs)")
     b.add_argument("--problems", default="all",
                    help="first N problems in vendored (stable) order, or 'all'")
+    b.add_argument("--problem-indices", default=None,
+                   help="explicit cohort: comma-separated 0-based vendored "
+                        "indices, e.g. '0,4,20,21' (M3 cohort cells). "
+                        "Mutually exclusive with a numeric --problems")
+    b.add_argument("--temperatures", default=None,
+                   help="per-canvas temperature list, comma-separated, e.g. "
+                        "'0.4,0.8,1.2' — gives each problem len(list) canvases "
+                        "and records each row's temperature (M3 P1 probe)")
+    b.add_argument("--hint-file", default=None,
+                   help="file whose first line-block is appended to the chat "
+                        "prompt as ONE extra line; text+sha256 land in the run "
+                        "meta (M3 P0.5 C-hint knowledge-injection null)")
     b.add_argument("-K", type=int, default=4, help="samples per problem")
     b.add_argument("--steps", type=int, default=96, help="denoise steps per canvas "
                    "(Dream engine; must be 0 for the qwen AR engine)")

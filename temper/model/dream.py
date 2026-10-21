@@ -71,7 +71,23 @@ class ParticleResult:
     truncated: bool = False     # mask tokens still present at end of canvas
     peak_mps_allocated_MB: Optional[float] = None
     peak_mps_driver_MB: Optional[float] = None
+    # M3.0 D3 (additive, schema v1.3): NFE/verifier metering. ``nfe`` stays the
+    # model-forward count (one per denoise step / per generated token), so
+    # every existing reader is unchanged; the verifier axis is separate and
+    # never folded into NFE (design §2.2: "verifier time is never NFE").
+    nfe_model: Optional[int] = None            # == nfe, recorded explicitly
+    nfe_verifier_calls: int = 0                # rung invocations (R0+R1+R2)
+    verifier_wall_s: float = 0.0               # summed verifier wall
     error: Optional[str] = None
+
+    @property
+    def nfe_total(self) -> int:
+        """Model NFE only (verifier calls are NOT NFE by design).
+
+        Mirrors the v1.2 ``nfe`` column so a cell record can assert the
+        envelope (`nfe_total <= n_problems * envelope`).
+        """
+        return int(self.nfe or self.nfe_model or 0)
 
 
 def _normalize_particles(

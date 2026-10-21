@@ -55,7 +55,7 @@ from typing import Callable, Optional
 import torch
 import torch.distributions as dists
 
-__all__ = ["apply_fixed_shape_sampler"]
+__all__ = ["apply_fixed_shape_sampler", "fixed_shape_step"]
 
 
 def _entropy_probs_padded(
@@ -202,91 +202,29 @@ def _make_fixed_sample(native_sample: Callable):
             tok_idx = None
             attention_mask = "full"
 
-        L = x.shape[1]
-        arange_L = torch.arange(L, device=device)
-        neg_inf = torch.tensor(-torch.inf, device=device)
-
         timesteps = torch.linspace(1, eps, steps + 1, device=device)
 
         x = generation_tokens_hook_func(None, x, None)
         for i in range(steps):
-            mask_index = x == mask_token_id  # [1, L]
-            logits = self(x, attention_mask, tok_idx).logits
-            logits = torch.cat([logits[:, :1], logits[:, :-1]], dim=1)
-
-            logits = generation_logits_hook_func(i, x, logits)
-
-            t = timesteps[i]
-            s = timesteps[i + 1]
-
-            is_mask = mask_index[0]  # [L]
-            n_mask = int(is_mask.sum())  # CPU sync (native has the same one)
-            if n_mask > B:  # cannot happen for Dream prompts (masks only in canvas)
-                raise RuntimeError(
-                    f"fixed-shape sampler: masked rows {n_mask} > canvas {B}"
-                )
-
-            # FIXED-shape row selection: masked positions in ascending order
-            # (native gather order), then dummy positions. Tie-free by keys.
-            key = is_mask.long() * L - arange_L
-            order_B = torch.topk(key, B).indices  # [B]
-            mask_sel = is_mask.long().gather(0, order_B).bool()  # [B]
-
-            padded = logits[0].index_select(0, order_B)  # [B, V] FIXED shape
-            # native adds the eos penalty to the gathered rows pre-sampling;
-            # row-wise add, so applying it on padded rows matches on real rows.
-            padded[:, pad_token_id] = padded[:, pad_token_id] + (
-                eos_penalty * torch.log(1 - t + eps)
-            )
-
-            confidence_padded, x0_padded = _entropy_sample_tokens_padded(
-                padded,
+            x = fixed_shape_step(
+                self,
+                x,
+                attention_mask=attention_mask,
+                tok_idx=tok_idx,
+                timesteps=timesteps,
+                i=i,
+                steps=steps,
+                canvas_len=B,
                 temperature=temperature,
                 top_p=top_p,
                 top_k=top_k,
+                eos_penalty=eos_penalty,
+                pad_token_id=pad_token_id,
+                mask_token_id=mask_token_id,
+                eps=eps,
+                generation_tokens_hook_func=generation_tokens_hook_func,
+                generation_logits_hook_func=generation_logits_hook_func,
             )
-
-            full_confidence = torch.full_like(
-                x, -torch.inf, device=device, dtype=logits.dtype
-            )
-            conf_write = torch.where(
-                mask_sel, confidence_padded, neg_inf.to(confidence_padded.dtype)
-            )
-            full_confidence[0].index_put_(
-                (order_B,), conf_write.to(full_confidence.dtype)
-            )
-
-            num_mask_token = mask_index.sum() / mask_index.shape[0]
-            number_transfer_tokens = (
-                int(num_mask_token * (1 - s / t))
-                if i < steps - 1
-                else int(num_mask_token)
-            )
-            if number_transfer_tokens > 0:
-                if alg_temp is None or alg_temp == 0:
-                    _, transfer_index = torch.topk(
-                        full_confidence, number_transfer_tokens
-                    )
-                else:  # not reachable for the bench (alg_temp=0); native-verbatim
-                    full_confidence = full_confidence / alg_temp
-                    full_confidence = torch.nn.functional.softmax(
-                        full_confidence, dim=-1
-                    )
-                    transfer_index = torch.multinomial(
-                        full_confidence, num_samples=number_transfer_tokens
-                    )
-                x_ = torch.zeros_like(x, device=device) + mask_token_id
-                x0_write = torch.where(mask_sel, x0_padded, mask_token_id)
-                x_[0].index_put_((order_B,), x0_write)
-                row_indices = (
-                    torch.arange(x.size(0), device=device)
-                    .unsqueeze(1)
-                    .expand_as(transfer_index)
-                )
-                x[row_indices, transfer_index] = x_[row_indices, transfer_index]
-
-            x = generation_tokens_hook_func(i, x, logits)
-
             if histories is not None:
                 histories.append(x.clone())
 
@@ -301,6 +239,110 @@ def _make_fixed_sample(native_sample: Callable):
         return x
 
     return _sample_fixed
+
+
+def fixed_shape_step(
+    model,
+    x: torch.Tensor,
+    *,
+    attention_mask,
+    tok_idx,
+    timesteps,
+    i: int,
+    steps: int,
+    canvas_len: int,
+    temperature: float,
+    top_p: Optional[float],
+    top_k: Optional[int],
+    eos_penalty: float,
+    pad_token_id: int,
+    mask_token_id: int,
+    eps: float,
+    generation_tokens_hook_func,
+    generation_logits_hook_func,
+) -> torch.Tensor:
+    """One full-canvas denoise step at FIXED padded shape.
+
+    This is the shared body of ``_sample_fixed`` AND of the M3 steer loop
+    (``temper.steer.loop``): the ops, their order, the tie-free masked-row
+    selection and the hook call sites are exactly the ones the fixed-shape
+    sampler always ran — extracted so the steer loop can drive ONE step of ONE
+    particle without re-implementing (and silently drifting from) the tail.
+    ``canvas_len`` is B, the maximum number of masked rows (= canvas length).
+    """
+    mask_index = x == mask_token_id  # [1, L]
+    logits = model(x, attention_mask, tok_idx).logits
+    logits = torch.cat([logits[:, :1], logits[:, :-1]], dim=1)
+
+    logits = generation_logits_hook_func(i, x, logits)
+
+    t = timesteps[i]
+    s = timesteps[i + 1]
+
+    B = canvas_len
+    L = x.shape[1]
+    arange_L = torch.arange(L, device=x.device)
+    neg_inf = torch.tensor(-torch.inf, device=x.device)
+
+    is_mask = mask_index[0]  # [L]
+    n_mask = int(is_mask.sum())  # CPU sync (native has the same one)
+    if n_mask > B:  # cannot happen for Dream prompts (masks only in canvas)
+        raise RuntimeError(
+            f"fixed-shape sampler: masked rows {n_mask} > canvas {B}"
+        )
+
+    # FIXED-shape row selection: masked positions in ascending order (native
+    # gather order), then dummy positions. Tie-free by keys.
+    key = is_mask.long() * L - arange_L
+    order_B = torch.topk(key, B).indices  # [B]
+    mask_sel = is_mask.long().gather(0, order_B).bool()  # [B]
+
+    padded = logits[0].index_select(0, order_B)  # [B, V] FIXED shape
+    # native adds the eos penalty to the gathered rows pre-sampling;
+    # row-wise add, so applying it on padded rows matches on real rows.
+    padded[:, pad_token_id] = padded[:, pad_token_id] + (
+        eos_penalty * torch.log(1 - t + eps)
+    )
+
+    confidence_padded, x0_padded = _entropy_sample_tokens_padded(
+        padded,
+        temperature=temperature,
+        top_p=top_p,
+        top_k=top_k,
+    )
+
+    full_confidence = torch.full_like(
+        x, -torch.inf, device=x.device, dtype=logits.dtype
+    )
+    conf_write = torch.where(
+        mask_sel, confidence_padded, neg_inf.to(confidence_padded.dtype)
+    )
+    full_confidence[0].index_put_(
+        (order_B,), conf_write.to(full_confidence.dtype)
+    )
+
+    num_mask_token = mask_index.sum() / mask_index.shape[0]
+    number_transfer_tokens = (
+        int(num_mask_token * (1 - s / t))
+        if i < steps - 1
+        else int(num_mask_token)
+    )
+    if number_transfer_tokens > 0:
+        # alg_temp randomness is unreachable on this path: _sample_fixed only
+        # routes here for alg_temp 0/None (see its eligibility gate).
+        _, transfer_index = torch.topk(full_confidence, number_transfer_tokens)
+        x_ = torch.zeros_like(x, device=x.device) + mask_token_id
+        x0_write = torch.where(mask_sel, x0_padded, mask_token_id)
+        x_[0].index_put_((order_B,), x0_write)
+        row_indices = (
+            torch.arange(x.size(0), device=x.device)
+            .unsqueeze(1)
+            .expand_as(transfer_index)
+        )
+        x[row_indices, transfer_index] = x_[row_indices, transfer_index]
+
+    x = generation_tokens_hook_func(i, x, logits)
+    return x
 
 
 def apply_fixed_shape_sampler(model) -> bool:

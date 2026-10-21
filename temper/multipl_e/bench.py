@@ -85,11 +85,39 @@ def build_prompt(problem_prompt: str) -> str:
     return INSTRUCTION_TEMPLATE.format(prompt=problem_prompt)
 
 
-def load_problems(benchmark: str, n: Optional[int] = None) -> List[dict]:
+def load_problems(
+    benchmark: str,
+    n: Optional[int] = None,
+    problem_indices: Optional[List[int]] = None,
+) -> List[dict]:
     """The first n problems of the vendored benchmark, in vendored file order
-    (stable across runs — the datasets-server row order)."""
+    (stable across runs — the datasets-server row order), or exactly the
+    problems at `problem_indices` (0-based, vendored order).
+
+    ``problem_indices`` exists so a cell can target a COHORT (the M3 C-hint
+    type-trap quartet {0,4,20,21}, the P1 probe's 9) without editing the
+    vendored dataset or silently re-slicing `--problems N`. Order is the
+    order given, deduplicated, so the run record's problem list stays stable.
+    """
     tasks = load_benchmark(benchmark)
     problems = list(tasks.values())  # dicts keep insertion (file) order
+    if problem_indices is not None:
+        seen = set()
+        picked = []
+        for idx in problem_indices:
+            if idx < 0 or idx >= len(problems):
+                raise ValueError(
+                    f"--problem-indices {idx} out of range for {benchmark} "
+                    f"(0..{len(problems) - 1})")
+            if idx in seen:
+                continue
+            seen.add(idx)
+            picked.append(problems[idx])
+        if n is not None and n != len(picked):
+            raise ValueError(
+                f"--problems {n} conflicts with --problem-indices "
+                f"({len(picked)} problems selected)")
+        return picked
     if n is None:
         return problems
     if n > len(problems):
@@ -154,6 +182,10 @@ def run_bench(
     sample_fn: Optional[Callable] = None,
     model: Optional[str] = None,
     milestone: Optional[str] = None,
+    problem_indices: Optional[List[int]] = None,
+    extra_meta: Optional[dict] = None,
+    temperatures: Optional[List[float]] = None,
+    hint_line: Optional[str] = None,
     log: Callable[[str], None] = lambda s: print(s, flush=True),
 ) -> dict:
     """Unsteered best-of-K generation over the first `n_problems` problems
@@ -168,15 +200,37 @@ def run_bench(
     the sample_fn injection point (e.g. the Qwen AR twin, row B3) — they
     default to the Dream dLLM values. The engine itself is whatever the
     injected sample_fn implements.
+
+    problem_indices (M3.0): run an explicit COHORT (vendored 0-based indices)
+    instead of "the first N" — how the C-hint quartet and the P1 probe target
+    their problem sets without touching the dataset. extra_meta is folded into
+    the run meta line AND into the resume config-match, so a cohort cell is
+    reproducible and a mismatched resume is refused.
+
+    temperatures (M3.0 P1 probe): an explicit per-CANVAS temperature list. When
+    given, a problem gets len(temperatures) canvases (instead of K), canvas j at
+    temperatures[j] with seed base_seed + j, and every row records its own
+    temperature — so one run record carries the whole (problem, temp, k) grid
+    the reachability curve is read from.
+
+    hint_line (M3.0 P0.5 C-hint): ONE extra line appended to the chat prompt.
+    The exact text and its sha256 go into the run meta, so the knowledge-
+    injection null is pinned to the string that was actually delivered.
     """
     out = Path(out)
-    problems = load_problems(benchmark, n_problems)
+    problems = load_problems(benchmark, n_problems,
+                             problem_indices=problem_indices)
+    # per-canvas temperatures replace "K identical canvases" when given
+    per_part = list(temperatures) if temperatures else [temperature] * k
+    k_eff = len(per_part)
     # validate every problem shape up front (cheap, before any GPU time)
     fn_names = {}
     for td in problems:
         fn_names[td["name"]] = _validate_problem(td)
 
     prompts = {td["name"]: build_prompt(td["prompt"]) for td in problems}
+    if hint_line is not None:
+        prompts = {n: p + "\n" + hint_line for n, p in prompts.items()}
     template_sha = _sha256(INSTRUCTION_TEMPLATE)
 
     done: Dict[tuple, dict] = {}
@@ -196,6 +250,12 @@ def run_bench(
             "n_problems": len(problems),
             "problem_names": [td["name"] for td in problems],
         }
+        if hint_line is not None:
+            expect["hint_sha256"] = _sha256(hint_line)
+        if temperatures:
+            expect["temperatures"] = list(temperatures)
+        for key, val in (extra_meta or {}).items():
+            expect[key] = val
         mismatched = [key for key, val in expect.items() if old_meta.get(key) != val]
         if mismatched:
             raise SystemExit(
@@ -203,7 +263,7 @@ def run_bench(
                 "record was created with different settings")
         for r in old_rows:
             done[(r["problem"], r["i"])] = r
-        log(f"resume: {len(done)}/{len(problems) * k} samples already present")
+        log(f"resume: {len(done)}/{len(problems) * k_eff} samples already present")
     else:
         if resume:
             raise SystemExit(f"{out}: --resume given but record does not exist")
@@ -227,6 +287,15 @@ def run_bench(
             "instruction_template_sha256": template_sha,
             "utc": datetime.now(timezone.utc).isoformat(),
         }
+        if problem_indices is not None:
+            meta["problem_indices"] = list(problem_indices)
+        if temperatures:
+            meta["temperatures"] = list(temperatures)
+            meta["K_effective"] = k_eff
+        if hint_line is not None:
+            meta["hint_text"] = hint_line
+            meta["hint_sha256"] = _sha256(hint_line)
+        meta.update(extra_meta or {})
         with open(out, "w", encoding="utf-8") as f:
             f.write(json.dumps(meta) + "\n")
 
@@ -241,7 +310,7 @@ def run_bench(
     n_new = 0
     for pidx, td in enumerate(problems):
         name = td["name"]
-        if all((name, i) in done for i in range(k)):
+        if all((name, i) in done for i in range(k_eff)):
             log(f"[{pidx + 1}/{len(problems)}] {name}: already complete, skip")
             continue
         chat_prompt = prompts[name]
@@ -260,8 +329,8 @@ def run_bench(
             chat_prompt,
             canvas_len=canvas,
             steps=steps,
-            particles=k,
-            temperatures=[temperature] * k,
+            particles=k_eff,
+            temperatures=per_part,
             algs=[alg] * k,
             base_seed=base_seed,
             progress=_progress,
@@ -287,6 +356,9 @@ def run_bench(
                 "problem": name,
                 "problem_index": pidx,
                 "i": p.index,
+                "problem_vendored_index": (
+                    problem_indices[pidx] if problem_indices is not None
+                    else pidx),
                 "seed": base_seed + p.index,
                 "temperature": p.temperature,
                 "alg": p.alg,
@@ -315,6 +387,14 @@ def run_bench(
                 row["n_forward_total"] = n_fwd
             if rendered_sha is not None:
                 row["rendered_prompt_sha256"] = rendered_sha
+            # M3.0 D3 (additive, schema v1.3): verifier metering rides the row
+            # alongside the unchanged v1.2 `nfe` (model forwards).
+            if getattr(p, "nfe_model", None) is not None:
+                row["nfe_model"] = p.nfe_model
+            if getattr(p, "nfe_verifier_calls", None):
+                row["nfe_verifier_calls"] = p.nfe_verifier_calls
+            if getattr(p, "verifier_wall_s", None):
+                row["verifier_wall_s"] = round(p.verifier_wall_s, 3)
             if p.error:
                 row["extract_ok"] = False
                 row["extract_reason"] = f"skipped (generation error: {p.error})"
@@ -328,12 +408,12 @@ def run_bench(
                 f.write(json.dumps(row) + "\n")
             done[(name, p.index)] = row
             n_new += 1
-        ok = sum(1 for i in range(k)
+        ok = sum(1 for i in range(k_eff)
                  if (name, i) in done and done[(name, i)]['extract_ok'])
-        log(f"    problem wall={gen_wall:.1f}s extract_ok={ok}/{k}")
+        log(f"    problem wall={gen_wall:.1f}s extract_ok={ok}/{k_eff}")
 
     # ---- final summary line (last one wins when parsing) -------------------
-    rows = [done[(td["name"], i)] for td in problems for i in range(k)
+    rows = [done[(td["name"], i)] for td in problems for i in range(k_eff)
             if (td["name"], i) in done]
     total_wall = time.perf_counter() - t_all
     summary = {
@@ -348,6 +428,10 @@ def run_bench(
         "extract_ok_rows": sum(1 for r in rows if r.get("extract_ok")),
         "gen_error_rows": sum(1 for r in rows if r.get("gen_error")),
         "truncated_rows": sum(1 for r in rows if r.get("truncated")),
+        "nfe_verifier_calls_total": sum(
+            r.get("nfe_verifier_calls") or 0 for r in rows),
+        "verifier_wall_s_total": round(sum(
+            r.get("verifier_wall_s") or 0.0 for r in rows), 3),
     }
     with open(out, "a", encoding="utf-8") as f:
         f.write(json.dumps(summary) + "\n")

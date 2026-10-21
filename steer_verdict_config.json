@@ -1,0 +1,64 @@
+{
+  "schema": "steer-verdict-config/1",
+  "version": "v0",
+  "frozen_utc": "2026-10-21",
+  "note": "M3.0 D7 freeze scaffold. Parameters are transcribed verbatim from docs/m3-design.md rev1 sections 2.2/3.2/3.3 as v0; D4 (ghost-closure validity on REAL canvases, a P0->P2 boundary activity) SETS the patience parameters from its measured table and REPINS this file (new version + new sha, both recorded in the report). The embedded sha256 is the canonical digest of this object WITHOUT the sha256 field; load_verdict_config() re-derives it and refuses a tampered file.",
+  "informed_error_classes": [
+    "E0277",
+    "E0282",
+    "E0283",
+    "E0507",
+    "E0382",
+    "E0308",
+    "E0499",
+    "E0061",
+    "E0599",
+    "E0369",
+    "E0502",
+    "E0505"
+  ],
+  "informed_class_provenance": "docs/m3-design.md rev1 section 3.2: 'filtering to E0xxx classes: E0277/E0282/E0283/E0507/E0382-style substantive diagnostics, and requiring the error to persist/point inside committed content away from hole-adjacent spans'. E0308/E0499/E0061/E0599/E0369/E0502/E0505 are the same substantive class family (type/borrow/arity/method-resolution, all non-parse); adopted in v0 because they are the diagnostics the corrected-basis forensic rows actually produced.",
+  "patience": {
+    "consecutive_checkpoints": 2,
+    "hole_proximity_lines": 1,
+    "provenance": "docs/m3-design.md rev1 section 3.3 item 1: 'informed-class rustc errors whose primary span sits inside committed (non-ghost) content, stable across >=2 consecutive checkpoints OR at a stage the rung has measured reliable (D4 decides the actual rule; start: 2-checkpoint persistence + span-localization)'"
+  },
+  "r0": {
+    "fatal_flags": [
+      "prose_after_fence",
+      "fence_unterminated",
+      "mask_share_divergent",
+      "fn_header_missing"
+    ],
+    "non_fatal_flags": [
+      "extract_rejected_final"
+    ],
+    "mask_share_tolerance": 0.35,
+    "provenance": "docs/m3-design.md rev1 section 3.2 R0 row: fence integrity, prose-after-closing-fence (HumanEval_17 class), mask-residue sanity (expected residual mask share at step k ~ (1-k/S) +- tolerance), must_define fn-header presence late in decode, brace trajectory. extract_rejected_final is recorded but NOT fatal: at the final checkpoint the game still emits a canvas (design section 3.3 item 2) and its failure is scored honestly."
+  },
+  "r2_stub_markers": [
+    "todo!(",
+    "unimplemented!(",
+    "panic!("
+  ],
+  "checkpoint_grid": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "emission": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+  "clone": {
+    "temp_step": 0.2,
+    "temp_cap": 0.8,
+    "clone_cap_per_parent": 2
+  },
+  "budget": {
+    "k_max_eff": 8,
+    "envelopes": [
+      1024,
+      2048
+    ]
+  },
+  "sha256": "6d3440b9a43ba9dd1f7ac012339c79fbea25b08b0c380031965e78cd43491d9f"
+}
