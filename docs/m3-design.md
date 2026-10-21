@@ -15,6 +15,38 @@ instrument), and in M2.4a's "Implications for L1 steering" target list (M2.4b
 
 ---
 
+## rev1 changelog — adversarial-review modifications (2026-10-21)
+
+Two independent adversarial reviews of the rev0 draft were commissioned by the
+operator (both MODIFY-THEN-PROCEED) and are part of the project record:
+
+- **review A (Kimi-K3)**:
+  `/Users/richardf/.pi/agent/sessions/--Users-richardf--/subagent-artifacts/f292ab77-5102-4630-a316-07ac2e629f5d_worker_output.md`
+- **review B (GLM-5.3 — a second instance, not the author)**:
+  `/Users/richardf/.pi/agent/sessions/--Users-richardf--/subagent-artifacts/29c494a4-e812-488a-b7cc-772c229d0b01_worker_output.md`
+
+Both verdicts converged on the same two missing nulls (one each, complementary)
+and the same statistics/gates critique. rev1 adopts all of the following; the
+body sections below carry the changed text (old text where conflicting is
+SUPERSEDED by the rev1 passages):
+
+| # | rev1 change | where | review |
+|---|---|---|---|
+| R1 | Reframe: deliverable = engine + mechanism question, not a capability number; AR-substrate paragraph | §0.5–0.6 | A1, B1 |
+| R2 | C-hint cell (knowledge-injection null), scheduled FIRST | §4.1, §5 | A2 |
+| R3 | C-screen counterfactual (static-filter null), primary attribution delta | §4.1, §4.2, §4.3, §5 | B2 |
+| R4 | Paired sign-test primary; Jeffreys demoted; pre-registered primary comparison; flip replication | §4.2 | A3, B4 |
+| R5 | Deepened, cohort-stratified probe; PARTIAL forces EV rewrite; NO-GO s512 recheck | §5 (P1) | A4, B4 |
+| R6 | Freeze-before-cells (verdict config sha); D4 demotion rule; C-null emission spec; §4.3 isolation fixed | §4.1, §4.3, §7 (D7) | B2, B3 |
+| R7 | C-null EV modeled; reviewers' falsifiable predictions on record | §6.1, §11 | A, B |
+
+Nothing in rev1 removes rev0's strengths (P1 falsifier economics, §3.2
+ghost-closure negative result, D-deliverables, commit-stickiness).
+
+---
+
+---
+
 ## 0. What changed since the last L1 sketch (and why the design moved)
 
 The M2.4b correction rewrites the problem L1 must solve:
@@ -49,6 +81,37 @@ Consequences for this design:
    17% at s512, and (§1.2) the mass is no longer mostly parse corruption:
    it is dominated by *deterministic, type-level, single-mode blunders* that
    survive doubling the budget.
+5. **(rev1, reviews A1/B1) The capability claim is dead; the mechanism claim
+   lives — and this doc now says so up front.** The AR twin's
+   0.92-in-9.35-minutes refutes every practical/capability reading of this
+   program; the design's own realistic steered ceiling (0.72–0.84) is
+   *below* the twin's already-measured point. M3.0's deliverable is
+   therefore explicitly **(a) the engine** (substrate, verifier ladder,
+   metering, replay, held-in guards) and **(b) one mechanism question,
+   measurable or falsified**: *does verifier-controlled compute reallocation
+   inside a masked-diffusion decode beat diverse-sampling-plus-filter at
+   matched NFE?* A score of 14/25 without an answer to (b) is not a result
+   — it is bookkeeping. The publishable facts of M3.0 are the engine, the
+   measured mid-decode-verification validity curves, and the signed answer
+   to (b), whatever its sign.
+6. **(rev1) Why demonstrate on the dLLM substrate at all, given M2.4b §M2.5
+   item 3 recommends AR as the L1 base?** Honest answer, stated once: AR
+   verifier-signal resampling is real and likely strong — but it is a
+   *different* mechanism, and the two things this program studies exist
+   only on the diffusion side: (i) **mode-retention** — whether a
+   masked-diffusion decode distribution retains semantically distinct
+   correct modes that decoding policy can select (the question no AR
+   prefix process can even pose the same way, because an AR canvas is a
+   committed left-to-right path), and (ii) the §6.2 item-5 asymmetry:
+   commits are monotone, so kill-on-committed-fatal-evidence is *sound* in
+   diffusion in a way it never is mid-AR — while swiss-cheese mid-canvas
+   verification has no AR counterpart either (§3.4). Both the burden and
+   the advantage are diffusion-specific. The AR-substrate recommendation is
+   recorded, engaged, and deliberately deferred to a follow-on lane; it is
+   an *answer to a different question* than the one this doc asks.
+   M3.0-as-syntax-rescue is infrastructure; the toot's property-steering
+   thesis is M3.1's content and M3.2's frontier (reviews A1/B1 both:
+   say-so-louder).
 
 ---
 
@@ -395,7 +458,9 @@ prior work does and does not hand us (honest placement)
 |---|---|---|---|---|
 | **anchor-1024** | — (the corrected s256 row, committed, no re-run) | 1024 | 7.21 h (banked) | the 0.44 line |
 | **anchor-2048** | — (corrected s512, committed) | 2048 | 14.48 h (banked) | the 0.64 line |
-| **C-null** | temp-ladder diversity only (T ∈ {0.2,0.4,0.6,0.8} round-robin), no rungs, no kill/clone, K_max_eff to budget | 2048 | ~14.9 h | attribution control: diversity alone |
+| **C-hint** *(rev1, review A add; scheduled FIRST in §5)* | unsteered, K=4, steps=256, T=0.2, problems {0,4,20,21} (the deterministic type-trap quartet), prompt + one pre-committed generic anti-trap hint line (exact text frozen in verdict-config before launch; e.g. "for `Vec<f64>` sorting use `sort_by(|a,b| a.partial_cmp(b).unwrap())`; prefer explicit type annotations") | 10 | ~1.2 h | knowledge-injection null: if a free hint reproduces the flips, syntax-rescue is information-delivery, not search — dead early and cheap; if not, steering's reachability result gets stronger |
+| **C-null** | temp-ladder diversity only (T ∈ {0.2,0.4,0.6,0.8} round-robin), no rungs, no kill/clone, K_max_eff to budget. *(rev1 emission spec, closing review B's spec hole)* Emission rule, pre-committed: the T=0.2 canvas if present in the ladder, else the lowest-T canvas; per-completion container statuses and the full ensemble recorded for C-screen | 2048 | ~14.9 h | attribution control: diversity alone |
+| **C-screen** *(rev1, review B add; computed, not generated)* | no generation — container-score C-null's FULL 8-canvas ensemble (container-minutes), then offline counterfactual from committed sidecars: apply the FROZEN informed-class filter to completed canvases and emit "best R1-clean by confidence (ties: lowest temp)" | 0 extra (2048 envelope of C-null) | ~minutes | static-filter null: temp ladder + final rustc screen, ZERO mid-decode machinery — the Prism-style known-art mechanism the design must beat or be reduced to |
 | **C-full** | R0+R1+R2, kill, clone-from-checkpoint, children temp +0.2 | **1024** & **2048** | 7.5 h & 14.9 h | the L1 rows |
 | **C-kill** (described, run if budget permits) | early-aborts only, no cloning (fresh replacement at fresh temp) | 2048 | 14.9 h | separates "kill-savings" from "clone-conditioning" |
 | **C-b512** (stretch) | same policy as C-full | 512 | 3.7 h | sub-anchor leverage point |
@@ -415,43 +480,85 @@ prior work does and does not hand us (honest placement)
 
 - Estimator: per-problem binary outcome (game's emitted completion verdict);
   honest = exclusions/gen-errors folded as failures; official + normalized
-  both reported. Jeffreys pooled posterior Beta(0.5+x, 0.5+25−x) — computed
-  for this doc:
-  - x=13/25 → mean 0.519, P(θ>0.44)=0.79
-  - x=14/25 → mean 0.558, P(θ>0.44)=**0.886**
-  - x=16/25 → mean 0.635, P(θ>0.44)=0.978; vs the 0.64 line: x=18 → P(θ>0.64)=0.795
-- **SHIP GATE (M3.0)**: C-full@≤2048 honest point estimate **≥14/25 (0.56)**
-  (P(θ>0.44) ≥ 0.85) with **zero net regressions** among the 11 corrected
-  s256-passers (paired per-problem migration table; ≤0 new failures among
-  those 11). Declared "beat B2's 0.44 at matched NFE".
-- **STRONG GATE**: ≥18/25 (0.72) at ≤2048 — i.e., steering buys what the
-  next doubling of unsteered budget cannot (0.64→0.72 at half the wall of
-  any projected s1024 cell). Programmatic: P(θ>0.64|data) ≥ 0.8.
-- **Attribution GATE** (without which the ship gate has no causal story):
-  C-full − C-null ≥ +1 problem at the same envelope, zero gain-loss
-  inversions. If C-full = C-null, the claim is "diversity injection
-  explains the gain" and steering-as-resampling is reported as a null
-  result (phase kill, §5).
+  both reported.
+- **(rev1, reviews A3/B4 — gates rewritten) Decision quantities, in order of
+  authority:**
+  1. **Paired migration matrix + one-sided sign-test (PRIMARY).** Problems
+     are deterministic single draws, NOT exchangeable Bernoulli draws — the
+     pooled Jeffreys Beta(0.5+x, 0.5+25−x) treats them as iid and is
+     demoted to a reporting convenience, printed only with that caveat.
+     Every gate decision is made on the paired per-problem migration vs the
+     banked anchors and on sign-test p-values with ex-ante
+     detectable-effect statements (D6 emits McNemar/sign-test numbers for
+     every gate).
+  2. **Pre-registered primary comparison (single):** C-full@2048 vs
+     C-null@2048, paired — its outcome decides the mechanism question in
+     §0.5(b). Every other comparison (envelope response, C-hint/C-screen
+     deltas, 1024 cells, M3.1 gates) is secondary/exploratory and labeled
+     such. This composes the ~6 gate-families' multiplicity down to one
+     primary; no FWER formality, one honest sentence and one primary.
+- **SHIP GATE (M3.0)**: C-full@2048 ≥ **15/25** honest *with paired margins*:
+  zero net regressions among the 11 corrected s256 passers, sign-test vs
+  anchor-1024 reported, and **≥ 2 confirmed-attributed flips** (flips that
+  survive the §4.3 attribution battery incl. replication ≥ 2 games/problem
+  on the flip set, P ≈ 0.55–0.65 conditional on P1-GO). Language note:
+  underpowered for effects < +3 problems — every ship/no-ship line says so.
+  (rev0's bare "14/25, P(θ>0.44)≥0.85" is superseded: it shipped ~12%
+  one-sided false-positive per cell on pooled-noise alone.)
+- **STRONG GATE**: ≥18/25 (0.72) at ≤2048 with the same paired discipline —
+  i.e., steering buys what the next doubling of unsteered budget cannot
+  (projected from the budget-invariance forensics §1.2, stated as
+  projection; a 9-problem s1024 spot ~5 h is run ONLY if the strong gate
+  becomes load-bearing for the headline).
+- **Attribution GATE (rev1, the causal story)**: C-full@2048
+  **> max(C-null, C-screen, C-hint-relevant-cohort)** on the paired matrix,
+  margin ≥ +2 problems, with at least one flip OUTSIDE the
+  hint-fixable/ladder-reachable cohorts (type-trap quartet / anything in
+  C-screen's clean set), flip-set replication green. C-full − C-screen is
+  the mechanism's incremental yield and the single number the §0.5(b)
+  question is priced by; C-hint's quartet outcome bounds the
+  information-vs-search decomposition; if C-full = C-null = C-screen,
+  steering-as-reallocation is a measured null and is reported as one
+  (phase kill, §5 — including the ambiguous zone review B flagged: any
+  non-ship outcome with C-full ≈ either null is pre-registered negative,
+  not iterated past).
 - Paired analysis accompanies every gate: per-problem migration matrix vs
   corrected s256/s512 (m2_4a_migration.py extended), plus the Monkeys
   framing: steered β-offset along the NFE axis (does the steered point sit
   LEFT of the unsteered staircase at equal accuracy — horizontal offset,
   not curve-riding).
+- Jeffreys pooled posterior reference values (reporting-only, rev0
+  provenance): x=14/25 → P(θ>0.44)=0.886; x=16 → 0.978; x=18 → P(θ>0.64)=0.795.
 - Protocol honesty: T=0.2 is the B2 anchor point; C-full's temp ladder is an
   explicit protocol deviation, WHICH IS WHY C-null exists at exactly the
   same ladder; report both against anchor-1024 with the deviation printed.
   pass@10/100 stays out of reach at K≤8 (n≥k requirement) — the 20-100
   sample/problem protocol points stay future work at full-156 scale.
 
-### 4.3 The ablation matrix (what each lever owns)
+### 4.3 The isolation matrix (rev1 — three mechanisms, each isolated; review B's §0.3-vs-§4.3 contradiction removed)
 
-| axis | cells | question answered |
+A steered cell bundles three separable mechanisms: (i) diversity injection
+(temp ladder), (ii) final-screen selection over completed diverse canvases
+(Prism-style known art), (iii) mid-decode kill/clone budget reallocation
+(the novel part — called what it is: **verifier-conditioned budget
+reallocation**, not logit-level guidance; M3.0 gives the verifier no
+logits). rev1 makes each isolable by mandatory cells/computations:
+
+| mechanism | isolated by | status |
 |---|---|---|
-| diversity ladder | anchors (T=0.2) vs C-null (ladder) | does the T-ladder alone move the pass set? (it changes per-problem modes; measured mode-reachability under-write) |
-| kill/early-abort | C-null vs C-kill | does early rejection of doomed canvases + budget re-spend pay? expected small but positive (doomed canvases ≈ 39% at s256) |
-| clone conditioning | C-kill vs C-full | does prefix-inherited re-decode beat fresh restarts at equal NFE? (the SMC/FK thesis proper) |
-| rung sensitivity | C-full minus R1 (R0-only variant, cheap cell at 1024) | is the rustc rung pulling weight over free-shape signals? |
-| envelope response | C-full@{512,1024,2048} | the steering-vs-budget leverage curve; the headline plot |
+| (i) diversity ladder | anchors (T=0.2) vs C-null | mandatory cell |
+| (ii) final-screen selection | **C-screen** counterfactual from C-null's ensemble (exact, free) | mandatory computation |
+| (iii) mid-decode machinery | C-full − C-screen (primary delta) | mandatory cell |
+| information vs search | **C-hint** on the type-trap quartet | mandatory cell (first) |
+| kill-vs-clone | C-kill vs C-full | optional (runs only if the primary delta ≥ +2 and is contested) |
+| rung sensitivity | C-full minus R1 (R0-only @1024) | optional |
+| envelope response | C-full@{512,1024,2048} | 1024 mandatory-ish (cut order last), 512 stretch |
+
+Naming honesty (review B): nothing in M3.0 steers sampling distributions —
+information flows only via compute allocation and RNG/temp choice; every
+place this doc says "steering" in reference to M3.0's mechanism is this
+reallocation sense. M3.1/M3.2 are where the signal reaches INTO the
+decoder (ranking weights / re-masking).
 
 Every cell reuses banked anchors where identical config permits; nothing is
 re-run "for symmetry" (GPU wall is the binding constraint; §9).
@@ -469,16 +576,33 @@ scoring** (§9); full ablation matrix ≈ 62–74 h; the gates cut from the top.
 
 - **P0 (instrument, CPU-only, mandatory first — project rule
   instrument-before-engine)**: D1–D6 of §7. Exit: all D-acceptances green.
-- **P1 (mode-existence probe, ~5.5 h GPU)** — the falsifier for the
-  load-bearing assumption (§6): 9 problem set {0, 4, 20, 21, 11, 18, 24,
-  17, 19} × 2 temps (0.4, 0.8) × K=4 × steps=256, container-scored. **GO**:
-  ≥4/9 problems show ≥1 type-clean-and-passing canvas somewhere in the
-  ladder (AR-twin-passing implies the FAMILY knows the answer; the probe
-  tests Dream's reachability). PARTIAL (2–3): proceed but demote expected
-  gains; the 1024-envelope cell is cut first if wall needs saving.
-  **NO-GO (<2)**: diversity-reachability is dead at this scale — pivot:
-  cancel C-full; M3 becomes (a) property-feedback re-mask (M3.2 first), or
-  (b) template-hardening + full-156 slice change; report honestly.
+- **P0.5 (C-hint cell, ~1.2 h GPU — rev1, review A; scheduled first because
+  it is the cheapest falsifier in the program)**: problems {0,4,20,21},
+  unsteered K=4 steps=256 T=0.2, prompt + the pre-committed hint line,
+  container-scored. Outcomes (either strengthens the program): passes ≥ 3/4
+  ⇒ type-trap cohort is information-fixable — their flips are attributed to
+  knowledge delivery and the mechanism claim must live elsewhere
+  (semantic/exclusion cohorts, M3.1); passes ≤ 1/4 ⇒ the traps are
+  mode-lock, not knowledge — steer-reachability becomes the more
+  interesting claim. Either way the §4.2 attribution gate's C-hint term is
+  populated. (review A's own bet: passes all four ~free.)
+- **P1 (mode-existence probe, ~8.5 h GPU — rev1-deepened, reviews A4/B4)** —
+  the falsifier for the load-bearing assumption (§6): 9 problem set {0, 4,
+  20, 21, 11, 18, 24, 17, 19} × **3 temps {0.4, 0.8, 1.2}** × K=4 ×
+  steps=256, container-scored, reachability CURVE reported (not just a
+  ladder boolean). **GO, cohort-stratified**: ≥4/9 overall AND **≥2/4 of
+  the type-quartet** (0/4/20/21) AND ≥1 non-type problem. **PARTIAL
+  (2–3)**: the EV in §6.1 is REWRITTEN from measured reachability before
+  any C-cell launches (no inherited thresholds; review B's garden-of-
+  forking-paths closure); the 1024-envelope cell is still first on the cut
+  list. **NO-GO (<2)**: before canceling, run an s512-variant recheck on
+  exactly the failing cohort (mode-at-coarser-commit-grid vs genuinely
+  absent — ~+3 h); if still absent, pivot: cancel C-full; M3 becomes
+  (a) property-feedback re-mask (M3.2 first), or (b) template-hardening +
+  full-156 slice change; report honestly.
+  Bets on record (§11): review A predicts the quartet is reachable under
+  mild diversity; review B predicts the GO is driven by 17/19 with ≤1–2 of
+  the type quartet.
 - **P2 (engine equivalence & bench-internal)**: steer loop in "all-off" mode
   must reproduce `dream.sample` canvas outputs **bit-identically** on a
   4-canvas s128 spot-check (same method the M2.3 patch was gated by);
@@ -487,9 +611,14 @@ scoring** (§9); full ablation matrix ≈ 62–74 h; the gates cut from the top.
   bench/ringbuf, bench/wrap-sum (R3 live there: approved properties; also
   the corpus/replay machinery stays identical). Mechanism gates only, NO
   capability claim here (ringbuf has never passed).
-- **P3 (humaneval cells)**: C-full@1024, C-full@2048, C-null@2048 (+
-  C-kill@2048 if wall allows), scored on the official container, same
-  counting as §4.
+- **P3 (humaneval cells — rev1 order)**: D7 verdict-config freeze committed
+  (sha in every subsequent record) → C-null@2048 first (it feeds both the
+  attribution gate and the free C-screen) → **C-screen computation**
+  (container-score the C-null ensemble, offline frozen-filter
+  counterfactual — done BEFORE C-full result analysis so the primary
+  delta's yardstick exists ahead of the steered rows) → C-full@2048 →
+  C-full@1024 (+ C-kill@2048 only if the primary delta ≥ +2 and is
+  contested), all scored on the official container, same counting as §4.
 - **M3.0 SHIP GATE**: §4.2 ship gate + attribution gate + meters (verifier
   wall ≤ 5% of gen wall; NFE attribution exact; replay determinism green).
 - **M3.0 KILL CRITERIA** (any one ⇒ stop/redirect, each with its detector):
@@ -585,6 +714,27 @@ loses headroom and there is no s512-class anchor under it): P(ship-gate@1024)
 demands zero net regressions and the C-null run exists (C-null loss ⇒
 ladder re-tuning; C-full loss with C-null safe ⇒ rung/clone semantics
 bug — engine-forensics, not science).
+
+**(rev1, review B: the null model gets an EV — the omission that hid
+P(attribution gate)).** C-null@2048 (ladder only, same envelope): 11 base
+(structurally mechanical — the ladder keeps a T=0.2 canvas and the
+pre-committed emission prefers it; zero-regression on the null side is
+near-guaranteed and is NOT evidence of engine excellence) + the
+budget-fixable five at 0.5–0.8 each (the ladder captures most of this
+cohort — s512 already bought them with budget alone) + the type-trap
+quartet at 0.15–0.35 each (review B: the multimodal idiom is the ladder's
+weakest reach) + semantics ~0.15 ×3 + exclusions ~0.15 ×2 ⇒ **point
+estimate ≈ 0.52–0.64, i.e. C-null@2048 ≈ 13–16/25** — squarely
+overlapping the ship noise band. This is why §4.2 requires ≥ +2 margin
+AND ≥ 1 flip outside the hint/ladder-reachable cohorts: those are what
+stop "C-null 14, C-full 15" from being sold as a mechanism.
+**(rev1) Attribution-gate power statement:** with per-problem single
+draws, P(C-full − C-null ≥ +2 under a machinery-null) ≈ 0.15–0.2 by
+direct convolution over the cohort table (D6 reproduces this number at
+gate-time from the measured C-null ensemble); adding the
+outside-cohort-flip requirement plus ≥2-games replication pushes the
+confirmable false-positive rate toward the 0.05 grade. Written here so
+nobody re-derives it at decision time.
 
 **Honest P(Beat-0.44 goal met within 2 phases [M3.0 + M3.1])**: ∼ **0.55**
 (point estimate ≥14/25 ≤ 2048 NFE via ≥1 phase-3 cell + attribution + zero
@@ -698,8 +848,25 @@ posterior + MC P(θ>x) table (the §4.2 gates computed from results JSONs),
 paired migration matrix anchors-vs-steered, failure-class histograms
 reused from M2.1 taxonomy, per-cell {NFE, wall, verifier wall,
 position-forwards} block compliant with the M2.4b NFE/wall dual-report
-protocol. Acceptance: reproduces the §4.2 table from the corrected-basis
-anchors exactly.
+protocol. Acceptance: reproduces the §4.2 reference values from the
+corrected-basis anchors exactly; sign-test/McNemar suite on toy paired
+matrices green; Jeffreys posterior printed as reporting-only per rev1 §4.2.
+
+D7 **(rev1, review B) Verdict-config freeze & D4 demotion rule** — two
+  pre-commitments against in-sample reward-shaping:
+  1. The informed-class list + patience-rule parameters form a versioned
+     `steer_verdict_config.json`; committed with sha BEFORE any C-cell
+     launches; its sha is recorded in every C-cell run record (resume
+     config-match includes it). Post-freeze edits are a labeled-cell
+     decision, never silent — the §8 razor applied to verdict rules too.
+  2. D4's outcome is a decision, not a decoration: if live mid-decode
+     informed-class yield on real canvases tracks the sim's recall curve
+     (0–1/36 at ≤85% committed), the kill/clone cells demote in order
+     (C-kill dropped first, C-full's mid-decode rungs reduced in
+     checkpoint density), and the honest summary demotes to "ladder +
+     final screen" — priced almost for free by the C-screen computation.
+     Acceptance: freeze-config schema + tamper-detection test; the
+     demotion rule text committed before P0.5.
 
 ---
 
@@ -725,18 +892,23 @@ anchors exactly.
 
 | item | GPU wall | notes |
 |---|---|---|
-| D1–D6/D-bench | 0 (CPU-only) | ~0.5–1 day of work |
-| P1 probe | ~5.5 h | 9 problems × 2 temps × K4 × 4.4 min |
+| D1–D7 instruments | 0 (CPU-only) | ~0.5–1 day of work |
+| P0.5 C-hint cell (rev1) | ~1.2 h | 4 problems × K4 × 4.4 min — cheapest falsifier, runs FIRST |
+| P1 probe (rev1-deepened) | ~8.5 h | 9 problems × 3 temps × K4 × 4.4 min + margin |
+| P1 NO-GO s512 recheck (contingent) | ~3 h | failing cohort only |
 | P2 equivalence (s128 × 4, two runs) | ~0.5 h | bit-identity spot-checks |
-| C-full@1024 + C-full@2048 | 7.5 + 14.9 h | the two L1 rows |
-| C-null@2048 | 14.9 h | attribution control |
-| C-kill@2048 (optional-on-gates) | 14.9 h | run only if ship-gate reached finds hero attribution contested, or wall allows |
+| C-null@2048 | 14.9 h | FIRST in P3 (feeds attribution gate + C-screen) |
+| C-screen computation (rev1) | ~0 | container-minutes from C-null sidecars |
+| C-full@2048 | 14.9 h | the primary mechanism row |
+| C-full@1024 | 7.5 h | cut order last of the mandatory cells |
+| C-kill@2048 (contingent) | 14.9 h | only if primary delta ≥ +2 and contested |
 | C-prop rerun (M3.1) | 14.9 h | property-grade final |
-| container scoring (all cells) | ~30 min total | cells are minutes each |
-| **Phase-1 recommended base path** | **≈ 43 h GPU + scoring** | probe → C-full@2048 → C-null@2048 → C-full@1024 (cuttable) — a realistic ~10–14 calendar days on this host |
+| container scoring (all cells) | ~45 min total | cells are minutes each |
+| **Phase-1 rev1 base path** | **≈ 48 h GPU + scoring** | C-hint → probe → C-null → C-full@2048 → C-full@1024 (cuttable) |
 
-Full matrix incl. ablations ≈ 65–75 h; the base path first, extras cut by
-the gates. If P1 says NO-GO, saved: ~35 h.
+Full matrix incl. ablations ≈ 68–78 h; the base path first, extras cut by
+the gates. If P0.5 + P1 jointly say the quartet is hint-free AND
+unreachable, saved: ~36 h and the §5 pivot text is already written.
 
 ---
 
@@ -808,11 +980,35 @@ Saber (arXiv 2510.18165; decode-floor comparator); Dream-Coder
   informed-class patience design) → R3 approved proptest properties
   (bench-now, humaneval via docstring-only GLM-5.3-drafted + human-approved
   in M3.1). Never the vendored tests. Structural allowlist guard.
-- **The claim is budget-first**: C-full@2048 must clear 14/25 honest
-  (ship), 18/25 (strong); attribution demanded vs the temp-ladder control;
-  the mode-existence probe (5.5 h) falsifies the reachability assumption
-  before any 15-hour cell is spent. Honest P(ship within 2 phases) ≈ 0.55
-  (∼0.75 | P1-GO), riding on: *Dream's distribution retains the failing
-  problems' correct modes at reachable diversity — the same-init AR twin
-  passing 22/25 of them is the reason to believe it, and the 5.5-hour
-  probe is the reason to know it before committing.*
+- **rev1: capability claims foreclosed; mechanism claim pre-registered.**
+  C-full@2048 ship = ≥15/25 paired (sign-test primary, Jeffreys demoted),
+  18/25 strong; attribution = C-full > max(C-null, C-screen, C-hint) by
+  ≥+2 with ≥1 flip outside the hint/ladder cohorts, flip-set replication;
+  C-hint (1.2 h) and the deepened probe (8.5 h, cohort-stratified GO) run
+  BEFORE any 15-hour cell. Honest P(ship within 2 phases) ≈ 0.35–0.5
+  (rev1-revised, harder gates), riding on: *Dream's distribution retains
+  the failing problems' correct modes at reachable diversity — the
+  same-init AR twin passing 22/25 of them is the reason to believe it,
+  and the probe is the reason to know it before committing.*
+
+---
+
+## 11. Appendix (rev1): falsifiable predictions on record
+
+Both reviewers registered predictions BEFORE any M3 cell was generated.
+Whoever is wrong, the record shows the design made them cheap to be wrong:
+
+- **review A (Kimi-K3)**: every C-full flip will be hint-reproducible;
+  C-full − C-null ≤ +1 problem; the hint cell passes all four type-trap
+  problems at ~zero verifier NFE. If instead C-full beats max(C-null,
+  C-hint) by ≥ +2 with ≥ 1 flip outside the hint-fixable cohort, review A
+  concedes the mechanism is alive.
+- **review B (GLM-5.3)**: P1 GO at 4–6/9 driven by the shape pair with
+  ≤1–2 type-quartet; C-null@2048 ≈ 12–16/25 (median 14); C-full@2048
+  15–18/25 (ship met, strong missed, P≈0.75); **C-full − C-screen ∈
+  {0, +1}** — 60–75% of the shipped margin over anchor is ladder +
+  rustc filter. If C-full − C-screen ≥ +3, review B concedes the SMC
+  machinery survives in substance.
+- **design self-prediction (rev0 §6.1 basis)**: C-null@2048 ≈ 13–16/25
+  (the realistic-null EV now modeled, not assumed); ship conditional on
+  cohort-stratified P1-GO ≈ 0.35–0.5 under the rev2 gates.
