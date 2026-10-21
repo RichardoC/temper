@@ -347,7 +347,21 @@ def export_runs(
                 code = body
             else:
                 code = ex.code
-            code = strip_stop_residue(code, stop_tokens)
+            # GOTCHA 1 stop-strip (M2.4b correction): the `\n}` stop-token cut
+            # is for WHOLE-module/continuation completions, where a col-0 `}`
+            # is the fn's own close. A multipl-e BODY FRAGMENT excludes the
+            # fn's close by construction (to_body_fragment), but after the
+            # min-indent dedent a TOP-LEVEL block in the fn body (for/if/
+            # match) legitimately lands its close at col 0 — cutting there
+            # amputates a syntactically complete body into a guaranteed
+            # SyntaxError (measured: 64-76 of each committed cell's
+            # SyntaxErrors, incl. all 76 in the s512 cell — see
+            # scripts/m2_4b_strip_artifact.py and docs/m2.4b-report.md).
+            # The fragment path therefore keeps only the fence-line/blank-line
+            # trimming; the temper-flavor path (whole modules vs self-contained
+            # tests) keeps the full stop-strip unchanged.
+            frag = prob["flavor"] == "multipl-e"
+            code = strip_stop_residue(code, stop_tokens if not frag else ())
             if not code.strip():
                 excluded.append({**base,
                     "reason": "completion empty after stop-token/fence stripping",

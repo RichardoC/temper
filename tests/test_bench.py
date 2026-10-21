@@ -203,6 +203,38 @@ class TestDriverWithFakeSampler(unittest.TestCase):
         self.assertEqual(dones["extract_ok_rows"], 4)
         self.assertEqual(res["summary"]["n_rows"], 4)
 
+    def test_export_body_fragment_with_toplevel_block_not_stopcut(self):
+        # M2.4b strip-artifact regression: a body whose prompted fn contains a
+        # TOP-LEVEL block dedents its close to col 0 — the `\n}` stop-token
+        # cut (GOTCHA 1 machinery) must NOT amputate the fragment there.
+        # Found on the B3 Qwen cell (65/100 rows) and present in every
+        # committed dLLM cell (64-76 SyntaxErrors per cell); see
+        # scripts/m2_4b_strip_artifact.py + docs/m2.4b-report.md.
+        run_bench(
+            "humaneval-rs", n_problems=1, k=1, steps=4, canvas=8,
+            out=self.out, sample_fn=self._fake_sample, log=lambda s: None,
+        )
+        # overwrite the fake's simple body with a top-level-for body
+        # (HumanEval_0's real shape: `for` at fn-body depth)
+        from temper.multipl_e.bench import load_problems
+        from temper.multipl_e.export import _fn_header_line
+        td = load_problems("humaneval-rs", 1)[0]
+        sig = _fn_header_line(td["prompt"]).group(0)
+        raw_dir = self.out.parent / (self.out.name + ".raw")
+        (raw_dir / f"{td['name']}__p0.txt").write_text(
+            "```rust\n" + sig + "\n    for i in 0..10 {\n        true;\n    }\n    false\n}\n```",
+            encoding="utf-8")
+        outdir = self.tmp / "export2"
+        export_runs([self.out], outdir, benchmark="humaneval-rs")
+        comp = json.loads(
+            (outdir / f"{td['name']}.json").read_text())["completions"][0]
+        # body dedented by min indent (4): the top-level for lands at col 0
+        self.assertEqual(
+            comp,
+            "for i in 0..10 {\n    true;\n}\nfalse")
+        self.assertEqual(comp.count("{"), comp.count("}"),
+                         "top-level block close must survive the export")
+
     def test_export_roundtrip_produces_official_files(self):
         run_bench(
             "humaneval-rs", n_problems=2, k=2, steps=4, canvas=8,
