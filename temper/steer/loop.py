@@ -217,12 +217,18 @@ def run_game(
     config: Optional[VerdictConfig] = None,
     log_path=None,
     top_p: float = 0.95,
+    on_checkpoint: Optional[Callable[["SteerParticle", torch.Tensor, float], None]] = None,
     log: Callable[[str], None] = lambda s: None,
 ) -> SteerGameResult:
     """Play ONE steering game (one problem, one envelope).
 
     ``policy_enabled=False`` is the equivalence mode: no rungs, no kills, no
     clones — outputs must match ``dream.sample`` bit-for-bit.
+
+    ``on_checkpoint(particle, canvas, fraction)`` is an observation hook called
+    at every checkpoint fraction of the frozen grid whether or not the policy is
+    enabled; D4 uses it to snapshot real mid-decode canvases for the
+    ghost-closure validity table. It must not mutate the canvas.
     """
     from temper.steer.verdict import load_verdict_config
     cfg = config or load_verdict_config()
@@ -267,7 +273,10 @@ def run_game(
         max(1, int(round(steps * f))) for f in cfg.checkpoint_grid
     }
     if not policy_enabled:
-        checkpoint_steps = set()  # no rungs; only the final render below
+        # no rungs fire, but the CHECKPOINT GRID is still walked so an
+        # observation hook (D4 capture) sees the same fractions the steered
+        # path would. Rung work is skipped separately, below.
+        pass
 
     def _spawn(index: int, *, temperature_: float, epoch: int,
                parent: Optional[int], x0: Optional[torch.Tensor]) -> SteerParticle:
@@ -293,8 +302,22 @@ def run_game(
 
     timesteps = torch.linspace(1, eps, steps + 1, device=device)
 
-    def _advance(p: SteerParticle, from_step: int, to_step: int) -> None:
-        """Run steps [from_step, to_step) for one particle; accrue NFE."""
+    def _advance(p: SteerParticle, from_step: int, to_step: int,
+                 observe_at: Optional[set] = None) -> None:
+        """Run steps [from_step, to_step) for one particle; accrue NFE.
+
+        Runs under ``torch.no_grad()`` because ``diffusion_generate`` — the only
+        path the unsteered cells ever take — is decorated ``@torch.no_grad()``
+        (vendored generation_utils.py). Building an autograd graph here is not
+        merely wasteful: on MPS it selects different kernels and therefore a
+        different float path, which is exactly the kind of silent divergence the
+        P2 bit-identity gate exists to catch.
+        """
+        with torch.no_grad():
+            _advance_inner(p, from_step, to_step, observe_at)
+
+    def _advance_inner(p: SteerParticle, from_step: int, to_step: int,
+                       observe_at: Optional[set] = None) -> None:
         state = {"t0": None, "step_times": [], "step_confs": [],
                  "peak_alloc_MB": None, "peak_driver_MB": None,
                  "hook_errors": []}
@@ -321,6 +344,9 @@ def run_game(
             # (MANDATORY MPS fix, spike §4) — do not double-purge here.
             meters.spend_model(p.index, 1)
             p.nfe += 1
+            if observe_at and on_checkpoint is not None and (i + 1) in observe_at:
+                p.x = x
+                on_checkpoint(p, x, (i + 1) / steps)
         p.x = x
         confs = [c for c in state["step_confs"] if c == c]  # drop NaN
         if confs:
@@ -340,6 +366,16 @@ def run_game(
 
     live = list(particles)
     step_cursor: Dict[int, int] = {p.index: 0 for p in particles}
+    if not policy_enabled:
+        # ALL-OFF (equivalence mode): each particle runs ONE unbroken segment
+        # from step 0 to `steps`, exactly as dream.sample does. Splitting at the
+        # checkpoint grid would re-seed the RNG mid-canvas and destroy the
+        # bit-identity the P2 gate exists to prove; the observation hook is
+        # instead fired from inside the segment at the grid steps.
+        for p in list(live):
+            _advance(p, 0, steps, observe_at=checkpoint_steps)
+            step_cursor[p.index] = steps
+        live = []
     while live:
         progressed = False
         for p in list(live):

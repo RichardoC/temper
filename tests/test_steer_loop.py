@@ -163,6 +163,66 @@ class TestAllOffEquivalence(unittest.TestCase):
         self.assertIn("emit", kinds)
 
 
+class TestNoGradDiscipline(unittest.TestCase):
+    """The loop must run its denoise steps under torch.no_grad(), because
+    ``diffusion_generate`` — the only path the unsteered cells ever take — is
+    decorated @torch.no_grad(). Building a grad graph here is not just
+    wasteful: on MPS it selects different kernels and therefore a different
+    float path, which is exactly the silent divergence the P2 bit-identity gate
+    exists to catch (it caught this one: 0/4 identical before the fix, 4/4
+    after)."""
+
+    def test_steps_run_without_autograd(self):
+        seen = []
+
+        class _GradProbeModel(_FakeModel):
+            def forward(self, x, attention_mask, tok_idx):
+                seen.append(torch.is_grad_enabled())
+                return super().forward(x, attention_mask, tok_idx)
+
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        view = SteerProblemView(name="p", prompt="fn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        run_game(view, "x", tokenizer=_FakeTokenizer(), model=_GradProbeModel(),
+                 envelope_nfe=STEPS, k=1, steps=STEPS, canvas_len=CANVAS,
+                 policy_enabled=False, config=load_verdict_config(),
+                 log_path=tmp / "g.jsonl", log=lambda s: None)
+        self.assertTrue(seen, "the model was never called")
+        self.assertFalse(any(seen),
+                         "a model forward ran with grad enabled — must match "
+                         "diffusion_generate's @torch.no_grad()")
+
+
+class TestAllOffStaysOneSegment(unittest.TestCase):
+    """All-off must NOT split a canvas at the checkpoint grid.
+
+    Regression guard: an earlier version walked the grid in all-off mode too,
+    which re-entered the stepping function per checkpoint and re-seeded the RNG
+    mid-canvas — silently destroying the bit-identity the P2 gate proves (it
+    was caught by the P2 GPU gate, then reproduced here). Observation at grid
+    steps must happen from INSIDE one unbroken segment."""
+
+    def test_reference_match_not_broken_by_observation(self):
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        view = SteerProblemView(name="p", prompt="fn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        enc = _FakeTokenizer().apply_chat_template(
+            [{"role": "user", "content": "x"}])
+        torch.manual_seed(0)
+        ref = _sample_fixed_reference(_FakeModel(), enc, steps=STEPS,
+                                      canvas_len=CANVAS, temperature=0.2)
+        res = run_game(view, "x", tokenizer=_FakeTokenizer(), model=_FakeModel(),
+                       envelope_nfe=STEPS, k=1, steps=STEPS, canvas_len=CANVAS,
+                       base_seed=0, policy_enabled=False,
+                       config=load_verdict_config(),
+                       on_checkpoint=lambda p, x, f: None,
+                       log_path=tmp / "g.jsonl", log=lambda s: None)
+        self.assertTrue(torch.equal(res.particles[0].x, ref),
+                        "adding the observation hook changed the canvas")
+
+
 class TestEquivalenceWitnessHasTeeth(unittest.TestCase):
     """The all-off gate is only meaningful if a seed bug BREAKS it."""
 
