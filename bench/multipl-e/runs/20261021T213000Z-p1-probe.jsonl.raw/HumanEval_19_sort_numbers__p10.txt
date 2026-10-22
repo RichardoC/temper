@@ -1,0 +1,10 @@
+```rust
+fn sort_numbers(numbers: String) -> String {
+    let words: Vec<&> = numbers.split_whitespace().collect();
+    let sorted_numbers: Vec<_> = words
+        .iteroned(|| w.parse())
+        .sorted()
+        .map(|&n.to_string());
+ sorted_numbers.iter().join(" ")
+}
+```

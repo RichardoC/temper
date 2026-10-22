@@ -1,0 +1,37 @@
+To implement the `sort_numbers` function, we need to:
+1. Split the input string into a vector of number words.
+2. Convert each word to its corresponding digit.
+3. Sort the vector of digits.
+4. Convert the sorted digits back to their corresponding number words.
+5. Join the sorted number words back into a single string and return it.
+
+Here's how we can implement this function in Rust:
+
+```rust
+fn sort_numbers(numbers: String) -> String {
+    // Helper function to map number words to digits
+    let word_to_digit_map = {
+        let mut map = std::collections::HashMap::new();
+        for (digit, word) in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].iter().enumerate() {
+            map.insert(word, digit.to_string());
+        }
+        map
+    };
+
+    // Split the input string into words
+ let vec_words: Vec<&str> = numbers.split_whitespace().collect();
+
+    // Convert number to digits
+    let vec_digits: Vec<String> = vec_words.iter().map(|word| word_to_digit_map.get(word).unwrap_or.expect("unwrap should handle the word not found case")).collect();
+
+    // Sort the digits
+    vec_digits.sort();
+
+    // Convert digits to number words
+    let digit_to_sorted_words_map = {
+::collections::HashMap::new();
+        for (digit, word) in ["0", "1", "2", "3", "4",5
+  - `word_to_digit_map` can be used to map number words to their corresponding digits in string format (e.g., "zero" to "0", "one" to "9").
+  - Convert the words to their digits equivalents.
+  - Sort these list of digits.
+  - Convert back sorted digits to number

@@ -1,0 +1,16 @@
+```rust
+/// Given vector of numbers (of at least two elements), apply a linear transform to that vector,
+/// such that the smallest number will become 0 and the largest will become 1
+/// >>> rescale_to_unit(vec![1.0, 2.0, 3.0, 4.0, 5.0])
+///vec![0.0, 0.25, 0.5, 0.75, 1.0]
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    let min_value = *numbers.iter().min().unwrap();
+    let max_value = *numbers.iter().max().unwrap();
+    let range = max_value - min_value;
+
+    // Res the vectorcaled numbers
+    numbers.iter()
+        .map(|num| (x - min_value) / range)
+        .collect()
+}
+```

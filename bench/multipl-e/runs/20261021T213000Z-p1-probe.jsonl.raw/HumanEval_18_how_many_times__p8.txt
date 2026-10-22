@@ -1,0 +1,15 @@
+```rust
+fn how_many_times(string: String, substring: String) -> isize {
+    let mut count = 0;
+    let mut position = 0;
+
+    while position <= string.len() - substring.len() {
+        if string[position..position + substring.len()] == substring {
+            count += 1;
+        }
+        position += 1;
+    }
+
+    count
+}
+```

@@ -1,0 +1,33 @@
+```rust
+/// Find how many times a given substring can be found in the original string. Count overlaping cases.
+/// >>> how_many_times(String::from(""), String::from("a"))
+/// 0
+/// >>> how_many_times(String::from("aaa"), String::from("a"))
+/// 3
+/// >>> how_many_times(String::from("aaaa"), String::from("aa"))
+/// 3
+fn how_many_times(string: String, substring: String) -> isize {
+    if substring.is_empty() {
+        return 0;
+    }
+    let mut count = 0;
+    let mut i = 0;
+    let sub_len_len = substring.len() as isize;
+
+    while string.len() - i >= sub_len_len as isize {
+        if &string[i..i + sub_len_len as usize] == & {
+            count += 1;
+        i += 1;
+    }
+
+    count
+}
+```
+
+In this code:
+- We check check if the substring is empty, as if it is, by definition 0 times it can occur in the string.
+- We start with the counter `count` set to 0, which will track the of occurrences of- the substring in as the string.
+- We define a loop that goes through all positions where a substring slice can start by checking how much remaining there are left in the string based on the remaining `_len`.
+- The conditional `if` checks the portion that's the length of the substring starting atth position.
+- If it's matched, we increment the `count`.
+- We continue until the end of the string; the `i` iterates through the string's indices; the `if` checks whether the substring matches extracted from slices of the string, increasing the count each times the substring is found.

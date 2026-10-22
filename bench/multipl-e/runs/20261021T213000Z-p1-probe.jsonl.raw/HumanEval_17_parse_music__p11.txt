@@ -1,0 +1,10 @@
+```rust
+fn parse_music(music_string: String) -> Vec<isize> {
+    let beats_map: ['!["        .to_string() => 4,
+                     "o|"       .to_string() => 2,
+                     ".|"     .to_string() => 1]];
+
+    music music_string.chars()).flatmap(|ch| beats_map.get(&&&ch).to_string()).unwrap_or(&&&0))
+        .collect()
+}
+```

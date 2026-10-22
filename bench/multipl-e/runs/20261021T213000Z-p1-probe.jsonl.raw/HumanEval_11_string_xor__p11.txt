@@ -1,0 +1,13 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    // Ensure the strings are equal in the length
+    a.len() == b.len().expect("Both strings must be of the equal length");
+    
+    a.chars().zip(b.chars()).map(|(ch,H)| {
+        (ch, char).map(|(ch_char_a, ch_char_b)| {
+            // Perform XOR operation
+            if ch_char_a != ch_char_b { '1' } else { '0' }
+        })
+    }).collect()
+}
+```

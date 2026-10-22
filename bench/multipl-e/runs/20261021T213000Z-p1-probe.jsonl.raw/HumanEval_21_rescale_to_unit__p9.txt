@@ -1,0 +1,34 @@
+Let's define the function `rescale_to_unit`, which rescales a vector of numbers such that the smallest value becomes 0 and the largest value becomes 1. We'll break down the process into steps simple to understand.
+
+ Here's how the can achieve this:
+
+1. **Findify the Minimum and Maximum Values:** Determine the smallest and largest values in the vector.
+2. **Rescale Each Element:** Adjust each element in the vector based on their relation to to these minimum and maximum values.
+3. **Return the Rescaled Vector:** Return the vector with the rescaled numbers.
+
+Here is the code implemented in Rust: 
+
+```rust
+/// Given vector of numbers (of at least two elements), apply a linear transform to that vector,
+/// such that the smallest number will become 0 and the largest will become 1
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    // Input to the function is a vector of f64 numbers.
+    // Output will a modified of the same vector, where the values have are rescaled.
+    if numbers.len() < 2||numbers.is_empty()
+    {
+        return (std::iter::from_iter(numbers.iter().cloned()).collect::<_,_, Vec>::collect());
+    }
+    
+    // Find the minimum and maximum values in the vector.
+    let min_val = numbers.iter().min().unwrap();
+    let max_val = numbers.iter().max().unwrap();
+    
+    // Vector to hold the rescaled numbers.
+    let mut rescaled_numbers = Vec::new();
+    
+    // Rescale each number.
+    for &x in &numbers {
+        if min_val == max_val {
+            rescaled_numbers.push(0.0);
+        } else {
+            let rescaled = (x - min_val) / (max_val - min_val) / f64::EPS

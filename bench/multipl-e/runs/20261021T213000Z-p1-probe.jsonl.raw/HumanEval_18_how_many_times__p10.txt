@@ -1,0 +1,37 @@
+To implement the `how_many_times` function, we need to count overlapping occurrences of a given substring within a string. The key is iterating through the string while allowing for overlapping matches. Let's write this function:
+
+```rust
+fn how_many_times(string: String, substring: String) -> isize {
+    // Ensure the substring is not empty to avoid infinite loops
+    if substring.is_empty() {
+        return 0;
+    }
+
+    // Convert the strings to slices for easier indexing operations
+    let string_slice = string.as_str();
+    let substring_slice = substring.as_str();
+
+    // Lengths of the substring and string
+    let sub_len = substring_slice.len();
+    let string_len = string_slice.len();
+
+    // To count the number of occurrences
+       let mut count = 0;
+    let mut i = 0; // Start of the search
+
+    // Loop through the string, allowing for overlapping occurrences
+    while i <= string_len - sub_len {
+        if string_slice[i..i + sub_len] == substring_slice {
+            count += 1;        // Match found, increment the
+        }
+        i += 1;        // Move to next index for
+    c
+    count    isize
+    
+    //### Implementation Details
+
+    // The `h`_times` function starts from the beginning of the main string and keeps looking it till the end,    returning the count of matches..
+}
+```
+
+This implementation will loop through the string, from each start position of a sliding window of length equal to n _len` characters, until it hits the end of the string. The loop's condition ensures that we check up to where the remaining string could support matching the full substring, leveraging Rust `slice` capabilities to efficiently relevant portions of the main string.

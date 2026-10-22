@@ -1,0 +1,29 @@
+```rust
+/// Find how many times a given substring can be found in the original string. Count overlaping cases.
+/// >>> how_many_times(String::from(""), String::from("a"))
+/// 0
+/// >>> how_many_times(String::from("aaa"), String::from("a"))
+/// 3
+/// >>> how_many_times(String::from("aaaa"), String::from("aa"))
+/// 3
+fn how_many_times(string: String, substring: String) -> isize {
+    if substring.is_empty() {
+        return 0;
+
+    let mut count = 0;
+    let mut pos = 0;
+    let len = string.len();
+    let sub_len = substring.len();
+
+    while pos <= len - sub_len {
+        // Check if the substring matches the current position
+        if &string[pos..pos + sub_len] == &substring {
+            count += 1;
+        }
+        // Move to the next position, allowing for an overlapping match
+        pos = (pos + 1 + sub_len) % sub_len;
+    }
+
+    count
+}
+```

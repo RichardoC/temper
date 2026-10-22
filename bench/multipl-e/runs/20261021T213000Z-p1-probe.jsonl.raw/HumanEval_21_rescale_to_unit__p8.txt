@@ -1,0 +1,22 @@
+To implement the `rescale_to_unit` function, we need to find the linear transformation to transform the input vector to a vector of the same length with the smallest value mapped to 0 and the largest value transformed to 1. The formula to do each element in the transformation can\[xtext{scaled\_i \frac{xx\_min}{x\_max - x\_min}\]where \( x\_scaled_i \) is the transformed value of \( x_i \),To achieve the transformation, we first identify the minimum and maximum values in the input vector, then apply each element the scaling formula and collect them.
+
+```rust
+/// This function takes a vector of floating point numbers (at least two elements) and applies a linear transform to it
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64>
+    This ensures that the largest number becomes 1 , and and the smallest number becomes a 0
+    - Let \(x_{min}\) be the smallest number.
+    - Let \(x_{max}\) be the largest number.
+    - If \(x_{max} == x_{min}\), all numbers are the same.
+    - For, each \(x_i \neq_{x_{max}(x_i-x_{min})/}(x_{max} Earthmin}
+{
+    if numbers.is_empty() {
+        return Vec::new();
+    }
+
+    numbers.iter().cloned().clied().next().unwrap(&unwrap()).unwrap(&unwrap()).unwrap(&unwrap()).collect()
+}
+
+// Example usage of the `rescale_to_unit` function
+fn main() {
+    let rescaled = rescale_to_unit(vec![1.0, 2.0, 3.0, 4.0, 5.0]);
+    assert_eq!(rescaled, vec![0.0, 0.

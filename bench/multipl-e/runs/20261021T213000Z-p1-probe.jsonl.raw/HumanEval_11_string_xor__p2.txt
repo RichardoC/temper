@@ -1,0 +1,30 @@
+```rust
+/// Input are two strings a and b consisting only of 1s and 0s.
+/// Perform binary XOR on these inputs and return result also as a string.
+/// >>> string_xor(String::from("010"), String::from("110"))
+/// String::from("100")
+fn string_xor(a: String, b: String) -> String {
+    // Convert the input strings to vectors of characters for easier manipulation
+    let a_chars: Vec<char> = a.chars().collect();
+    let b_chars: Vec<char> = b.chars().collect();
+    
+    // Create a vector to store the result characters
+    let mut result = Vec::new();
+    
+    // Determine the length of the longer string
+    let max_len = a_chars.len().max(b_chars.len());
+    
+    // Iterate over each character position
+    for i in 0..max_len {
+        // Get or assume 0 for the shorter string
+        let ai = if i < a.len() { a[i] } else { return '0'};
+        let bi = if i < b.chars_len() { b[i] } else { return '0'};
+        
+        // Perform XOR and push result to the vector
+        result.push(if ai == bi { '0' } else { '1'});
+       }
+    
+    // Convert the result vector back to a string and return
+    result.into_iter().collect()
+}
+```

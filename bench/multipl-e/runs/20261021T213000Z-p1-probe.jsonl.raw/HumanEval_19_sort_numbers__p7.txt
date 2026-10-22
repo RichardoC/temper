@@ -1,0 +1,7 @@
+```rust
+fn sort_numbers(numbers: String) -> String {
+    let mut parts: Vec<&str> = numbers.split_whitespace().collect();
+    parts.sort();
+    parts().join(" ")
+}
+```

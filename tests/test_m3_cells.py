@@ -248,20 +248,37 @@ class TestP1Reachability(unittest.TestCase):
         self.assertIn("s512", v["text"])
         self.assertIn("OUT OF THIS LANE", v["text"])
 
-    def test_seed_join_maps_excluded_canvases(self):
+    def test_join_is_manifest_authoritative_not_driver_flags(self):
+        """The export RE-extracts, so a row the driver accepted can still be
+        excluded at export (measured on the real P1 cell: 18 driver failures vs
+        20 export exclusions). A positional zip against the driver's own
+        extract_ok flags shifts every later status within a problem — the join
+        must follow the manifest's source_rows."""
         run = {"rows": [
+            # driver accepted all three...
             {"problem": "HumanEval_0_x", "i": 0, "temperature": 0.4,
              "seed": 0, "extract_ok": True},
             {"problem": "HumanEval_0_x", "i": 1, "temperature": 0.4,
-             "seed": 1, "extract_ok": False},
+             "seed": 1, "extract_ok": True},
             {"problem": "HumanEval_0_x", "i": 2, "temperature": 0.4,
              "seed": 2, "extract_ok": True},
         ]}
         results = {"HumanEval_0_x": {"statuses_official": ["SyntaxError", "OK"],
                                     "n_excluded": 1}}
-        grid = self.mod.build_grid(run, results)
+        # ...but export dropped row 1, so row 2 owns the second status
+        manifest = {"problems": [{"name": "HumanEval_0_x", "source_rows": [
+            {"i": 0}, {"i": 2}]}]}
+        grid = self.mod.build_grid(run, results, manifest)
         cell = grid[("HumanEval_0_x", 0.4)]
-        self.assertEqual(cell["statuses"],
-                         ["SyntaxError", "EXCLUDED", "OK"])
+        self.assertEqual(cell["statuses"], ["SyntaxError", "EXCLUDED", "OK"])
         self.assertEqual(cell["n_ok"], 1)
         self.assertTrue(cell["pass"])
+
+    def test_join_marks_unexported_rows_excluded(self):
+        run = {"rows": [{"problem": "P", "i": i, "temperature": 0.4,
+                         "seed": i, "extract_ok": True} for i in range(3)]}
+        results = {"P": {"statuses_official": ["OK"]}}
+        manifest = {"problems": [{"name": "P", "source_rows": [{"i": 2}]}]}
+        grid = self.mod.build_grid(run, results, manifest)
+        self.assertEqual(grid[("P", 0.4)]["statuses"],
+                         ["EXCLUDED", "EXCLUDED", "OK"])

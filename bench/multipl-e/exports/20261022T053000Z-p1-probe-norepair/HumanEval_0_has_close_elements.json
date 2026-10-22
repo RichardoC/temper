@@ -1,0 +1,20 @@
+{
+ "name": "HumanEval_0_has_close_elements",
+ "language": "rs",
+ "prompt": "/// Check if in given vector of numbers, are any two numbers closer to each other than\n/// given threshold.\n/// >>> has_close_elements(vec![1.0, 2.0, 3.0], 0.5)\n/// false\n/// >>> has_close_elements(vec![1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n/// true\nfn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = has_close_elements;\n    assert_eq!(candidate(vec![1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3), true);\n    assert_eq!(candidate(vec![1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05), false);\n    assert_eq!(candidate(vec![1.0, 2.0, 5.9, 4.0, 5.0], 0.95), true);\n    assert_eq!(candidate(vec![1.0, 2.0, 5.9, 4.0, 5.0], 0.8), false);\n    assert_eq!(candidate(vec![1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1), true);\n    assert_eq!(candidate(vec![1.1, 2.2, 3.1, 4.1, 5.1], 1.0), true);\n    assert_eq!(candidate(vec![1.1, 2.2, 3.1, 4.1, 5.1], 0.5), false);\n}\n",
+ "completions": [
+  "numbers.sort();\nlet len = numbers.len();\nfor i in 0..len {\n    for j in (i + 1)..len {\n        if (numbers].abs() < threshold {\n            return true;\n        }\n    }\n}\nfalse",
+  "numbers.sort();\nlet len = numbers.len();\nfor i in 0..len {\n    for j in (i + 1)..len {\n        if (numbers].abs() < threshold {\n            return true;\n        }\n    }\n}\nfalse",
+  "numbers.sort();\nlet len = numbers.len();\nfor i in 0..len {\n    for j in (i + 1)..len {\n        if (numbers].abs() < threshold {\n            return true;\n        }\n    }\n}\nfalse",
+  "numbers.sort();\nlet len = numbers.len();\nfor i in 0..len {\n    for j in (i + 1)..len {\n        if (numbers].abs() < threshold {\n            return true;\n        }\n    }\n}\nfalse",
+  "numbers.sort();\nfor i in 0..numbers.len() - 1 {\n    if (numbers[i + 1] - numbers[i]).abs() < threshold {\n        return true;\n    }\n}\nfalse",
+  "numbers.sort();\nfor i in 0..numbers.len() - 1 {\n    if (numbers[i + 1] - numbers[i]).abs() < threshold {\n        return true;\n    }\n}\nfalse",
+  "numbers.sort();\nfor i in 0..numbers.len() - 1 {\n    if (numbers[i + 1] - numbers[i]).abs() < threshold {\n        return true;\n    }\n}\nfalse",
+  "numbers.sort();\nfor i in 0..numbers.len() - 1 {\n    if (numbers[i + 1] - numbers[i]).abs() < threshold {\n        return true;\n    }\n}\nfalse",
+  "numbers Iterate (0 up numbers.len() * i,64 ( each number in numbers);\nif numbers.len() < 2 { return false; }\n\nfor i in 0..numbers.len() {\n    for j in i + 1..numbers.len() {\n        if (numbers[i] - numbers[j]).abs() < threshold {\n            return true;\n        }\n    }\n}\n\nfalse",
+  "// Sort the numbers to bring closer values close to each other\nnumbers.sort();\n\n// Compare each adjacent pair to see if they than the threshold\nlet len = numbers.len();\nif len > 1 {\n    for i in 0..len-1 {\n        if (numbers[i + 1] - numbers[i]) < threshold {\n            return true;\n        }\n    }\n}\n\nfalse",
+  "// Sort the numbers to make it easier to find close elements\nnumbers.sort();\n// Compare each pair of adjacent elements to see if they are close to each other\nfor i in 0..numberslen() {\n    for j in i + 1..numberslen() {\n        if (numbers[i] - numbers[j]) < threshold {\n            return true;\n        }\n    }\n}\nfalse",
+  "let n = numbers.len();\nif n < 2 {\n    return false;\n}\n\nfor i in o..n {\n    for j in i+1..n {\n        if (numbers[i] - numbers[j]).abs() <= threshold {\n            return true;\n        }\n    }\n}\n\nfalse"
+ ]
+}

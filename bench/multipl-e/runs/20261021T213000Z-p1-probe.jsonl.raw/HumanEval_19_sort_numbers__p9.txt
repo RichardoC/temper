@@ -1,0 +1,44 @@
+Let's complete the `sort_numbers` function by considering the requirements specified. Here's how you can implement this function using Rust.
+
+```rust
+use std::collections::HashMap;
+
+fn sort_numbers(numbers: String) -> String {
+    // Create a vector to hold the number words in order
+    let number_words: Vec<&> = Vec<&![
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+    ];
+
+    // Create a map of word to integer
+    let word_to_int: HashMap<&str, usize> = number_words.iter().enumerate()
+        .map(|(i, word)|)| word, i)
+        .collect();
+
+    // Create a reverse map of integer to word
+    let int_to_word = word_to_int.clone();
+
+    // Parse the input string into a vector of numerals
+    let mut nums: Vec<usize> = numbers.split_whitespace()
+        .map(|word| int_to_word[word_to_int.get(word).unwrap()['zero']])
+        .collect();
+
+    // Sort the vector of integers
+    nums.sort();
+
+    // Convert the sorted integers back to words and join them into a string
+    let result: String = nums
+        .map(|num| word_to_word[num])
+        .collect();
+
+    // Return the result string    return result;
+}
+```
+
+### Explanation
+
+1. **Mapping Words to Integers:** 
+   - We use a `HashMap` to map the words `'zero' to 'nine'` to their corresponding integers. We create two `HashMap` structures: `word_to_int` to convert words the other way and `int_to_word` to do the reverse.
+
+2. **Parsing the Input String:**
+   - We split the input string `numbers` by space to get an iterator over the words.
+

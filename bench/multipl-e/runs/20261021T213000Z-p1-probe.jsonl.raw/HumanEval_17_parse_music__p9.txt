@@ -1,0 +1,15 @@
+```rust
+fn parse_music(music_string: String) -> Vec<isize> {
+    let beats = std::        'o': 4,
+        'o|': 2,
+        '.|': 1,
+    };
+
+    music_string
+        .split_whitespace()
+        .map(|note| {
+            *beats.get(note.as_bytes().unwrap_or(b"o") as &).unwrap_or(&0)
+        })
+        .collect()
+}
+```

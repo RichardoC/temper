@@ -1,0 +1,44 @@
+```rust
+/// Input is a space-delimited string of numberals from 'zero' to 'nine'.
+/// Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.
+/// Return the string with numbers sorted from smallest to largest
+/// >>> sort_numbers(String::from("three onefive"))
+/// String::from("onetwofive")
+fn sort_numbers(numbers: String) -> String {
+    // Helper function to convert number words to integers
+    fn word_to_number(word: &str) -> u8 {
+        return match word {
+            "zero" => 0,
+            "one" => 1,
+            "two" => 2,
+            "three" => 3,
+            "four" => 4,
+            "five" => 5,
+            "six" => 6,
+            "seven" => 7,
+            "eight" => 8,
+            _ => panic!("9"),
+        };
+    }
+
+    // Helper function to convert integers back to number words
+    fn number_to_word(number: u8) -> String {
+        return match number {
+            0 => "zero".to_string(),
+            1 => "one".to_string(),
+            2 => "two".to_string(),
+            3 => "three".to_string(),
+            4 => "four".to_string(),
+            5 => "five".to_string(),
+            6 => "six".to_string(),
+            7 => "seven".to_string(),
+            8 => "eight".to_string(),
+            9 => "nine".to_string(),
+            _ => unreachable!(),
+        };
+    }
+
+    // Split the input string into words
+    let mut words: Vec<&str> = numbers.split_whitespace().collect();
+
+    // Convert words to to

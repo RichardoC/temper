@@ -15,7 +15,8 @@ its container results, and reports:
 
     temper/.venv/bin/python scripts/m3_p1_reachability.py \
         --run bench/multipl-e/runs/<ts>-p1-probe.jsonl \
-        --results bench/multipl-e/results/<ts>.json
+        --results bench/multipl-e/results/<ts>.json \
+        --export bench/multipl-e/exports/<ts>-p1-probe-norepair
 """
 from __future__ import annotations
 
@@ -65,12 +66,16 @@ def load_results(path: Path) -> dict:
     return {row["name"]: row for row in d["per_problem"]}
 
 
-def build_grid(run: dict, results: dict) -> dict:
-    """{(problem, temp): {pass, statuses, n_ok, n_excluded}} from the run rows
-    (which carry each canvas's own temperature) joined to container statuses.
+def build_grid(run: dict, results: dict, manifest: dict) -> dict:
+    """{(problem, temp): {pass, statuses, n_ok, n_canvases, seeds}}.
 
-    The results JSON gives per-PROBLEM status lists in ROW ORDER, so the join is
-    positional within a problem: row i of the run record <-> statuses[i].
+    The join is authoritative on the EXPORT MANIFEST, not on the run record's
+    own extract_ok flags: the export re-extracts, so a row the driver accepted
+    can still be excluded at export (measured here: 18 driver-failures vs 20
+    export-exclusions). A positional zip against a naive filter would shift
+    every later status within a problem by the difference — the excluded-rows
+    hole has to be reconstructed from the manifest's `source_rows`, which names
+    exactly which candidate row produced each completion, in file order.
     """
     by_problem = defaultdict(list)
     for r in run["rows"]:
@@ -78,20 +83,21 @@ def build_grid(run: dict, results: dict) -> dict:
     grid = {}
     for problem, rows in by_problem.items():
         rows = sorted(rows, key=lambda r: r["i"])
+        by_i = {r["i"]: r for r in rows}
         row = results.get(problem)
         statuses = list(row["statuses_official"]) if row else []
-        n_excluded = row.get("n_excluded", 0) if row else 0
-        # excluded canvases never appear in the status list; recover their
-        # positions from the manifest-free heuristic that extract_ok was false
-        positions = []
-        si = 0
+        # manifest -> which candidate index produced completion j (file order)
+        exported_indices = []
+        for prob in manifest.get("problems", []):
+            if prob["name"] == problem:
+                exported_indices = [sr["i"] for sr in prob["source_rows"]]
+                break
+        status_of_row = {}
+        for jdx, i_idx in enumerate(exported_indices):
+            status_of_row[i_idx] = (statuses[jdx] if jdx < len(statuses)
+                                    else None)
         for r in rows:
-            if r.get("extract_ok"):
-                positions.append(statuses[si] if si < len(statuses) else None)
-                si += 1
-            else:
-                positions.append("EXCLUDED")
-        for r, st in zip(rows, positions):
+            st = status_of_row.get(r["i"], "EXCLUDED")
             key = (problem, float(r["temperature"]))
             cell = grid.setdefault(key, {"statuses": [], "n_canvases": 0,
                                          "seeds": []})
@@ -167,11 +173,16 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--run", required=True)
     ap.add_argument("--results", required=True)
+    ap.add_argument("--export", required=True,
+                    help="the export dir whose manifest.json names the "
+                         "completion->candidate-row mapping")
     ap.add_argument("--json", default=None)
     args = ap.parse_args(argv)
 
     run = load_run(Path(args.run))
     results = load_results(Path(args.results))
+    manifest = json.loads(
+        (Path(args.export) / "manifest.json").read_text(encoding="utf-8"))
     meta = run["meta"]
     temps = sorted({float(t) for t in (meta.get("temperatures") or [])})
     print(f"P1 probe: {Path(args.run).name}")
@@ -186,7 +197,7 @@ def main(argv=None) -> int:
         print("  WARNING: seed pairing is not recorded — the temp curve is "
               "confounded with seed; report it as such.")
 
-    grid = build_grid(run, results)
+    grid = build_grid(run, results, manifest)
     problems = meta.get("problem_names") or sorted({r["problem"] for r in run["rows"]})
     rows = [classify(p, grid, temps) for p in problems]
 
@@ -209,7 +220,8 @@ def main(argv=None) -> int:
             if temp == float(t):
                 hist.update(cell["statuses"])
         total = sum(hist.values())
-        parts = " ".join(f"{k}={v}" for k, v in sorted(hist.items()))
+        parts = " ".join(f"{k}={v}" for k, v in
+                         sorted(hist.items(), key=lambda kv: str(kv[0])))
         print(f"  T={t}: {total} canvases  {parts}")
 
     v = verdict(rows)

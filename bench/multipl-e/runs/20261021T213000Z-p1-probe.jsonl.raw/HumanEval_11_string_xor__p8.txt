@@ -1,0 +1,15 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    a.chars().into_iter().zip(b.chars().into_iter())
+        .map(|(x, y)| {
+            let xor_result = if x == y {
+                '0'
+            } else {
+                '1'
+            };
+            // Convert to a single-character string
+            String::from(xor_result)
+        })
+        .collect()
+}
+```

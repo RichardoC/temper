@@ -1,0 +1,935 @@
+{
+  "type": "multipl-e-export-manifest",
+  "exported_at": "2026-10-22T04:34:39.296239+00:00",
+  "benchmark_arg": "humaneval-rs",
+  "repair": false,
+  "runs": [
+    "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl"
+  ],
+  "problems": [
+    {
+      "file": "HumanEval_0_has_close_elements.json",
+      "name": "HumanEval_0_has_close_elements",
+      "flavor": "multipl-e",
+      "completions": 12,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 176
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 176
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 176
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 176
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 139
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 280
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 9,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p9.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 310
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 319
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_0_has_close_elements__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 200
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_4_mean_absolute_deviation.json",
+      "name": "HumanEval_4_mean_absolute_deviation",
+      "flavor": "multipl-e",
+      "completions": 9,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 339
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 342
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 339
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 342
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 162
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 188
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 438
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 437
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 457
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_20_find_closest_elements.json",
+      "name": "HumanEval_20_find_closest_elements",
+      "flavor": "multipl-e",
+      "completions": 12,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 695
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 697
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 699
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 698
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 236
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 231
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 279
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 230
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 374
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 9,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p9.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 533
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 359
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_20_find_closest_elements__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 933
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_21_rescale_to_unit.json",
+      "name": "HumanEval_21_rescale_to_unit",
+      "flavor": "multipl-e",
+      "completions": 10,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 290
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 290
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 290
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 289
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 230
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 229
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 238
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 232
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 383
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 505
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_11_string_xor.json",
+      "name": "HumanEval_11_string_xor",
+      "flavor": "multipl-e",
+      "completions": 10,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 772
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 772
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 764
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 770
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 188
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 188
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 249
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 268
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 9,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p9.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 317
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 311
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_18_how_many_times.json",
+      "name": "HumanEval_18_how_many_times",
+      "flavor": "multipl-e",
+      "completions": 6,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 49
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 49
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 49
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 49
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 213
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 197
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_24_largest_divisor.json",
+      "name": "HumanEval_24_largest_divisor",
+      "flavor": "multipl-e",
+      "completions": 12,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 97
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 97
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 97
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 97
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 71
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 106
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 123
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 118
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 90
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 9,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p9.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 218
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 95
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_24_largest_divisor__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 91
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_17_parse_music.json",
+      "name": "HumanEval_17_parse_music",
+      "flavor": "multipl-e",
+      "completions": 11,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 345
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 1,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p1.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 345
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 2,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p2.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 345
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 3,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p3.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 345
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 192
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 193
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 193
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 198
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 8,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p8.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 127
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 286
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 11,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p11.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 248
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_19_sort_numbers.json",
+      "name": "HumanEval_19_sort_numbers",
+      "flavor": "multipl-e",
+      "completions": 6,
+      "source_rows": [
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 4,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p4.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 98
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 5,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p5.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 99
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 6,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p6.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 99
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 7,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p7.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 96
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 9,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p9.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 846
+        },
+        {
+          "run": "20261021T213000Z-p1-probe.jsonl",
+          "i": 10,
+          "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p10.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 208
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 5,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p5.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 6,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p6.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 9,
+      "problem": "HumanEval_4_mean_absolute_deviation",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_4_mean_absolute_deviation__p9.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 8,
+      "problem": "HumanEval_21_rescale_to_unit",
+      "reason": "whole-module extraction not convertible to the prompted-fn body fragment (renamed/reshaped API or unsupported shape)",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p8.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 9,
+      "problem": "HumanEval_21_rescale_to_unit",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_21_rescale_to_unit__p9.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 7,
+      "problem": "HumanEval_11_string_xor",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p7.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 10,
+      "problem": "HumanEval_11_string_xor",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_11_string_xor__p10.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 0,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p0.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 1,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p1.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 2,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p2.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 3,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p3.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 9,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p9.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 10,
+      "problem": "HumanEval_18_how_many_times",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_18_how_many_times__p10.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 9,
+      "problem": "HumanEval_17_parse_music",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_17_parse_music__p9.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 0,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p0.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 1,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p1.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 2,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p2.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 3,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p3.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 8,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "extract rejected at export: no fenced rust block and no plausible bare code span",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p8.txt"
+    },
+    {
+      "run": "20261021T213000Z-p1-probe.jsonl",
+      "i": 11,
+      "problem": "HumanEval_19_sort_numbers",
+      "reason": "whole-module extraction not convertible to the prompted-fn body fragment (renamed/reshaped API or unsupported shape)",
+      "raw_path": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl.raw/HumanEval_19_sort_numbers__p11.txt"
+    }
+  ],
+  "counts": {
+    "candidate_rows": 108,
+    "exported_completions": 88,
+    "excluded_rows": 20
+  },
+  "note": "excluded rows are scored failures under honest counting (pass@k is recomputable with n=exported+excluded)"
+}

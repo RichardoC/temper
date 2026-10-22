@@ -1,0 +1,13 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    // Create iterators iterator over characters in both strings
+    let result: Vec<char> = a.chars().zip(b.chars()).map(|(bit_a, byte_b)| {
+        // XOR two: _a XOR b -> 1 (if different), 0 (if  same)
+        if bit_a != byte_b {
+            '1'
+        } else { '0'
+    }).collect();
+
+    // Convert iterator of chars back into single string
+    result.into_iter().collect()
+}

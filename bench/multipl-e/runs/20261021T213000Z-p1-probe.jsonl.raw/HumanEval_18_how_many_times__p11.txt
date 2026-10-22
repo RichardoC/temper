@@ -1,0 +1,18 @@
+```rust
+fn how_many_times(string: String, substring: String) -> isize {
+    if substring.is_empty() || string.len() < substring.len() {
+        return 0;
+    }
+
+    
+    let mut count = 0;
+    let mut i = 0;
+
+    while i <= string.len() - substring.len() {
+        count += 1;
+        start += 1;
+    }
+
+    count
+}
+```

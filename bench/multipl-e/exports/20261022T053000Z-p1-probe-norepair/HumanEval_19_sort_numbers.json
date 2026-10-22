@@ -1,0 +1,14 @@
+{
+ "name": "HumanEval_19_sort_numbers",
+ "language": "rs",
+ "prompt": "/// Input is a space-delimited string of numberals from 'zero' to 'nine'.\n/// Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n/// Return the string with numbers sorted from smallest to largest\n/// >>> sort_numbers(String::from(\"three one five\"))\n/// String::from(\"one three five\")\nfn sort_numbers(numbers: String) -> String {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = sort_numbers;\n    assert_eq!(candidate(String::from(\"\")), String::from(\"\"));\n    assert_eq!(candidate(String::from(\"three\")), String::from(\"three\"));\n    assert_eq!(candidate(String::from(\"three five nine\")), String::from(\"three five nine\"));\n    assert_eq!(candidate(String::from(\"five zero four seven nine eight\")), String::from(\"zero four five seven eight nine\"));\n    assert_eq!(candidate(String::from(\"six five four three two one zero\")), String::from(\"zero one two three four five six\"));\n}\n",
+ "completions": [
+  "let mut parts: Vec<&str> = numbers.split_whitespace().collect();\nparts.sort();\nparts.intojoin(\" \")",
+  "let mut parts: Vec<&str> = numbers.split_whitespace().collect();\nparts.sort();\nparts.join.join(\" \")",
+  "let mut parts: Vec<&str> = numbers.split_whitespace().collect();\nparts.sort();\nparts.into.join(\" \")",
+  "let mut parts: Vec<&str> = numbers.split_whitespace().collect();\nparts.sort();\nparts().join(\" \")",
+  "// Create a vector to hold the number words in order\nlet number_words: Vec<&> = Vec<&![\n    \"zero\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"\n];\n\n// Create a map of word to integer\nlet word_to_int: HashMap<&str, usize> = number_words.iter().enumerate()\n    .map(|(i, word)|)| word, i)\n    .collect();\n\n// Create a reverse map of integer to word\nlet int_to_word = word_to_int.clone();\n\n// Parse the input string into a vector of numerals\nlet mut nums: Vec<usize> = numbers.split_whitespace()\n    .map(|word| int_to_word[word_to_int.get(word).unwrap()['zero']])\n    .collect();\n\n// Sort the vector of integers\nnums.sort();\n\n// Convert the sorted integers back to words and join them into a string\nlet result: String = nums\n    .map(|num| word_to_word[num])\n    .collect();\n\n// Return the result string    return result;",
+  "   let words: Vec<&> = numbers.split_whitespace().collect();\n   let sorted_numbers: Vec<_> = words\n       .iteroned(|| w.parse())\n       .sorted()\n       .map(|&n.to_string());\nsorted_numbers.iter().join(\" \")"
+ ]
+}

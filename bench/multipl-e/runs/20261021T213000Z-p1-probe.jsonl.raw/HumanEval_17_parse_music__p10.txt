@@ -1,0 +1,13 @@
+```rust
+fn parse_music(music_string: String) -> Vec<isize> {
+    match music_string.split_whitespace()
+        .map(move |note| -> isize {
+            match note {
+                "o" => 4,
+                "o|" => 2,
+                ".|." => 1,
+                _ => panic!("Unknown note format: {}", note), // Handle any unknown case if needed
+            }
+        })
+        .collect()
+}

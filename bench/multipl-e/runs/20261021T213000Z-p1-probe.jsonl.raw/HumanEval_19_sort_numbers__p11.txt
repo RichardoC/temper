@@ -1,0 +1,42 @@
+## Rust `sort_numbers` function
+
+Here is a complete implementation of the `sort_numbers` function in Rust:
+
+```rust
+use std::collections::HashMap;
+
+fn sort_numbers(input: String) -> String {
+    // Define an array of string representations of the numbers from '0' to '9'
+    let numbers = vec![
+        String::from("zero"), String::from("one"), String::fromfrom("three"),
+        String::from("five"), String::from("four"), String::from("six"),
+        String::from("seven"), String::from("nine"), String]
+    ];
+
+    // Create a map from number word to index
+    let number_map: HashMap<String, String> = numbers.iter().enumerate().map(|index, &num| (index.to_string(), num.to_string()).collect();
+
+    // Split the input string into a vector of strings representing integer indices of the numbers
+    let numbers_iter: Vec<u32> = input.split()
+                                      .map(|word| number_map.get(word).unwrap_or(&9_u32)) // Assign index '9' to any unintended word
+                                      .collect()
+                                      .collect();
+
+(|index, &num| (index.to_string(), num.to_string())).collect();
+
+    // Sort the vector of indices
+    let sorted_numbers_indices: Vec<u32> = numbers_iter();
+    sortedsort
+    // Convert the sorted indices back to readable words
+    let sorted_numbers_iter: Vec<_> = sorted_numbers_indices.iter().map(|num| number_map.get(&num).unwrap()).collect();
+
+    // Join the numbers back into a space-separated string
+    let sorted_numbers_string: String = sorted_numbers_iter.join(" ");
+
+    sorted_numbers_string
+}
+```
+
+In this implementation, we:
+1. Define an array of strings representing numeral words from '0' to '9'.
+2. Create

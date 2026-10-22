@@ -1,0 +1,16 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    assert_eq!(a.len(), b.len(), "Input strings must be of equal length");
+    
+    a.chars()
+        .zip(b.chars())
+        .map(|(c_a, c_b)| {
+            if c_a == c_b {
+                '0' // XOR of the same or opposite distinct bits is '0'
+            } else {
+                '1' // XOR of two different bits is '1
+            }
+        })
+        .collect()
+}
+```

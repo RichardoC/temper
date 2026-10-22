@@ -1,0 +1,13 @@
+```rust
+fn largest_divisor(n: isize) -> isize {
+    if n <= 1 {
+        return 1; // for n negative, or cases not than a proper divisor, return 1
+    }
+    for i in(n..1).rev() {
+        if n % i == 0 {
+            return i;
+        }
+    }
+    return1; // For prime numbers other than itself, return 1
+}
+```

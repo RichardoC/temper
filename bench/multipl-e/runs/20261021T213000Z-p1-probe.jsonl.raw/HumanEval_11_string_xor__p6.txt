@@ -1,0 +1,18 @@
+```rust
+/// Input are two strings a and b, consisting only of 1s and 0s.
+/// Perform binary XOR on these inputs and return result also as a string.
+/// >>> string_xor(String::from("010"), String::from("110"))
+/// String::from("100")
+fn string_xor(a: String, b: String) -> String {
+    let mut result = String::new();
+    for (a_char, b_char) in a.chars().zip(b.chars()) {
+        // XOR if bits are different, return 1
+        if (a_char == '1') != (b_char == '1') {
+            result.push('1');
+        } else {
+            result.push('0');
+        }
+    }
+    result
+}
+```
