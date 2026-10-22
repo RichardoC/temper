@@ -305,10 +305,15 @@ class TestSteeredGame(unittest.TestCase):
                                    informed_error_classes=(), stub_markers=())
 
     def test_checkpoints_land_on_the_frozen_grid(self):
+        """With the kill/clone rungs ENABLED the loop walks the whole frozen
+        grid. (The frozen v2 config demotes them off — `kill_clone_enabled` is
+        passed explicitly here so this pins the GRID, not the demotion; the
+        demoted window has its own test below.)"""
         path = self.tmp / "g.jsonl"
         run_game(self._view(), "x", tokenizer=_FakeTokenizer(),
                  model=_FakeModel(), envelope_nfe=STEPS * 2, k=1, steps=STEPS,
                  canvas_len=CANVAS, policy_enabled=True,
+                 kill_clone_enabled=True,
                  config=self._non_killing_config(), log_path=path,
                  log=lambda s: None)
         steps_seen = {e["step"] for e in read_game_log(path)
@@ -327,6 +332,7 @@ class TestSteeredGame(unittest.TestCase):
         res = run_game(view, "x", tokenizer=_KillingTokenizer(),
                        model=_FakeModel(), envelope_nfe=STEPS, k=2,
                        steps=STEPS, canvas_len=CANVAS, policy_enabled=True,
+                       kill_clone_enabled=True,
                        config=killing, log_path=path, log=lambda s: None)
         kills = [e for e in read_game_log(path) if e["kind"] == "kill"]
         self.assertTrue(kills, "an R0-fatal canvas must be killed")
@@ -352,6 +358,150 @@ class TestSteeredGame(unittest.TestCase):
                        config=self.cfg, log_path=path, log=lambda s: None)
         self.assertIsNotNone(res.emitted)
         self.assertIn(res.emitted.index, {p.index for p in res.particles})
+
+
+class TestLadderTemperatures(unittest.TestCase):
+    """The rev2 diversity ladder is per-PARTICLE, not per-game: one structural
+    canvas at T=0.2 plus a round-robin over the measured reachable band. The
+    loop must take the list verbatim and give every particle its own temp."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.cfg = load_verdict_config()
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def test_each_particle_gets_its_ladder_temperature(self):
+        ladder = [0.2, 0.8, 0.95, 1.0, 1.1, 1.2, 0.8, 0.95]
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        res = run_game(view, "x", tokenizer=_FakeTokenizer(),
+                       model=_FakeModel(), envelope_nfe=STEPS * len(ladder),
+                       k=len(ladder), steps=STEPS, canvas_len=CANVAS,
+                       temperatures=ladder, base_seed=0,
+                       policy_enabled=True, config=self.cfg,
+                       log_path=self.tmp / "g.jsonl", log=lambda s: None)
+        self.assertEqual([p.temperature for p in res.particles], ladder)
+        # seeds stay FLAT (base_seed + i): the slots are independent
+        # configurations, so pairing their seeds would only duplicate canvases
+        self.assertEqual([p.seed for p in res.particles], list(range(len(ladder))))
+
+    def test_temperature_list_shorter_than_k_is_refused(self):
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        with self.assertRaises(ValueError):
+            run_game(view, "x", tokenizer=_FakeTokenizer(),
+                     model=_FakeModel(), envelope_nfe=STEPS * 3, k=3,
+                     steps=STEPS, canvas_len=CANVAS, temperatures=[0.2, 0.8],
+                     policy_enabled=True, config=self.cfg,
+                     log_path=self.tmp / "g.jsonl", log=lambda s: None)
+
+    def test_the_ladder_is_recorded_in_the_game_log(self):
+        ladder = [0.2, 0.8, 1.2]
+        path = self.tmp / "g.jsonl"
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        run_game(view, "x", tokenizer=_FakeTokenizer(), model=_FakeModel(),
+                 envelope_nfe=STEPS * 3, k=3, steps=STEPS, canvas_len=CANVAS,
+                 temperatures=ladder, policy_enabled=True, config=self.cfg,
+                 log_path=path, log=lambda s: None)
+        meta = read_game_log(path)[0]
+        self.assertEqual(meta["temperatures"], ladder)
+
+
+class TestDemotedKillCloneRole(unittest.TestCase):
+    """The frozen rev2 config demotes the kill/clone rungs (D4: informed-class
+    recall measured 0/5 at <=75% committed). Under the demotion the ladder
+    fires ONLY at the final checkpoint and no kill is ever executed — these are
+    regression pins, in the same spirit as the no_grad pin: a future re-enable
+    must be a deliberate, visible decision."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.cfg = load_verdict_config()
+        self.view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                     fn_name="f", signature_line="fn f() -> i32 {")
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def test_frozen_config_is_the_demoted_role(self):
+        """One switch states the whole demotion: kills are not executed AND the
+        rung ladder does not fire before the final checkpoint."""
+        self.assertFalse(self.cfg.kill_clone_enabled)
+        self.assertFalse(self.cfg.raw["rev2"]["kill_clone_enabled"])
+
+    def test_rungs_fire_only_at_the_final_checkpoint(self):
+        path = self.tmp / "g.jsonl"
+        run_game(self.view, "x", tokenizer=_FakeTokenizer(), model=_FakeModel(),
+                 envelope_nfe=STEPS * 2, k=2, steps=STEPS, canvas_len=CANVAS,
+                 policy_enabled=True, config=self.cfg, log_path=path,
+                 log=lambda s: None)
+        steps_seen = {e["step"] for e in read_game_log(path)
+                      if e["kind"] == "checkpoint"}
+        self.assertEqual(steps_seen, {STEPS},
+                         "the demoted role fires the ladder at the final "
+                         "checkpoint only")
+
+    def test_an_r0_fatal_canvas_is_not_killed_under_the_demotion(self):
+        """The kill trigger is present (an unterminated fence) and the policy
+        would kill it, but the demoted role must suppress the action and log
+        it — the particle keeps decoding and still emits."""
+        path = self.tmp / "g.jsonl"
+        res = run_game(self.view, "x", tokenizer=_KillingTokenizer(),
+                       model=_FakeModel(), envelope_nfe=STEPS * 2, k=2,
+                       steps=STEPS, canvas_len=CANVAS, policy_enabled=True,
+                       config=self.cfg, log_path=path, log=lambda s: None)
+        kinds = [e["kind"] for e in read_game_log(path)]
+        self.assertNotIn("kill", kinds, "the demotion must not execute kills")
+        self.assertIn("kill_suppressed", kinds,
+                      "a suppressed kill must be logged, not silent")
+        self.assertTrue(all(p.alive for p in res.particles),
+                        "a suppressed kill must not stop the particle")
+
+
+class TestConfidenceAccumulatesAcrossSegments(unittest.TestCase):
+    """``mean_commit_conf`` is the emission rule's ranking statistic and must
+    mean the same thing the bench record's column means: the WHOLE canvas's
+    mean step confidence. A steered particle is advanced one segment per
+    checkpoint, so the mean has to accumulate — reading only the last segment
+    would rank a single unrepresentative step-run against a full canvas."""
+
+    def test_mean_confidence_covers_every_step_of_the_canvas(self):
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        cfg = load_verdict_config()
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        # 8 steps in 4 checkpoint segments; all-off runs one segment
+        steered = run_game(view, "x", tokenizer=_FakeTokenizer(),
+                           model=_FakeModel(), envelope_nfe=STEPS, k=1,
+                           steps=STEPS, canvas_len=CANVAS, base_seed=0,
+                           policy_enabled=True, config=cfg,
+                           log_path=tmp / "a.jsonl", log=lambda s: None)
+        # the log's final checkpoint reports the committed-token count for the
+        # WHOLE canvas, i.e. the particle really did run every step
+        events = [e for e in read_game_log(tmp / "a.jsonl")
+                  if e["kind"] == "checkpoint"]
+        self.assertEqual(events[-1]["step"], STEPS)
+        self.assertEqual(steered.meters.nfe_model, STEPS)
+        self.assertIsNotNone(steered.particles[0].mean_commit_conf)
+
+    def test_all_off_confidence_matches_the_single_segment_mean(self):
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        cfg = load_verdict_config()
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        res = run_game(view, "x", tokenizer=_FakeTokenizer(), model=_FakeModel(),
+                       envelope_nfe=STEPS, k=1, steps=STEPS, canvas_len=CANVAS,
+                       base_seed=0, policy_enabled=False, config=cfg,
+                       log_path=tmp / "b.jsonl", log=lambda s: None)
+        p = res.particles[0]
+        self.assertEqual(p.conf_count, STEPS,
+                         "every step's confidence must be accumulated")
+        self.assertAlmostEqual(p.mean_commit_conf, p.conf_sum / p.conf_count)
 
 
 if __name__ == "__main__":

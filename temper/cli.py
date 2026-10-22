@@ -97,6 +97,7 @@ def cmd_bench_multipl_e(args) -> int:
     n = None if args.problems == "all" else int(args.problems)
     sample_fn = None
     model = milestone = None
+    extra_meta = None
     if args.engine == "qwen":
         # M2.4b row B3: the AR twin through the SAME driver + record format.
         if args.steps != 0:
@@ -107,6 +108,45 @@ def cmd_bench_multipl_e(args) -> int:
         sample_fn = qwen_sample
         model = QWEN_MODEL_ID
         milestone = "M2.4b-B3"
+    elif args.engine == "steer":
+        # M3.0 C-full: ONE steering game per problem (design 4.1's cell unit),
+        # so the driver runs with -K 1 and the game's emitted canvas is the
+        # row. extra_meta makes the resume config-match include the envelope
+        # and the frozen verdict-config sha (design 7 D7).
+        if args.K != 1:
+            raise SystemExit(
+                "--engine steer plays ONE game per problem (the game's emitted "
+                "canvas is the row); pass -K 1")
+        if args.envelope_nfe is None:
+            raise SystemExit(
+                "--engine steer needs --envelope-nfe (NFE spent per problem, "
+                "design 4.1: 2048 for C-full)")
+        from temper.steer.emission import STRUCTURAL_TEMP  # noqa: F401
+        from temper.steer.engine import REV2_LADDER, ladder_for_envelope, make_steer_sample_fn
+        from temper.steer.verdict import load_verdict_config
+        cfg = load_verdict_config()
+        ladder = ladder_for_envelope(args.envelope_nfe, args.steps)
+        if ladder != list(REV2_LADDER[:len(ladder)]):
+            raise SystemExit(f"ladder {ladder} is not the frozen rev2 prefix")
+        sample_fn = make_steer_sample_fn(
+            out=Path(args.out), envelope_nfe=args.envelope_nfe,
+            steps=args.steps, canvas=args.canvas, base_seed=args.seed,
+            alg=args.alg)
+        model = "Dream-org/Dream-Coder-v0-Instruct-7B"
+        milestone = "M3.0-C-full"
+        extra_meta = {
+            "mode": "steered",
+            "cell": "C-full",
+            "envelope_nfe": args.envelope_nfe,
+            "diversity_ladder": ladder,
+            "steer_config_sha256": cfg.sha256,
+            "steer_config_version": cfg.version,
+            "kill_clone_enabled": cfg.kill_clone_enabled,
+            "emission": cfg.emission,
+        }
+        # the driver writes extra_meta itself; the steer cell also needs the
+        # ladder as its per-canvas temperature list so the record shows the
+        # game's composition. -K 1 already, so pass no --temperatures here.
     problem_indices = None
     if args.problem_indices:
         problem_indices = [int(x) for x in args.problem_indices.split(",") if x.strip()]
@@ -138,6 +178,7 @@ def cmd_bench_multipl_e(args) -> int:
         temperatures=temps,
         seed_paired_across_temps=args.seed_paired_across_temps,
         hint_line=hint_line,
+        extra_meta=extra_meta,
     )
     s = res["summary"]
     return 0 if s["n_rows"] else 1
@@ -302,12 +343,18 @@ def build_parser() -> argparse.ArgumentParser:
                    help="file whose first line-block is appended to the chat "
                         "prompt as ONE extra line; text+sha256 land in the run "
                         "meta (M3 P0.5 C-hint knowledge-injection null)")
+    b.add_argument("--envelope-nfe", type=int, default=None,
+                   help="NFE spent per problem in ONE steering game (the "
+                        "--engine steer cell unit; design 4.1: 2048 for "
+                        "C-full/C-null at steps=256)")
     b.add_argument("-K", type=int, default=4, help="samples per problem")
     b.add_argument("--steps", type=int, default=96, help="denoise steps per canvas "
                    "(Dream engine; must be 0 for the qwen AR engine)")
-    b.add_argument("--engine", default="dream", choices=["dream", "qwen"],
-                   help="sampling engine: dream (dLLM diffusion canvas, B2) or "
-                        "qwen (Qwen2.5-Coder-7B-Instruct AR decode, B3 twin) — "
+    b.add_argument("--engine", default="dream", choices=["dream", "qwen", "steer"],
+                   help="sampling engine: dream (dLLM diffusion canvas, B2), "
+                        "qwen (Qwen2.5-Coder-7B-Instruct AR decode, B3 twin), or "
+                        "steer (the M3.0 C-full steer loop: ONE game per "
+                        "problem, so it requires -K 1 and --envelope-nfe) — "
                         "same driver, prompt template, seeds and record schema")
     b.add_argument("--canvas", type=int, default=384, help="canvas length (new tokens)")
     b.add_argument("--seed", type=int, default=0,

@@ -34,6 +34,7 @@ import torch
 
 from temper.model.dream import MASK_TOKEN_ID, _make_hooks
 from temper.model.dream_fixed import fixed_shape_step
+from temper.steer.emission import rank_screen, select_screen
 from temper.steer.log import Decision, SteerGameLog, decide, persistence_of
 from temper.steer.metering import GameMeters
 from temper.steer.verdict import (
@@ -97,6 +98,13 @@ class SteerParticle:
     final_raw_text: str = ""
     final_clean: bool = False
     mean_commit_conf: Optional[float] = None
+    # Running confidence accumulators. ``mean_commit_conf`` must mean the same
+    # thing the bench record's column means (the WHOLE canvas's mean step
+    # confidence), because it is the emission rule's ranking statistic; a
+    # steered particle is advanced in one segment per checkpoint, so the mean
+    # is accumulated across segments instead of being reset by the last one.
+    conf_sum: float = 0.0
+    conf_count: int = 0
     verdict_calls: int = 0
     verifier_wall_s: float = 0.0
 
@@ -211,9 +219,11 @@ def run_game(
     steps: int,
     canvas_len: int,
     temperature: float = 0.2,
+    temperatures: Optional[List[float]] = None,
     alg: str = "entropy",
     base_seed: int = 0,
     policy_enabled: bool = True,
+    kill_clone_enabled: Optional[bool] = None,
     config: Optional[VerdictConfig] = None,
     log_path=None,
     top_p: float = 0.95,
@@ -225,6 +235,23 @@ def run_game(
     ``policy_enabled=False`` is the equivalence mode: no rungs, no kills, no
     clones — outputs must match ``dream.sample`` bit-for-bit.
 
+    ``temperatures`` gives particle i its own sampling temperature (the rev2
+    diversity ladder: one structural canvas at T=0.2 plus a round-robin over
+    the measured reachable band). Without it every particle uses the scalar
+    ``temperature``, which is what the P2 equivalence gate needs. Particle i
+    still draws seed ``base_seed + i`` — the ladder's slots are independent
+    configurations, so pairing their seeds would only duplicate canvases.
+
+    ``kill_clone_enabled`` defaults to the FROZEN CONFIG's value (rev2: False)
+    and is only ever an explicit override in unit tests. Under the demoted C-full
+    role the rung ladder still fires and the policy's would-be verdict is still
+    logged, but no kill is executed and no rung fires before the final
+    checkpoint — the in-loop machinery's only actionable window was the final
+    checkpoint, which is also the emission screen. D4 measured informed-class
+    recall 0/5 at <=75% committed, so earlier firings would buy no decision,
+    only verifier wall. Each suppressed kill is logged as a ``kill_suppressed``
+    event, so the demotion is auditable from the log alone.
+
     ``on_checkpoint(particle, canvas, fraction)`` is an observation hook called
     at every checkpoint fraction of the frozen grid whether or not the policy is
     enabled; D4 uses it to snapshot real mid-decode canvases for the
@@ -232,6 +259,8 @@ def run_game(
     """
     from temper.steer.verdict import load_verdict_config
     cfg = config or load_verdict_config()
+    if kill_clone_enabled is None:
+        kill_clone_enabled = cfg.kill_clone_enabled
     # The loop drives ``fixed_shape_step`` itself (it IS the fixed-shape path),
     # so the M2.3 kill-switch is not a fallback here — a run with the native
     # sampler forced on would silently mean something else. Refuse instead of
@@ -242,6 +271,12 @@ def run_game(
             "the fixed-shape sampler. Unset it — the native path is a "
             "regression-contrast escape hatch, not a steering substrate.")
     device = str(next(model.parameters()).device)
+    # Per-particle temperature ladder: explicit list wins, else the scalar.
+    temps = list(temperatures) if temperatures else [temperature] * k
+    if len(temps) < k:
+        raise ValueError(
+            f"temperatures has {len(temps)} entries for k={k} particles")
+    temps = temps[:k]
 
     enc = tokenizer.apply_chat_template(
         [{"role": "user", "content": chat_prompt}],
@@ -257,10 +292,12 @@ def run_game(
         game_log.meta(
             game=view.name, problem=view.name, steps=steps, K=k,
             envelope_nfe=envelope_nfe, canvas=canvas_len,
-            temperature=temperature, alg=alg, base_seed=base_seed,
+            temperature=temperature, temperatures=temps, alg=alg,
+            base_seed=base_seed,
             verdict_config_sha256=cfg.sha256,
             verdict_config_version=cfg.version,
             policy_enabled=policy_enabled,
+            kill_clone_enabled=kill_clone_enabled,
             view_sha256=hashlib.sha256(
                 (view.prompt + "\x00" + view.fn_name).encode()).hexdigest(),
         )
@@ -350,7 +387,9 @@ def run_game(
         p.x = x
         confs = [c for c in state["step_confs"] if c == c]  # drop NaN
         if confs:
-            p.mean_commit_conf = sum(confs) / len(confs)
+            p.conf_sum += sum(confs)
+            p.conf_count += len(confs)
+            p.mean_commit_conf = p.conf_sum / p.conf_count
 
     def _finish(p: SteerParticle) -> None:
         gen_ids = p.x[0, prompt_len:].tolist()
@@ -362,7 +401,7 @@ def run_game(
     # ---- main round-robin loop -------------------------------------------
     t_all = time.perf_counter()
     for i in range(k):
-        _spawn(i, temperature_=temperature, epoch=0, parent=None, x0=None)
+        _spawn(i, temperature_=temps[i], epoch=0, parent=None, x0=None)
 
     live = list(particles)
     step_cursor: Dict[int, int] = {p.index: 0 for p in particles}
@@ -390,6 +429,13 @@ def run_game(
             step_cursor[p.index] = nxt
             progressed = True
             if policy_enabled and nxt in checkpoint_steps:
+                # Rung window (same switch as the kill demotion): with
+                # kill/clone OFF the ladder fires only at the final
+                # checkpoint — D4 measured no informed evidence at <=75%
+                # committed, so earlier firings would buy no decision, only
+                # verifier wall.
+                if not kill_clone_enabled and nxt < steps:
+                    continue
                 rec = _verdict_at_checkpoint(
                     view, tokenizer, p, prompt_len=prompt_len,
                     steps_done=nxt, steps=steps, config=cfg,
@@ -414,11 +460,21 @@ def run_game(
                                   action=d.action, reason=d.reason,
                                   nfe_at=p.nfe)
                 if d.action == "kill":
-                    p.alive = False
-                    p.dead_reason = d.reason
-                    live.remove(p)
-                    if game_log is not None:
-                        game_log.emit("kill", particle=p.index, reason=d.reason,
+                    if kill_clone_enabled:
+                        p.alive = False
+                        p.dead_reason = d.reason
+                        live.remove(p)
+                        if game_log is not None:
+                            game_log.emit("kill", particle=p.index,
+                                          reason=d.reason, nfe_at=p.nfe)
+                    elif game_log is not None:
+                        # Demoted role: the policy's verdict is recorded but
+                        # not executed (see the docstring). D4 measured 0/5
+                        # informed recall at <=75% committed, so under the
+                        # rev2 demotion these events are the measurement of
+                        # what a re-enabled kill rung WOULD have done.
+                        game_log.emit("kill_suppressed", particle=p.index,
+                                      step=nxt, reason=d.reason,
                                       nfe_at=p.nfe)
         if not progressed:
             break
@@ -429,18 +485,23 @@ def run_game(
     emitted = None
     eligible = [p for p in particles if p.final_raw_text]
     if policy_enabled:
-        clean = [p for p in eligible if _final_is_clean(view, cfg, p)]
-        pool = clean or eligible
-        if pool:
-            emitted = sorted(
-                pool,
-                key=lambda q: (-(q.mean_commit_conf or -1e9), q.temperature, q.index),
-            )[0]
+        for p in eligible:
+            p.final_clean = _final_is_clean(view, cfg, p)
+        emitted = select_screen(eligible)
     else:
         emitted = eligible[0] if eligible else None
     if game_log is not None:
         game_log.emit("emit", particle=(emitted.index if emitted else None),
-                      nfe_at=meters.nfe_model)
+                      nfe_at=meters.nfe_model,
+                      emission_rule=cfg.emission,
+                      final_clean=[p.index for p in particles if p.final_clean],
+                      screen_ranking=[p.index for p
+                                      in rank_screen(eligible)] if
+                      policy_enabled else [],
+                      mean_commit_conf={str(p.index): p.mean_commit_conf
+                                        for p in particles},
+                      temperatures={str(p.index): p.temperature
+                                    for p in particles})
         game_log.done(nfe_used=meters.nfe_model,
                       n_particles_live=len(live),
                       emitted_particle=(emitted.index if emitted else None),

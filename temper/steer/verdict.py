@@ -141,6 +141,24 @@ class VerdictConfig:
         """The serializable config record a run log carries (sha included)."""
         return dict(self.raw, sha256=self.sha256)
 
+    @property
+    def kill_clone_enabled(self) -> bool:
+        """Whether the policy may EXECUTE a kill (rev2 ``kill_clone_enabled``).
+
+        Read from the frozen payload so the D4 demotion is one fact stated once
+        (config, sha-recorded per cell), never a per-run flag. Absent (v0/v1
+        configs, where the demotion had not been applied) means enabled.
+
+        The demotion is a single fact, so it has a single switch: with it OFF
+        the loop neither executes a kill nor fires the rung ladder before the
+        final checkpoint (D4 measured informed-class recall 0/5 at <=75%
+        committed on real canvases — before the final step there is no evidence
+        to act on, and every bit of the ladder's measured discriminative power
+        sits at the final screen).
+        """
+        rev2 = self.raw.get("rev2") or {}
+        return bool(rev2.get("kill_clone_enabled", True))
+
 
 def load_verdict_config(path: Path | str | None = None) -> VerdictConfig:
     """Load + VERIFY the frozen verdict config.
