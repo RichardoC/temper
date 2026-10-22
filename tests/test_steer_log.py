@@ -85,13 +85,18 @@ class TestReplay(unittest.TestCase):
         self.assertEqual([d.action for d in got], ["continue"] * 3)
 
     def test_positive_evidence_kills_after_patience(self):
-        # informed evidence at checkpoint 1 and 2 (>= patience 2) -> kill
-        recs = [_checkpoint(0, 64, informed=("E0277",)),
-                _checkpoint(0, 128, informed=("E0277",))]
+        """Informed evidence must persist ``cfg.patience_checkpoints``
+        consecutive checkpoints before it kills — read from the FROZEN config,
+        not hardcoded (D4 repinned it 2 -> 3)."""
+        p = self.cfg.patience_checkpoints
+        recs = [_checkpoint(0, 32 * (i + 1), informed=("E0277",))
+                for i in range(p)]
         events = _log_events(recs)
         actions = [d.action for d in replay_game(events, self.cfg)]
-        self.assertEqual(actions[0], "continue", "absence of patience must not kill")
-        self.assertEqual(actions[1], "kill")
+        for i in range(p - 1):
+            self.assertEqual(actions[i], "continue",
+                             f"checkpoint {i}: patience not yet reached")
+        self.assertEqual(actions[p - 1], "kill")
 
     def test_single_checkpoint_evidence_never_kills(self):
         recs = [_checkpoint(0, 64, informed=("E0277",)),
@@ -99,6 +104,16 @@ class TestReplay(unittest.TestCase):
         events = _log_events(recs)
         self.assertEqual([d.action for d in replay_game(events, self.cfg)],
                          ["continue", "continue"])
+
+    def test_interrupted_evidence_run_resets_patience(self):
+        """A clean checkpoint between two informed ones resets the run, so the
+        kill never fires however long the log is."""
+        recs = [_checkpoint(0, 64, informed=("E0277",)),
+                _checkpoint(0, 128),
+                _checkpoint(0, 192, informed=("E0277",)),
+                _checkpoint(0, 256)]
+        actions = [d.action for d in replay_game(_log_events(recs), self.cfg)]
+        self.assertEqual(set(actions), {"continue"})
 
     def test_r0_fatal_flag_kills_immediately(self):
         recs = [_checkpoint(0, 64, r0=("prose_after_fence",))]
@@ -136,7 +151,10 @@ class TestReplay(unittest.TestCase):
         with self.assertRaises(ReplayMismatch):
             replay_game(events, self.cfg)
 
-        recs = [_checkpoint(0, 64), _checkpoint(0, 128)]
+        # enough consecutive informed checkpoints to exceed the frozen
+        # patience, so poisoning them MUST flip the decision to kill
+        p = self.cfg.patience_checkpoints
+        recs = [_checkpoint(0, 32 * (i + 1)) for i in range(p)]
         events = _log_events(recs)
         for ev in events:
             if ev.get("kind") == "checkpoint":

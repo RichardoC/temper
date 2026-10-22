@@ -81,6 +81,16 @@ class TestVerdictConfigFreeze(unittest.TestCase):
         self.assertIn("todo!(", cfg.stub_markers)
         self.assertEqual(cfg.checkpoint_grid, (0.25, 0.5, 0.75, 1.0))
 
+    def test_d4_repin_is_recorded_and_consistent(self):
+        """The committed config is the D4-repinned v1: the repin payload must
+        name its captures and the patience value must match the decision text."""
+        cfg = load_verdict_config()
+        self.assertEqual(cfg.version, "v1")
+        repin = cfg.raw["d4_repin"]
+        self.assertIn("d4-capture-alive.json", " ".join(repin["captures"]))
+        self.assertEqual(cfg.patience_checkpoints, 3)
+        self.assertIn("D4", cfg.raw["patience"]["provenance"])
+
     def test_tampering_a_verdict_parameter_is_detected(self):
         """D7 acceptance: edit one informed class -> load must REFUSE."""
         raw = json.loads(DEFAULT_CONFIG_PATH.read_text(encoding="utf-8"))

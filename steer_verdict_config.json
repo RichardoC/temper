@@ -1,7 +1,7 @@
 {
   "schema": "steer-verdict-config/1",
-  "version": "v0",
-  "frozen_utc": "2026-10-21",
+  "version": "v1",
+  "frozen_utc": "2026-10-22",
   "note": "M3.0 D7 freeze scaffold. Parameters are transcribed verbatim from docs/m3-design.md rev1 sections 2.2/3.2/3.3 as v0; D4 (ghost-closure validity on REAL canvases, a P0->P2 boundary activity) SETS the patience parameters from its measured table and REPINS this file (new version + new sha, both recorded in the report). The embedded sha256 is the canonical digest of this object WITHOUT the sha256 field; load_verdict_config() re-derives it and refuses a tampered file.",
   "informed_error_classes": [
     "E0277",
@@ -19,9 +19,9 @@
   ],
   "informed_class_provenance": "docs/m3-design.md rev1 section 3.2: 'filtering to E0xxx classes: E0277/E0282/E0283/E0507/E0382-style substantive diagnostics, and requiring the error to persist/point inside committed content away from hole-adjacent spans'. E0308/E0499/E0061/E0599/E0369/E0502/E0505 are the same substantive class family (type/borrow/arity/method-resolution, all non-parse); adopted in v0 because they are the diagnostics the corrected-basis forensic rows actually produced.",
   "patience": {
-    "consecutive_checkpoints": 2,
+    "consecutive_checkpoints": 3,
     "hole_proximity_lines": 1,
-    "provenance": "docs/m3-design.md rev1 section 3.3 item 1: 'informed-class rustc errors whose primary span sits inside committed (non-ghost) content, stable across >=2 consecutive checkpoints OR at a stage the rung has measured reliable (D4 decides the actual rule; start: 2-checkpoint persistence + span-localization)'"
+    "provenance": "docs/m3-design.md rev1 section 3.3 item 1: 'informed-class rustc errors whose primary span sits inside committed (non-ghost) content, stable across >=2 consecutive checkpoints OR at a stage the rung has measured reliable (D4 decides the actual rule; start: 2-checkpoint persistence + span-localization)' || REPINNED v1 by D4 measurement (see d4_repin): 3 consecutive checkpoints, since measured mid-canvas recall is 0 until the final step so the tighter patience costs no true-kill latency."
   },
   "r0": {
     "fatal_flags": [
@@ -60,5 +60,31 @@
       2048
     ]
   },
-  "sha256": "6d3440b9a43ba9dd1f7ac012339c79fbea25b08b0c380031965e78cd43491d9f"
+  "sha256": "e4f860bf86a23844587634bcbaa2877c11e14a265060a864f60553bbe993dc37",
+  "d4_repin": {
+    "measured_by": "scripts/m3_d4_validity.py on REAL mid-decode canvases",
+    "captures": [
+      "bench/multipl-e/d4-capture-unreachable.json",
+      "bench/multipl-e/d4-capture-alive.json"
+    ],
+    "findings": {
+      "mid_canvas_informed_recall_by_commit_fraction": {
+        "0.25": "0/5",
+        "0.50": "0/5",
+        "0.75": "0/5",
+        "1.00": "5/5"
+      },
+      "note_final": "at the FINAL checkpoint the any-error screen detected 5/5 compile-dead (HumanEval_0 4/4 E0277; HumanEval_4 1/4)",
+      "false_kill_on_live_canvases": "0/12 observations (HumanEval_11, 3 live particles x 4 checkpoints); 0/0 on the unreachable pair because all 8 finals were dead (no live side to measure)",
+      "sim_comparison": "design 3.2 sim predicted informed recall 0-1/36 at <=85% committed; measured 0/5 at <=75% - the sim's low-recall curve REPLICATES on real canvases, so the confidence-ranked commit order did NOT buy the recall the design hoped for"
+    },
+    "decision": "D4 demotion rule (design 7 D4): live mid-decode informed-class yield tracks the sim's low-recall curve, so the kill/clone cells demote in the documented order. patience_checkpoints raised 2->3 (the only parameter change: with per-checkpoint recall measured at 0 until the final step, requiring 3 consecutive checkpoints costs nothing in true-kill latency and tightens the false-kill guard further). hole_proximity_lines stays 1: 0 false kills measured at that setting. C-kill is DROPPED first if a budget cut is needed; C-full's mid-decode rungs reduce in checkpoint density first. The honest summary for any C-full result demotes to 'ladder + final screen' unless C-full - C-screen >= +2.",
+    "rungs_unchanged": [
+      "informed_error_classes",
+      "r0_fatal_flags",
+      "r2_stub_markers",
+      "checkpoint_grid",
+      "emission"
+    ]
+  }
 }
