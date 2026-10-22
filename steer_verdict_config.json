@@ -1,6 +1,6 @@
 {
   "schema": "steer-verdict-config/1",
-  "version": "v1",
+  "version": "v2",
   "frozen_utc": "2026-10-22",
   "note": "M3.0 D7 freeze scaffold. Parameters are transcribed verbatim from docs/m3-design.md rev1 sections 2.2/3.2/3.3 as v0; D4 (ghost-closure validity on REAL canvases, a P0->P2 boundary activity) SETS the patience parameters from its measured table and REPINS this file (new version + new sha, both recorded in the report). The embedded sha256 is the canonical digest of this object WITHOUT the sha256 field; load_verdict_config() re-derives it and refuses a tampered file.",
   "informed_error_classes": [
@@ -60,7 +60,6 @@
       2048
     ]
   },
-  "sha256": "e4f860bf86a23844587634bcbaa2877c11e14a265060a864f60553bbe993dc37",
   "d4_repin": {
     "measured_by": "scripts/m3_d4_validity.py on REAL mid-decode canvases",
     "captures": [
@@ -86,5 +85,33 @@
       "checkpoint_grid",
       "emission"
     ]
-  }
+  },
+  "rev2": {
+    "approved_by": "operator, 2026-10-22 (explicit approval of parent brief)",
+    "basis": "P1 probe commit 7c8a124: T=0.4 produced 0 passing canvases of 36; the reachable band starts at T>=0.8. rev1 ladder {0.2,0.4,0.6,0.8} spends half its canvases in the measured dead zone.",
+    "unreachable_after_amendment": "docs/m3-design.md rev2 changelog",
+    "diversity_ladder": {
+      "structural_temp": 0.2,
+      "structural_role": "emission-preferred base canvas; protects the 11-passer cohort (M2.4b banked at T=0.2)",
+      "round_robin": [
+        0.8,
+        0.95,
+        1.0,
+        1.1,
+        1.2
+      ]
+    },
+    "kill_clone_enabled": false,
+    "kill_clone_reason": "D4 demotion rule executed: mid-canvas informed-class recall measured 0/5 at <=75% committed; no kill window exists at the frozen grid. C-kill cell DROPPED; C-full mid-decode rungs demoted to late-window-only verdicts; honest C-full summary demotes to 'ladder + final screen' unless C-full - C-screen >= +2.",
+    "clone": {
+      "temp_step": 0.1,
+      "base_band": [
+        0.8,
+        1.2
+      ],
+      "temp_cap": 1.2,
+      "note": "supersedes v1 clone {temp_step:0.2, cap:0.8}: children of a 0.2 parent would start at 0.4 = measured dead zone. Clone machinery itself is OFF under kill_clone_enabled=false; this block is retained so a future re-enable inherits the re-based band, not the dead one."
+    }
+  },
+  "sha256": "a63b2b369606bb0222a19d0a79088f5f5425f3e9e041f6a4f8ea9499177ae5e1"
 }

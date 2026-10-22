@@ -15,6 +15,20 @@ instrument), and in M2.4a's "Implications for L1 steering" target list (M2.4b
 
 ---
 
+## rev2 changelog — measured amendments (2026-10-22, operator-approved)
+
+Applied after P0–P2 execution, ahead of every C-cell:
+
+| # | rev2 change | basis | approval |
+|---|---|---|---|
+| V1 | **D4 demotion executed**: mid-canvas informed recall 0/5 at ≤75%, 0/12 false kills → kill/clone disabled, C-kill cell dropped, C-full rungs late-window-only; v1 config patience 3 | D4 real-canvas capture (`m3_d4_validity.py`, committed table) | pre-registered (rev1 D7) |
+| V2 | **Ladder re-base**: diversity ladder T=0.2 structural (emission-preferred) + round-robin {0.8, 0.95, 1.0, 1.1, 1.2}; clone base band [0.8,1.2] | P1 probe `7c8a124`: T=0.4 = 0/36 passes; band starts at 0.8 | operator, explicit (protocol deviation) |
+| V3 | **C-full@1024 cut + C-full@2048 re-roled** as the in-loop engine row (divergence from offline C-screen counterfactual = engine forensics, not mechanism) | V1's consequences (stable P3 at ~30 GPU-h) | operator, explicit |
+
+Cell definitions below referencing rev1 ladder/clone grids are AMENDED by
+these; `steer_verdict_config.json` v2 (sha `a63b2b36…`, replacing v1
+e4f860bf… both recorded) is the frozen form for all rev2 cells.
+
 ## rev1 changelog — adversarial-review modifications (2026-10-21)
 
 Two independent adversarial reviews of the rev0 draft were commissioned by the
@@ -459,7 +473,7 @@ prior work does and does not hand us (honest placement)
 | **anchor-1024** | — (the corrected s256 row, committed, no re-run) | 1024 | 7.21 h (banked) | the 0.44 line |
 | **anchor-2048** | — (corrected s512, committed) | 2048 | 14.48 h (banked) | the 0.64 line |
 | **C-hint** *(rev1, review A add; scheduled FIRST in §5)* | unsteered, K=4, steps=256, T=0.2, problems {0,4,20,21} (the deterministic type-trap quartet), prompt + one pre-committed generic anti-trap hint line (exact text frozen in verdict-config before launch; e.g. "for `Vec<f64>` sorting use `sort_by(|a,b| a.partial_cmp(b).unwrap())`; prefer explicit type annotations") | 10 | ~1.2 h | knowledge-injection null: if a free hint reproduces the flips, syntax-rescue is information-delivery, not search — dead early and cheap; if not, steering's reachability result gets stronger |
-| **C-null** | temp-ladder diversity only (T ∈ {0.2,0.4,0.6,0.8} round-robin), no rungs, no kill/clone, K_max_eff to budget. *(rev1 emission spec, closing review B's spec hole)* Emission rule, pre-committed: the T=0.2 canvas if present in the ladder, else the lowest-T canvas; per-completion container statuses and the full ensemble recorded for C-screen | 2048 | ~14.9 h | attribution control: diversity alone |
+| **C-null** | diversity ladder only — **rev2 grid: T=0.2 structural canvas + round-robin {0.8, 0.95, 1.0, 1.1, 1.2}** (v2 config), no rungs, no kill/clone, K_max_eff to budget. Emission (rev1, unchanged): the T=0.2 canvas if clean, else lowest-T clean; full ensemble recorded for C-screen | 2048 | ~14.9 h | attribution control: diversity alone |
 | **C-screen** *(rev1, review B add; computed, not generated)* | no generation — container-score C-null's FULL 8-canvas ensemble (container-minutes), then offline counterfactual from committed sidecars: apply the FROZEN informed-class filter to completed canvases and emit "best R1-clean by confidence (ties: lowest temp)" | 0 extra (2048 envelope of C-null) | ~minutes | static-filter null: temp ladder + final rustc screen, ZERO mid-decode machinery — the Prism-style known-art mechanism the design must beat or be reduced to |
 | **C-full** | R0+R1+R2, kill, clone-from-checkpoint, children temp +0.2 | **1024** & **2048** | 7.5 h & 14.9 h | the L1 rows |
 | **C-kill** (described, run if budget permits) | early-aborts only, no cloning (fresh replacement at fresh temp) | 2048 | 14.9 h | separates "kill-savings" from "clone-conditioning" |
