@@ -566,3 +566,86 @@ class TestCfullPreflightChecks(unittest.TestCase):
         meta_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
         res = self.pf.check_run(out, 256, 2048)
         self.assertFalse(res["checks"]["record_carries_the_ladder"])
+
+
+class TestSteerCliWiring(unittest.TestCase):
+    """The CLI's --engine steer path must reach the seam with the keyword names
+    the seam actually takes. This is pinned because a kwarg mismatch here is
+    invisible to the unit suite (it only fires when a real cell launches) and
+    costs a launch cycle: `canvas` vs `canvas_len` did exactly that on the
+    first C-full launch attempt."""
+
+    def test_cli_passes_canvas_len_not_canvas(self):
+        import argparse
+        from temper.cli import build_parser
+        parser = build_parser()
+        args = parser.parse_args([
+            "bench-multipl-e", "--benchmark", "humaneval-rs",
+            "--problem-numbers", "0", "-K", "1", "--steps", "256",
+            "--canvas", "384", "--engine", "steer", "--envelope-nfe", "2048",
+            "--out", "/tmp/x.jsonl"])
+        self.assertEqual(args.canvas, 384)
+        # the seam's real signature is the contract
+        import inspect
+        from temper.steer.engine import make_steer_sample_fn
+        params = set(inspect.signature(make_steer_sample_fn).parameters)
+        self.assertIn("canvas_len", params)
+        self.assertNotIn("canvas", params)
+
+    def test_steer_engine_requires_k_one(self):
+        from temper.cli import build_parser
+        parser = build_parser()
+        args = parser.parse_args([
+            "bench-multipl-e", "--benchmark", "humaneval-rs", "-K", "4",
+            "--steps", "256", "--engine", "steer", "--envelope-nfe", "2048",
+            "--out", "/tmp/x.jsonl"])
+        from temper.cli import cmd_bench_multipl_e
+        with self.assertRaises(SystemExit) as ctx:
+            cmd_bench_multipl_e(args)
+        self.assertIn("-K 1", str(ctx.exception))
+
+    def test_steer_engine_requires_an_envelope(self):
+        from temper.cli import build_parser, cmd_bench_multipl_e
+        args = build_parser().parse_args([
+            "bench-multipl-e", "--benchmark", "humaneval-rs", "-K", "1",
+            "--steps", "256", "--engine", "steer", "--out", "/tmp/x.jsonl"])
+        with self.assertRaises(SystemExit) as ctx:
+            cmd_bench_multipl_e(args)
+        self.assertIn("--envelope-nfe", str(ctx.exception))
+
+    def test_steer_engine_builds_the_seam_with_the_cell_params(self):
+        """End-to-end through the CLI command with the GPU seam stubbed: this is
+        the wiring the failed launch proved was untested."""
+        from temper.cli import build_parser, cmd_bench_multipl_e
+        import temper.steer.engine as engine_mod
+        import temper.multipl_e.bench as bench_mod
+        captured = {}
+
+        def fake_make(**kwargs):
+            captured.update(kwargs)
+            return lambda *a, **k: []
+
+        def fake_run(benchmark, **kwargs):
+            captured["run_bench"] = kwargs
+            return {"out": "x", "summary": {"n_rows": 0}}
+
+        real_make, real_run = engine_mod.make_steer_sample_fn, bench_mod.run_bench
+        engine_mod.make_steer_sample_fn = fake_make
+        bench_mod.run_bench = fake_run
+        try:
+            args = build_parser().parse_args([
+                "bench-multipl-e", "--benchmark", "humaneval-rs", "-K", "1",
+                "--steps", "256", "--canvas", "384", "--engine", "steer",
+                "--envelope-nfe", "2048", "--out", "/tmp/x.jsonl"])
+            cmd_bench_multipl_e(args)
+        finally:
+            engine_mod.make_steer_sample_fn = real_make
+            bench_mod.run_bench = real_run
+        self.assertEqual(captured["canvas_len"], 384)
+        self.assertEqual(captured["envelope_nfe"], 2048)
+        self.assertEqual(captured["steps"], 256)
+        meta = captured["run_bench"]["extra_meta"]
+        self.assertEqual(meta["mode"], "steered")
+        self.assertEqual(meta["cell"], "C-full")
+        self.assertEqual(meta["diversity_ladder"], list(REV2_LADDER))
+        self.assertFalse(meta["kill_clone_enabled"])

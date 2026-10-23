@@ -130,7 +130,7 @@ def cmd_bench_multipl_e(args) -> int:
             raise SystemExit(f"ladder {ladder} is not the frozen rev2 prefix")
         sample_fn = make_steer_sample_fn(
             out=Path(args.out), envelope_nfe=args.envelope_nfe,
-            steps=args.steps, canvas=args.canvas, base_seed=args.seed,
+            steps=args.steps, canvas_len=args.canvas, base_seed=args.seed,
             alg=args.alg)
         model = "Dream-org/Dream-Coder-v0-Instruct-7B"
         milestone = "M3.0-C-full"
