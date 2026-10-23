@@ -452,3 +452,117 @@ class TestCanvasPairDiff(unittest.TestCase):
                                        "excluded": True}, emit, 8)
         self.assertEqual(rec["verdict"], "SAME_EVIDENCE")
         self.assertEqual(rec["screen_status"], "EXCLUDED")
+
+
+def _preflight_tool():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "m3_p3_cfull_preflight",
+        Path(__file__).resolve().parents[1] / "scripts" /
+        "m3_p3_cfull_preflight.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+class TestCfullPreflightChecks(unittest.TestCase):
+    """The pre-flight is what stands between a cheap failure and a 14.9 h one,
+    so its checks must actually FAIL on a broken game — a pre-flight that
+    always passes is worse than none."""
+
+    def setUp(self):
+        import json
+        import tempfile
+        self.json = json
+        self.tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(lambda: __import__("shutil").rmtree(self.tmp))
+        self.pf = _preflight_tool()
+        from temper.steer.engine import REV2_LADDER
+        from temper.steer.verdict import load_verdict_config
+        self.ladder = list(REV2_LADDER)
+        self.sha = load_verdict_config().sha256
+
+    def _record(self, *, mode="steered", nfe=256, temp=0.8, kill=False,
+                checkpoints=(256,), kills=0, suppressed=0, n_spawn=8,
+                emit=True, n_temps=8):
+        out = self.tmp / "r.jsonl"
+        meta = {"type": "run", "mode": mode, "diversity_ladder": self.ladder,
+                "steer_config_sha256": self.sha}
+        row = {"type": "candidate", "problem": "HumanEval_17_parse_music",
+               "i": 0, "nfe": nfe, "temperature": temp, "extract_ok": True,
+               "mean_commit_conf": 0.5, "raw_path": "x"}
+        out.write_text("\n".join(self.json.dumps(o) for o in (meta, row)) + "\n",
+                       encoding="utf-8")
+        steer = Path(str(out) + ".steer")
+        steer.mkdir()
+        events = [{"kind": "meta", "verdict_config_sha256": self.sha,
+                   "temperatures": self.ladder, "kill_clone_enabled": kill}]
+        events += [{"kind": "spawn", "particle": i} for i in range(n_spawn)]
+        events += [{"kind": "checkpoint", "particle": 0, "resume_epoch": 0,
+                    "step": s, "is_final": s == 256, "nfe_at": s,
+                    "committed_token_count": s, "canvas_prefix_sha256": "x",
+                    "mask_share": 0.0, "expected_mask_share": 0.0,
+                    "r0_flags": [], "r2_stubs": [], "r1": {"ok": True},
+                    "live_particles": 8, "budget_remaining_nfe": 0,
+                    "envelope_nfe": 256} for s in checkpoints]
+        events += [{"kind": "decision", "particle": 0, "resume_epoch": 0,
+                    "step": s, "action": "continue", "reason": "x",
+                    "nfe_at": s} for s in checkpoints]
+        events += [{"kind": "kill"} for _ in range(kills)]
+        events += [{"kind": "kill_suppressed"} for _ in range(suppressed)]
+        if emit:
+            events.append({"kind": "emit", "particle": 3,
+                           "temperatures": {str(i): t for i, t in
+                                            enumerate(self.ladder[:n_temps])},
+                           "final_clean": [3], "screen_ranking": [3]})
+        events.append({"kind": "done", "meters": {"nfe_verifier_calls": n_temps}})
+        (steer / "HumanEval_17_parse_music.jsonl").write_text(
+            "\n".join(self.json.dumps(e) for e in events) + "\n",
+            encoding="utf-8")
+        return out
+
+    def test_a_healthy_game_passes_every_check(self):
+        res = self.pf.check_run(self._record(), 256, 2048)
+        failed = [k for k, v in res["checks"].items() if not v]
+        self.assertEqual(failed, [], f"unexpected failures: {failed}")
+
+    def test_a_kill_during_the_demoted_role_is_caught(self):
+        res = self.pf.check_run(self._record(kills=1), 256, 2048)
+        self.assertFalse(res["checks"][
+            "HumanEval_17_parse_music:no_kill_executed"])
+
+    def test_early_rung_firing_is_caught(self):
+        res = self.pf.check_run(self._record(checkpoints=(64, 128, 256)),
+                                256, 2048)
+        self.assertFalse(res["checks"][
+            "HumanEval_17_parse_music:ladder_fired_at_final_checkpoint_only"])
+
+    def test_an_envelope_overflow_is_caught(self):
+        res = self.pf.check_run(self._record(nfe=4096), 256, 2048)
+        self.assertFalse(res["checks"][
+            "HumanEval_17_parse_music:nfe_within_envelope"])
+
+    def test_emission_over_a_partial_ladder_is_caught(self):
+        res = self.pf.check_run(self._record(n_temps=3), 256, 2048)
+        self.assertFalse(res["checks"][
+            "HumanEval_17_parse_music:emission_saw_the_whole_ladder"])
+
+    def test_a_missing_emission_is_caught(self):
+        res = self.pf.check_run(self._record(emit=False), 256, 2048)
+        self.assertFalse(res["checks"][
+            "HumanEval_17_parse_music:emitted_one_canvas"])
+
+    def test_a_non_steered_record_is_caught(self):
+        res = self.pf.check_run(self._record(mode="unsteered"), 256, 2048)
+        self.assertFalse(res["checks"]["record_mode_is_steered"])
+
+    def test_a_ladder_mismatch_is_caught(self):
+        out = self._record()
+        meta_path = Path(out)
+        lines = meta_path.read_text(encoding="utf-8").splitlines()
+        m = self.json.loads(lines[0])
+        m["diversity_ladder"] = [0.2, 0.4]
+        lines[0] = self.json.dumps(m)
+        meta_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        res = self.pf.check_run(out, 256, 2048)
+        self.assertFalse(res["checks"]["record_carries_the_ladder"])
