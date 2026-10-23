@@ -393,3 +393,62 @@ class TestFlipReplication(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self._run("--primary", str(p), "--replication", str(p),
                       "--flips", "HumanEval_999_nope")
+
+
+def _diff_tool():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "m3_p3_canvas_diff",
+        Path(__file__).resolve().parents[1] / "scripts" / "m3_p3_canvas_diff.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+class TestCanvasPairDiff(unittest.TestCase):
+    """C-full vs C-screen is ENGINE forensics (rev2 V3), so the classifier has
+    to separate the three cases that mean different things: the same evidence
+    (agreement), a different draw with the same outcome (healthy), and a
+    different OUTCOME (must be explained — a ladder difference is
+    mechanism-adjacent, a rule difference is an engine bug)."""
+
+    def setUp(self):
+        self.d = _diff_tool()
+
+    def _emit(self, temps, confs, clean):
+        return {"kind": "emit", "temperatures": temps,
+                "mean_commit_conf": confs, "final_clean": clean}
+
+    def test_same_slot_is_same_evidence(self):
+        screen = {"screen_emitted": 3, "screen_temp": 1.1, "screen_status": "OK"}
+        emit = self._emit({"3": 1.1}, {"3": 0.8}, [3])
+        rec = self.d.classify(screen, {"emitted": 3, "status": "OK"}, emit, 8)
+        self.assertEqual(rec["verdict"], "SAME_EVIDENCE")
+
+    def test_different_slot_same_outcome_is_healthy(self):
+        screen = {"screen_emitted": 3, "screen_temp": 1.1, "screen_status": "OK"}
+        emit = self._emit({"1": 0.8, "3": 1.1}, {"1": 0.9, "3": 0.8}, [1, 3])
+        rec = self.d.classify(screen, {"emitted": 1, "status": "OK"}, emit, 8)
+        self.assertEqual(rec["verdict"], "SAME_OUTCOME")
+
+    def test_different_outcome_is_diverged(self):
+        screen = {"screen_emitted": 3, "screen_temp": 1.1,
+                  "screen_status": "SyntaxError"}
+        emit = self._emit({"1": 0.8}, {"1": 0.9}, [1])
+        rec = self.d.classify(screen, {"emitted": 1, "status": "OK"}, emit, 8)
+        self.assertEqual(rec["verdict"], "DIVERGED")
+
+    def test_a_missing_steer_log_is_missing_not_diverged(self):
+        """Absent data must not manufacture forensics work."""
+        screen = {"screen_emitted": 0, "screen_temp": 0.2, "screen_status": "OK"}
+        rec = self.d.classify(screen, {"emitted": None, "status": None},
+                              None, 8)
+        self.assertEqual(rec["verdict"], "MISSING")
+
+    def test_an_export_exclusion_is_its_own_outcome_class(self):
+        screen = {"screen_emitted": 0, "screen_temp": 0.2, "screen_status": None}
+        emit = self._emit({"0": 0.2}, {"0": 0.5}, [])
+        rec = self.d.classify(screen, {"emitted": 0, "status": None,
+                                       "excluded": True}, emit, 8)
+        self.assertEqual(rec["verdict"], "SAME_EVIDENCE")
+        self.assertEqual(rec["screen_status"], "EXCLUDED")
