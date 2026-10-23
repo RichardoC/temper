@@ -506,3 +506,84 @@ class TestConfidenceAccumulatesAcrossSegments(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCheckpointRenderMatchesTheEmittedText(unittest.TestCase):
+    """R0's `prose_after_fence` must judge what the CONTAINER will see.
+
+    Real defect found on the C-full cell's own logs: `_render_canvas` decoded
+    with skip_special_tokens=False (required — the mask residue must survive to
+    become `todo!()` in the ghost closure) but did NOT cut at EOS the way
+    `_finish` does. A finished canvas therefore rendered its trailing
+    `<|endoftext|>` as literal text AFTER the closing fence, so
+    `prose_after_fence` fired on every completed canvas: measured 92/104 final
+    checkpoints, of which 90 were the artifact and 2 were real. The same
+    canvases judged on their emitted text flagged only 2/13.
+
+    Under the frozen v2 config this was outcome-neutral (rung firing is
+    demoted to the final checkpoint and no kill is executed), but it is a
+    ~45 % false-kill rate on R0 and had to be fixed before anything re-enables
+    R0 kills.
+    """
+
+    def test_trailing_eos_is_not_rendered_as_prose(self):
+        from temper.steer.loop import _render_canvas
+        from temper.steer.verdict import load_verdict_config, r0_shape
+        from temper.steer.view import SteerProblemView
+
+        class _EosTokenizer(_FakeTokenizer):
+            """Renders a canvas whose tail holds EOS then padding, the shape a
+            finished canvas actually has."""
+
+            def decode(self, ids, skip_special_tokens=True):
+                table = {i: chr(ord("a") + i % 26) for i in range(V)}
+                body = "".join(table.get(int(i), "") for i in ids)
+                tail = "" if skip_special_tokens else ""
+                if not skip_special_tokens and self.eos_token_id in ids:
+                    tail = "<|endoftext|>"
+                return ("```rust\nfn f() -> i32 {\n" + body + "\n}\n```" + tail)
+
+        cfg = load_verdict_config()
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        tok = _EosTokenizer()
+        # a canvas: 4 non-special tokens then EOS
+        x = torch.tensor([[10, 11, 1, 2, 2, 2]])
+        text = _render_canvas(tok, x, prompt_len=1)
+        self.assertNotIn("<|endoftext|>", text,
+                         "EOS must be cut before R0 judges the canvas")
+        r = r0_shape(view, text, mask_share=0.0, expected_mask_share=0.0,
+                     checkpoint_fraction=1.0, config=cfg)
+        self.assertNotIn("prose_after_fence", r.flags)
+
+    def test_mask_residue_still_survives_the_render(self):
+        """The cut must NOT strip the mask residue: fill_holes needs it."""
+        from temper.steer.loop import _render_canvas
+
+        class _MaskTokenizer(_FakeTokenizer):
+            def decode(self, ids, skip_special_tokens=True):
+                out = []
+                for i in ids:
+                    if int(i) == MASK_TOKEN_ID:
+                        out.append("" if skip_special_tokens else "<|mask|>")
+                    else:
+                        out.append(chr(ord("a") + int(i) % 26))
+                return "".join(out)
+
+        text = _render_canvas(_MaskTokenizer(),
+                              torch.tensor([[10, MASK_TOKEN_ID, 11]]),
+                              prompt_len=1)
+        self.assertIn("<|mask|>", text,
+                      "mask residue must reach fill_holes as <|mask|>")
+
+    def test_real_prose_after_the_fence_still_flags(self):
+        from temper.steer.verdict import load_verdict_config, r0_shape
+        from temper.steer.view import SteerProblemView
+        cfg = load_verdict_config()
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+        canvas = "```rust\nfn f() -> i32 {\n    1\n}\n```\n### Explanation:\n..."
+        r = r0_shape(view, canvas, mask_share=0.0, expected_mask_share=0.0,
+                     checkpoint_fraction=1.0, config=cfg)
+        self.assertIn("prose_after_fence", r.flags,
+                      "the fix must not blind R0 to genuine prose echoes")

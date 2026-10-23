@@ -129,8 +129,29 @@ def _committed_mask_share(x: torch.Tensor, prompt_len: int) -> float:
 
 
 def _render_canvas(tokenizer, x: torch.Tensor, prompt_len: int) -> str:
-    """Decode the canvas region to text (mask positions -> <|mask|> residue)."""
+    """Decode the canvas region to text (mask positions -> <|mask|> residue).
+
+    The special-token policy here is load-bearing and differs from
+    ``_finish``'s on purpose:
+
+    * ``skip_special_tokens=False`` is REQUIRED, because the masked positions
+      only reach the rung ladder as ``<|mask|>`` residue and that residue is
+      what :func:`temper.steer.verdict.fill_holes` turns into ``todo!()``.
+    * The canvas is nonetheless cut at the FIRST EOS exactly as ``_finish``
+      does, because the emitted text — the only text the container ever scores
+      — is cut there too. Without the cut, a finished canvas carries its
+      trailing ``<|endoftext|>`` padding, which renders as literal text AFTER
+      the closing fence and makes R0's ``prose_after_fence`` fire on every
+      completed canvas. Measured on the C-full cell's logs before this fix:
+      92 of 104 final checkpoints flagged ``prose_after_fence``, of which 90
+      were the EOS artifact and only 2 were real prose echoes (HumanEval_1,
+      HumanEval_9) — a ~45 % false-kill rate on the R0 rung, which would have
+      destroyed any cell that executed R0 kills.
+    """
     gen_ids = x[0, prompt_len:].tolist()
+    eos = tokenizer.eos_token_id
+    if eos is not None and eos in gen_ids:
+        gen_ids = gen_ids[: gen_ids.index(eos)]
     return tokenizer.decode(gen_ids, skip_special_tokens=False)
 
 
