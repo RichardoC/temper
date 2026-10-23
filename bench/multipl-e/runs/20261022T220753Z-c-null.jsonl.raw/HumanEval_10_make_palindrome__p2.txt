@@ -1,0 +1,44 @@
+To implement the function `make_palindrome`, we need to follow the algorithm described in the documentation comments. Here is a step-by-step approach to achieve this:
+
+1. **Identify the Longest Palindromic Suffix**: We need to find the longest suffix that the string itself can be a prefix of, reversed. This is essentially the part before the longest palindrome suffix the string already contains.
+
+2. **Append the Reversed Prefix**: Append the reversed string prefix that comes before this palindromic suffix to the original string to make a palindrome.
+
+Here is the implementation using `match` and `slice in`:
+
+```rust
+fn make_palindrome(string: String) -> String {
+	// Helper function to find the longest suffix that is a palindrome
+fn longest_suffix_palindrome(s: &str) -> String {
+    let chars: Vec<char> = s.chars().collect();
+    let mut length = chars.len();
+    
+    // Find the longest suffix that is a palindrome
+    for i in (0..length).rev() {
+        if chars[i..]eq(chars[i..length].rev()) {
+            length = i;
+       ;
+    }
+    
+    &s[length..]
+}
+    
+    // Find the longest palindromic suffix
+    let palindromic_suffix = longest_suffix_palindrome(&*string);
+    
+    // Reverse the palindromic suffix
+    let reversed_palindromic_suffix: String =
+    = palindromic_suffix_suffix().rev().collect();
+    
+    // Get the prefix before the palindromic suffix
+    let prefix: String<char> &[palindromic_suffix.len()..].collect();
+    
+    // Append the reverse of the prefix to the original string
+    string + &prefix.chars()
+}
+```
+
+### Explanation
+
+ the helper function `longest_suffix_palindrome`:
+- Iterates over

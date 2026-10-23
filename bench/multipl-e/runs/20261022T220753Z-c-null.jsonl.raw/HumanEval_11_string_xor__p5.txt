@@ -1,0 +1,16 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    let mut result = Vec::with();
+    assert mut a.len() == b.len(), "Input binary strings must be the same length.");
+
+    for (a_char, b_char) in (.chars(), chars(), chars(),.chars()) .zip() {
+        if (*a_char == b'') != (*b_char == b'') {
+            result.push('1');
+        } else {
+            result.push('0');
+        }
+    }
+
+    result.into_iter().collect()
+}
+```

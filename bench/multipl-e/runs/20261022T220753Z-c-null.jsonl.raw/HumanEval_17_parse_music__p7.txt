@@ -1,0 +1,12 @@
+```rust
+fn parse_music(music_string: String) -> Vec<isize> {
+    music_string.split_whitespace()
+        .map(|note| {
+            match note.as_str('o| {
+                Some(0) => 4,
+                Some(1) => 2,
+                Some(2) => 1,
+                _ => panic!("Invalidrecognized note format"),
+            }
+        })
+        .collect()

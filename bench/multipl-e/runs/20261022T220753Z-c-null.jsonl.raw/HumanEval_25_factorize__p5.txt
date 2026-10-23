@@ -1,0 +1,48 @@
+Here's a complete implementation of the `factorize` function in Rust:
+
+```rust
+/// Return vector of prime factors of given integer in the order from smallest to largest.
+/// Each of the factors should be vectored number of times corresponding to how many times it appeares in factorization.
+/// Input number should be equal to the product of all factors
+/// >>> factorize(8)
+/// vec![2, 2, 2]
+/// >>> factorize(25)
+///vec![5, 5]
+/// >>> factorize(70)
+///vec![2, 5, 7]
+fn factorize(n: isize) -> Vec<isize> {
+    let mut factors = Vec::new();
+    let mut number = n;
+
+    // Check for number of 2s that divide n
+    while number % 2 == 0 {
+        factors.push(2);
+        number /= 2;
+    }
+
+    // Check for number of odds starting 3
+    let mut divisor = 3;
+    while divisor * divisor <= number {
+        while number % divisor == 0 {
+            factors.push(divisor);
+            number /= divisor;
+        }
+        divisor += divisor;
+    }
+    
+    // This condition is to check if n is a prime number greater than sqrt of n
+    if number > 2 {
+        factors.push(number);
+    }
+
+    factors
+}
+```
+
+### Explanation:
+
+1. **Check 2 Factorization:** This part with the outer loopwhile number % 2 == 0` checks the number of times 2 divides ` given integer `n`.
+   
+ - If `n` is even by the start, we continually divide 2 and push 2 into the `factors` vector while `number % is still  without remainder, This means  are the factors that divide it times.
+
+2. **Check Odd Prime

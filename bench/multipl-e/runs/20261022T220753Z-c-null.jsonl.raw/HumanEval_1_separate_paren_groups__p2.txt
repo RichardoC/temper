@@ -1,0 +1,50 @@
+To solve the problem, we need to create a function that processes a string containing nested parentheses and extracts separate balanced groups. We will achieve this by iterating through the string, maintaining a balance counter to track track of the number between open and closed parentheses. Each we encounter an opening parenthesis '(', we increase the counter. When a closing parenthesis is found ')', we decrease the counter. When the counter reaches zero, it indicates the end of a complete balanced group, which we can then extract and store this group in a result vector.
+
+Here's the implementation of the function:
+
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    let mut result = Vec::new();
+    let mut balance = 0;
+    let mut current_group = String::new();
+    
+    for ch in paren_string.chars() {
+        if ch.is_whitespace() {
+            // Ignore spaces
+            continue;
+        }
+        
+        if ch == '(' {
+            current_group.push(ch);
+            balance += 1;
+        } else if ch == ')' {
+            current_group.push(ch);
+            balance -= 1;
+            
+            // Check if balance zero, which means a complete group found
+            balance == 0 && !current_group.is_empty() {
+                result.push(current_group.to_string());
+                current_group.clear String::new();
+            }
+        } else {
+            // This should not happen with valid input
+ as we only allow parentheses or whitespace that we ignore
+                panic!("Invalid character found: {}", ch);
+            }
+        }
+    
+    // If the balance is zero, check for any pending balanced group
+    if balance == 0 {
+        if !current_group.is_empty() {
+            result.push(current_group.to_string());
+        }
+    }
+    
+    result
+}
+```
+
+### Explanation
+
+1. **Initialize Variables**:
+   - `result`: A vector to store the extracted groups of

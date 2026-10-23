@@ -1,0 +1,12 @@
+```rust
+/// Return vector of all prefixes from shortest to longest of the input string
+/// >>> all_prefixes(String::from("abc"))
+/// vec![String::from("a"), String::from("ab"), String::from("abc")]
+fn all_prefixes(string: String) -> Vec<String> {
+    let mut prefixes = Vec::new();
+    for i in 1..=string.len() {
+        prefixes.push(string.chars().take(i).cloned().to_string());
+    }
+    prefixes
+}
+```

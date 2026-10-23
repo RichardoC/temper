@@ -1,0 +1,14 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    a.chars()
+        .zip(b.chars())
+        .map(|(x, y)|            match (x, y) {
+                ('0', '0') => '0',
+                ('1', '0') => '1',
+                ('0', '1') => '1',
+                ('1', '1') => '0',
+                _ => unreachable!("input"),
+            }
+        })
+        .collect()
+}

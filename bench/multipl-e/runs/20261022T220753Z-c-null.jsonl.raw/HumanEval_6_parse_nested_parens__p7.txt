@@ -1,0 +1,21 @@
+```rust
+fn parse_nested_parens(paren_string: String) -> Vec<isize> {
+    let mut depths = Vec::new();
+    
+    for group in paren_string.split_whitespace() {
+        let mut max_depth = 0;
+        let mut current_depth = 0;
+        
+        for ch in group.chars() {
+            match c {
+                '(' => current_depth += 1,
+                ')' => current_depth -= 1,
+                _ => {}
+            }
+            max_depth = max_depth.max(current_depth);
+        }
+        depths.push(max_depth);
+    }
+
+    depths
+}

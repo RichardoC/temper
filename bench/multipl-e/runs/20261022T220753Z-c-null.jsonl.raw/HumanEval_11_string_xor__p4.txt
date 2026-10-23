@@ -1,0 +1,13 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    let mut result = String::new();
+    for (char_a, char_b) in a.chars().zip(b.chars()) {
+        if char_a == char_b {
+            result.push('1');
+        } else {
+            result.push('0');
+        }
+    }
+    result
+}
+```

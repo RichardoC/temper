@@ -1,0 +1,16 @@
+```rust
+fn parse_music(music_string: String) -> Vec<isize> {
+    music_string.trim()
+()
+            //split the input string into words based on whitespace
+// of the input string are representations like "o", "o|", '.|"        .split_whitespace()
+        // Convert these words to their corresponding lasts of in beats
+        .map(|note| match note {
+            "o" => 4,
+            "o|" => 2,
+            ".|" => 1,
+            _ => panic!("Invalid note in the music string"),
+        })
+        .collect()
+}
+```

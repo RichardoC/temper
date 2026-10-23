@@ -1,0 +1,20 @@
+```rust
+fn make_palindrome(string: String) -> String {
+    fn is_palindrome(s: &str) -> bool {
+        s.chars().eq(s.chars().rev())
+    }
+
+    let len = string.len();
+    let mut max_pal = 0;
+
+    for i in 0..len {
+        if is_palindrome(&string[i..]) {
+            max_pal = i + 1;
+        }
+    }
+
+    let non_pal = &string[..max_pal];
+    let reversed_non_pal = non_pal.chars().rev().collect::<String>();
+    string + &reversed_non_pal
+}
+```

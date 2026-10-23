@@ -1,0 +1,20 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    numbers.sort();
+
+    let mut min_diff = f64::consts::MAX;
+    let mut closest = numbers[0];
+    let mut next = numbers[1];
+
+    for i in 0..numbers.len() - 1 {
+        let current_diff = (numbers[i + 1] - numbers[i]).abs();
+        if current_diff < min_diff {
+            min_diff = current_diff;
+            closest = *numbers[i].mp(&numbers[i + 1]).unwrap_ref();
+            other = numbers.swap(i + 1);
+        }
+    }
+
+    (closest, other)
+}
+```

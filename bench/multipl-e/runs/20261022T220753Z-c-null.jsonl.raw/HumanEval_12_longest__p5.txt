@@ -1,0 +1,13 @@
+```rust
+fn longest(strings: Vec<String>) -> Option<String> {
+    match strings.iter().iter        // Start iterator the iterator
+        .fold(| => None)             // If the vector is empty, return None
+    {
+        Some(ref longest => Some(current)) if 
+            current.length() > longest.length() => {
+            // If current string length is greater than it's length of the longest string
+            Some(current.clone())
+        },
+    }
+}
+```

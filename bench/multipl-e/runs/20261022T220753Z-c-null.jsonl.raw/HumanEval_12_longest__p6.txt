@@ -1,0 +1,13 @@
+```rust
+/// Out of vector of strings, return the longest one. Return the first one in case of multiple
+/// strings of the same length. Return None in case the input vector is empty.
+/// >>> longest(vec![])
+/// None
+/// >>> longest(vec![String::from("a"), String::from("b"), String::from("c")])
+/// Some(String::from("a"))
+/// >>> longest(vec![String::from("a"), String::from("bb"), String::from("ccc")])
+/// Some(String::from("ccc"))
+fn longest(strings: Vec<String>) -> Option<String> {
+    strings.into_iter().max_by_key(|s| s.len())
+}
+```

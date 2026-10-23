@@ -1,0 +1,13 @@
+```rust
+fn largest_divisor(n: isize) -> isize {
+    if n <= 1 {
+        return 1; // For 0, or lower, return 1
+    }
+    for i in (2..n).rev() {
+        if n % i == 0 {
+            return i;
+        }
+    }
+    1
+}
+```

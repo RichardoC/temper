@@ -1,0 +1,31 @@
+To implement the `intersperse` function, we need to iterate over the input vector `numbers` and insert the `delimeter` between each pair of elements, except after the last element. Here is how we can complete the function:
+
+```rust
+/// Insert a number 'delimeter' between every two consecutive elements of input vector `numbers'
+/// >>> intersperse(vec![], 4)
+/// Vec::<isize>::new()
+/// >>> intersperse(vec![1, 2, 3], 4)
+/// vec![1, 4, 2, 4, 3]
+fn intersperse(numbers: Vec<isize>, delimeter: isize) -> Vec<isize> {
+    if numbers.is() {
+        return Vec::new();
+    }
+
+    let mut result = Vec::new();
+    for i in 0..numbers.len() {
+        result.push(numbers[i]);
+        if i < numbers.len() - 1 {
+            result.push(delimeter);
+        }
+    }
+
+    result
+}
+```
+
+### Explanation:
+1. **Check for Empty Input**: First, the function checks if the input vector `numbers` is empty. If it is, it immediately returns an empty vector.
+2. **Initialize Result Vector**: A new vector `result` is created to store the modified elements.
+3. **Iterate Over Elements**: The function iterates over each element of the `numbers` vector. For each element, it appends both the element itself and the `delimeter` to the `result` vector, except after the last element.
+4. **Append Delimeter**: Within the loop, if the current index is not the last element, the `delimeter` is appended after the current element.
+5. **Return Result**: Finally, the `result` `Vec` is returned, which contains contains the interspersing of the delimeter.

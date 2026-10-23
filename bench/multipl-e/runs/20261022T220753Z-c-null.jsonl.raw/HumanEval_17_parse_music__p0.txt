@@ -1,0 +1,35 @@
+```rust
+fn parse_music(music_string: String) -> Vec<isize> {
+    let mut beats = Vec::new();
+    let mut chars = music_string.chars();
+
+    while let Some(c) = chars.next() {
+        match c {
+            'o' => beats.push(4),
+            'o' => {
+                if let Some(next_char) = chars.peek() {
+                    if next_char == '|' {
+                        beats.push(2);
+                        chars.next(); // consume the '|' character
+                    } else {
+                        beats.push(4); // whole note
+                }
+            }
+            '.' => {
+                if let Some(next_char) = chars.peek() {
+                    if next_char == '|' {
+                        beats.push(1);
+                        chars.next(); // consume the '|' character
+                    } else {
+                        beats.push(0); // unknown character
+                }
+            }
+            _ => beats.push(0), // unknown character
+        }
+    }
+
+    beats
+}
+```
+
+This function processes the input string character by character, determining the type of note and on that basis, appends the corresponding number of beats to the `beats` vector.

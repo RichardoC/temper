@@ -1,0 +1,44 @@
+To implement the `find_closest_elements` function in Rust, we need to perform the following steps:
+
+1. Sort the vector of numbers to bring the closest numbers together.
+2. Iterate over the sorted list to find the pair of numbers with the smallest difference between3.
+3. Return the pair with numbers in order (smaller number, larger number).
+
+Here's the implementation of the function:
+
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    // Sort the numbers to bring closest numbers together
+    numbers.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    // mut min to store the minimum difference found
+    let mut min_diff = f64::consts::MAX;
+    let mut closest_pair = (0.0, 0.0);
+
+    // Iterate through the sorted list to find the closest pair
+    for i in 0..numbers.len() - 1 {
+        let diff = (numbers[i] - numbers[i + 1]).abs();
+        if diff < min_diff {
+            min_diff = diff;
+            closest_pair = (numbers[i], numbers[i + 1]);
+        }
+    }
+
+    // Ensure the pair is returned in order (smaller, larger)
+    if closest_pair.0 < closest_pair.1 {
+        return closest_pair;
+    }
+    
+ // return a pair if we have duplicates for some elements
+    (1.0, 1.0)
+}
+
+// Example usage
+fn main() {
+    let numbers = vec![1.0, 2.0, 3.0, 4.0, 5.0, 2.2];
+    let result = find_closest_elements(numbers);
+    println!("{:?}", result);
+}
+```
+
+### Explanation:
+- **Sorting:** The `sort_by` method

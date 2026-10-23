@@ -1,0 +1,22 @@
+```rust
+fn parse_nested_parens(paren_string: String) -> Vec<isize> {
+    let results = Vec::new();
+
+    for group in paren_string.split_whitespace() {
+        let mut depth = 0;
+        let mut level = 0;
+
+        for ch in group.chars() {
+            match ch {
+                '(' => level += 1,
+                ')' => level -= 1,
+                _ => depth = depth.max(level),
+            }
+        }
+
+        results.push(depth);
+    }
+
+    results
+}
+```

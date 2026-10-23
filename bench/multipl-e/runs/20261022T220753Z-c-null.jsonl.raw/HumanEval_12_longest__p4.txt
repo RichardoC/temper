@@ -1,0 +1,16 @@
+```rust
+fn longest(strings: Vec<String>) -> Option<String> {
+    if strings.is_empty() {
+        return None;
+    }
+
+    let mut longest = strings[0];
+    for s in &strings {
+        if s.len() > longest.len() {
+            longest = s.clone();
+        }
+    }
+
+    Some(longest)
+}
+```

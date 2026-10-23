@@ -1,0 +1,12 @@
+```rust
+/// Given a string, find out how many distinct characters (regardless of case) does it consist of
+/// >>> count_distinct_characters(String::from("xyzXYZ"))
+/// 3
+/// >>> count_distinct_characters(String::from("Jerry"))
+/// 4
+fn count_distinct_characters(string: String) -> isize {
+    string.chars()
+        .map(|c| c.to_lowercase())
+        .collect::<Vec<_>>()
+        .intoYES()
+```

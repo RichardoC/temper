@@ -1,0 +1,8 @@
+```rust
+fn count_distinct_characters(string: String) -> isize {
+    // Convert the string to lowercase to ensure case insensitivity
+    let lowercase_string = string.to_lowercase();
+    
+    // Use a HashSet to collect the distinct characters
+    lowercase_string.chars().collect().count() as isize
+}

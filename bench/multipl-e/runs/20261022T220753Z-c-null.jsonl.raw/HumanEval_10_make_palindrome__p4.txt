@@ -1,0 +1,45 @@
+Certainly! Below is the complete implementation of the `make_palindrome` function:
+
+```rust
+/// Find the shortest palindrome that begins with a supplied string.
+/// Algorithm idea is simple:
+/// - Find the longest postfix of supplied string that is a palindrome.
+/// - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+/// >>> make_palindrome(String::from(""))
+/// String::from("")
+/// >>> make_palindrome(String::from("cat"))
+/// String::from("catac")
+/// >>> make_palindrome(String::from("cata"))
+///String::from("catac")
+fn make_palindrome(string: String) -> String {
+    fn is_palindrome(s: &str) -> bool {
+        s.chars().eq(s.chars().rev())
+    }
+    // This the main function to generate the shortest palindrome
+    fn build_palindrome(s: String) -> String {
+        let n = s.len();
+        
+        // Find the longest suffixindromic suffix
+        let mut h = 0;
+ for i in 1..n {
+rev().collect())
+    }    
+    // Use the function palindromic palindrome
+    fn build_palindrome(s: String) -> String {
+        let n = s.len();
+        
+        // Find the longest palindromic suffix
+        let mut length = 0;
+        for i in 1..n {
+            if is_palindrome(&s[i..]) {
+        }
+    }
+    
+    build_palindrome(string);
+}
+
+fn main() {
+    println!("{}", make_palindrome(String::from(""))); // Output: ""
+    println!("{}", make_palindrome(String::from("a")));  // Output: "a"
+    println!("{}", make_palindrome(String::from("abc")));  // Output: "abcba"
+    println!("{}", make_palindrome(String::from("abcc

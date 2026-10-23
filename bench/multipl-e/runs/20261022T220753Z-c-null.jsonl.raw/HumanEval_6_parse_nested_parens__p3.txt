@@ -1,0 +1,28 @@
+```rust
+fn parse_nested_parens(paren_string: String) -> Vec<isize> {
+    let groups = paren_string.split_whitespace();
+    groups.map(|group| {
+        let mut max_depth = 0;
+        let mut current_depth = 0;
+        for ch in group.chars() {
+            match ch {
+                '(' => {
+                    current_depth += 1;
+                    if current_depth > max_depth {
+                        max_depth = current_depth;
+                    }
+                }
+                ')' => {
+                    if current_depth > 0 {
+                        current_depth -= 1;
+                    }
+                }
+                _ => {
+                    // Ignore non-parenthesis characters if necessary
+                }
+            }
+        }
+        max_depth
+    }).collect()
+}
+``````

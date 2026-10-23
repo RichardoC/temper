@@ -1,0 +1,42 @@
+```rust
+/// From a given vector of integers, generate a vector of rolling maximum element found until given moment
+/// in the sequence.
+/// >>> rolling_max(vec![1, 2, 3, 2, 3, 4, 2])
+/// vec![1, 2, 3, 3, 3, 4, 4]
+fn rolling_max(numbers: Vec<isize>) -> Vec<isize> {
+    // Initialize an empty vector to hold the rolling max values
+    let mut rolling_max_vec = Vec::new();
+    
+    // Iterate over each number in the input vector
+    for &number in &numbers {
+        if rolling_max_vec.is_empty() {
+            // If the result vector is empty, add the first number as the maximum
+            rolling_max_vec.push(number);
+        } else {
+            // Otherwise, find the maximum between the current number and the last rolling max value            rolling_max_vec.push(*rolling_max_vec.last().unwrap_or &number).max(number));
+        }
+    }
+
+    
+    rolling_max_vec
+}
+```
+
+I'm going to complete the function as described the instructions:
+
+```rust
+fn rolling_max(numbers: Vec<isize>) -> Vec<isize> {
+    (let mut rolling_max_vec = Vec::new();
+ for &number in numbers {
+// The rolling is, otherwise, add the current: rollingmax_vec.push(number); }
+    }
+    
+    // Get the rolling maximum for the numbersnumbers list, with the: to a vector and the vector: vector, and iterating over over the: numbers example, using the input: vector: numbers input is first numberadd the maximum: test results [
+            assert_eqRolling_max_vec, vec![1, 2, 3, 3, 3, 4, 4]);
+    };
+
+}
+       `
+
+}
+``

@@ -1,0 +1,23 @@
+To implement the `make_palindrome` function, we need to follow these main steps:
+
+1. Identify the longest palindromic suffix in the input string.
+2. Append the reverse of the prefix before this palindromic suffix to the string to make it a palindrome.
+
+Here's the complete Rust function:
+
+```rust
+fn make_palindrome(string: String) -> String {
+    let n = string.len();
+    let mut j = n;
+
+    // Find the longest palindromic suffix
+    for i in (0..n).rev() {
+        if string[i..]eq(string[0..i].rev() {
+            length = i;
+        }
+    }
+
+    // Make a palindrome
+    string.push(string[..j].rev().collect())
+}
+```

@@ -1,0 +1,9 @@
+```rust
+fn longest(strings: Vec<String>) -> Option<String> {
+    if strings.is_empty() {
+        return None;
+    }
+
+    strings.iter().max_by(|a, b| a.len().cmp(&b())).cloned().next()
+}
+```

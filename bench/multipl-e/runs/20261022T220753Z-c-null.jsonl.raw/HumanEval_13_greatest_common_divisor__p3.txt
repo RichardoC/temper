@@ -1,0 +1,8 @@
+```rust
+fn greatest_common_divisor(a: isize, b: isize) -> isize {
+    fn gcd(x: isize, y: isize) -> isize {
+        if y == 0 { x } else { gcd(y, x % y) }
+    }
+    gcd(a, b)
+}
+```

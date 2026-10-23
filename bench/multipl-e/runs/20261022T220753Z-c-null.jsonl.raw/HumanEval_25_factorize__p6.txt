@@ -1,0 +1,50 @@
+To complete the `factorize` function, we need to compute the prime factors of a given integer `n` and return them in a vector, sorted from the smallest to the largest. We will achieve this by repeatedly dividing the number by the smallest possible prime factor starting from 2, continuing until the number is completely factorized.
+
+Here is the implementation:
+
+```rust
+fn factorize(n: isize) -> Vec<isize> {
+    // Helper function to divide and by a factor
+    //fn divide(n: &mut isize, factor: isize) {
+    //    while n % factor == 0 {
+    //        factors.push(factor);
+    //        n /= factor;
+    //    }
+    //    ...
+    //   
+    let mut factors = Vec::new();
+
+    // Check for number of 2s that divide  n
+    while n % 2 == 0 {
+        factors.push(2);
+        n /= 2;
+    }
+
+    // Check for odd factors from 3 onwards
+    let mut factor = 3;
+    while factor * factor <= n {
+        while n % factor == 0 {
+            factors.push(factor);
+            n /= factor;
+        }
+        factor += 2;
+    }
+
+    // If n is a prime number greater than 2
+    if n > 1 {
+        factors.push(n);
+    }
+
+    factors
+}
+
+mod tests {
+    #[test]
+    use super::factorize;
+
+    fn test_examples() {
+        assert_eq!(factorize(8), vec![2, 2, 2]);
+        assert_eq!(factorize(25), vec![5, 5]);
+        assert_eq!(factorize(70), vec![2, 5, 7]);
+        assert_eq!(factorize(1), vec![]);
+        assert_eq!(factorize(0), vec

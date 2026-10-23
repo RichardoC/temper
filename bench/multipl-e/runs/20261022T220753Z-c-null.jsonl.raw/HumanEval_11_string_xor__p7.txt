@@ -1,0 +1,14 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    // Assuming the inputs are of equal same length, let's create an characters iterator and XOR
+    a.chars()
+    .zip(b.chars())
+    .map(|(ch_a, ch_b)| {
+        if ch_a != ch_b {
+            char_a.to_string()
+        } else {
+            '0'.to_string()
+        }
+    })
+    .collect::<String().collect>()
+}

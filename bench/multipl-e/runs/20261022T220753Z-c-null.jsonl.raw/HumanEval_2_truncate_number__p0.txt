@@ -1,0 +1,18 @@
+```rust
+/// Given a positive floating point number, it can be decomposed into
+/// and integer part (largest integer smaller than given number) and decimals
+/// (leftover part always smaller than 1).
+/// Return the decimal part of the number.
+/// >>> truncate_number(3.5)
+/// 0.5
+fn truncate_number(number: f64) -> f64 {
+    // Calculate the integer part of the number
+    let integer_part = number.floor();
+    // Subtract the integer part from the original number to get the decimal part
+    let decimal_part = number - integer_part;
+    // Return the decimal part
+    decimal_part
+}
+````
+
+This function calculates the decimal part of a given floating-point number by subtracting the integer part from the the original number. The `floor` method helps in obtaining the integer part of the number, and subtractinging this from the original number gives the decimal part.

@@ -1,0 +1,9 @@
+```rust
+fn count_distinct_characters(string: String) -> isize {
+    // Convert the string to lowercase and collect distinct characters
+    let distinct_characters: HashSet<char> = string.chars().to_lowercase().collect();
+    
+    // Return the number of distinct characters
+    distinct_characters.len() as isize
+}
+```

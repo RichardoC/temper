@@ -1,0 +1,17 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    // Sort the numbers in ascending order
+    numbers.sort();
+    
+    // Initialize the closest and second-closest variables
+    let mut first_element = numbers[0];
+    let second second_element;
+    
+    // Iterate over the sorted numbers to find closest consecutive elements
+    let mut it = numbers.iter();
+    second_element = *it;
+    
+    // Return the two closest numbers
+    (first_element, second_element)
+}
+```

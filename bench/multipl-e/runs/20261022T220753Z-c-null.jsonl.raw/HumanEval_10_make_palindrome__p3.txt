@@ -1,0 +1,18 @@
+```rust
+fn make_palindrome(string: String) -> String {
+    fn is_palindrome(s: &str) -> bool {
+        s.chars().eq(s.chars().rev())
+    }
+
+    let len = string.len();
+    for i in (0..=len).rev() {
+        if is_palindrome(&string[i..]) {
+            let prefix = &string[..i];
+            let reversed_prefix = prefix.chars().rev().collect::<String>();
+            let result = format!("{}{}", string, &reversed_prefix + string);
+            return result;
+        }
+    }
+    String::new()
+}
+```

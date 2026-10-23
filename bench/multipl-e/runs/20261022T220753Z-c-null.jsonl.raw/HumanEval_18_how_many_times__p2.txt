@@ -1,0 +1,5 @@
+```rust
+fn how_many_times(string: String, substring: String) -> isize {
+    string.as_str().match_over_matches(&substring).count() as isize
+}
+```

@@ -1,0 +1,43 @@
+To implement the `sort_numbers` function, we need to follow these steps:
+
+1. **Split the Input String**: We will split the input string by spaces to get a vector of number strings.
+2. **Convert Number Strings to Numbers**: Use a hashmap to map the number strings to their corresponding integer values.
+3. **Sort the Numbers**: Sort the integers in ascending order.
+4. **Map Back to Strings**: Map back the sorted integer values to their corresponding number strings.
+5. **Join the Number Strings**: Join the sorted number strings back into a single string.
+
+Below is the complete code for the `sort_numbers` function:
+
+```rust
+use std::collections::HashMap;
+
+fn sort_numbers(numbers: String) -> String {
+    // Create a hashmap to map number words to their integer values
+    let number number_to _number: HashMap<&str, usize> = vec![
+        (
+        ("zero", 0),
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("seven", 7),
+        ("eight", 8),
+        ("nine", 9),
+    ].    into_iter().   ();
+
+    // Split the input string into words vector
+    let words: Vec<&str> = numbers.split().collect();
+
+    // Map word to to number and prepare the reverse _number_to_word mapping
+    let mut number_to_word: HashMap<usize, &str> = HashMap::new();
+    for (num, &word) in _number.iter() {
+        number_to_word.insert(number, word);
+    }
+
+    // Create a new vector to store sorted words
+    let mut sorted_words: Vec<&str> = words.iter().collect();
+
+    sorted_words.sort_by(|a, b| {
+        let

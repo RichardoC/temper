@@ -1,0 +1,17 @@
+```rust
+fn factorize(n: isize) -> Vec<isize> {
+    let mut factors = Vec::new();
+    let mut number = n;
+    let mut divisor = 2;
+
+    while number > 1 {
+        while number % divisor == 0 {
+            factors.push(divisor);
+            number /= divisor;
+        }
+        divisor += 1;
+    }
+
+    factors
+}
+```

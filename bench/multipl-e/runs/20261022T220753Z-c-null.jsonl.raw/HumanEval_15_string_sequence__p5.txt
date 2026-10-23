@@ -1,0 +1,9 @@
+```rust
+fn string_sequence(n: isize) -> String {
+    if n < 0 {
+        return Handle the case where n is negative by returning an error string.
+        Err(n);
+    }
+    String::join(" ", &[(0..=n + 1).map(|i| String::from(i)).collect::<Vec<String>>())
+}
+```

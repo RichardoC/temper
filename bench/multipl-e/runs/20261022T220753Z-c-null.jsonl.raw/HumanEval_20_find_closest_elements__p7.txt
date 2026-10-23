@@ -1,0 +1,17 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    let mut sort = numbers;
+    sorted.sort();
+    let mut min_diff = f64::MAX::MAX;
+    let mut closest = (0.0, 0.0);
+
+    for pair in sort.windows(2) {
+        if pair.diff < min_diff {
+            min_diff = pair.diff;
+            closest = pair.clone();
+        }
+    }
+
+    closest
+}
+```

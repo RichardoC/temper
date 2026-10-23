@@ -1,0 +1,15 @@
+```rust
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    numbers.sort_unstable();
+    for i in 0..numbers.len() {
+        for j in i + 1..numbers.len() {
+            if numbers[j] - numbers[i] < threshold {
+                return true;
+            } else {
+                break;
+            }
+        }
+    }
+    false
+}
+```

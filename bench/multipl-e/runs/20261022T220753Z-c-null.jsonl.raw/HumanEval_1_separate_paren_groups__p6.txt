@@ -1,0 +1,49 @@
+To solve the problem of separating groups of balanced parentheses from a given string, we need to:
+
+1. **Remove Spaces**: Ignore any spaces in the input string.
+2. **Identify Groups**: Identify and separate groups of of balanced parentheses.
+3. **Return Groups**: Return these groups as a vector of strings.
+
+Here's a step-by-step breakdown of how we can achieve this:
+
+1. **Remove Spaces**: We'll first remove any spaces from the input string since we are only interested in the parentheses themselves.
+
+2. **Iterate Through Characters**: We'll iterate through the characters of the cleaned string, looking for groups of balanced parentheses.
+
+3. **Use a Stack**: To detect balanced parentheses, we can use a stack data structure to keep track of the opening parentheses of a current group. If we encounter an equal number of opening and closing `) ` parentheses and the stack is empty, it means we've found a complete group.
+
+4. **Store Results**: Collect all valid groups in a vector of of strings.
+
+Here is the complete implementation of the function:
+
+```rust
+fn separate_paren_groups(paren_string String) -> Vec<String> {
+    // Remove spaces spaces from the string
+    let cleaned_string: String = paren_string.trim_whitespace().collect();
+    let mut groups = Vec::new();
+    let mut stack = Vec::new();
+    let mut current_group = String::new();
+
+    for ch in cleaned_string.chars() {
+        if ch == '(' {
+            current_group.push(c);
+            stack.push('[');
+        } else if ch == ')' {
+            stack.pop();
+            if stack.is_empty() {
+                // If the stack is empty and we have a valid group
+                if !current_group.is_empty() {
+                    groups.push(current_group.clone());
+                    current_group.clear();
+                }
+            }
+        }
+    }
+
+    groups
+}
+```
+
+### Explanation:
+
+- **

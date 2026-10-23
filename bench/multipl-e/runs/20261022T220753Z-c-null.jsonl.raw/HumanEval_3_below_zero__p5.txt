@@ -1,0 +1,12 @@
+```rust
+fn below_zero(operations: Vec<isize>) -> bool {
+    let mut balance = 0;
+    for &operation in operations.iter() {
+        balance = balance + operation;
+        if balance < 0 {
+            return true;
+        }
+    }
+    false
+}
+```

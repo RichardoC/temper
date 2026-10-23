@@ -1,0 +1,16 @@
+```rust
+/// Return a greatest common divisor of two integers a and b
+/// >>> greatest_common_divisor(3, 5)
+/// 1
+/// >>> greatest_common_divisor(25, 15)
+/// 5
+fn greatest_common_divisor(a: isize, b: isize) -> isize {
+    fn gcd(x: isize, y: isize) -> isize {
+        if y == 0 {
+            x
+        } else {
+            gcd(y, x % y)
+        }
+    }
+    gcd(a, b)
+}

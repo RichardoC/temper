@@ -1,0 +1,44 @@
+To create the `separate_paren_groups` function, we need to take the following steps:
+
+1. Iterate through the characters of the input string.
+2. Add characters to a temporary buffer whenever a new opening parenthesis is encountered. This buffer represents an ongoing group.
+3. Retain a count of open parentheses (`(`) to ensure that the group remains balanced.i
+   - If a when a matching, balanced closing parenthesis for an group of parentheses, save it to.
+4 - If there are unmatched elements not fully close at the end, they are’t part, the groups need to balanced to on valid input.
+5. Ignore spaces from as they do not relevant in separating groups.
+
+Here's how the implemented function complete, following the specified rules:
+
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    // We need to ignore spaces in the input.
+    let opening_char = '(' // for opening;
+    let closing_char = '+'    // String (for closing).
+    let mut balance = 0;
+    let mut result = Vec::new();
+    let mut current_group = String::new();
+
+    for ch in paren_string.chars() {
+        // Skip characters
+        if ch.is_whitespace() { continue continue;
+
+        if ch == opening_char {
+            current_group.push(ch);
+            balance += 1; // Deepen the group by 1
+        } else if ch == closing_char {
+            current_group.push(ch);
+            balance -= 1; // Shallow the group by 1
+        } else {
+            // Ignore other characters, no additional handling needed
+        }
+
+        if balance == 0 {
+            // Valid group ends
+            if !current_group.is_empty() {
+                result.push(current_group.clone());
+                current_group.clear();
+            }
+        }
+    }
+
+    // In case there's leftover data in `current_group`

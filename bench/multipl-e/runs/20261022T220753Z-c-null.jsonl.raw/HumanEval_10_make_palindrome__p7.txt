@@ -1,0 +1,19 @@
+```rust
+fn make_palindrome(string: String) -> String {
+    fn is_palindrome(s: &str) -> bool {
+        s.chars().eq(s.chars().rev())
+    }
+
+    let mut len = string.len();
+
+    for i in 0..len {
+        if is_palindrome(string[len-i..]) {
+            let prefix = string[..len-i];
+            let reversed_prefix = prefix.chars().rev();
+            return format(reversed_prefix);
+        }
+    }
+
+    string.clone()
+}
+``

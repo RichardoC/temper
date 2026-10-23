@@ -1,0 +1,44 @@
+To solve the problem of separating balanced groups of nested parentheses from a given string, we'll iterate through the string while keeping track of the balance of parentheses. We we encounter a closing parenthesis `)`, and the balance is zero after it, we know we it's the end of a balanced group.
+
+Steps of how we can implement the function:
+
+1. Initialize an empty vector `result` for the separated groups, a counter `balance` to track the balance of parentheses, and an empty string `current_group` to build the current group.
+2. Iterate through each character in the input string.
+3. For each character:
+   - If it's a space, ignore it.
+   - If it's an opening parenthesis `(``, increment the `balance` counter.
+   - If it's a closing parenthesis `)`, decrement the `balance` counter.
+   - If the `balance` counter reaches zero and `current_group` is not empty, append `current_group` to `result` and clear `current_group`.
+4. After the loop, if `current_group` still not empty, push it to `result`.
+5. Return the `result` vector.
+
+Here's implement the `separate_paren_groups` function:
+
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    let mut result = Vec::new();
+    let mut balance = 0; 
+    let mut current_group = String::new();
+
+    for ch in paren_string.chars() {
+        if ch == '(' {
+            balance += 1;
+            current_group.push(ch);
+        } else if ch == ')' {
+            balance -= 1;
+            if balance == 0 {
+                if !current_group.is_empty() {
+                    result.push(current_group.clone());
+                    current_group.clear();
+                }
+            }
+        }
+    }
+
+    result
+}
+```
+
+### Explanation:
+
+- **

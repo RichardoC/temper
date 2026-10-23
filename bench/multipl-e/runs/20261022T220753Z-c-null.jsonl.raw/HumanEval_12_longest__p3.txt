@@ -1,0 +1,12 @@
+```rust
+fn longest(strings: Vec<String>) -> Option<String> {
+    if strings.is_empty() {
+        return None;
+    }
+    
+    let longest_string = strings.iter()
+                                 .max_by_key(|s| s.len())
+                                 .unwrap();
+    Some(longest_string.to_string())
+}
+```

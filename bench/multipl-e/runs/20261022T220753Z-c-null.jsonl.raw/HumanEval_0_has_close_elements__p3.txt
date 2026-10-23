@@ -1,0 +1,17 @@
+```rust
+fn has_close_elements(numbers: Vec<f64>, threshold: f64) -> bool {
+    numbers.sort();
+    
+    if numbers.len() < 2 {
+        return false; // Not pair elements
+    }
+    
+    for i in 0..numbers.len() - 1  {
+        if numbers[i + 1] - numbers[i] < threshold {
+            return true;
+        }
+    }
+    
+    false
+}
+```

@@ -1,0 +1,10 @@
+```rust
+/// Return a string containing space-delimited numbers starting from 0 upto n inclusive.
+/// >>> string_sequence(0)
+/// String::from("0")
+/// >>> string_sequence(5)
+/// String::from("0 1 2 3 4 5")
+fn string_sequence(n: isize) -> String {
+    (0..=n).map(|i| num.to_string()).collect::<Vec<String>>().join(" ")
+}
+```

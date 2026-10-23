@@ -1,0 +1,45 @@
+To solve the problem of separating balanced groups of parentheses from a string, we can use a stack to track the opening and closing of parentheses. Here's how we can implement the `separate_paren_groups` function:
+
+1. **Initialize Structures**: Use a stack to keep track of open parentheses, and a vector to collect the separated groups.
+2. **Iterate Through Characters**: Traverse each character in the string.
+3. **Ignore Spaces**: Skip any spaces.
+4. **Handle Parentheses**::
+   - Push onto a opening parenthesis `(`.
+   - Pop from a closing parenthesis `)` and, the stack is empty, meaning the closing parenthesis starts a new group, so push current group to the results list.
+When the stack is empty, the matching opening are found, and a group is completed.
+
+Here's complete implementation:
+
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    // This is to track the track of opening parentheses
+    let mut stack = Vec::new();
+    // This to store the separated groups of parentheses
+    let mut groups = Vec::new();
+    // Temporary variable to build the current group parentheses
+    let mut current_group = String::new();
+    
+    // Iterate over each character in the input string
+    for ch in paren_string.chars() {
+        if ch == ' ' {
+            // It is // a space
+            continue;
+        } else if ch == '(' {
+            // It is an opening parenthesis {
+            stack.push(ch);
+        } else if ch == ')' {
+            // It is a closing parenthesis {
+            if !stack.is_empty() {
+                stack.pop();
+                groups.push(current_group.clone());
+                current_group.clear();
+            }
+        } else {
+            current_group.push(ch);
+        }
+    }
+    
+    // Return the collected group strings slices that groups the parentheses
+    groups
+}
+```

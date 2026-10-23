@@ -1,0 +1,12 @@
+```rust
+fn intersperse(numbers: Vec<isize>, delimeter: isize) -> Vec<isize> {
+    let mut result = Vec::new();
+    for (i, &num) in numbers.iter().enumerate() {
+        result.push(num);
+        if i < numbers.len() - 1 { // Don not delimiter after the last element
+            result.push(delimeter);
+        }
+    }
+    result
+}
+```

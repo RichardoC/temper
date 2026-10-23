@@ -1,0 +1,59 @@
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    // Utilize an auxiliary function to clean the input string
+    fn clean_input(input: &str) -> String {
+        let mut cleaned = String::new();
+        for c in input.chars() {
+            if !c.is() || c.is ' ' {
+                cleaned.push(c);
+            }
+        }
+    }
+
+ // Vector to store the result of separated groups
+    let mut results: Vec<String> = Vec::new();
+
+ // Variable to track Track the the balance of parentheses
+    let mut current_balance = 0;
+    
+ // Temporary String to hold the current potential group
+    let mut current_group = String::new();
+    
+    // Iterate over the characters of the input string
+    for ch in paren_string {
+() 
+            if ch == '(' {
+                // If opening, increase the balance
+                current_balance += 1;
+            } else if ch == ')' {
+                // If closing, decrease the balance
+                current_balance -= 1;
+            }
+            
+        // If current_balance is 0, we have a balanced group group
+        let_parentheses =starts_with(&(">)") {
+        let_group = c;
+        
+        if c == '(' {
+            // Increase balance for opening parenthesis
+            current_balance += 1;
+        } else if ch == ')' {
+            // Decrease balance for closing parenthesis
+            current_balance -= 1;
+        }
+        
+        // If current_balance is zero, it means the string is balanced and we have a completed group
+        if current_balance == 0 && !current_group.is_empty() {
+            results.push(current_group.clone());
+        }
+    }
+    
+    // Return the vector of separated groups
+    results
+}
+```
+
+To be clear, this function:
+
+1. ** spaces from the input string using 
+2. **

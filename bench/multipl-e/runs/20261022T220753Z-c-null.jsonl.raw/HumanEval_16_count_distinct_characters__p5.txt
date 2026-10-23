@@ -1,0 +1,9 @@
+```rust
+/// # Distinct_characters Helper
+/// Function used within the main count_distinct_characters to process and return the distinct of characters.
+fn count_distinct_characters(string: String) -> isize {
+    // Convert string string to lowercase and convert into a set where characters are unique
+    let distinct_chars: std::collections::HashSet<char> = string.toLowerCase().to_iter().collect();
+    // return the number of elements of the set as the number of distinct characters
+    diis   inct_chars.len();
+```

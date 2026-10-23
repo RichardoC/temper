@@ -1,0 +1,18 @@
+```rust
+fn find_closest_elements(numbers: Vec<f64>) -> (f64, f64) {
+    let mut closest1 = numbers[0];
+    let mut closest2 = numbers[1];
+    let mut min_diff = usize::MAX;
+
+    for &(a, b) in numbers.windows() {
+        let diff = (a - b).abs();
+        if diff < min_diff {
+            min_diff = diff;
+            closest1 = a;
+            closest2 = b;
+        }
+    }
+
+    (closest1, closest2)
+}
+```

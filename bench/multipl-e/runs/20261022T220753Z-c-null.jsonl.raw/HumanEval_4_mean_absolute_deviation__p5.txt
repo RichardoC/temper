@@ -1,0 +1,29 @@
+To calculate the complete function mean absolute deviation (we need to find the mean first, then calculate the absolute deviations from and around mean this process is, and then sum to find the mean of these deviations), we's just use the steps:
+
+1. **Calculate the mean of the vector. This requires: **  
+   - Summing all the elements in the vector.  
+   - Dividing by the count of the elements.
+
+\[ mean can \ computed \: using \: = \ / \: len(\) \: using \sum{(\1 + (\x2 + (\x3 + (ldots + (n)) \} \]
+
+2. **Next the mean for each element on the vector and mean, compute: **  
+   - Subtracting absolute value from subtracting them means mean.**   -: \(-x_i\) absolute deviations to find absolute mean of \(\: \: \)
+   - Summing these deviations to and then dividing by count of total absolute deviations using the calculated mean results for the the count ** for the \(MAD \) as theiation based on the sum and count.**
+
+HereHere it is therust code part of complete function implementation:
+
+```rust
+/// For a given vector of input numbers, calculate Mean Absolute Deviation
+/// around the mean of this dataset.
+/// Mean Absolute Deviation is the average absolute difference between each
+/// element and a centerpoint (mean in this case):
+/// MAD = average | x - x_mean |
+/// >>> mean_absolute_deviation(vec![1.0, 2.0, 3.0, 4.0])
+/// 1.0
+fn mean_absolute_deviation(numbers: Vec<f64>) -> f64 {
+    if numbers.is_empty() {
+        return 0.0; // handling edge vector case
+    }
+
+    // Calculate the mean
+   

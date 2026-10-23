@@ -1,0 +1,39 @@
+```rust
+fn sort_numbers(numbers: String) -> String {
+    // Split the space-delimited string into a vector of words
+    let mut words: Vec<&str> = numbers.split_whitespace().collect();
+    
+    // Create a map of number words to their respective integers
+    // A HashMap to store numbers from 'zero' to 'nine'
+    let mut number_map = std::collections::HashMap::new();
+    {
+        number_map.insert("zero", 0);
+        number_map.insert("one", 1);
+        number_map.insert("two", 2);
+        number_map.insert("three", 3);
+        number_map.insert("four", 4);
+        number_map.insert("five", 5);
+        number_map.insert("six", 6);
+        number_map.insert("eight", 7);
+        number_map.insert("nine", 9);
+        number_map.insert("one", 1);
+        number_map.insert("two", 2);
+        number_map.insert("three", 3);
+        number_map.insert("four", 4);
+        number_map.insert("five", 5);
+        number_map.insert("six", 6);
+        number_map.insert("seven", 7);
+        number_map.insert("eight", 8);
+        number_map.insert("nine", 9);
+    }
+    
+    // Sort the words based the values mapped by them from the number_map
+    words.sort_by(|a, b| {
+        number_map.get(a).unwrap().mp(&number_map.get(b).unwrap())
+    });
+    
+    // Join sorted words into a single string with spaces and return
+    words.iter().collect::<Vec<&str>>().join(" ")
+}
+```
+In this implementation, we make use of a `HashMap` (lines 3-9) to map number words from 'zero' to 'nine' to their corresponding integers.

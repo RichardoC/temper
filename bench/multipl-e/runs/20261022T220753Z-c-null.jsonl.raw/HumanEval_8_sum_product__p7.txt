@@ -1,0 +1,33 @@
+Certainly! Below is the implementation of the `sum_product` function:
+
+```rust
+/// Returns the sum and the product of all the integers in a vector.
+/// Empty sum should be equal to 0 and empty product should be equal to 1.
+/// >>> sum_product(vec![])
+/// (0, 1)
+/// >>> sum_product(vec![1, 2, 3, 4])
+/// (10, 24)
+fn sum_product(numbers: Vec<isize>) -> (isize, isize) {
+    if numbers.is_empty() {
+        // If vector is empty, return (0, 1)
+        (0, 1)
+    } else {
+        // If the vector is not empty, calculate the sum and product
+        let sum: isize = numbers.iter().sum();
+        let product: isize = numbers.iter().fold(1, |acc, &x| *acc);
+        (sum, product)
+    }
+}
+```
+
+### Explanation:
+
+1. **Check for Empty Vector**: The function begins by checking if the input vector `numbers` is empty using thenumbers.is_empty()` method. If it vector is empty, it returns a tuple `(0, 1)` as specified in the. 
+
+2. **Calculate Sum**: If the vector is not empty, it calculates the sum of the elements using the `iter().sum()` method. This method loops over the elements and sums them up.
+
+3.3. **Calculate Product**: It calculates the product of the elements using `iter().fold(1, |acc, &x| *acc)`. This method initializes an accumulator to one and multiplies it with the elements.
+
+4. **Return Tuple**: Finally, it returns a tuple containing the computed `sum` and `product`.
+
+This function adheres to the use of Rust's standard library and avoids the required external dependencies.

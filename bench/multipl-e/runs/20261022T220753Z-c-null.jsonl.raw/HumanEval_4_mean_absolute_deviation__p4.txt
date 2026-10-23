@@ -1,0 +1,43 @@
+To complete the function `mean_absolute_deviation`, we'll follow these steps:
+
+1. Calculate the mean of the input vector of numbers.
+2. Compute the absolute differences between each element and the mean.
+3. Calculate the mean of these absolute differences, which is the Mean Absolute Deviation (MAD).
+
+Below is the implementation:
+
+```rust
+fn mean_absolute_deviation(numbers: Vec<f64>) -> f64 {
+    if numbers.is_empty() {
+        return 0.0;
+    }
+
+    // Step 1: Calculate the mean of the input numbers
+    let sum: f64 = numbers.iter().sum();
+    let count = numbers.len() as f64;
+    let mean = sum / count;
+
+    // Step 2: Compute the absolute differences between each element and the mean
+    let absolute_mean_diffs: Vec<f64> = numbers.iter        // Iterate over the numbers
+        .map(|&x| (x - mean).abs())   // Compute the absolute difference from the mean
+        .collect();                                // Collect the results into a vector
+
+    // Step 3: Calculate the mean of the absolute differences
+    let mad = f64 =absolute_mean_diffs.iter().sum();
+ / absolute.count_diffs.len() as f64;
+
+    mad
+}
+```
+
+### Explanation:
+
+1. **Empty Vector Check:**
+   - Before proceeding with calculations, we handle the edge case of an empty vector. Is it empty, the function returns `0.0`.
+
+2. **Calculation of Mean:**
+   - The sum of the vector is calculated using `numbers.iter().sum()`.
+   - The length of the vector is cast to `f64` to ensure the division results in `f64`.
+   - The mean is calculated by dividing the sum by the number of elements.
+
+3.

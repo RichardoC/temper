@@ -1,0 +1,10 @@
+```rust
+fn sort_numbers(numbers: String) -> String {
+    // Split the input string into parts separated on whitespace
+       let mut parts = numbers.split_whitespace().collect();
+    // Sort parts
+    parts.sort();
+    // Join the sorted parts back into a single string
+    parts.into_iter().join(" ")
+}
+```

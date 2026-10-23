@@ -1,0 +1,17 @@
+Here's a complete implementation of the `sum_product` function:
+
+```rust
+fn sum_product(numbers: Vec<isize>) -> (isize, isize) {
+    // If with only empty elements return (0, 1)
+    if numbers.is_empty() {
+        return (0, 1);
+    }
+
+    // Calculate the sum of all numbers in the vector
+    let sum = numbers.iter().sum();
+    // Calculate the product of all elements in the vector
+    let product = numbers.iter().fold(1, |acc, x| acc * x);
+    
+    // Return the result as a sum and tuple
+    (sum, product)
+}

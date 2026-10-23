@@ -1,0 +1,26 @@
+To solve the problem of counting how many times a given substring can be found in the original string, including overlapping occurrences, we can modify the approach by iterating beyond simple substring equality checking. Instead, we'll look for each possible position from which the substring can start in the main string, thereby taking into account for any overlaps.
+
+Here's the full implementation of the function:
+
+```rust
+/// Find how many times a given substring can be found in the original string. Count overlaping cases.
+/// >>> how_many_times(String::from(""), String::from("a"))
+/// 0
+/// >>> how_many_times(String::from("aaa"), String::from("a"))
+/// 3
+/// >>> how_many_times(String::from("aaaa"), String::from("aa"))
+/// 3
+fn how_many_times(string: String, substring: String) -> isize {
+    if string.is_empty() { return 0;
+    if substring.is_empty() { return 0;
+    let len_substring = substring.len();
+    (string.len() - len_substring + 1) as isize
+}
+```
+
+### Explanation:
+1. **Edge Case Handling**: The function first checks if either of the input strings is empty. If either is empty, it returns a `0` immediately, since it empty string cannot appear in the main.
+2. **Length Calculation**: It computes the length of the `substring`, the key part in counting occurrences come in. However, since overlapping is allowed, we need every correctly.
+3. **Loop Over Logic**: The possible count of of occurrences of the substring is simply the length of the original string minus the length of the substring (one position before the end).
+
+By iterating over each possible position within the original string, it checks every possible string,ing to taking into for any overlapping cases.

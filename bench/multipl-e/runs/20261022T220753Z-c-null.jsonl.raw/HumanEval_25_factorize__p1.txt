@@ -1,0 +1,1 @@
+To implement the function `factorize`, we need to find the prime factors of the given integer and return them in a vector. Here's a step-by-step implementation of the function.

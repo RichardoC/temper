@@ -1,0 +1,10 @@
+```rust
+fn sort_numbers(numbers: String) -> String {
+    // Split the input into words
+    let mut words: Vec<&str> = numbers.split_whitespace().collect();
+    // Sort the words
+    words.sort();
+    // Join the sorted words back into a string
+    words.into_iter().join(" ")
+}
+```

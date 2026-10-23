@@ -1,0 +1,15 @@
+```rust
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    if numbers.is_empty() {
+        return Vec::new();
+    }
+    
+    let min_value = *numbers.iter().min().unwrap();
+    let max_value = *numbers.iter().max().unwrap();
+    let range = max_value - min_value;
+
+    numbers.into_iter()
+        .map(|x| (x - min_value) / range)
+        .collect()
+}
+```

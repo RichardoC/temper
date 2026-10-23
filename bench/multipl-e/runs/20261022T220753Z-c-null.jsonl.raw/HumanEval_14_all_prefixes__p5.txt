@@ -1,0 +1,9 @@
+```rust
+/// Return_prefixes vector from the input string of size.
+/// Example length.
+
+fn all_prefixes(string: String) -> Vec<String> {
+    use std::vec! .into().collect (1..= .len()
+    .map(|i| &string[0..i])
+   ().collect()
+```

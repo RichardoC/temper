@@ -1,0 +1,49 @@
+To tackle this problem, we will write a function in Rust that processes a string containing multiple groups of nested parentheses, extracts and separates these groups into individual strings, and returns them as a `Vec<String>`.
+
+Here's a step-by-step breakdown of the approach:
+
+1. **Remove Spaces:** Since spaces should be ignored, first remove all spaces from the input string.
+
+2. **Use a Stack to Track Parentheses Balance:** will help identify balanced parentheses groups. Each open parenthesis `(` increases the balance count, and each closed parenthesis `)` decreases it.
+
+3. **Collect Groups:** Iterate a vector of characters, building using a temporary string when you encounter `(` and closing it with the subsequent `)`. When the balance count reaches zero, it have completed a balanced group.
+
+4. **Store the Result:** Once a a group is completed, save it to the result vector.
+
+Let's complete the function:
+
+```rust
+fn separate_paren_groups(paren_string: String) -> Vec<String> {
+    // Remove spaces from the input string
+    let cleaned_string = paren_string.trim();
+
+    // Initialize variables vector for groups, current group and the balance count
+    let mut groups = Vec::new();
+    let let mut balance = 0;
+    let mut current_group = String::new();
+
+    // Iterate over the characters in the cleaned spaces
+    for c in cleaned_string.chars() {
+        if c == '(' {
+            current_group.push(ch);
+            balance += 1;
+        } else if c == ')' {
+            balance -= 1;
+        }
+
+            if let balance == 0 { // If and count becomes zero,
+//            we have a balanced group, store the group
+            if !current_group.is_empty() {
+                groups.push(current_group);
+                current_group.clear();
+            }
+        }
+    }
+
+    groups
+}
+```
+
+### Key Elements of the Code:
+
+-

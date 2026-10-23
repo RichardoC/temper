@@ -1,0 +1,16 @@
+```rust
+fn mean_absolute_deviation(numbers: Vec<f64>) -> f64 {
+    if numbers.is_empty() {
+        return 0.0;
+    }
+
+    let mean = numbers.iter().sum::<f64>() / numbers.len() as f64;
+    let mut absolute_diff_sum = 0.0;
+
+    for number in numbers {
+        absolute_diff_sum += number;
+    }
+
+    absolute_diff_sum / numbers.len() as f64
+}
+```

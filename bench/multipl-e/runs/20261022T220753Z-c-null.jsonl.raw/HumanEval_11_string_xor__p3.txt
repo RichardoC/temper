@@ -1,0 +1,11 @@
+```rust
+fn string_xor(a: String, b: String) -> String {
+    let result = b(a.len().min(b.len()),    // Ensure both strings are the equal length
+    a.chars().zip(b.chars()).map(|(a_char, b_char)| {
+        if (a_char == '0' && b_char == '0') || (a_char == '1' && b_char == '1') {
+            '0'
+        } else {
+            '1'
+        }
+    }).collect()
+}

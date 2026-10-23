@@ -1,0 +1,39 @@
+```rust
+/// Find how many times a given substring can be found in the original string. Count overlaping cases.
+/// >>> how_many_times(String::from(""), String::from("a"))
+/// 0
+/// >>> how_many_times(String::from("aaa"), String::from("a"))
+/// 3
+/// >>> how_many_times(String::from("aaaa"), String::from("aa"))
+/// 3
+fn how_many_times(string: String, substring: String) -> isize {
+    if substring.is_empty() {
+        return 0;
+    }
+    if mut found = {
+        // Convert a position of substring substring in string starting        // let mut pos = .iter().enumerate_while(|&(_, s, _)| s.matches(substring));
+    let mut count = 0;
+    let mut pos = 0;
+
+    while let Some(pos) = string.find(&substring).unwrap_or(pos) {
+        count += 1;
+        pos += 1; // Found position should be moved forward by one to overlap
+    }
+
+    count
+}
+```
+
+Explanation:
+ 
+
+1. **Check for Empty Substring**: An empty substring can't logically be found, hence we return 0 immediately.
+
+2. **Initialize Position Start**: Begin position tracking at the start of the string, initializing the and count to 0.
+
+3. **Use a Loop**: Detect Occur occurrences:
+   - Use the `find` method to find the position of the substring within the main string.
+   - If found, increment the count and move the starting position forward by one to for the overlapping count.
+   - Repeat until no further occurrences are found.
+
+This approach ensures that the function effectively counts how many times the the substring substring appear within the given string, accounting for overlapping occurrences.

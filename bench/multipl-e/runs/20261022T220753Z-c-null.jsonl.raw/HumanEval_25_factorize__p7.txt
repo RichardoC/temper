@@ -1,0 +1,46 @@
+Certainly! Below is the complete implementation of the `factorize` function, including the required documentation comments, signature line, and implementation body.
+
+```rust
+fn factorize(n: isize) -> Vec<isize> {
+    // Handle the edge case where n is less than or equal to 1
+    if n <= 1 {
+        return Vec::new();
+    }
+
+    let mut factors = Vec::new();
+
+    // // Check division by 2
+    while n % 2 == 0 {
+        factors.push(2);
+        n /= 2;
+    }
+
+    // Check odd numbers for prime factorization
+    for i in (3..=n.sqrt_root).step_by(2) {
+        while n % i == 0 {
+            factors.push(i);
+            n /= i;
+        }
+    }
+
+    // If n is a prime number greater than 2
+    if n > 2 {
+        factors.push(n);
+    }
+
+    factors
+}
+
+fn main() {
+    assert_eq!(factorize(8), vec![2, 2, 2]);
+    assert_eq!(factorize(25), vec![5, 5]);
+    assert_eq!(factorize(70), vec![2, 5, 7]);
+}
+```
+
+### Explanation:
+- We first handle the edge case where `n` is less than or equal to 1, as such numbers do not have prime factors.
+- We then initialize an empty vector `factors` to store the prime factors.
+- We check divisibility by 2 and continuously divide the `n` until2 is no longer divisible.
+- We then only iterate through odd numbers starting from 3 up to the square root of `n` to complete the prime factorization.
+- If there's any remaining part of `n` greater than 2 after processing all possible factors,

@@ -1,0 +1,30 @@
+To create the `rescale_to_unit` function, we'll go through these steps:
+
+1. **Ident the Rangerange Minimums Maximum Values:**
+   - First, we the indices and values of the minimum and maximum values in the vector.
+  2. **Compute the Scaling Factor:**
+   - Since our goal is to rescale values such that the smallest becomes 0 and the largest becomes 1, we take these as the endpoints of the new range (0 to 1).
+   - Calculate the ratio between the max and min. This helps to determine the formula for linear transformation:
+     \[ (\new\_valuevalue = \frac{\text{value} - \text{min}}{\text{max} - \text{min}} \}
+
+3. **Initialize Result**: Create a new vector to store the transformed values.
+
+4. **Iterate and Transform:
+  . For original value, apply the linear transformation, and place it into the new vector.
+
+5. **Return the Result**: Return the new vector.
+
+Let complete with the the Rust code:
+
+```rust
+/// Given vector of numbers (of at least two elements), apply a linear transform to that vector,
+/// such that the smallest number will become 0 and the largest will become 1
+/// >>> rescale_to_unit(vec![1.0, 2.0, 3.0, 4.0, 5.0])
+/// vec![0.0, 0.25, 0.5, 0.75, 1.0]
+fn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {
+    if numbers.len() < 2 {
+        un!("Vector must contain at least two elements.");
+    }
+    
+    let value_min = numbers.iter().min().unwrap();
+    let value_max = numbers.iter().max
