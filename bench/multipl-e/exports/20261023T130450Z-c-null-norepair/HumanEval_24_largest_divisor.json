@@ -1,0 +1,16 @@
+{
+ "name": "HumanEval_24_largest_divisor",
+ "language": "rs",
+ "prompt": "/// For a given number n, find the largest number that divides n evenly, smaller than n\n/// >>> largest_divisor(15)\n/// 5\nfn largest_divisor(n: isize) -> isize {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = largest_divisor;\n    assert_eq!(candidate(3), 1);\n    assert_eq!(candidate(7), 1);\n    assert_eq!(candidate(10), 5);\n    assert_eq!(candidate(100), 50);\n    assert_eq!(candidate(49), 7);\n}\n",
+ "completions": [
+  "if n <= 1 {\n    return -1; // No valid divisor for numbers less than or equal to 1\n}\n\nfor i in n - 1..=1 {\n    if n % i == 0 {\n        return i;\n    }\n}\n\n-1 // Fallback return, though this line should never be reached",
+  "for i in (1..n).rev() {\n    if n % i == 0 {\n        return i;\n    }\n}\n0 // This return case handles n <= 1",
+  "// Check each i from from n-1 down to 1\nfor i in (1..n) {\n    if n % i == 0 {\n        return i;\n    }\n}\n1",
+  "if n <= 1 {\n    return -1;\n}\nfor i in (n / 2..n).rev() {\n    if n % i == 0 {\n        return i;\n    }\n}\n1",
+  "for i in (1..n).rev() {\n    if n % i == 0 {\n        return i;\n    }\n}\n1; // This case is never reached, but to needs a the statement",
+  "if n <= 1 {\n    return 1; // For 0, or lower, return 1\n}\nfor i in (2..n).rev() {\n    if n % i == 0 {\n        return i;\n    }\n}\n1",
+  "for i in (1..n).rev() {\n    if n % i == 0 {\n        return i;\n    }\n}\n1 // If n is found, return 1",
+  "if n <= 1 {\n    return 1;\n}\n\nfor i in (1..n).rev() {\n    if n % i == 0 {\n        return i;\n    }\n}\n1"
+ ]
+}

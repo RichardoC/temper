@@ -1,0 +1,16 @@
+{
+ "name": "HumanEval_13_greatest_common_divisor",
+ "language": "rs",
+ "prompt": "/// Return a greatest common divisor of two integers a and b\n/// >>> greatest_common_divisor(3, 5)\n/// 1\n/// >>> greatest_common_divisor(25, 15)\n/// 5\nfn greatest_common_divisor(a: isize, b: isize) -> isize {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = greatest_common_divisor;\n    assert_eq!(candidate(3, 7), 1);\n    assert_eq!(candidate(10, 15), 5);\n    assert_eq!(candidate(49, 14), 7);\n    assert_eq!(candidate(144, 60), 12);\n}\n",
+ "completions": [
+  "// Helper function to perform the Euclidean algorithm\nfn gcd(mut x: isize, mut y: isize) -> isize {\n    while y != 0 {\n        let temp = y;\n        y = x % y;\n        x = temp;\n    }\n    x\n}\n\n// Call the helper function with the initial parameters\ngcd(a, b)",
+  "if b == 0 {\n    a\n} else {\n    greatest_common_divisor(b, a % b)\n}",
+  "if b == 0 {\n    return a;\n} else {\n    greatest_common_divisor(b, a % b)\n}",
+  "fn gcd(x: isize, y: isize) -> isize {\n    if y == 0 { x } else { gcd(y, x % y) }\n}\ngcd(a, b)",
+  "fn gcd(x: isize, y: isize) -> isize {\n    if y == 0 {\n        x.abs().unwrap()\n    } else {\n        gcd(y, x % y)\n    }\n}\ngcd(a, b)",
+  "if a < 0 || b < 0 {\n    panic!(\"GCD is only defined only for non-negative integers\");\n}\n\nwhile b != 0 {\n    let temp = a % b;\n    a = b;\n    b = temp;\n}\na",
+  "if b == 0 {\n    return a\n} else {\n    greatest_common_divisor(b, a % b)\n}",
+  "fn gcd(x: isize, y: isize) -> isize {\n    if y == 0 {\n        x\n    } else {\n        gcd(y, x % y)\n    }\n}\ngcd(a, b)"
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "name": "HumanEval_21_rescale_to_unit",
+ "language": "rs",
+ "prompt": "/// Given vector of numbers (of at least two elements), apply a linear transform to that vector,\n/// such that the smallest number will become 0 and the largest will become 1\n/// >>> rescale_to_unit(vec![1.0, 2.0, 3.0, 4.0, 5.0])\n/// vec![0.0, 0.25, 0.5, 0.75, 1.0]\nfn rescale_to_unit(numbers: Vec<f64>) -> Vec<f64> {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = rescale_to_unit;\n    assert_eq!(candidate(vec![2.0, 49.9]), vec![0.0, 1.0]);\n    assert_eq!(candidate(vec![100.0, 49.9]), vec![1.0, 0.0]);\n    assert_eq!(candidate(vec![1.0, 2.0, 3.0, 4.0, 5.0]), vec![0.0, 0.25, 0.5, 0.75, 1.0]);\n    assert_eq!(candidate(vec![2.0, 1.0, 5.0, 3.0, 4.0]), vec![0.25, 0.0, 1.0, 0.5, 0.75]);\n    assert_eq!(candidate(vec![12.0, 11.0, 15.0, 13.0, 14.0]), vec![0.25, 0.0, 1.0, 0.5, 0.75]);\n}\n",
+ "completions": [
+  "if numbers.len() < 2 {\n    panic!(\"The vector must contain at least two elements.\");\n}\n\nlet min_value = *numbers.iter().min().unwrap();\nlet max_value = *numbers.iter().max().unwrap();\n\nif min_value == max_value {\n    // If all the numbers are the same, return a vector of zeros\n    return vec![0.0; numbers.len()];\n}\n\nlet range = max_value - min_value;\nnumbers.map(|x| (x - min_value) / range).collect()",
+  "let min_value = *numbers.iter().min().unwrap();\nlet max_value = *numbers.iter().max().unwrap();\nlet range = max_value - min_value;\n\n// Create the rescaled vector\nnumbers.iter()\n    .map(|x| (x - min_value) / range)\n    .collect()",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet min_value = *numbers.iter().min().unwrap();\nlet max_val = *numbers.iter().max().unwrap();\n\nif min_value == max_val {\n    return vec![0.0;; numbers.len()];\n}\n\nlet range_diff = max_val - min_value;\n\nnumbers.iter().map(|x| (x - min_value) / range_diff).collect()",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet min_value = *numbers.iter().min().unwrap();\nlet max_value = *numbers.iter().max().unwrap();\nlet range = max_value - min_value;\n\nnumbers.into_iter()\n    .map(|x| (x - min_value) / range)\n    .collect()",
+  "if numbers.len() < 2 {\n    return numbers;\n}\n\nlet min_value = *numbers.iter().min().unwrap();\nlet max_value = *numbers.iter().max().unwrap();\nlet range = max_value - min_value;\n\nnumbers.iter().map(|&x| (num - min_value) / range).collect()",
+  "let min_value = *numbers.iter().min().unwrap();\nlet max_value = *numbers.iter().max().unwrap();\nlet range = max_value - min_value;\n\n// Res the vector to vector\nnumbers.iter()\n    .map(|num| (x - min_value) / range)\n    .collect()",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet min_value = *numbers.iter().min().unwrap();\nlet max_value = *numbers.iter().max().unwrap();\nlet range = max_value - min_value;\n\nif range == 0.0 {\n    return vec![0.0; numbers.len() as usize];\n}\n\nnumbers.iter().map(|&num| (x - min_value) / range).collect()"
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "name": "HumanEval_9_rolling_max",
+ "language": "rs",
+ "prompt": "/// From a given vector of integers, generate a vector of rolling maximum element found until given moment\n/// in the sequence.\n/// >>> rolling_max(vec![1, 2, 3, 2, 3, 4, 2])\n/// vec![1, 2, 3, 3, 3, 4, 4]\nfn rolling_max(numbers: Vec<isize>) -> Vec<isize> {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = rolling_max;\n    assert_eq!(candidate(Vec::<isize>::new()), Vec::<isize>::new());\n    assert_eq!(candidate(vec![1, 2, 3, 4]), vec![1, 2, 3, 4]);\n    assert_eq!(candidate(vec![4, 3, 2, 1]), vec![4, 4, 4, 4]);\n    assert_eq!(candidate(vec![3, 2, 3, 100, 3]), vec![3, 3, 3, 100, 100]);\n}\n",
+ "completions": [
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet mut current_max = numbers[0];\nlet mut result = Vec::new();\nresult.push(current_max);\n\nfor &num in &numbers[1.. {\n    if num > current_max {\n        current_max = num;\n    }\n    result.push(current_max);\n}\n\nresult",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet mut rolling_max = Vec::new();\nlet mut current_max = numbers[0];\nrolling_max.push(current_max);\n\nfor &number in &numbers[1..] {\n    if number > current_max {\n        current_max = number;\n    }\n    rolling_max.push(current_max);\n}\n\nrolling_max",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet mut result = Vec::new();\nlet mut current_max = numbers[0];\nresult.push(current_max);\n\nfor &num in &numbers[1..] {\n    if num > current_max {\n        current_max = num;\n    }\n    result.push(current_max);\n}\n\nresult",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet mut result = Vec::new();\nlet mut current_max = numbers[0];\nresult.push(current_max);\n\nfor &number in numbers.iter(..() {\n    if number > current_max {\n        current_max = number;\n    }\n    result.push(current_max);\n}\n\nresult",
+  "// Initialize an empty vector to hold the rolling max values\nlet mut rolling_max_vec = Vec::new();\n\n// Iterate over each number in the input vector\nfor &number in &numbers {\n    if rolling_max_vec.is_empty() {\n        // If the result vector is empty, add the first number as the maximum\n        rolling_max_vec.push(number);\n    } else {\n        // Otherwise, find the maximum between the current number and the last rolling max value            rolling_max_vec.push(*rolling_max_vec.last().unwrap_or &number).max(number));\n    }\n}\n\n\nrolling_max_vec",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet mut current_max = numbers[0];\nlet mut rollings = Vec::with_capacity(numbers.len());\n\nfor &num in &numbers.iter() {\n    if num > current_max {\n        current_max = num;\n    }\n    rollings.push(current_max);\n}\n\nrollings",
+  "if numbers.is_empty() {\n    return Vec::new();\n}\n\nlet mut result = Vec::with_capacity(numbers.len());\nlet current_max = numbers[0];\nresult.push(current_max);\n\nfor &number in &numbers[1:] {\n    if num > current_max {\n        current_max = num;\n    }\n    result.push(current_max);\n}\n\nresult"
+ ]
+}

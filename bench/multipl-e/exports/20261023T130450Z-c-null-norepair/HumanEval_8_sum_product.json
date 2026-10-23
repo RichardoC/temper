@@ -1,0 +1,16 @@
+{
+ "name": "HumanEval_8_sum_product",
+ "language": "rs",
+ "prompt": "/// For a given vector of integers, return a tuple consisting of a sum and a product of all the integers in a vector.\n/// Empty sum should be equal to 0 and empty product should be equal to 1.\n/// >>> sum_product(vec![])\n/// (0, 1)\n/// >>> sum_product(vec![1, 2, 3, 4])\n/// (10, 24)\nfn sum_product(numbers: Vec<isize>) -> (isize, isize) {\n",
+ "tests": "}\n\nfn main() {\n    let candidate = sum_product;\n    assert_eq!(candidate(Vec::<isize>::new()), (0, 1));\n    assert_eq!(candidate(vec![1, 1, 1]), (3, 1));\n    assert_eq!(candidate(vec![100, 0]), (100, 0));\n    assert_eq!(candidate(vec![3, 5, 7]), (15, 105));\n    assert_eq!(candidate(vec![10]), (10, 10));\n}\n",
+ "completions": [
+  "if numbers.len() == 0 {\n    return (0, 1);\n}\n\nlet mut sum = 0;\nlet mut product = 1;\n\nfor &number in &numbers {\n    sum += number;\n    product *= number;\n}\n\n(sum, product)",
+  "let sum = numbers.iter().sum::<_>();\nlet product = numbers.iter().fold(1, |acc, x| acc * num);\n(sum, product)",
+  " let mut sum = 0\n;\n let mut product = 1;\n\n // Iterate through sum elements and compute product\n for &number in &numbers {\n     sum += number;\n     product *= number;\n }\n\n (sum, product)",
+  "if numbers.is_empty() {\n    return (0, 1);\n}\n\n\nlet sum: isize = numbers.iter().sum();\nlet product: isize = numbers.iter().foldQL(1, std::acc *= *);\n\n(sum, product)",
+  "let mut sum = 0;\nlet mut product = 1;\n\nfor number in numbers {\n    sum += number;\n    product *= number;\n}\n\n(sum, product)",
+  "// If with only empty elements return (0, 1)\nif numbers.is_empty() {\n    return (0, 1);\n}\n\n// Calculate the sum of all numbers in the vector\nlet sum = numbers.iter().sum();\n// Calculate the product of all elements in the vector\nlet product = numbers.iter().fold(1, |acc, x| acc * x);\n\n// Return the result as a sum and tuple\n(sum, product)",
+  "let sum = numbers.iter().sum::<_>();\nlet product = numbers.iter().fold(1, |acc, x| acc * x);\n(sum, product)",
+  "if numbers.is_empty() {\n    // If vector is empty, return (0, 1)\n    (0, 1)\n} else {\n    // If the vector is not empty, calculate the sum and product\n    let sum: isize = numbers.iter().sum();\n    let product: isize = numbers.iter().fold(1, |acc, &x| *acc);\n    (sum, product)\n}"
+ ]
+}

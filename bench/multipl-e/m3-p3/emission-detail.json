@@ -1,0 +1,1277 @@
+{
+ "run": "bench/multipl-e/runs/20261022T220753Z-c-null.jsonl",
+ "export": "bench/multipl-e/exports/20261023T130450Z-c-null-norepair",
+ "results": "bench/multipl-e/results/20261023T130739Z.json",
+ "verdict_config_sha256": "a63b2b369606bb0222a19d0a79088f5f5425f3e9e041f6a4f8ea9499177ae5e1",
+ "structural_temp": 0.2,
+ "rows": [
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 7,
+   "cnull_temp": 0.95,
+   "cnull_status": "SyntaxError",
+   "screen_emitted": 7,
+   "screen_temp": 0.95,
+   "screen_status": "SyntaxError",
+   "screen_ranking": [
+    7,
+    1,
+    6,
+    2,
+    4,
+    3,
+    5,
+    0
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 1,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "Exception",
+   "screen_ranking": [
+    1,
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "Exception",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "n_canvases": 8,
+   "n_r1_clean": 8,
+   "n_container_ok": 8,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_ranking": [
+    2,
+    7,
+    1,
+    6,
+    3,
+    4,
+    5,
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 2,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 5,
+   "screen_temp": 1.2,
+   "screen_status": "OK",
+   "screen_ranking": [
+    5,
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "OK",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_4_mean_absolute_deviation",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 2,
+   "cnull_temp": 0.95,
+   "cnull_status": "SyntaxError",
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "SyntaxError",
+   "screen_ranking": [
+    2,
+    7,
+    3,
+    1,
+    6,
+    0,
+    5,
+    4
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    null,
+    null,
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_5_intersperse",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 2,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 4,
+   "screen_temp": 1.1,
+   "screen_status": "OK",
+   "screen_ranking": [
+    4,
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_6_parse_nested_parens",
+   "n_canvases": 8,
+   "n_r1_clean": 3,
+   "n_container_ok": 3,
+   "any_ok": true,
+   "cnull_emitted": 2,
+   "cnull_temp": 0.95,
+   "cnull_status": "OK",
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_ranking": [
+    2,
+    3,
+    5
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    "OK",
+    "SyntaxError",
+    "OK",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_7_filter_by_substring",
+   "n_canvases": 8,
+   "n_r1_clean": 8,
+   "n_container_ok": 8,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_ranking": [
+    2,
+    7,
+    3,
+    4,
+    5,
+    1,
+    6,
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_8_sum_product",
+   "n_canvases": 8,
+   "n_r1_clean": 5,
+   "n_container_ok": 5,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_ranking": [
+    6,
+    4,
+    0,
+    2,
+    5
+   ],
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "OK",
+    "SyntaxError",
+    "OK",
+    "OK",
+    "OK",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    true,
+    false,
+    true,
+    true,
+    true,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_9_rolling_max",
+   "n_canvases": 8,
+   "n_r1_clean": 4,
+   "n_container_ok": 2,
+   "any_ok": true,
+   "cnull_emitted": 1,
+   "cnull_temp": 0.8,
+   "cnull_status": "OK",
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": null,
+   "screen_ranking": [
+    2,
+    3,
+    1,
+    5
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "OK",
+    null,
+    "OK",
+    "SyntaxError",
+    "Exception",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    true,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_10_make_palindrome",
+   "n_canvases": 8,
+   "n_r1_clean": 1,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 6,
+   "cnull_temp": 0.8,
+   "cnull_status": "Exception",
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "Exception",
+   "screen_ranking": [
+    6
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "Exception",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_11_string_xor",
+   "n_canvases": 8,
+   "n_r1_clean": 4,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "Exception",
+   "screen_emitted": 4,
+   "screen_temp": 1.1,
+   "screen_status": "Exception",
+   "screen_ranking": [
+    4,
+    1,
+    6,
+    0
+   ],
+   "canvas_statuses": [
+    "Exception",
+    "Exception",
+    null,
+    "SyntaxError",
+    "Exception",
+    "SyntaxError",
+    "Exception",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_12_longest",
+   "n_canvases": 8,
+   "n_r1_clean": 4,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 1,
+   "cnull_temp": 0.8,
+   "cnull_status": "Exception",
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "Exception",
+   "screen_ranking": [
+    2,
+    3,
+    1,
+    6
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "Exception",
+    "Exception",
+    "Exception",
+    "SyntaxError",
+    "SyntaxError",
+    "Exception",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_13_greatest_common_divisor",
+   "n_canvases": 8,
+   "n_r1_clean": 6,
+   "n_container_ok": 6,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_ranking": [
+    1,
+    6,
+    3,
+    7,
+    2,
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    true
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_14_all_prefixes",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 2,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_ranking": [
+    0,
+    7
+   ],
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_15_string_sequence",
+   "n_canvases": 8,
+   "n_r1_clean": 1,
+   "n_container_ok": 1,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_ranking": [
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_16_count_distinct_characters",
+   "n_canvases": 8,
+   "n_r1_clean": 1,
+   "n_container_ok": 1,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_ranking": [
+    0
+   ],
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    null,
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_17_parse_music",
+   "n_canvases": 8,
+   "n_r1_clean": 3,
+   "n_container_ok": 3,
+   "any_ok": true,
+   "cnull_emitted": 1,
+   "cnull_temp": 0.8,
+   "cnull_status": "OK",
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_ranking": [
+    6,
+    1,
+    2
+   ],
+   "canvas_statuses": [
+    null,
+    "OK",
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    null
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_18_how_many_times",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "Exception",
+   "screen_emitted": 3,
+   "screen_temp": 1.0,
+   "screen_status": "Exception",
+   "screen_ranking": [
+    3,
+    0
+   ],
+   "canvas_statuses": [
+    "Exception",
+    "SyntaxError",
+    "SyntaxError",
+    "Exception",
+    null,
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_19_sort_numbers",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 1,
+   "cnull_temp": 0.8,
+   "cnull_status": "SyntaxError",
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "SyntaxError",
+   "screen_ranking": [
+    1,
+    6,
+    2,
+    7,
+    3,
+    0,
+    4,
+    5
+   ],
+   "canvas_statuses": [
+    null,
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_20_find_closest_elements",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 6,
+   "cnull_temp": 0.8,
+   "cnull_status": "SyntaxError",
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "SyntaxError",
+   "screen_ranking": [
+    6,
+    1,
+    2,
+    7,
+    4,
+    5,
+    0,
+    3
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_21_rescale_to_unit",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "any_ok": false,
+   "cnull_emitted": 3,
+   "cnull_temp": 1.0,
+   "cnull_status": "SyntaxError",
+   "screen_emitted": 3,
+   "screen_temp": 1.0,
+   "screen_status": "SyntaxError",
+   "screen_ranking": [
+    3,
+    2,
+    7,
+    4,
+    1,
+    6,
+    0,
+    5
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "diverged": false
+  },
+  {
+   "problem": "HumanEval_23_strlen",
+   "n_canvases": 8,
+   "n_r1_clean": 8,
+   "n_container_ok": 8,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "OK",
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_ranking": [
+    1,
+    6,
+    2,
+    7,
+    0,
+    3,
+    4,
+    5
+   ],
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_24_largest_divisor",
+   "n_canvases": 8,
+   "n_r1_clean": 7,
+   "n_container_ok": 4,
+   "any_ok": true,
+   "cnull_emitted": 0,
+   "cnull_temp": 0.2,
+   "cnull_status": "Exception",
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_ranking": [
+    6,
+    1,
+    3,
+    7,
+    2,
+    0,
+    5
+   ],
+   "canvas_statuses": [
+    "Exception",
+    "OK",
+    "Exception",
+    "Exception",
+    "SyntaxError",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true
+   ],
+   "diverged": true
+  },
+  {
+   "problem": "HumanEval_25_factorize",
+   "n_canvases": 8,
+   "n_r1_clean": 3,
+   "n_container_ok": 1,
+   "any_ok": true,
+   "cnull_emitted": 2,
+   "cnull_temp": 0.95,
+   "cnull_status": "Exception",
+   "screen_emitted": 3,
+   "screen_temp": 1.0,
+   "screen_status": "OK",
+   "screen_ranking": [
+    3,
+    2,
+    5
+   ],
+   "canvas_statuses": [
+    "SyntaxError",
+    null,
+    "Exception",
+    "OK",
+    "SyntaxError",
+    "Exception",
+    null,
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "diverged": true
+  }
+ ],
+ "cnull_passes": 14,
+ "screen_passes": 14
+}
