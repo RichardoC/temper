@@ -1,0 +1,202 @@
+{
+ "checks": {
+  "HumanEval_17_parse_music:steer_log_exists": true,
+  "HumanEval_17_parse_music:ladder_reached_the_game": true,
+  "HumanEval_17_parse_music:all_eight_particles_spawned": true,
+  "HumanEval_17_parse_music:config_sha_recorded": true,
+  "HumanEval_17_parse_music:demoted_role_recorded": true,
+  "HumanEval_17_parse_music:ladder_fired_at_final_checkpoint_only": true,
+  "HumanEval_17_parse_music:no_kill_executed": true,
+  "HumanEval_17_parse_music:nfe_within_envelope": true,
+  "HumanEval_17_parse_music:emitted_one_canvas": true,
+  "HumanEval_17_parse_music:emission_saw_the_whole_ladder": true,
+  "HumanEval_17_parse_music:row_carried_the_emitted_canvas": true,
+  "HumanEval_17_parse_music:verifier_metered": true,
+  "HumanEval_17_parse_music:steer_log_replays": true,
+  "HumanEval_11_string_xor:steer_log_exists": true,
+  "HumanEval_11_string_xor:ladder_reached_the_game": true,
+  "HumanEval_11_string_xor:all_eight_particles_spawned": true,
+  "HumanEval_11_string_xor:config_sha_recorded": true,
+  "HumanEval_11_string_xor:demoted_role_recorded": true,
+  "HumanEval_11_string_xor:ladder_fired_at_final_checkpoint_only": true,
+  "HumanEval_11_string_xor:no_kill_executed": true,
+  "HumanEval_11_string_xor:nfe_within_envelope": true,
+  "HumanEval_11_string_xor:emitted_one_canvas": true,
+  "HumanEval_11_string_xor:emission_saw_the_whole_ladder": true,
+  "HumanEval_11_string_xor:row_carried_the_emitted_canvas": true,
+  "HumanEval_11_string_xor:verifier_metered": true,
+  "HumanEval_11_string_xor:steer_log_replays": true,
+  "record_mode_is_steered": true,
+  "record_carries_config_sha": true,
+  "record_carries_the_ladder": true,
+  "one_row_per_problem": true
+ },
+ "problems": [
+  {
+   "name": "HumanEval_17_parse_music",
+   "row_nfe": 256,
+   "row_temp": 0.95,
+   "row_extract_ok": false,
+   "row_has_raw": true,
+   "log_verdict_config_sha256": "a63b2b369606bb0222a19d0a79088f5f5425f3e9e041f6a4f8ea9499177ae5e1",
+   "log_temperatures": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "log_kill_clone_enabled": false,
+   "n_checkpoints": 8,
+   "checkpoint_steps": [
+    32
+   ],
+   "n_kills": 0,
+   "n_kill_suppressed": 8,
+   "emit_particle": 2,
+   "emit_final_clean": [],
+   "emit_n_temps": 8,
+   "emit_ranking": [
+    2,
+    6,
+    3,
+    1,
+    4,
+    0,
+    7,
+    5
+   ],
+   "n_particles_spawned": 8,
+   "done_meters": {
+    "envelope_nfe": 256,
+    "nfe_model": 256,
+    "nfe_verifier_calls": 8,
+    "verifier_wall_s": 0.635,
+    "per_particle_nfe": {
+     "0": 32,
+     "1": 32,
+     "2": 32,
+     "3": 32,
+     "4": 32,
+     "5": 32,
+     "6": 32,
+     "7": 32
+    }
+   }
+  },
+  {
+   "name": "HumanEval_11_string_xor",
+   "row_nfe": 256,
+   "row_temp": 0.2,
+   "row_extract_ok": false,
+   "row_has_raw": true,
+   "log_verdict_config_sha256": "a63b2b369606bb0222a19d0a79088f5f5425f3e9e041f6a4f8ea9499177ae5e1",
+   "log_temperatures": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "log_kill_clone_enabled": false,
+   "n_checkpoints": 8,
+   "checkpoint_steps": [
+    32
+   ],
+   "n_kills": 0,
+   "n_kill_suppressed": 8,
+   "emit_particle": 0,
+   "emit_final_clean": [],
+   "emit_n_temps": 8,
+   "emit_ranking": [
+    0,
+    1,
+    6,
+    2,
+    3,
+    7,
+    5,
+    4
+   ],
+   "n_particles_spawned": 8,
+   "done_meters": {
+    "envelope_nfe": 256,
+    "nfe_model": 256,
+    "nfe_verifier_calls": 8,
+    "verifier_wall_s": 0.414,
+    "per_particle_nfe": {
+     "0": 32,
+     "1": 32,
+     "2": 32,
+     "3": 32,
+     "4": 32,
+     "5": 32,
+     "6": 32,
+     "7": 32
+    }
+   }
+  }
+ ],
+ "meta": {
+  "type": "run",
+  "schema_version": "1.2",
+  "milestone": "M2.2-B2",
+  "mode": "steered",
+  "benchmark": "humaneval-rs",
+  "K": 1,
+  "steps": 32,
+  "canvas": 384,
+  "temperature": 0.2,
+  "alg": "entropy",
+  "base_seed": 0,
+  "top_p": 0.95,
+  "n_problems": 2,
+  "problem_names": [
+   "HumanEval_17_parse_music",
+   "HumanEval_11_string_xor"
+  ],
+  "model": "Dream-org/Dream-Coder-v0-Instruct-7B",
+  "instruction_template_sha256": "bdd6144a5fe9565cc3c0ad703893068253560e53acd912841e8791e4f8710ef2",
+  "utc": "2026-10-23T13:14:05.011077+00:00",
+  "problem_numbers": [
+   17,
+   11
+  ],
+  "cell": "C-full-preflight",
+  "envelope_nfe": 256,
+  "diversity_ladder": [
+   0.2,
+   0.8,
+   0.95,
+   1.0,
+   1.1,
+   1.2,
+   0.8,
+   0.95
+  ],
+  "steer_config_sha256": "a63b2b369606bb0222a19d0a79088f5f5425f3e9e041f6a4f8ea9499177ae5e1",
+  "kill_clone_enabled": false
+ },
+ "rows": [
+  {
+   "problem": "HumanEval_17_parse_music",
+   "nfe": 256,
+   "temperature": 0.95,
+   "extract_ok": false,
+   "mean_commit_conf": 0.6675340540221735
+  },
+  {
+   "problem": "HumanEval_11_string_xor",
+   "nfe": 256,
+   "temperature": 0.2,
+   "extract_ok": false,
+   "mean_commit_conf": 0.8222830866864332
+  }
+ ]
+}
