@@ -177,3 +177,219 @@ class TestSteerEngineSeam(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _analysis_tool():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "m3_p3_analysis",
+        Path(__file__).resolve().parents[1] / "scripts" / "m3_p3_analysis.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _replication_tool():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "m3_p3_replication",
+        Path(__file__).resolve().parents[1] / "scripts" / "m3_p3_replication.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+class TestCohortTable(unittest.TestCase):
+    """The design §6.1 cohorts are named by HumanEval NUMBER, and the P1
+    reachability tags overlays them — a flip inside either is not mechanism
+    evidence."""
+
+    def setUp(self):
+        self.a = _analysis_tool()
+
+    def test_design_cohorts_resolve_by_number(self):
+        self.assertEqual(self.a.cohort_of("HumanEval_0_has_close_elements"),
+                         "type_quartet")
+        self.assertEqual(self.a.cohort_of("HumanEval_24_largest_divisor"),
+                         "semantic_trio")
+        self.assertEqual(self.a.cohort_of("HumanEval_17_parse_music"),
+                         "exclusion_pair")
+        self.assertEqual(self.a.cohort_of("HumanEval_23_strlen"),
+                         "structural_base")
+
+    def test_p1_reachability_is_an_overlay_not_a_bucket(self):
+        # 17 is BOTH an exclusion problem and P1-reachable — the report's
+        # stricter reading of the attribution gate depends on seeing both
+        tags = self.a.cohort_tags("HumanEval_17_parse_music")
+        self.assertIn("exclusion_pair", tags)
+        self.assertIn("p1_reachable", tags)
+
+    def test_p1_unreachable_set_is_the_probes_four(self):
+        self.assertEqual(set(self.a.P1_UNREACHABLE), {0, 18, 19, 21})
+
+    def test_s256_passer_set_is_the_banked_eleven(self):
+        self.assertEqual(sorted(self.a.S256_PASSERS),
+                         [1, 2, 3, 5, 7, 8, 13, 14, 15, 16, 23])
+        self.assertEqual(len(self.a.S256_PASSERS), 11)
+
+
+class TestGates(unittest.TestCase):
+    """The gates must FAIL in the ways design §4.2 says they must — a gate that
+    cannot fail is not a gate."""
+
+    def setUp(self):
+        self.a = _analysis_tool()
+
+    def _cell(self, label, passers_by_number):
+        per = {}
+        for n in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                  17, 18, 19, 20, 21, 23, 24, 25]:
+            ok = n in passers_by_number
+            name = f"HumanEval_{n}_p"
+            per[name] = {"statuses": ["OK"] if ok else ["SyntaxError"],
+                         "n_ok": 1 if ok else 0, "n_scored": 1, "n_excluded": 0,
+                         "pass": ok, "emitted": 0, "emitted_temp": 0.2}
+        return {"label": label, "per_problem": per, "n_problems": len(per),
+                "n_passers": len(passers_by_number), "honest_p1": None}
+
+    def test_ship_gate_needs_fifteen(self):
+        base = set(self.a.S256_PASSERS)
+        fourteen = base | {0, 4, 20}
+        g = self.a.gate_ship(self._cell("cfull", fourteen),
+                             self._cell("anchor1024", base),
+                             self._cell("cnull", base), None)
+        self.assertFalse(g["checks"]["passers_ge_15"])
+        self.assertFalse(g["pass"])
+        fifteen = base | {0, 4, 20, 21}
+        g = self.a.gate_ship(self._cell("cfull", fifteen),
+                             self._cell("anchor1024", base),
+                             self._cell("cnull", base), None)
+        self.assertTrue(g["checks"]["passers_ge_15"])
+
+    def test_ship_gate_fails_on_a_regression_of_an_s256_passer(self):
+        base = set(self.a.S256_PASSERS)
+        # 16 passers but problem 3 (an s256 passer) was LOST
+        with_regression = (base - {3}) | {0, 4, 11, 17, 18, 20}
+        self.assertEqual(len(with_regression), 16)
+        g = self.a.gate_ship(self._cell("cfull", with_regression),
+                             self._cell("anchor1024", base),
+                             self._cell("cnull", base), None)
+        self.assertEqual(len(g["regressions"]), 1)
+        self.assertFalse(g["checks"]["zero_net_regressions_on_11_s256_passers"])
+        self.assertFalse(g["pass"], "the ship gate demands zero net regressions")
+
+    def test_ship_gate_needs_confirmed_attributed_flips(self):
+        base = set(self.a.S256_PASSERS)
+        strong = base | {0, 4, 11, 17, 20}
+        g = self.a.gate_ship(self._cell("cfull", strong),
+                             self._cell("anchor1024", base),
+                             self._cell("cnull", base), None)
+        self.assertFalse(g["checks"]["confirmed_attributed_flips_ge_2"])
+        repl = {"all_green": True, "problems": [
+            {"problem": "HumanEval_0_p", "confirmed_attributed": True},
+            {"problem": "HumanEval_11_p", "confirmed_attributed": True}]}
+        g = self.a.gate_ship(self._cell("cfull", strong),
+                             self._cell("anchor1024", base),
+                             self._cell("cnull", base), repl)
+        self.assertTrue(g["checks"]["confirmed_attributed_flips_ge_2"])
+
+    def test_attribution_gate_fails_when_cfull_equals_the_nulls(self):
+        base = set(self.a.S256_PASSERS)
+        same = base | {0, 4, 11}
+        g = self.a.gate_attribution(self._cell("cfull", same),
+                                    self._cell("cnull", same),
+                                    self._cell("cscreen", same), None)
+        self.assertFalse(g["checks"]["margin_vs_cnull_ge_2"])
+        self.assertFalse(g["pass"],
+                         "C-full == C-null is a measured null, not a result")
+
+    def test_attribution_gate_needs_replication_green(self):
+        base = set(self.a.S256_PASSERS)
+        cfull = base | {0, 4, 11, 17}
+        cnull = base
+        g = self.a.gate_attribution(self._cell("cfull", cfull),
+                                    self._cell("cnull", cnull),
+                                    self._cell("cscreen", cnull), None)
+        self.assertFalse(g["checks"]["flip_set_replication_green"])
+        self.assertFalse(g["pass"])
+
+    def test_attribution_gate_rejects_flips_confined_to_the_reachable_set(self):
+        """A flip on the type quartet or on a P1-reachable problem could be
+        diversity or knowledge delivery — the design text's outside-cohort
+        requirement, made explicit here."""
+        base = set(self.a.S256_PASSERS)
+        cfull = base | {0, 4}          # both in the type quartet
+        repl = {"all_green": True, "problems": [
+            {"problem": "HumanEval_0_p", "confirmed_attributed": False},
+            {"problem": "HumanEval_4_p", "confirmed_attributed": False}]}
+        g = self.a.gate_attribution(self._cell("cfull", cfull),
+                                    self._cell("cnull", base),
+                                    self._cell("cscreen", base), repl)
+        self.assertEqual(g["outside_cohort_flips"], [])
+        self.assertFalse(
+            g["checks"]["at_least_one_flip_outside_ladder_reachable"])
+
+    def test_strong_gate_needs_eighteen(self):
+        base = set(self.a.S256_PASSERS)
+        self.assertFalse(self.a.gate_strong(
+            self._cell("cfull", base | {0, 4, 11, 17}))["pass"])
+        self.assertTrue(self.a.gate_strong(
+            self._cell("cfull", base | {0, 4, 11, 17, 18, 19, 20}))["pass"])
+
+
+class TestFlipReplication(unittest.TestCase):
+    """A flip is one Bernoulli draw; confirmation needs the second game."""
+
+    def _run(self, *args):
+        import io
+        import contextlib
+        from scripts.m3_p3_replication import main
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = main(list(args))
+        return rc, buf.getvalue()
+
+    def test_a_flip_that_does_not_reproduce_is_not_confirmed(self):
+        import json
+        import tempfile
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(lambda: __import__("shutil").rmtree(tmp))
+
+        # REAL vendored names: the tool refuses unknown problems rather than
+        # guessing which problem a flip belongs to (its cohort tags depend on
+        # the HumanEval number).
+        names = {17: "HumanEval_17_parse_music",
+                 19: "HumanEval_19_sort_numbers",
+                 21: "HumanEval_21_rescale_to_unit"}
+
+        def cell(label, passes):
+            rows = []
+            for n in [17, 19, 21]:
+                rows.append({"name": names[n],
+                             "statuses_official": ["OK"] if n in passes
+                             else ["SyntaxError"],
+                             "n_scored": 1, "n_excluded": 0})
+            p = tmp / f"{label}.json"
+            p.write_text(json.dumps({"per_problem": rows,
+                                     "aggregate": {}}), encoding="utf-8")
+            return str(p)
+        prim = cell("prim", {19})
+        repl = cell("repl", set())      # the flip did not survive
+        out = tmp / "r.json"
+        rc, text = self._run("--primary", prim, "--replication", repl,
+                             "--flips", names[19], "--json", str(out))
+        self.assertEqual(rc, 0)
+        self.assertIn("NOT-REPRODUCED", text)
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        self.assertFalse(payload["all_green"])
+        self.assertEqual(payload["n_confirmed_attributed"], 0)
+
+    def test_unknown_problem_name_is_refused(self):
+        import tempfile
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(lambda: __import__("shutil").rmtree(tmp))
+        p = tmp / "x.json"
+        p.write_text('{"per_problem": [], "aggregate": {}}', encoding="utf-8")
+        with self.assertRaises(SystemExit):
+            self._run("--primary", str(p), "--replication", str(p),
+                      "--flips", "HumanEval_999_nope")
