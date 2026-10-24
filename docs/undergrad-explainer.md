@@ -97,13 +97,16 @@ official tests check actual behavior, not just spelling.
 
 ## 3. The methods, in the language you already know
 
-* **Control runs at every fork.** (i) The plain ladder: sample many drafts,
-  no feedback, pick by a fixed rule. (ii) The hint control: as before, but
-  with the *exact missing trick* pasted into the instructions. (iii) The
-  offline filter: take the plain ladder's drafts and apply the selection
-  rule after the fact, with no live steering at all. If the live-steering
-  apparatus is really what helps, it has to beat these — by amounts beyond
-  chance.
+* **Control runs at every fork.** (i) The plain bracket: sample several
+  drafts per problem, with no feedback, at a deliberately *spread* of
+  sampling-adventurousness settings — the photographer's exposure
+  bracket: same shot taken safe and dull, again wild, so that something
+  lands well in one of them — then pick by a fixed rule. (ii) The hint
+  control: as before, but with the *exact missing trick* pasted into the
+  instructions. (iii) The offline filter: take the plain bracket's drafts
+  and apply the selection rule after the fact, with no live steering at
+  all. If the live-steering apparatus is really what helps, it has to
+  beat these — by amounts beyond chance.
 * **Fixed random seeds and paired runs.** A random seed is a starting
   number that makes a given random run exactly reproducible, like the
   machine's dice being re-loaded identically. Whenever we compared two
@@ -187,8 +190,8 @@ algorithm.
 
 **(c) Steering the writing with live toolchain feedback: no detectable
 win, per the pre-registered gates.** The full proposal — sample eight
-drafts per problem with a designed spread of how-adventurous the sampling
-is, check them with the compiler as they form, let an engine act on that
+drafts per problem in an adventure-spread bracket (§3), check them with
+the compiler as they form, let an engine act on that
 feedback, then pick the best draft — produced the program's best single
 result: **17 of 25 problems solved, versus 14 of 25 for the plain sampler**,
 with no problem the plain sampler solved that the engine lost. Looks like
