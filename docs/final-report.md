@@ -209,7 +209,7 @@ every cell reports `nfe_total` and asserts it against its envelope.
 ## §7 Disposition
 
 - M3.2 (rejuvenation) is **parked, unstarted** — nothing pending.
-- Repo state: HEAD `49b8eda`; 384 tests green; both config freezes
+- Repo state: HEAD `321f835`; 384 tests green; both config freezes
   (v2 `a63b2b36`, v3 + harness manifest) tamper-verified; all cell artifacts,
   guard logs and replay records committed; `temper steer-replay` can
   re-derive every steered game offline.

@@ -6,7 +6,7 @@ python3 `/usr/bin/python3` (stdlib only), hyperfine 2.0.0, sandbox-exec verified
 
 ## What was built
 
-### Inherited (verified, not redone — commits `1fb45cc`, `218fa8c`)
+### Inherited (verified, not redone — commits `1a9543b`, `00e52de`)
 - `rust-template/`: candidate-crate template pinned to proptest `=1.12.0`
   (vendored, committed `vendor/`, 11 MB), offline source-replacement in
   `.cargo/config.toml`, warm `target/`. `cargo build --offline` succeeds as
@@ -26,7 +26,7 @@ python3 `/usr/bin/python3` (stdlib only), hyperfine 2.0.0, sandbox-exec verified
   strategy in scope), seed-exact replay reproduces the identical minimal input.
 
 ### New in this session
-- **`ef1baf6` — `temper/` python harness package**
+- **`47264cc` — `temper/` python harness package**
   - `harness/emit.py` — copies template layout (Cargo.toml, Cargo.lock,
     `.cargo/`, `vendor/`, `src/`; never `target/`) into reused workdir
     `temper/.work/gen/`, writes `candidate.rs` + `properties.rs`,
@@ -65,7 +65,7 @@ python3 `/usr/bin/python3` (stdlib only), hyperfine 2.0.0, sandbox-exec verified
     `Suggestion` (`suggested_replacement`, `suggestion_applicability`).
     Unknown fields/variants ignored; non-JSON lines skipped; ICE
     ("internal compiler error") surfaced distinctly via `Diagnostic.is_ice`.
-- **`75cae7f` — `scripts/demo_m0.py`**: 4-step acceptance demo, all seatbelt.
+- **`c8c2c12` — `scripts/demo_m0.py`**: 4-step acceptance demo, all seatbelt.
 - **This commit — `scripts/measure_cycle.sh`, LICENSE, README.md,
   `.gitignore`** (target/, .work/ ignored; vendor/ committed), this report.
   `.gitignore` already covered target/.work from the checkpoint; vendor/

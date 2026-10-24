@@ -29,7 +29,7 @@ no cache mutation, no monkeypatching).
 
 ## What was built (commits)
 
-- `b7850e2` **M1: model runtime (Dream-Coder MPS, K=1 sequential)** —
+- `5286807` **M1: model runtime (Dream-Coder MPS, K=1 sequential)** —
   `temper/model/runtime.py` (watermark env before torch import; mps+bf16
   required, loud CPU debug fallback; resident loader;
   `model.config.use_cache = False` right after load; memory probes),
@@ -41,7 +41,7 @@ no cache mutation, no monkeypatching).
   alternation), `temper/model/extract.py` (fenced-block → bare-span
   heuristics, must_define symbol check, mask-token rejection; 12 unit tests),
   venv + `.gitignore`.
-- `3f4da3e` **M1: L0 steering loop + CLI** — `temper/steer/l0.py`
+- `fa75e11` **M1: L0 steering loop + CLI** — `temper/steer/l0.py`
   (K sequential → extract → M0 `run_candidate` → score 100·1[compiles] +
   1000·1[tests] − 5·reject_fraction, tie-break mean commit confidence →
   JSONL run record with per-candidate particle config, compile status,
@@ -50,7 +50,7 @@ no cache mutation, no monkeypatching).
   `bench/<task>/corpus/<strategy_hash>/`; `temper eval` = unbiased pass@k
   (Chen et al. 2021 product form) over run records), `temper/cli.py` +
   `bin/temper` (gen/eval/draft).
-- `0943a07` **M1: GLM-5.3 property drafting** — `temper/authoring/draft.py`
+- `f764f78` **M1: GLM-5.3 property drafting** — `temper/authoring/draft.py`
   (stdlib urllib+json only; SSE streaming; env-then-models.json key;
   `properties.draft.rs` written, `--approve` gated behind interactive y/N +
   `task.toml properties.approved = true`; never auto-approves),

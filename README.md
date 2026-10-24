@@ -7,7 +7,37 @@ sandbox against a proptest property, and the structured outcome (pass /
 fail + minimal counterexample seed / compile diagnostics) is the feedback
 signal that steers the next generation round.
 
-## Status: M0 (execution harness only)
+## Status: program complete (M0 → M3.1)
+
+The full investigation ran to completion in October 2026: the M0 execution
+harness described below, honest-scoring baselines and budget ablations (M2),
+the pre-registered steering-engine matrix at fixed inference budget (M3.0),
+and the property-reward selection study (M3.1). Headline composite:
+harness generation — not selection — is the binding constraint at 7B scale;
+where property evidence existed it was oracle-grade (64/64).
+
+### Read this first (findings & explainers)
+
+* **[docs/final-report.md](docs/final-report.md)** — the program-level
+  synthesis: every claim, its number, and the report that owns it; ends with
+  the answer to the originating toot.
+* **[docs/undergrad-explainer.md](docs/undergrad-explainer.md)** — the same
+  story written for a reader with no machine-learning background (plain
+  language: solve rates, budgets, fair-coin statistics, exposure brackets).
+* **[docs/m3.0-p3-report.md](docs/m3.0-p3-report.md)** — the pre-registered
+  C-cell matrix: 17/25 capability cell (program best), SHIP pass,
+  attribution fail — the honest steering null.
+* **[docs/m3.1-report.md](docs/m3.1-report.md)** — property-reward selection:
+  the composite negative (generator wall + 64/64 discrimination + coverage
+  ceiling).
+* **[docs/commit-hash-map.md](docs/commit-hash-map.md)** — history note: on
+  2026-10-24 all commits were re-attributed to
+  `pi-harness <RichardoC@users.noreply.github.com>` (names/emails only,
+  graph unchanged); commit hashes cited in `docs/` were remapped
+  accordingly. Pre-rewrite hashes remain inside the frozen
+  `steer_verdict_config.json` payload (D7 tamper check) and its pin test.
+
+## The M0 verification loop (still the heart of the harness)
 
 M0 delivers the full verification loop around generated code — no model,
 no GPU. The loop for one candidate:

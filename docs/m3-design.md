@@ -22,7 +22,7 @@ Applied after P0–P2 execution, ahead of every C-cell:
 | # | rev2 change | basis | approval |
 |---|---|---|---|
 | V1 | **D4 demotion executed**: mid-canvas informed recall 0/5 at ≤75%, 0/12 false kills → kill/clone disabled, C-kill cell dropped, C-full rungs late-window-only; v1 config patience 3 | D4 real-canvas capture (`m3_d4_validity.py`, committed table) | pre-registered (rev1 D7) |
-| V2 | **Ladder re-base**: diversity ladder T=0.2 structural (emission-preferred) + round-robin {0.8, 0.95, 1.0, 1.1, 1.2}; clone base band [0.8,1.2] | P1 probe `7c8a124`: T=0.4 = 0/36 passes; band starts at 0.8 | operator, explicit (protocol deviation) |
+| V2 | **Ladder re-base**: diversity ladder T=0.2 structural (emission-preferred) + round-robin {0.8, 0.95, 1.0, 1.1, 1.2}; clone base band [0.8,1.2] | P1 probe `226f5c5`: T=0.4 = 0/36 passes; band starts at 0.8 | operator, explicit (protocol deviation) |
 | V3 | **C-full@1024 cut + C-full@2048 re-roled** as the in-loop engine row (divergence from offline C-screen counterfactual = engine forensics, not mechanism) | V1's consequences (stable P3 at ~30 GPU-h) | operator, explicit |
 
 Cell definitions below referencing rev1 ladder/clone grids are AMENDED by
