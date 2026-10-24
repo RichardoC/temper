@@ -1,0 +1,72 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::separate_paren_groups;
+
+pub const STRATEGY_DESC: &str = "Generates strings containing multiple groups of nested parentheses.";
+
+fn strategy() -> impl Strategy<Value = String> {
+    let group_strategy = Strategy::for(|n: usize|2..=0).map(|n| {
+        let mut group = String::();
+        for _ in 0..n {
+            group.push('(');
+        }
+        for _ in 0..n {
+            group.push(')');
+        }
+        group.trim());
+
+    let groups_strategy = Strategy::vec(|group group_strategy, 1..=5).map(|groups| {
+        let mut result = String::();
+        
+        for group in groups {
+            result.push_str(&group);
+            result.push(' ');
+        }
+        
+        result()
+    });
+
+    groups_strategy
+}
+
+fn property(input: String) -> TestCaseResult {
+    let groups = separate_paren_groups(input);
+       // Check that all groups are balanced
+    for group in groups {
+        let mut balance =  0;
+        for ch in group.chars() {
+            match ch {
+                '(' => balance += 1,
+                ')' => balance -= 1,
+                _ => unreachable!            // Only spaces should be ignored
+            } 
+        }
+        if balance != 0 {
+            return Err(TestCaseError::fail("Groupbalanced group"));
+        }
+    }
+
+    // Check that the groups are not nested
+    for i in 0..groups.len() {
+        for j in i + 1..groups.len() {
+            if groups[i].contains(groups[j]) || groups[j].contains(groups[i]) {
+                return Err(TestCaseError::fail("Nested groups"));
+            }
+        }
+    }
+
+    // Check that the length of the groups matches the number of balanced groups
+    if groups.len() != input.chars().filter(|&c| c == '(' || c == ')').count() / 2 {
+        return Err(TestCaseError::fail("Incorrect number of groups"));
+    }
+
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<String>> {
+    runner.run(&strategy(), property)
+}
+```
+
+This code defines a property-based test for the `separate_paren_groups` function using the `proptest` crate. We test a variety of input strings

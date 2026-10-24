@@ -1,0 +1,30 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::truncate_number;
+
+pub const STRATEGY_DESC: &str = "Strategy for truncate_number function";
+
+fn strategy() -> impl Strategy<Value = (f64, f64)> {
+    any {
+        integer_part in 1.0..1_000_000_00.0.0,
+        decimal_part in any::<0.0..1.0>,
+        (integer_part, decimal_part)
+    }
+}
+
+fn property(input: (f64, f64)) -> TestCaseResult {
+    let (integer_part, decimal_part) = input;
+    let result = truncate_number(integer_part + decimal_part);
+    if result != decimal_part {
+        return Err(TestCaseError::fail(format!("{}", "Expected {} to return {}, but got {}", integer_part + decimal_part, decimal_part, result,)));
+    }
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(f64, f64)>> {
+    runner.run(&strategy(), property)
+}
+```
+
+This code defines a property-based test for the `truncate_number` function using the `proptest` crate. The test checks the property that the function should return the decimal part of the given positive floating-point number. The `strategy` function generates a tuple of `(f64, f64)` where the first element is the integer part of the number and the second element is the decimal part. The `property` function checks if the result of `truncate_number(integer_part + decimal_part)` equals the `decimal_part`. If `truncate_number` returns a different value, the test case error is returned; otherwise, success. The `run_property` function runs the test using the defined strategy and property

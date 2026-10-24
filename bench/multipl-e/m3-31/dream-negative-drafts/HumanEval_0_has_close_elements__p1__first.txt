@@ -1,0 +1,49 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::has_close_elements;
+
+pub const STRATEGY_DESC: &str = "Strategy for has_close_elements function";
+
+fn strategy() -> impl Strategy<Value = (Vec<f64>, f64)> {
+    any(
+               any::vec(f64::any(), 0..100), // // Vector of f64 numbers between  0 and 100
+        f64::any(), // Threshold as f64
+    )
+}
+
+fn property(input: (Vec<f64>, f64)) -> TestCaseResult {
+    let (numbers, threshold) = input;
+    let result = has_close_elements(numbers.clone(), threshold);
+
+    // Check if the function returns true based on the documentation examples
+    if numbers.len() < 2 {
+        return Err(TestCaseError::fail("Vector must have at least two elements"));
+    }
+
+    for i in 0..numbers.len() {
+        for j in (i + 1)..numbers.len() {
+            if (numbers[i] - numbers[j]).abs() < threshold {
+                if result {
+                    return Ok(TestCaseError::fail("Function should return true if there are pairs"));
+                } else {
+                    return Ok(TestCaseError::fail("Function should return false if no are pairs"));
+                }
+            }
+        }
+    }
+
+    if !result {
+        return Ok(TestCaseError::fail("Function should return false if no are pairs"));
+    }
+
+    Ok(())
+())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(Vec<f64>, f64)>> {
+    runner.run(&strategy(), property)
+}
+```
+
+This code defines a property-based test for the `has_close_elements` function using the `proptest` crate. It follows the specified requirements exactly. The `strategy` function generates vectors of of `f 6.4` numbers within a range of 0 to 100, and a threshold of `f 6.4` value. The `property` function checks if the function returns the expected result given the documentation examples.. The `run_property` function runs the test using the `strategy()` and `property()` functions. The test checks that the the function returns `true` if there are pairs of numbers closer than the threshold and `false` if no such pairs exist.

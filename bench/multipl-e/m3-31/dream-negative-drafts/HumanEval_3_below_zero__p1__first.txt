@@ -1,0 +1,26 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::below_zero;
+
+pub const STRATEGY_DESC: &str = "Generate a vector of of deposit and withdrawal operations on a bank account that starts with zero balance.";
+
+fn strategy() -> impl Strategy<Value = Vec<isize>> {
+    any::vec::<isize>(any::isize())
+}
+
+fn property(operations: Vec<isize>) -> TestCaseResult {
+    let mut balance = 0;
+    for op in operations {
+        balance += op;
+        if balance < 0 {
+            return Err(TestCaseError::fail("Account balance fell below zero."));
+        }
+    }
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<Vec<isize>>> {
+    runner.run(&strategy(), property)
+}
+```

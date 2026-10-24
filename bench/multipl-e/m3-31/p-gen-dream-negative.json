@@ -1,0 +1,337 @@
+{
+ "cell": "P-gen-dream-NEGATIVE",
+ "milestone": "M3.1",
+ "utc": "2026-10-24",
+ "substrate": "Dream-org/Dream-Coder-v0-Instruct-7B (the program's dLLM)",
+ "config": {
+  "temperature": 0.2,
+  "steps": 256,
+  "canvas": 512,
+  "seeds": [
+   0,
+   1
+  ],
+  "replacement_seed": 2,
+  "H": 2,
+  "draft_prompt_sha256": "78709afcd14281f56652e9d8d6ffcaafd7cecaa3cc33d6595ecd434a577da9ef"
+ },
+ "gate": "G4 requires >= 90% of the 50 FIRST drafts to compile (<=5 failures)",
+ "first_drafts": [
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "slot": 0,
+   "seed": 0,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 459.93,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2129,
+   "raw_sha256": "89696e1ba2acf6a6af8395a7c4f4273c404bee8c30211f1efb570b6c7a89d6e4",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "unexpected closing delimiter: `}`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_0_has_close_elements__p0__first.txt"
+  },
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "slot": 1,
+   "seed": 1,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 457.92,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2129,
+   "raw_sha256": "89696e1ba2acf6a6af8395a7c4f4273c404bee8c30211f1efb570b6c7a89d6e4",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "unexpected closing delimiter: `}`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_0_has_close_elements__p1__first.txt"
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "slot": 0,
+   "seed": 0,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 461.15,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2221,
+   "raw_sha256": "7a2f013abb8b6dc6f45cbb4bf9304bd8fea1380d096c82d6b46e0edca176cc19",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "mismatched closing delimiter: `)`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_1_separate_paren_groups__p0__first.txt"
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "slot": 1,
+   "seed": 1,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 461.18,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2221,
+   "raw_sha256": "7a2f013abb8b6dc6f45cbb4bf9304bd8fea1380d096c82d6b46e0edca176cc19",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "mismatched closing delimiter: `)`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_1_separate_paren_groups__p1__first.txt"
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "slot": 0,
+   "seed": 0,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 444.25,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 1607,
+   "raw_sha256": "4271ca41d40c1e203be8f87a2a0ba3e3f1b1b1300037c780b4c2511330d9cabe",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [
+    "E0574"
+   ],
+   "first_error": [
+    "",
+    "expected one of `,`, `:`, or `}`, found `in`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_2_truncate_number__p0__first.txt"
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "slot": 1,
+   "seed": 1,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 444.43,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 1607,
+   "raw_sha256": "4271ca41d40c1e203be8f87a2a0ba3e3f1b1b1300037c780b4c2511330d9cabe",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [
+    "E0574"
+   ],
+   "first_error": [
+    "",
+    "expected one of `,`, `:`, or `}`, found `in`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_2_truncate_number__p1__first.txt"
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "slot": 0,
+   "seed": 0,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 458.02,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 781,
+   "raw_sha256": "44d92696faa6190fdd30593d4ab7b7ea04eb096f000a6e80238eb26ad8fb980a",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [
+    "E0433",
+    "E0433"
+   ],
+   "first_error": [
+    "E0433",
+    "cannot find module or crate `any` in this scope"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_3_below_zero__p0__first.txt"
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "slot": 1,
+   "seed": 1,
+   "kind": "first",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 461.55,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 781,
+   "raw_sha256": "44d92696faa6190fdd30593d4ab7b7ea04eb096f000a6e80238eb26ad8fb980a",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [
+    "E0433",
+    "E0433"
+   ],
+   "first_error": [
+    "E0433",
+    "cannot find module or crate `any` in this scope"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_3_below_zero__p1__first.txt"
+  }
+ ],
+ "replacements": [
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "slot": 0,
+   "seed": 2,
+   "kind": "replacement",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 460.04,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2131,
+   "raw_sha256": "037da05e008072dc465ab9ef4fbb917b09db332adbe8dd22be7b1194f4ce2aef",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "unexpected closing delimiter: `}`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_0_has_close_elements__p0__replacement.txt"
+  },
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "slot": 1,
+   "seed": 2,
+   "kind": "replacement",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 459.08,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2131,
+   "raw_sha256": "037da05e008072dc465ab9ef4fbb917b09db332adbe8dd22be7b1194f4ce2aef",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "unexpected closing delimiter: `}`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_0_has_close_elements__p1__replacement.txt"
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "slot": 0,
+   "seed": 2,
+   "kind": "replacement",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 462.64,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2221,
+   "raw_sha256": "7a2f013abb8b6dc6f45cbb4bf9304bd8fea1380d096c82d6b46e0edca176cc19",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "mismatched closing delimiter: `)`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_1_separate_paren_groups__p0__replacement.txt"
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "slot": 1,
+   "seed": 2,
+   "kind": "replacement",
+   "canvas": 512,
+   "nfe": 256,
+   "gen_wall_s": 462.16,
+   "truncated": false,
+   "committed_tokens_total": 512,
+   "raw_chars": 2221,
+   "raw_sha256": "7a2f013abb8b6dc6f45cbb4bf9304bd8fea1380d096c82d6b46e0edca176cc19",
+   "compiled": false,
+   "compile_status": "compile_error",
+   "runtime_status": null,
+   "error_codes": [],
+   "first_error": [
+    "",
+    "mismatched closing delimiter: `)`"
+   ],
+   "raw_path": "bench/multipl-e/m3-31/dream-negative-drafts/HumanEval_1_separate_paren_groups__p1__replacement.txt"
+  }
+ ],
+ "compile_rate_first": {
+  "compiled": 0,
+  "n": 8
+ },
+ "compile_rate_replacement": {
+  "compiled": 0,
+  "n": 4
+ },
+ "failure_classes": {
+  "HumanEval_0_has_close_elements": "unexpected closing delimiter: `}` \u2014 a `match { ... }` written as an expression with mangled arms",
+  "HumanEval_1_separate_paren_groups": "mismatched closing delimiter: `)`",
+  "HumanEval_2_truncate_number": "expected one of `,`, `:`, or `}`, found `in`",
+  "HumanEval_3_below_zero": "E0433 cannot find module or crate `any` \u2014 `any::vec::<isize>(any::isize())` is not proptest syntax"
+ },
+ "seed_invariance": "every problem reproduces the SAME failure class at seed 0, seed 1 AND the seed-2 replacement, so the failure is a capability limit of the generator at this task, not draw luck",
+ "validation_path_soundness": {
+  "what": "a hand-written CORRECT harness for HumanEval_3_below_zero, validated through the identical path",
+  "compiled": true,
+  "runtime_status": "fail",
+  "runtime_reason": "not yet implemented",
+  "minimal_input": "[]",
+  "harness_sha": "20e36a22721fad816c2549e1fbe837417b42283d580af117ea9558b2ace5aba1",
+  "conclusion": "the validation path is sound: a harness that matches the prompted signature compiles against the todo!() stub and aborts at runtime, which is EXACTLY the shape design 2.2 specifies. The 0/12 result is therefore the drafts' failure, not the instrument's."
+ },
+ "canvas_length_measurement": {
+  "384": "truncated mid-signature (committed_tokens_total 384/384, unterminated `Result`) \u2014 384 is NOT enough for a property file",
+  "512": "completes (committed 512/512, no truncation) \u2014 and still does not compile",
+  "conclusion": "truncation is not the cause of the compile failures; 512 is the correct canvas for this task shape and the failures persist there"
+ },
+ "cost": {
+  "n_canvases": 12,
+  "nfe_total": 3072,
+  "gen_wall_s": 5492.4,
+  "gpu_hours": 1.53,
+  "s_per_canvas_mean": 457.7,
+  "note": "456 s/canvas at steps=256: the pinned harness instruction is ~448 tokens longer than the canvas prompt (750 vs 302 tokens), so every denoise step re-encodes a much longer canvas of context"
+ },
+ "prior_evidence": "M2.4b measured Dream-Coder at 0.44 pass@1 on MultiPL-E rust at 1024 NFE \u2014 it barely writes one correct ~10-line function when asked directly. A property file is ~2x longer and semantically harder, so a 0/50 was predictable from the program's own capability numbers.",
+ "finding": "On the original single-substrate formulation the toot thesis is NOT MEASURABLE: the diffusion LM cannot author a compiling proptest file, so R3 would receive no harnesses and the property ranking would degenerate to the confidence rule for every problem. The blocker is the HARNESS GENERATOR, not the property idea and not the R3/emission machinery (both substrate-agnostic, and both verified working in Phase 0). Reported per operator ruling: the substrate constraint was load-bearing for mechanism claims about STEERING, never for who authors the properties.",
+ "disposition": "\u00a72.1 amendment (2026-10-24): harness generation moves to the AR twin (Qwen2.5-Coder-7B, the M2.4b B3 instrument). Canvases remain diffusion-drawn in every cell. This file is preserved as the negative that motivated the amendment and appears as a static column in the M3.1 G4 table, outside the gate arithmetic."
+}
