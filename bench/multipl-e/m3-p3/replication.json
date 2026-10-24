@@ -1,0 +1,93 @@
+{
+ "primary": "bench/multipl-e/m3-p3/c-full-emission-results.json",
+ "replication": "bench/multipl-e/m3-p3/c-full-repl-emission-results.json",
+ "problems": [
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "cohorts": [
+    "structural_base",
+    "s256_passer"
+   ],
+   "primary_pass": true,
+   "replication_pass": true,
+   "replication_statuses": [
+    "OK"
+   ],
+   "replication_emitted": 0,
+   "replication_temp": 0.2,
+   "confirmed": true,
+   "outside_ladder_reachable": true,
+   "confirmed_attributed": true
+  },
+  {
+   "problem": "HumanEval_4_mean_absolute_deviation",
+   "cohorts": [
+    "type_quartet",
+    "p1_reachable"
+   ],
+   "primary_pass": true,
+   "replication_pass": true,
+   "replication_statuses": [
+    "OK"
+   ],
+   "replication_emitted": 0,
+   "replication_temp": 0.8,
+   "confirmed": true,
+   "outside_ladder_reachable": false,
+   "confirmed_attributed": false
+  },
+  {
+   "problem": "HumanEval_9_rolling_max",
+   "cohorts": [
+    "other"
+   ],
+   "primary_pass": true,
+   "replication_pass": true,
+   "replication_statuses": [
+    "OK"
+   ],
+   "replication_emitted": 0,
+   "replication_temp": 1.0,
+   "confirmed": true,
+   "outside_ladder_reachable": true,
+   "confirmed_attributed": true
+  },
+  {
+   "problem": "HumanEval_24_largest_divisor",
+   "cohorts": [
+    "semantic_trio",
+    "p1_reachable"
+   ],
+   "primary_pass": true,
+   "replication_pass": true,
+   "replication_statuses": [
+    "OK"
+   ],
+   "replication_emitted": 0,
+   "replication_temp": 0.8,
+   "confirmed": true,
+   "outside_ladder_reachable": false,
+   "confirmed_attributed": false
+  },
+  {
+   "problem": "HumanEval_25_factorize",
+   "cohorts": [
+    "other"
+   ],
+   "primary_pass": true,
+   "replication_pass": false,
+   "replication_statuses": [
+    "Exception"
+   ],
+   "replication_emitted": 0,
+   "replication_temp": 0.95,
+   "confirmed": false,
+   "outside_ladder_reachable": true,
+   "confirmed_attributed": false
+  }
+ ],
+ "n_flips": 5,
+ "n_replicated": 4,
+ "all_green": false,
+ "n_confirmed_attributed": 2
+}

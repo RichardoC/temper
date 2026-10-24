@@ -1,0 +1,98 @@
+{
+  "type": "multipl-e-export-manifest",
+  "exported_at": "2026-10-24T08:28:14.635440+00:00",
+  "benchmark_arg": "humaneval-rs",
+  "repair": false,
+  "runs": [
+    "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl"
+  ],
+  "problems": [
+    {
+      "file": "HumanEval_1_separate_paren_groups.json",
+      "name": "HumanEval_1_separate_paren_groups",
+      "flavor": "multipl-e",
+      "completions": 1,
+      "source_rows": [
+        {
+          "run": "20261024T052649Z-c-full-repl.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl.raw/HumanEval_1_separate_paren_groups__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 524
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_4_mean_absolute_deviation.json",
+      "name": "HumanEval_4_mean_absolute_deviation",
+      "flavor": "multipl-e",
+      "completions": 1,
+      "source_rows": [
+        {
+          "run": "20261024T052649Z-c-full-repl.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl.raw/HumanEval_4_mean_absolute_deviation__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 178
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_9_rolling_max.json",
+      "name": "HumanEval_9_rolling_max",
+      "flavor": "multipl-e",
+      "completions": 1,
+      "source_rows": [
+        {
+          "run": "20261024T052649Z-c-full-repl.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl.raw/HumanEval_9_rolling_max__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 276
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_24_largest_divisor.json",
+      "name": "HumanEval_24_largest_divisor",
+      "flavor": "multipl-e",
+      "completions": 1,
+      "source_rows": [
+        {
+          "run": "20261024T052649Z-c-full-repl.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl.raw/HumanEval_24_largest_divisor__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 98
+        }
+      ]
+    },
+    {
+      "file": "HumanEval_25_factorize.json",
+      "name": "HumanEval_25_factorize",
+      "flavor": "multipl-e",
+      "completions": 1,
+      "source_rows": [
+        {
+          "run": "20261024T052649Z-c-full-repl.jsonl",
+          "i": 0,
+          "raw_path": "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl.raw/HumanEval_25_factorize__p0.txt",
+          "record_extract_ok": true,
+          "repaired_at_export": false,
+          "chars": 289
+        }
+      ]
+    }
+  ],
+  "excluded": [],
+  "counts": {
+    "candidate_rows": 5,
+    "exported_completions": 5,
+    "excluded_rows": 0
+  },
+  "note": "excluded rows are scored failures under honest counting (pass@k is recomputable with n=exported+excluded)"
+}

@@ -1,0 +1,41 @@
+To implement the `rolling_max` function, we need to iterate over the given vector and keep track of the maximum value encountered so far. We then push this maximum value into a new vector at each step. Here's the complete implementation:
+
+```rust
+fn rolling_max(numbers: Vec<isize>) -> Vec<isize> {
+    if numbers.is_empty() {
+        return Vec::new();
+    }
+
+    let mut result = Vec::new();
+    let mut current_max = numbers[0];
+    result.push(current_max);
+
+    for &num in numbers.iter().skip(1) {
+        if num > current_max {
+            current_max = num;
+        }
+        result.push(current_max);
+    }
+
+    result
+}
+```
+
+### Explanation:
+
+1. **Initial Check**: 
+   - We first check if the input vector `numbers` is empty. If it is, we immediately return an empty vector since there are no elements to process.
+
+2. **Initialization**:
+   - We create a new vector `result` to store the rolling maximums.
+   - We set `current_max` to the first element of the vector vector `if it is not empty` and push `current_max` onto the `result` vector.
+
+3. **Edge Element Handling**:
+   - If the vector has only one element, the function already returns a vector containing only that element since `current_max` and `result` are initialized with the first element without any iteration.
+
+4. **Iterate Through Elements**:
+   - We use `iter().skip(1)` to iterate over the elements of the vector starting from the second.
+   - During each iteration, we compare the current number (`num`) with the `current_max` and update `current_max` if `num` is larger.
+   - We then push the `current_max` onto the `result` vector.
+
+5.

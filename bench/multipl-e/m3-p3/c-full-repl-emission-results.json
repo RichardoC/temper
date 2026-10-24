@@ -1,0 +1,91 @@
+{
+ "type": "multipl-e-results",
+ "created_utc": "2026-10-24T08:28:34.800983+00:00",
+ "input_dir": "/Users/richardf/temper/bench/multipl-e/exports/20261024T082812Z-c-full-repl-norepair",
+ "versions": [
+  "official"
+ ],
+ "emission_cell": "C-null",
+ "note": "EMISSION-RULE CELL: one emitted canvas per problem, so each problem contributes exactly one scored row (or one honest exclusion). This is design 4.1's per-problem binary.",
+ "per_problem": [
+  {
+   "name": "HumanEval_1_separate_paren_groups",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "structural",
+   "emitted_temp": 0.2,
+   "emitted_conf": 0.1944295531907865,
+   "emitted_clean": true,
+   "emitted_r1_codes": []
+  },
+  {
+   "name": "HumanEval_4_mean_absolute_deviation",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "structural",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.6621693899487076,
+   "emitted_clean": true,
+   "emitted_r1_codes": []
+  },
+  {
+   "name": "HumanEval_9_rolling_max",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "structural",
+   "emitted_temp": 1.0,
+   "emitted_conf": 0.1879985211610368,
+   "emitted_clean": true,
+   "emitted_r1_codes": []
+  },
+  {
+   "name": "HumanEval_24_largest_divisor",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "structural",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.8315728413607113,
+   "emitted_clean": true,
+   "emitted_r1_codes": []
+  },
+  {
+   "name": "HumanEval_25_factorize",
+   "statuses_official": [
+    "Exception"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "structural",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.3764509548288954,
+   "emitted_clean": true,
+   "emitted_r1_codes": []
+  }
+ ],
+ "aggregate": {
+  "official": {
+   "pass@1": 0.8
+  },
+  "honest-official": {
+   "pass@1": 0.8,
+   "n_excluded_rows": 0
+  }
+ }
+}
