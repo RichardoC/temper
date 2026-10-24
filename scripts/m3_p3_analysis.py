@@ -355,7 +355,10 @@ def main(argv=None) -> int:
     ap.add_argument("--cells", nargs="+", required=True,
                     help="label=results.json[:run.jsonl]")
     ap.add_argument("--primary", nargs=2, metavar=("A", "B"),
-                    help="the pre-registered primary comparison (cfull cnull)")
+                    help="the pre-registered primary comparison, written in the "
+                         "direction the design states it (cnull cfull = 'C-full "
+                         "vs C-null'): the delta is then B - A, so a positive "
+                         "delta means B is better")
     ap.add_argument("--anchor1024", default="anchor1024",
                     help="cell label of the corrected s256 anchor (the 0.44 line)")
     ap.add_argument("--replication", default=None,
@@ -388,6 +391,9 @@ def main(argv=None) -> int:
         a, b = args.primary
         rep = paired_report(cells[a], cells[b])
         print_paired(rep, primary=True)
+        rep["design_statement"] = (
+            f"design 4.2 pre-registers C-full vs C-null; this run compares "
+            f"{b} vs {a}, so a positive delta means {b} is better")
         report["paired"]["primary"] = rep
 
     # every other pre-registered/secondary comparison the report needs
