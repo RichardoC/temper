@@ -1,0 +1,5 @@
+```rust
+fn truncate_number(number: f64) -> f64 {
+    number - number.floor()
+}
+```

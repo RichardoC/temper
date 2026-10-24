@@ -1,0 +1,27 @@
+```rust
+fn parse_nested_parens(paren_string: String) -> Vec<isize> {
+    let mut result = Vec::new();
+
+    for group in paren_string.split_whitespace() {
+        let mut max_level = 0;
+        let mut current_level = 0;
+
+        for ch in group.chars() {
+            match ch {
+                '(' => {
+                    current_level += 1;
+                    max_level = max_level.max(current_level);
+                }
+                ')' => {
+                    current_level -= 1;
+                }
+                _ => (), //  Ignore non-parentheses characters if they exist in a group
+            }
+        }
+
+        result.push(max_level);
+    }
+
+    result
+}
+```

@@ -1,0 +1,17 @@
+```rust
+fn intersperse(numbers: Vec<isize>, delimeter: isize) -> Vec<isize> {
+    if numbers.is_empty() {
+        return numbers;
+    }
+
+    let mut result = Vec::new();
+    for i in 0..numbers.len() {
+        result.push(numbers[i]);
+        if i < numbers.len() - 1 {
+            result.push(delimeter);
+        }
+    }
+
+    result
+}
+```

@@ -1,0 +1,22 @@
+```rust
+fn make_palindrome(string: String) -> String {
+    fn is_palindrome(s: &str) -> bool {
+        s.chars().eq(s.chars().rev())
+    }
+
+    if string = String {
+        return string;
+    }
+
+    let mut longest_palindrome = "";
+    for i in (0..string.len()).rev() {
+        if is_palindrome(&string[i..]) {
+            longest_palindrome = &string[i..];
+            break;
+        }
+    }
+
+    let prefix = &string[..longest_palindrome];
+    string + prefix.chars().collect()
+}
+```

@@ -1,0 +1,452 @@
+{
+ "rows": [
+  {
+   "screen_emitted": 7,
+   "screen_temp": 0.95,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.7087483168906288,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "SyntaxError",
+   "cfull_conf": 0.4474448698299226,
+   "cfull_final_clean": [],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_0_has_close_elements"
+  },
+  {
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "Exception",
+   "screen_conf": 0.6045821710568247,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "SyntaxError",
+   "cfull_conf": 0.21527445033545173,
+   "cfull_final_clean": [],
+   "cfull_n_emittable": 8,
+   "verdict": "DIVERGED",
+   "problem": "HumanEval_10_make_palindrome"
+  },
+  {
+   "screen_emitted": 4,
+   "screen_temp": 1.1,
+   "screen_status": "Exception",
+   "screen_conf": 0.5383477437431214,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "Exception",
+   "cfull_conf": 0.3938182927136968,
+   "cfull_final_clean": [
+    0,
+    1,
+    6
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_11_string_xor"
+  },
+  {
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "Exception",
+   "screen_conf": 0.7951499853082866,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "Exception",
+   "cfull_conf": 0.5291575192440024,
+   "cfull_final_clean": [
+    1
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_12_longest"
+  },
+  {
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.8336350542110746,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.18950372253445802,
+   "cfull_final_clean": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_13_greatest_common_divisor"
+  },
+  {
+   "screen_emitted": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_conf": 0.8688465184467766,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.8688465184467766,
+   "cfull_final_clean": [
+    0,
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_EVIDENCE",
+   "problem": "HumanEval_14_all_prefixes"
+  },
+  {
+   "screen_emitted": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_conf": 0.7436122630769025,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.7436122630769025,
+   "cfull_final_clean": [
+    0,
+    1
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_EVIDENCE",
+   "problem": "HumanEval_15_string_sequence"
+  },
+  {
+   "screen_emitted": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_conf": 0.7127414522692633,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.7127414522692633,
+   "cfull_final_clean": [
+    0
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_EVIDENCE",
+   "problem": "HumanEval_16_count_distinct_characters"
+  },
+  {
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.6954192006647495,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.5167028769207636,
+   "cfull_final_clean": [
+    1,
+    6,
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_17_parse_music"
+  },
+  {
+   "screen_emitted": 3,
+   "screen_temp": 1.0,
+   "screen_status": "Exception",
+   "screen_conf": 0.756811525960509,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "Exception",
+   "cfull_conf": 0.5491427493839298,
+   "cfull_final_clean": [
+    0
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_18_how_many_times"
+  },
+  {
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.8302908730392333,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "SyntaxError",
+   "cfull_conf": 0.26525887323836916,
+   "cfull_final_clean": [],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_19_sort_numbers"
+  },
+  {
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "Exception",
+   "screen_conf": 0.18949915310247756,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.1944295531907865,
+   "cfull_final_clean": [
+    0,
+    1
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "DIVERGED",
+   "problem": "HumanEval_1_separate_paren_groups"
+  },
+  {
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.579409421292968,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "SyntaxError",
+   "cfull_conf": 0.25625461588285325,
+   "cfull_final_clean": [],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_20_find_closest_elements"
+  },
+  {
+   "screen_emitted": 3,
+   "screen_temp": 1.0,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.6054242898807632,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "SyntaxError",
+   "cfull_conf": 0.4332413643001244,
+   "cfull_final_clean": [],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_21_rescale_to_unit"
+  },
+  {
+   "screen_emitted": 1,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.9830271660390123,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.9813493036058508,
+   "cfull_final_clean": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_23_strlen"
+  },
+  {
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.8315728413607113,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.6729988532722916,
+   "cfull_final_clean": [
+    0,
+    1,
+    3,
+    5,
+    6
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_24_largest_divisor"
+  },
+  {
+   "screen_emitted": 3,
+   "screen_temp": 1.0,
+   "screen_status": "OK",
+   "screen_conf": 0.6668803277826986,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.2330930017927812,
+   "cfull_final_clean": [
+    2
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_25_factorize"
+  },
+  {
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_conf": 0.9822875501616666,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.8301497390657702,
+   "cfull_final_clean": [
+    0,
+    1,
+    2,
+    3,
+    6,
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_2_truncate_number"
+  },
+  {
+   "screen_emitted": 5,
+   "screen_temp": 1.2,
+   "screen_status": "OK",
+   "screen_conf": 0.8425150391007857,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.7888873984933942,
+   "cfull_final_clean": [
+    0,
+    1
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_3_below_zero"
+  },
+  {
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.7040442035208878,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.470930286486676,
+   "cfull_final_clean": [
+    2
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "DIVERGED",
+   "problem": "HumanEval_4_mean_absolute_deviation"
+  },
+  {
+   "screen_emitted": 4,
+   "screen_temp": 1.1,
+   "screen_status": "OK",
+   "screen_conf": 0.7085378780843608,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.5513992931978356,
+   "cfull_final_clean": [
+    0,
+    2,
+    5
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_5_intersperse"
+  },
+  {
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_conf": 0.519228594326015,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.39064654872790006,
+   "cfull_final_clean": [
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_6_parse_nested_parens"
+  },
+  {
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_conf": 0.9343734994883724,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.8789494796912067,
+   "cfull_final_clean": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_7_filter_by_substring"
+  },
+  {
+   "screen_emitted": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.807731114778149,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.5979370079889073,
+   "cfull_final_clean": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "SAME_OUTCOME",
+   "problem": "HumanEval_8_sum_product"
+  },
+  {
+   "screen_emitted": 2,
+   "screen_temp": 0.95,
+   "screen_status": "EXCLUDED",
+   "screen_conf": 0.2210781505173512,
+   "cfull_emitted": 0,
+   "cfull_temp": 0.2,
+   "cfull_status": "OK",
+   "cfull_conf": 0.6448259127669304,
+   "cfull_final_clean": [
+    3
+   ],
+   "cfull_n_emittable": 8,
+   "verdict": "DIVERGED",
+   "problem": "HumanEval_9_rolling_max"
+  }
+ ],
+ "tally": {
+  "SAME_OUTCOME": 18,
+  "DIVERGED": 4,
+  "SAME_EVIDENCE": 3
+ },
+ "diverged": [
+  "HumanEval_10_make_palindrome",
+  "HumanEval_1_separate_paren_groups",
+  "HumanEval_4_mean_absolute_deviation",
+  "HumanEval_9_rolling_max"
+ ],
+ "screen_detail": "bench/multipl-e/m3-p3/emission-detail.json",
+ "cfull_steer_dir": "bench/multipl-e/runs/20261023T133243Z-c-full.jsonl.steer",
+ "cfull_results": "bench/multipl-e/m3-p3/c-full-emission-results.json"
+}
