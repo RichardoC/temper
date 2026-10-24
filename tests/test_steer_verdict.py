@@ -82,11 +82,12 @@ class TestVerdictConfigFreeze(unittest.TestCase):
         self.assertEqual(cfg.checkpoint_grid, (0.25, 0.5, 0.75, 1.0))
 
     def test_d4_repin_is_recorded_and_consistent(self):
-        """The committed config is the rev2-repinned v2 (superseding D4 v1): the
-        d4_repin payload still names its captures, patience matches, and the rev2
-        block records the operator-approved ladder re-base + kill/clone demotion."""
+        """The committed config is the rev2-repinned lineage, now at v3 for M3.1:
+        the d4_repin payload still names its captures, patience matches, and the
+        rev2 block records the operator-approved ladder re-base + kill/clone
+        demotion (which v3 neither touches nor re-enables)."""
         cfg = load_verdict_config()
-        self.assertEqual(cfg.version, "v2")
+        self.assertEqual(cfg.version, "v3")
         repin = cfg.raw["d4_repin"]
         self.assertIn("d4-capture-alive.json", " ".join(repin["captures"]))
         self.assertEqual(cfg.patience_checkpoints, 3)
@@ -97,6 +98,32 @@ class TestVerdictConfigFreeze(unittest.TestCase):
                          [0.8, 0.95, 1.0, 1.1, 1.2])
         self.assertFalse(rev2["kill_clone_enabled"])
         self.assertIn("7c8a124", rev2["basis"])
+
+    def test_v3_is_the_m3_1_property_config(self):
+        """M3.1's pre-registration is ONE frozen artifact (D7 config v3).
+
+        Pinned here so a post-freeze drift in ANY of the four pre-registered
+        facts (the ranking rule, R3's final-window-only scope, the 256-case
+        count, the abstention policy) is a test failure, not a silent
+        difference between the design text and what the cells ran.
+        """
+        from temper.steer.emission import EMISSION_PROPERTY
+
+        cfg = load_verdict_config()
+        self.assertEqual(cfg.emission, EMISSION_PROPERTY)
+        m31 = cfg.raw["m3_1"]
+        self.assertEqual(m31["r3"]["fire"], "final_window_only")
+        self.assertEqual(m31["r3"]["cases"], 256)
+        self.assertEqual(m31["r3"]["timeout_policy"], "abstain")
+        self.assertEqual(m31["r3"]["requires"],
+                         "completed, zero-hole, R1-clean canvas")
+        self.assertEqual(m31["harness_set"]["H"], 2)
+        self.assertEqual(m31["harness_set"]["seeds"], [0, 1])
+        self.assertEqual(m31["harness_set"]["replacement_seed"], 2)
+        # the demotion is NOT reversed by the property rung
+        self.assertTrue(m31["r3"]["enabled"])
+        self.assertIn("never kills or clones", m31["r3"]["kill_clone"])
+        self.assertFalse(cfg.kill_clone_enabled)
 
     def test_tampering_a_verdict_parameter_is_detected(self):
         """D7 acceptance: edit one informed class -> load must REFUSE."""

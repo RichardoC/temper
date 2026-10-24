@@ -28,15 +28,22 @@ import hashlib
 import os
 import time
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional, Tuple
+from pathlib import Path
+from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
 import torch
 
 from temper.model.dream import MASK_TOKEN_ID, _make_hooks
 from temper.model.dream_fixed import fixed_shape_step
-from temper.steer.emission import rank_screen, select_screen
+from temper.steer.emission import (
+    EMISSION_SCREEN,
+    rank_by_rule,
+    rank_screen,
+    select_by_rule,
+)
 from temper.steer.log import Decision, SteerGameLog, decide, persistence_of
 from temper.steer.metering import GameMeters
+from temper.steer.property import R3Verdict, make_pub_program, run_r3
 from temper.steer.verdict import (
     VerdictConfig,
     final_checkpoint_clean,
@@ -112,6 +119,18 @@ class SteerParticle:
     emission_dropped_ids: List[int] = field(default_factory=list)
     verdict_calls: int = 0
     verifier_wall_s: float = 0.0
+    # R3 (M3.1): the property evidence about this canvas, filled at the
+    # final window by _fire_r3 and consumed by the v3 emission ranking.
+    # ``property_pass_rate`` stays None when nothing was measured — the
+    # abstention tier (see temper.steer.emission).
+    property_verdict: Optional[R3Verdict] = None
+    property_pass_rate: Optional[float] = None
+    property_pass_count: int = 0
+    property_measured_count: int = 0
+    property_call_count: int = 0
+    property_statuses: List[str] = field(default_factory=list)
+    property_minimal_inputs: List[str] = field(default_factory=list)
+    r3_wall_s: float = 0.0
 
 
 @dataclass
@@ -296,6 +315,8 @@ def run_game(
     policy_enabled: bool = True,
     kill_clone_enabled: Optional[bool] = None,
     config: Optional[VerdictConfig] = None,
+    harnesses: Optional[Sequence] = None,
+    r3_workdir: Path | str | None = None,
     log_path=None,
     top_p: float = 0.95,
     on_checkpoint: Optional[Callable[["SteerParticle", torch.Tensor, float], None]] = None,
@@ -327,6 +348,14 @@ def run_game(
     at every checkpoint fraction of the frozen grid whether or not the policy is
     enabled; D4 uses it to snapshot real mid-decode canvases for the
     ghost-closure validity table. It must not mutate the canvas.
+
+    ``harnesses`` is this problem's FROZEN property set (M3.1 R3, design §2.3).
+    R3 fires at the FINAL WINDOW ONLY, once per R1-clean zero-hole canvas, and
+    its evidence feeds the emission ranking — it never kills, clones, reorders
+    mid-decode or moves budget. With no harnesses the property ranking has no
+    evidence to read, so it degenerates to the screen rule by construction
+    (tier 1 for every canvas); the game log records ``r3_available: false`` so
+    a cell that was supposed to measure properties cannot silently not do it.
     """
     from temper.steer.verdict import load_verdict_config
     cfg = config or load_verdict_config()
@@ -565,20 +594,51 @@ def run_game(
         _finish(p)
     emitted = None
     eligible = [p for p in particles if p.final_raw_text]
+    r3_fired: List[int] = []
     if policy_enabled:
+        # R1 on the emitted text (the hard screen), then R3 on the canvases it
+        # passed. R3 is the FINAL-WINDOW-ONLY rung (design §2.3): it fires here,
+        # after every particle has finished, and its evidence can only affect
+        # which finished canvas is emitted — never a kill, a clone, a budget
+        # move or a mid-decode ordering.
         for p in eligible:
             p.final_clean = _final_is_clean(view, cfg, p)
-        emitted = select_screen(eligible)
+        if harnesses:
+            for p in eligible:
+                if not p.final_clean:
+                    # §2.3: R3 requires a completed, zero-hole, R1-clean canvas.
+                    continue
+                _fire_r3(view, cfg, p, harnesses=harnesses,
+                         workdir=r3_workdir, meters=meters,
+                         game_log=game_log)
+                r3_fired.append(p.index)
+        emitted = select_by_rule(eligible, cfg.emission)
     else:
         emitted = eligible[0] if eligible else None
     if game_log is not None:
         game_log.emit("emit", particle=(emitted.index if emitted else None),
                       nfe_at=meters.nfe_model,
                       emission_rule=cfg.emission,
+                      r3_available=bool(harnesses),
+                      r3_fired=r3_fired,
+                      r3_calls=sum(p.property_call_count for p in particles),
                       final_clean=[p.index for p in particles if p.final_clean],
                       screen_ranking=[p.index for p
                                       in rank_screen(eligible)] if
                       policy_enabled else [],
+                      emission_ranking=[p.index for p in rank_by_rule(
+                          eligible, cfg.emission)] if policy_enabled else [],
+                      # The v2 screen's pick is ALWAYS recorded beside the
+                      # configured rule's. P-prop-screen vs C-screen is a
+                      # same-ensemble rule delta (design §3), so the log must
+                      # carry both picks for the flip attribution to be
+                      # checkable from the game record alone.
+                      screen_selected=(_screen_pick_index(eligible)
+                                       if policy_enabled else None),
+                      property_pass_rate={str(p.index): p.property_pass_rate
+                                          for p in particles},
+                      property_statuses={str(p.index): p.property_statuses
+                                         for p in particles},
                       mean_commit_conf={str(p.index): p.mean_commit_conf
                                         for p in particles},
                       temperatures={str(p.index): p.temperature
@@ -620,3 +680,85 @@ def _final_is_clean(view: SteerProblemView, cfg: VerdictConfig,
         return final_checkpoint_clean(verdict)
     except Exception:
         return False
+
+
+def _fire_r3(
+    view: SteerProblemView,
+    cfg: VerdictConfig,
+    p: SteerParticle,
+    *,
+    harnesses: Sequence,
+    workdir: Path | str | None,
+    meters: GameMeters,
+    game_log,
+) -> None:
+    """Run the frozen property set against ONE finished canvas (R3, §2.3).
+
+    Evidence gathering only: the verdict lands on the particle as
+    ``property_pass_rate`` (plus its per-call records) for the emission ranking
+    to read. R3 is metered on the VERIFIER axis — 256 proptest cases per
+    harness cost cargo wall, never model NFE, and the D3 criterion that caps
+    verifier work at 10 % of the budget wall reads ``verifier_wall_s``.
+
+    A verifier crash must never kill a game (same rule as R1): an exception
+    here leaves the particle with NO property evidence, i.e. the abstention
+    tier, and is logged as such rather than silently scored as a failure.
+    """
+    t0 = time.perf_counter()
+    try:
+        program = make_pub_program(view, p.final_raw_text)
+        verdict = run_r3(
+            program.text, harnesses,
+            canvas_ref=f"p{p.index}", problem=view.name,
+            cases=int(_r3_cases(cfg)), timeout_ms=int(_r3_timeout_ms(cfg)),
+            workdir=workdir,
+        )
+    except Exception as exc:  # a verifier crash is never a verdict
+        p.property_verdict = None
+        p.property_pass_rate = None
+        p.property_statuses = []
+        if game_log is not None:
+            game_log.emit("r3_error", particle=p.index,
+                          error=f"{type(exc).__name__}: {exc}",
+                          nfe_at=p.nfe)
+        meters.spend_verifier(time.perf_counter() - t0, 0)
+        p.verifier_wall_s += time.perf_counter() - t0
+        return
+    wall = time.perf_counter() - t0
+    p.property_verdict = verdict
+    p.property_pass_rate = verdict.pass_rate
+    p.property_pass_count = verdict.n_passed
+    p.property_measured_count = verdict.n_measured
+    p.property_call_count = verdict.n_calls
+    p.property_statuses = list(verdict.statuses)
+    p.property_minimal_inputs = list(verdict.minimal_inputs)
+    p.r3_wall_s = verdict.wall_s
+    p.verifier_wall_s += wall
+    # D3: R3 calls are verifier work on their own axis (never folded into NFE,
+    # which is the budget every cell's envelope is stated in).
+    meters.spend_verifier(wall, verdict.n_calls)
+    if game_log is not None:
+        for call in verdict.calls:
+            game_log.emit("r3", particle=p.index, nfe_at=p.nfe,
+                          **call.as_event())
+        # §7 Q1 (operator ruling 2026-10-24): an all-timeout canvas is its own
+        # recorded class — abstention must stay measurable so G4 can weigh it
+        # against the container verdict before any future re-tiering.
+        if verdict.all_abstained:
+            game_log.emit("r3_abstain", particle=p.index, nfe_at=p.nfe,
+                          statuses=list(verdict.statuses),
+                          pass_rate=None)
+
+
+def _screen_pick_index(candidates: Sequence) -> Optional[int]:
+    """The v2 screen's pick over the same pool, as a reference point."""
+    picked = select_by_rule(candidates, EMISSION_SCREEN)
+    return picked.index if picked is not None else None
+
+
+def _r3_cases(cfg: VerdictConfig) -> int:
+    return int((cfg.raw.get("m3_1") or {}).get("r3", {}).get("cases", 256))
+
+
+def _r3_timeout_ms(cfg: VerdictConfig) -> int:
+    return int((cfg.raw.get("m3_1") or {}).get("r3", {}).get("timeout_ms", 2000))

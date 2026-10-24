@@ -1,7 +1,7 @@
 {
   "schema": "steer-verdict-config/1",
-  "version": "v2",
-  "frozen_utc": "2026-10-22",
+  "version": "v3",
+  "frozen_utc": "2026-10-24",
   "note": "M3.0 D7 freeze scaffold. Parameters are transcribed verbatim from docs/m3-design.md rev1 sections 2.2/3.2/3.3 as v0; D4 (ghost-closure validity on REAL canvases, a P0->P2 boundary activity) SETS the patience parameters from its measured table and REPINS this file (new version + new sha, both recorded in the report). The embedded sha256 is the canonical digest of this object WITHOUT the sha256 field; load_verdict_config() re-derives it and refuses a tampered file.",
   "informed_error_classes": [
     "E0277",
@@ -47,7 +47,7 @@
     0.75,
     1.0
   ],
-  "emission": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+  "emission": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
   "clone": {
     "temp_step": 0.2,
     "temp_cap": 0.8,
@@ -113,5 +113,36 @@
       "note": "supersedes v1 clone {temp_step:0.2, cap:0.8}: children of a 0.2 parent would start at 0.4 = measured dead zone. Clone machinery itself is OFF under kill_clone_enabled=false; this block is retained so a future re-enable inherits the re-based band, not the dead one."
     }
   },
-  "sha256": "a63b2b369606bb0222a19d0a79088f5f5425f3e9e041f6a4f8ea9499177ae5e1"
+  "m3_1": {
+    "basis": "docs/m3.1-design.md rev1 \u00a72.3/\u00a72.4 (property-reward selection) + the \u00a77 clarification rows (operator ruling 2026-10-24: Q1 three-tier undefined-case fill, Q2 replacement rule, Q3 engine-canvas banking + C-full bound, Q4 P-25re roles). Frozen BEFORE any M3.1 cell generates.",
+    "emission_note": "v3 supersedes v2's 'best_r1_clean_by_mean_commit_conf_ties_lowest_temp'. Design \u00a72.3 pre-registers the property ranking: pass_rate over non-timeout harnesses, then mean_commit_conf, then lowest temp, then lowest index. The screen tie order is unchanged, so the two rules differ ONLY in the leading term.",
+    "r3": {
+      "enabled": true,
+      "fire": "final_window_only",
+      "requires": "completed, zero-hole, R1-clean canvas",
+      "cases": 256,
+      "timeout_ms": 2000,
+      "timeout_policy": "abstain",
+      "timeout_policy_provenance": "docs/m3.1-design.md \u00a72.3: 'timeout counts as abstention, never as failure (a candidate the harness cannot judge is unknown, not wrong \u2014 and aborting != failing is the difference between evidence and punishment)'.",
+      "ranking_rule": "tier0 measured pass_rate>0 (pass_rate desc) > tier1 abstained, i.e. all harnesses timeout/unmeasurable (pass_rate undefined) > tier2 measured pass_rate==0; each tier then mean_commit_conf desc, temp asc, index asc",
+      "tier_provenance": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q1): the rev1 text defines pass_rate only over non-timeout harnesses, so an all-timeout canvas has no defined pass_rate. Three tiers fill that undefined case: abstention can neither beat measured-good nor rank below measured-bad. Recorded as a clarification, not an amendment \u2014 it does not change a \u00a72.3 value, it defines a value \u00a72.3 left undefined.",
+      "mid_decode_forbidden": "D4 measured mid-canvas informed recall ~0; R3 fires at the final window only and never acts mid-canvas.",
+      "kill_clone": "OFF \u2014 R3 produces evidence for the emission ranking only; it never kills or clones."
+    },
+    "harness_set": {
+      "H": 2,
+      "temperature": 0.2,
+      "steps": 256,
+      "seeds": [
+        0,
+        1
+      ],
+      "replacement_seed": 2,
+      "input": "prompt-only: the banked <problem>__prompt.txt sidecar (docstring + signature). The MultiPL-E tests string is never shown to any generator (design \u00a72.1).",
+      "freeze_validation": "cargo-compile against a todo!() signature stub emitted via temper.harness.emit; runtime behaviour at freeze is recorded but NOT gated (only compile success is required, design \u00a72.2)",
+      "replacement_rule": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q2): a first draft that fails stub-compile is replaced once by a seed-2 draft; if the seed-2 draft also fails on a problem whose other harness survived, the survivor set stands with denominator 1 (logged, shown in the G4 table); if BOTH drafts and BOTH replacements fail (zero survivors) the lane STOPS and escalates rather than silently degrading that problem to confidence ranking. G4's >=90% compile-rate gate applies to the 50 FIRST drafts (5 failures is the ceiling); frozen-set and replacement rates are separate reported columns."
+    },
+    "canvas_banking": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q3): the M3.1 engine seam writes every particle's final canvas to <out>.canvases/<problem>__p<i>.txt (text only; I/O, never NFE). This is what makes P-prop-engine's own oracle audit exact and the P-prop-screen-twin over the engine's own ensemble computable. The banked M3.0 C-full cell held only the emitted canvas, so its audit is reported as the R1-clean-ALTERNATE UPPER BOUND, a ceiling, never as 'oracle'."
+  },
+  "sha256": "ec9085d749a7fe2e805baebbafbc8dbcb961780bb654b9cad957f42a377d5685"
 }
