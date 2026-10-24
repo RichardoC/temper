@@ -52,8 +52,25 @@ from temper.steer.view import SteerProblemView  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-# The pinned instruction. Written 2026-10-24 before any draft was generated.
-HARNESS_DRAFT_INSTRUCTION = """\
+# --------------------------------------------------------------------------
+# The instruction, TWO versions, both on record.
+#
+# v1 was written 2026-10-24 before any draft existed. It produced the Dream
+# negative (0/12) and, on the AR twin, 2/25 compiles at canvas 256 — with the
+# single biggest fixable class being that the model OMITTED the
+# `use crate::candidate::{fn}` line (only 12/25 drafts had it) and got the
+# `Strategy<Value = T>` / `run_property` shape wrong (E0271 x3, E0308 x1).
+#
+# v2 (operator-approved 2026-10-24, M3.1 §7 row C5) replaces the prose
+# requirement list with a SKELETON TO FILL: the import is a literal line in the
+# skeleton, and the exact `run_property` shape is given verbatim. Filling a
+# skeleton sidesteps API-memory errors structurally instead of asking the model
+# to recall an interface. The v1 text and its sha stay here as the labeled
+# history of why v2 exists — a later reader must be able to see what changed and
+# why, and every P-gen row records WHICH sha produced it.
+# --------------------------------------------------------------------------
+
+HARNESS_DRAFT_INSTRUCTION_V1 = """\
 Write a Rust property-based test file for the `proptest` crate (pinned 1.12.0, \
 std feature only, no other dependencies).
 
@@ -106,19 +123,135 @@ never assume the function's implementation, only its signature.
 - Output ONLY the fenced Rust block, no prose.
 """
 
-HARNESS_PROMPT_SHA256 = hashlib.sha256(
-    HARNESS_DRAFT_INSTRUCTION.encode("utf-8")).hexdigest()
+HARNESS_DRAFT_INSTRUCTION_V2 = """\
+Complete the Rust file below. It is the property test for the function whose \
+documentation and signature follow. Fill in the three marked parts; keep every \
+other line EXACTLY as written.
+
+The function's documentation and exact signature:
+
+```rust
+{prompt}```
+
+Write exactly ONE ```rust fenced code block containing the completed file. It \
+must have this shape, with your parts substituted:
+
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{{TestCaseError, TestCaseResult, TestError, TestRunner}};
+use crate::candidate::{fn_name};
+
+pub const STRATEGY_DESC: &str = "<one line describing your input strategy>";
+
+// PART 1: the generator. Return a boxed Strategy for the TUPLE of the
+// function's arguments (a bare type if there is one argument). Give it the
+// EXACT type below; only the body is yours.
+fn strategy() -> BoxedStrategy<{value_type}> {{
+    // your code
+}}
+
+// PART 2: the checker. Call {fn_name} with the input and verify the contract
+// the documentation states. Return Ok(()) when it holds, and
+// Err(TestCaseError::fail("...")) when it does not.
+fn property(input: {value_type}) -> TestCaseResult {{
+    // your code
+}}
+
+// PART 3: leave this entry point EXACTLY as it is.
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<{value_type}>> {{
+    runner.run(&strategy(), property)
+}}
+```
+
+Rules:
+- `{value_type}` is `{value_type}` — use that exact type in all three parts.
+- Only the Rust standard library and proptest 1.12.0. No other crates, no \
+serde, no `proptest!` macro, no `#[test]`, no `fn main`, no `mod`, no printing.
+- Call ONLY `{fn_name}` from `crate::candidate`.
+- Your strategy must be able to produce the inputs the documentation's examples \
+use, plus the boundaries it mentions (empty, zero, one element, duplicates, \
+negative or large values, multi-byte or whitespace strings where relevant).
+- The property must be a real contract that a WRONG implementation would \
+violate: assert the documented postcondition, compare against an independent \
+recomputation, or check a metamorphic relation. Do not merely call the function \
+and return Ok(()).
+- The file is compiled against a stub whose body is `todo!()`: never assume the \
+implementation, only the signature.
+- Output ONLY the fenced Rust block, no prose.
+"""
+
+HARNESS_PROMPT_SHA256_V1 = hashlib.sha256(
+    HARNESS_DRAFT_INSTRUCTION_V1.encode("utf-8")).hexdigest()
+HARNESS_PROMPT_SHA256_V2 = hashlib.sha256(
+    HARNESS_DRAFT_INSTRUCTION_V2.encode("utf-8")).hexdigest()
+
+# The version every M3.1 cell runs. Changing it is a labeled amendment, and the
+# sha recorded in each P-gen row must name the version that actually produced it.
+HARNESS_INSTRUCTION_VERSION = "v2"
+HARNESS_PROMPT_SHA256 = HARNESS_PROMPT_SHA256_V2
 
 
-def build_harness_prompt(view: SteerProblemView) -> str:
-    """The drafter's chat prompt: pinned instruction + docstring+signature only.
+def value_type_of(signature_line: str) -> str:
+    """The ``T`` of the skeleton: the tuple of the prompted argument types.
+
+    The skeleton needs a CONCRETE type where v1 said "T", because "substitute T
+    everywhere" is exactly the instruction the model kept failing. One argument
+    gives that bare type; several give a tuple; none gives ``()``.
+
+    Returns the type as source text. Refuses a signature it cannot parse rather
+    than emitting a skeleton with a guessed type (a wrong ``T`` would fail every
+    draft at once and look like a model failure).
+    """
+    m = re.search(r"\(([^)]*)\)\s*->", signature_line)
+    if m is None:
+        raise ValueError(
+            f"cannot read the argument list from {signature_line!r}")
+    args = m.group(1).strip()
+    if not args:
+        return "()"
+    types: List[str] = []
+    for part in _split_top_level(args):
+        # `name: Type` -> Type (the name may be `_` or a pattern; the type is
+        # everything after the first top-level colon)
+        _, sep, ty = part.partition(":")
+        if not sep:
+            raise ValueError(
+                f"argument {part!r} of {signature_line!r} has no `name: Type` "
+                "shape")
+        types.append(ty.strip())
+    return types[0] if len(types) == 1 else "(" + ", ".join(types) + ")"
+
+
+def _split_top_level(args: str) -> List[str]:
+    """Split an argument list on top-level commas (brackets <> () [] aware)."""
+    parts, depth, cur = [], 0, []
+    for ch in args:
+        if ch in "<([":
+            depth += 1
+        elif ch in ">)]":
+            depth -= 1
+        if ch == "," and depth == 0:
+            parts.append("".join(cur).strip())
+            cur = []
+        else:
+            cur.append(ch)
+    if "".join(cur).strip():
+        parts.append("".join(cur).strip())
+    return parts
+
+
+def build_harness_prompt(view: SteerProblemView,
+                         version: str = HARNESS_INSTRUCTION_VERSION) -> str:
+    """The drafter's chat prompt: instruction + docstring+signature only.
 
     ``view.prompt`` is the allowlisted problem prompt (D5). Nothing else about
     the task is reachable here — in particular the vendored ``tests`` string
     never enters this scope, which is design §2.1's no-reference-leakage clause.
     """
-    return HARNESS_DRAFT_INSTRUCTION.format(prompt=view.prompt,
-                                            fn_name=view.fn_name)
+    template = (HARNESS_DRAFT_INSTRUCTION_V2 if version == "v2"
+                else HARNESS_DRAFT_INSTRUCTION_V1)
+    return template.format(prompt=view.prompt, fn_name=view.fn_name,
+                           value_type=value_type_of(view.signature_line))
 
 
 def verify_prompt_sidecar(view: SteerProblemView, sidecar_path: Path) -> bool:

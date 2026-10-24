@@ -1,0 +1,32 @@
+```rust
+use crate::candidate::intersperse;
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A vector of isize and an isize delimiter";
+
+fn strategy() -> impl Strategy<Value = (Vec<isize>, isize)> {
+    (any::<Vec<isize>>(), any::<isize>())
+}
+
+fn property((numbers, delimeter): (Vec<isize>, isize)) -> TestCaseResult {
+    let result = intersperse(numbers.clone(), delimeter);
+    if numbers.is_empty() {
+        assert!(result.is_empty(), "Expected empty result for empty input");
+    } else {
+        let mut expected = Vec::new();
+        for (i, &num) in numbers.iter().enumerate() {
+            expected.push(num);
+            if i < numbers.len() - 1 {
+                expected.push(delimeter);
+            }
+        }
+        assert_eq!(result, expected, "Result does not match expected output");
+    }
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(Vec<isize>, isize)>> {
+    runner.run(&strategy(), property)
+}
+```

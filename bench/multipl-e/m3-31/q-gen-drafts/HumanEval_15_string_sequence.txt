@@ -1,0 +1,26 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::string_sequence;
+
+pub const STRATEGY_DESC: &str = "isize values from -1000 to 1000";
+
+fn strategy() -> impl Strategy<Value = isize> {
+    -1000..=1000
+}
+
+fn property(input: isize) -> TestCaseResult {
+    let result = string_sequence(input);
+    if input == 0 {
+        assert_eq!(result, "0");
+    } else {
+        let expected = (0..=input).map(|i| i.to_string()).collect::<Vec<String>>().join(" ");
+        assert_eq!(result, expected);
+    }
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<isize>> {
+    runner.run(&strategy(), property)
+}
+```

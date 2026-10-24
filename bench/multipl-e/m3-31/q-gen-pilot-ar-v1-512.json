@@ -1,0 +1,356 @@
+[
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "tokens": 251,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_0_has_close_elements.txt",
+  "raw_sha256": "dd8a1daf06a350848725068870612db1a738259d93758b112f62e255940b86fd"
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_1_separate_paren_groups.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "tokens": 191,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": true,
+  "compiled": true,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_2_truncate_number.txt",
+  "raw_sha256": "78f5c622bfc2253f4465e9c87ef17fb43b807aa379c32745d7a9fc2965257445"
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "tokens": 279,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 2,
+  "has_import": true,
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_3_below_zero.txt",
+  "raw_sha256": "2e71313b360f5042be497930555da5adc05c7ae63815dd400091c6b4755250e1"
+ },
+ {
+  "problem": "HumanEval_4_mean_absolute_deviation",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_4_mean_absolute_deviation.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_5_intersperse",
+  "tokens": 255,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": true,
+  "compiled": true,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_5_intersperse.txt",
+  "raw_sha256": "76994a2607d90a0ac9d4052a1b58bdcd671dc659da0ab3665c733d7b236242ba"
+ },
+ {
+  "problem": "HumanEval_6_parse_nested_parens",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_6_parse_nested_parens.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_7_filter_by_substring",
+  "tokens": 214,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": true,
+  "compiled": false,
+  "codes": [
+   "E0308"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_7_filter_by_substring.txt",
+  "raw_sha256": "9050e285a43707bd8f6423efac412bb5db3e7b8d036a9749c1fca08c513f5b4a"
+ },
+ {
+  "problem": "HumanEval_8_sum_product",
+  "tokens": 273,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_8_sum_product.txt",
+  "raw_sha256": "fc9c36d3ca24d913bd1cebcf9ff04c4e68f4198465e2a326286a1823a3435162"
+ },
+ {
+  "problem": "HumanEval_9_rolling_max",
+  "tokens": 279,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_9_rolling_max.txt",
+  "raw_sha256": "f0b433cb475ed73a03db4045f6495d318e3a622d57774e3cd0e50a23e1fcf243"
+ },
+ {
+  "problem": "HumanEval_10_make_palindrome",
+  "tokens": 282,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_10_make_palindrome.txt",
+  "raw_sha256": "08504a94c6da0698d65bb45bfd60686b32750166725ba92514a7b975b2742375"
+ },
+ {
+  "problem": "HumanEval_11_string_xor",
+  "tokens": 228,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_11_string_xor.txt",
+  "raw_sha256": "9d45f747bc40090f87db03f9af6e23ae649f55dc95ba8eadeb1e4180160e285e"
+ },
+ {
+  "problem": "HumanEval_12_longest",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_12_longest.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_13_greatest_common_divisor",
+  "tokens": 230,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": true,
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_13_greatest_common_divisor.txt",
+  "raw_sha256": "32751e01f4d231f4494987ec62a7b9c795e783ae96c49edcf7b348b8bb57f351"
+ },
+ {
+  "problem": "HumanEval_14_all_prefixes",
+  "tokens": 288,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 2,
+  "has_import": true,
+  "compiled": true,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_14_all_prefixes.txt",
+  "raw_sha256": "a5eacf47b8a3824de49fb9afbee62c61ebe01ce2da08a3b875cb0e2fe6a7b785"
+ },
+ {
+  "problem": "HumanEval_15_string_sequence",
+  "tokens": 199,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": true,
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_15_string_sequence.txt",
+  "raw_sha256": "5531a6191d1e6913aa02618447a9282b725f09916ed935fc792ec9e7f4a8e540"
+ },
+ {
+  "problem": "HumanEval_16_count_distinct_characters",
+  "tokens": 333,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_16_count_distinct_characters.txt",
+  "raw_sha256": "4d5c065770c66e4fe09a21b7685358d9d08bf17e3f5747bd6ffbb523603981d5"
+ },
+ {
+  "problem": "HumanEval_17_parse_music",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_17_parse_music.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_18_how_many_times",
+  "tokens": 211,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_18_how_many_times.txt",
+  "raw_sha256": "93c17e0cb5f4b5bcf26d389d1976bb67109bf639c034434d16dbf448d37f2efd"
+ },
+ {
+  "problem": "HumanEval_19_sort_numbers",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_19_sort_numbers.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_20_find_closest_elements",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_20_find_closest_elements.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_21_rescale_to_unit",
+  "tokens": 0,
+  "closed": false,
+  "trunc": false,
+  "err": "NonFiniteLogitsError: non-finite logits ",
+  "attempts": 2,
+  "has_import": false,
+  "compiled": false,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_21_rescale_to_unit.txt",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "problem": "HumanEval_23_strlen",
+  "tokens": 317,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 2,
+  "has_import": true,
+  "compiled": true,
+  "codes": [],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_23_strlen.txt",
+  "raw_sha256": "b68720f96ed8b87f49f8d02bae81136ade98d68991f9980664405078a4ec4773"
+ },
+ {
+  "problem": "HumanEval_24_largest_divisor",
+  "tokens": 207,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": false,
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_24_largest_divisor.txt",
+  "raw_sha256": "f2ac7aa5a848322c3ef87c0613ad8493a190565ea1b70f2924e1cc62f1e9b011"
+ },
+ {
+  "problem": "HumanEval_25_factorize",
+  "tokens": 175,
+  "closed": true,
+  "trunc": false,
+  "err": "",
+  "attempts": 1,
+  "has_import": true,
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "raw_path": "bench/multipl-e/m3-31/q-gen-drafts/HumanEval_25_factorize.txt",
+  "raw_sha256": "2634c5e5c7a1f008077aa744ef0320aa3a1d481fb1da64830e7856be4811a9a1"
+ }
+]

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""M3.1 PHASE 1 — P-gen: draft the property harness set on the diffusion LM.
+"""M3.1 PHASE 1 — P-gen: draft the property harness set.
 
-Design §2.1/§3. The generator is the SAME diffusion substrate as every other
-cell in the program (Dream-Coder-v0-Instruct-7B, fixed-shape sampler), drafting
-**H = 2 property harnesses per problem** at T = 0.2, steps = 256, seeds 0/1.
+Design §2.1/§3 AS AMENDED by §7 C5: the harness drafter is the AR twin
+(Qwen2.5-Coder-7B-Instruct, the M2.4b B3 instrument), drafting **H = 6 property
+harnesses per problem** at T = 0.2 into a 256-token canvas. The dLLM could not
+author a compiling proptest file at all (measured 0/12 — kept on record in
+bench/multipl-e/m3-31/p-gen-dream-negative.json); CANVASES remain
+diffusion-drawn in every cell, so the program's substrate claim about STEERING
+is untouched.
 
 What the model sees is the pinned instruction (``scripts/m3_31_harness.py``,
 its sha recorded here and in the freeze manifest) wrapped around the problem's
@@ -48,6 +52,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from temper.multipl_e.bench import load_problems  # noqa: E402
 from temper.steer.view import SteerProblemView  # noqa: E402
 from scripts.m3_31_harness import (  # noqa: E402
+    HARNESS_INSTRUCTION_VERSION as INSTRUCTION_VERSION,
     HARNESS_PROMPT_SHA256,
     build_harness_prompt,
     verify_prompt_sidecar,
@@ -55,16 +60,24 @@ from scripts.m3_31_harness import (  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-# Design §2.1/§2.2, verbatim.
+# Design §2.1/§2.2 as amended by §7 C5 (operator ruling 2026-10-24):
+#   * generator: the AR twin (Qwen2.5-Coder-7B, the M2.4b B3 instrument), because
+#     the dLLM cannot author compiling proptest (measured 0/12 — see
+#     bench/multipl-e/m3-31/p-gen-dream-negative.json);
+#   * H 2 -> 6, because H=2 is structurally starved at ANY plausible compile
+#     rate, and AR drafts cost ~20 s each;
+#   * canvas 256, because the AR decode loop emits non-finite logits at 384+ on
+#     this prompt (11/25 NaN) and not at 256 (2/25);
+#   * one seed-2 replacement round per slot, unchanged.
 DRAFT_TEMPERATURE = 0.2
-DRAFT_STEPS = 256
-DRAFT_SEEDS = (0, 1)
+DRAFT_STEPS = 0        # AR has no denoise steps; 0 is the honest record value
+DRAFT_SEEDS = (0, 1, 2, 3, 4, 5)
 REPLACEMENT_SEED = 2
 # The problem cohort: HumanEval NUMBER 0..21, 23, 24, 25 (the vendored file omits
 # HumanEval_22) — the same 25 problems as every M3.0 cell.
 PROBLEM_NUMBERS = tuple(range(22)) + (23, 24, 25)
 
-DEFAULT_CANVAS = 384
+DEFAULT_CANVAS = 256
 
 
 def _sha(text: str) -> str:
@@ -109,7 +122,7 @@ def main(argv=None) -> int:
     ap.add_argument("--canvas", type=int, default=DEFAULT_CANVAS)
     ap.add_argument("--steps", type=int, default=DRAFT_STEPS)
     ap.add_argument("--temperature", type=float, default=DRAFT_TEMPERATURE)
-    ap.add_argument("--alg", default="entropy")
+    ap.add_argument("--alg", default="ar")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--max-canvases", type=int, default=None,
                     help="stop after N new canvases (smoke runs)")
@@ -180,7 +193,16 @@ def main(argv=None) -> int:
             "benchmark": "humaneval-rs",
             "cell": "P-gen",
             "milestone": "M3.1-P1",
-            "model": "Dream-org/Dream-Coder-v0-Instruct-7B",
+            # `model` names the model that AUTHORED the artifacts in this
+            # record. On a harness-draft run that is the AR twin, NOT the
+            # program's diffusion canvas model — the two must never be
+            # ambiguous on the same record.
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "authored_by": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "canvas_model_note": ("this cell drafts HARNESSES; no canvases are "
+                                  "drawn here. Diffusion canvases belong to the "
+                                  "selection cells (P-prop-screen / "
+                                  "P-prop-engine)."),
             "mode": "harness-draft",
             "problem_numbers": list(PROBLEM_NUMBERS),
             "problem_names": names,
@@ -193,13 +215,21 @@ def main(argv=None) -> int:
             "replacement_seed": REPLACEMENT_SEED,
             "H": len(DRAFT_SEEDS),
             "draft_prompt_sha256": HARNESS_PROMPT_SHA256,
+            "instruction_version": INSTRUCTION_VERSION,
+            "harness_generator": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "harness_generator_note": (
+                "§7 C5 amendment: harnesses are drafted by the AR twin; CANVASES "
+                "remain diffusion-drawn in every cell"),
             "verdict_config_sha256": cfg.sha256,
             "verdict_config_version": cfg.version,
             "input": "problem docstring+signature only (D5 allowlist); the "
                      "MultiPL-E tests string is never in the prompt",
-            "note": "Design §2.1/§3 P-gen. Rows: kind=first (slot 0/1, seeds "
-                    "0/1) then kind=replacement (seed 2) for slots that failed "
-                    "freeze stub-compile validation.",
+            "note": (f"Design §2.1/§3 P-gen as amended by §7 C5. Rows: "
+                     f"kind=first for slots 0..{len(DRAFT_SEEDS)-1} (seeds "
+                     f"{list(DRAFT_SEEDS)}), then kind=replacement (seed "
+                     f"{REPLACEMENT_SEED}) for slots that failed freeze "
+                     f"stub-compile validation. The harness drafter is the AR "
+                     f"twin; CANVASES remain diffusion-drawn in every cell."),
         }
         with open(out, "w", encoding="utf-8") as f:
             f.write(json.dumps(meta) + "\n")
@@ -217,7 +247,7 @@ def main(argv=None) -> int:
                     f"{out}: resume mismatch in {key} ({got!r} != {want!r})")
 
     # ---- generate ----------------------------------------------------------
-    from temper.model.dream import sample as dream_sample
+    from temper.model.qwen import sample as ar_sample
 
     nfe_total_planned = len(jobs) * args.steps
     print(f"P-gen: {len(jobs)} canvases x {args.steps} steps "
@@ -243,10 +273,9 @@ def main(argv=None) -> int:
               f"seed={seed} T={args.temperature} steps={args.steps}",
               flush=True)
         t0 = time.perf_counter()
-        results = dream_sample(
+        results = ar_sample(
             prompt, canvas_len=args.canvas, steps=args.steps,
-            temperature=args.temperature, alg=args.alg, particles=1,
-            base_seed=seed,
+            temperature=args.temperature, particles=1, base_seed=seed,
         )
         p = results[0]
         wall = time.perf_counter() - t0
@@ -272,10 +301,25 @@ def main(argv=None) -> int:
             "gen_error": p.error,
             "prompt_sha256": _sha(prompt),
             "draft_prompt_sha256": HARNESS_PROMPT_SHA256,
+            "instruction_version": INSTRUCTION_VERSION,
+            "harness_generator": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "harness_generator_note": (
+                "§7 C5 amendment: harnesses are drafted by the AR twin; CANVASES "
+                "remain diffusion-drawn in every cell"),
             "problem_prompt_sha256": _sha(view.prompt),
             "raw_path": _repo_rel(sidecar),
             "raw_sha256": _sha(p.raw_text),
             "raw_chars": len(p.raw_text),
+            # M3.1 C5 decode guards: a retried or fence-cut attempt is visible
+            # on the row, so a retry can never look like a clean first attempt.
+            "n_attempts": getattr(p, "n_attempts", 1),
+            "attempts": getattr(p, "attempts", []),
+            "retried": getattr(p, "retried", False),
+            "retry_succeeded": getattr(p, "retry_succeeded", False),
+            "fence_closed": getattr(p, "fence_closed", False),
+            "fence_truncated_chars": getattr(p, "fence_truncated_chars", 0),
+            "harness_generator": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "instruction_version": meta["instruction_version"],
         }
         with open(out, "a", encoding="utf-8") as f:
             f.write(json.dumps(row) + "\n")

@@ -1,0 +1,302 @@
+[
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_0_has_close_elements",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "compiled": false,
+  "codes": [
+   "",
+   "E0765"
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_1_separate_paren_groups",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_2_truncate_number",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_3_below_zero",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ },
+ {
+  "problem": "HumanEval_4_mean_absolute_deviation",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "truncated": true,
+  "fence_closed": false,
+  "gen_error": null,
+  "retried": false
+ }
+]

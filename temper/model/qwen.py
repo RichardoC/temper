@@ -53,8 +53,9 @@ Python 3.9 compatible.
 from __future__ import annotations
 
 import math
+import re
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Callable, List, Optional
 
 import torch
@@ -62,8 +63,17 @@ import torch
 from temper.model.dream import ParticleResult
 from temper.model.dream_fixed import _top_p_logits  # verbatim HF top-p port
 
-__all__ = ["MODEL_ID", "QwenParticle", "sample", "build_rendered_prompt",
-           "get_model_qwen"]
+__all__ = ["MODEL_ID", "NonFiniteLogitsError", "QwenParticle", "sample",
+           "build_rendered_prompt", "get_model_qwen"]
+
+
+class NonFiniteLogitsError(RuntimeError):
+    """A decode step's logits were inf/nan (measured on MPS with long prompts).
+
+    A DISTINCT class so the bounded retry below can recognise exactly this
+    failure and so a record can tell a numerical device artifact apart from any
+    other generation failure.
+    """
 
 MODEL_ID = "Qwen/Qwen2.5-Coder-7B-Instruct"  # Apache-2.0; HF-cached
 
@@ -73,6 +83,31 @@ MODEL_ID = "Qwen/Qwen2.5-Coder-7B-Instruct"  # Apache-2.0; HF-cached
 DEFAULT_TEMPERATURE = 0.2
 DEFAULT_TOP_P = 0.95
 AR_ALG_LABEL = "ar"  # honest row label; "entropy"/"topk_margin" are dLLM-only
+
+# M3.1 retry policy — AMENDED ON MEASUREMENT (operator ruling 2026-10-24).
+#
+# Ruling (b)(ii) originally allowed ONE bounded retry because the guard was
+# first characterised on an INTERMITTENT failure (2/25 at canvas 256, 11/25 at
+# 384). Re-measurement showed the dominant class is NOT intermittent:
+#   * problem 0 fails at generated token 325 and problem 1 at token 357 --
+#     identical at canvas_len 384, 448 and 512, and identical across EVERY seed;
+#   * a retry with seed + 1000 fails at the SAME token, because at T=0.2 the
+#     decode is near-deterministic, so a fresh stream does not escape it.
+# The retry therefore cannot recover the measured class: it burns a second
+# attempt and then reports the same failure. Default is now ZERO retries — one
+# attempt, hard error — which is the honest record. The retry path is KEPT
+# (and tested) so a genuinely stochastic failure mode can be re-enabled by
+# raising this constant on evidence, rather than by editing logic.
+NONFINITE_RETRY_SEED_OFFSET = 1000
+NONFINITE_MAX_RETRIES = 0
+
+# M3.1 (b)(iii): stop generation as soon as the answer's closing fence is
+# emitted, checked IN the decode loop rather than after it. Measured why this
+# matters: an answer is ~300 tokens, and the measured MPS non-finite failure
+# struck at token 325 of a 512 budget — i.e. AFTER the answer was complete, in
+# the trailing prose. Stopping at the fence removes both the 256-truncation
+# class (100% of a 25-problem pilot) and the dominant NaN class in one change.
+FENCE_TOKEN_TEXT = "```"
 
 _RESIDENT = {"tokenizer": None, "model": None}
 
@@ -101,6 +136,15 @@ class QwenParticle(ParticleResult):
     rendered_prompt: str = ""
     tokens_total: int = 0
     mean_token_conf: Optional[float] = None  # mean sampled-token softmax prob
+    # M3.1 (b): the fence-close cut and the bounded-retry audit trail. Additive,
+    # so every pre-M3.1 reader of a QwenParticle is unaffected.
+    fence_closed: bool = False
+    fence_stopped_early: bool = False
+    fence_truncated_chars: int = 0
+    attempts: List[dict] = field(default_factory=list)
+    n_attempts: int = 1
+    retried: bool = False
+    retry_succeeded: bool = False
 
 
 def _load_once():
@@ -182,6 +226,55 @@ def _sample_token(logits: torch.Tensor, *, temperature: float,
     return int(tok.item()), float(prob)
 
 
+_FENCE_END_RE = re.compile(r"```[ \t]*\r?\n?")
+
+
+def _answer_closed(tokenizer, gen_ids: List[int], n_fence_tokens: int) -> bool:
+    """Has the answer's closing fence been emitted? (cheap, per-step)
+
+    A fenced answer contains exactly two fence markers: the opener and the
+    closer. Counting FENCE TOKENS therefore answers "is the block closed?" in
+    O(1) per step with no decoding at all.
+
+    Qwen tokenizes ``` as a single token (id 73594) but a closing ```` at the
+    end of a body can also arrive fused with preceding text, so ``n_fence_tokens``
+    is measured on the decoded prefix rather than assumed: the caller tracks it
+    by decoding only when a fence-ish token appears, and the value passed here
+    is the count of fence markers in the generated answer so far.
+    """
+    return n_fence_tokens >= 2
+
+
+def _closing_fence_end(text: str) -> Optional[int]:
+    """Index just past the closing ``` fence, or None if the block never closed.
+
+    A fenced block opens with ```lang and closes with ```: the answer is the
+    text through the SECOND fence occurrence (the first match is the opener).
+    Returning the match END keeps the closing fence itself inside the answer —
+    cutting at its start would delete the delimiter the extraction instrument
+    needs, turning a complete block into an unterminated one.
+    """
+    matches = list(_FENCE_END_RE.finditer(text))
+    if len(matches) < 2:
+        return None
+    return matches[1].end()
+
+
+def _logits_are_finite(logits: torch.Tensor) -> bool:
+    """Is this decode step's logit vector usable?
+
+    M3.1 measured the MPS bf16 failure mode this guards: on a long prompt with
+    a long generation, the [1,1] decode loop eventually emits non-finite
+    logits, and the NEXT `_sample_token` raises
+    ``RuntimeError: probability tensor contains either inf, nan or element < 0``
+    mid-canvas. On the canvas-prompt path this never fired (the banked B3 cell
+    is 0/100), so it is a long-prompt x long-generation interaction, not a
+    broken engine. Checking here turns it into a labelled, countable
+    generation error at the exact step it happens.
+    """
+    return bool(torch.isfinite(logits).all().item())
+
+
 def _eos_ids(model, tokenizer) -> set:
     """EOS set from the generation config ([151645 <|im_end|>, 151643
     <|endoftext|>] for Qwen2.5-Coder-7B-Instruct), tokenizer fallback."""
@@ -256,8 +349,18 @@ def _generate_one(
         gen_ids: List[int] = []
         confs: List[float] = []
         n_decode_forwards = 0
+        # the ids whose text can contain a fence marker (Qwen: 73594 for ```)
+        fence_tokens = set(tokenizer.encode(FENCE_TOKEN_TEXT,
+                                            add_special_tokens=False))
         for _ in range(max_new_tokens):
             t0 = time.perf_counter()
+            if not _logits_are_finite(logits):
+                # MID-CANVAS NON-FINITE LOGITS (see _logits_are_finite): the
+                # honest refusal. The tokens produced so far are kept so the
+                # caller can see how far it got, and the error names the step.
+                raise NonFiniteLogitsError(
+                    f"non-finite logits at generated token {len(gen_ids)} "
+                    f"of max_new_tokens={max_new_tokens}")
             tok, conf = _sample_token(logits, temperature=temperature,
                                       top_p=top_p)
             gen_ids.append(tok)
@@ -271,6 +374,23 @@ def _generate_one(
                 # no further forward is needed.
                 res.per_step_s.append(round(time.perf_counter() - t0, 3))
                 break
+            # Cheap in-loop fence accounting: decode only when the newest
+            # token's text could belong to a fence, and only then re-count.
+            # Qwen renders ``` as one token, so in practice this decodes twice
+            # per answer (opener, closer).
+            if tok in fence_tokens:
+                n_fence = tokenizer.decode(gen_ids,
+                                           skip_special_tokens=True).count(
+                    FENCE_TOKEN_TEXT)
+                if _answer_closed(tokenizer, gen_ids, n_fence):
+                    # the closing fence just landed: the ANSWER is complete.
+                    # Stop rather than burn budget on trailing prose (see
+                    # FENCE_TOKEN_TEXT) — measured to be where the MPS
+                    # non-finite failure actually strikes.
+                    res.fence_closed = True
+                    res.fence_stopped_early = True
+                    res.per_step_s.append(round(time.perf_counter() - t0, 3))
+                    break
             if len(gen_ids) >= max_new_tokens:
                 # budget exhausted: this token was the last — no further
                 # forward (and no phantom compute in the wall-clock).
@@ -295,6 +415,20 @@ def _generate_one(
     res.mean_token_conf = (round(sum(finite) / len(finite), 4)
                            if finite else None)
     raw = tokenizer.decode(gen_ids, skip_special_tokens=True)
+    # DRIVER-LEVEL FENCE-CLOSE TRUNCATION (M3.1 ruling (b)(iii)). A model that
+    # finishes its fenced code block but does not emit EOS keeps generating
+    # prose; the raw text then carries a closed answer followed by commentary.
+    # Cutting AT the closing fence is what the extraction instrument does
+    # anyway, and doing it here keeps `truncated` a true statement about the
+    # ANSWER rather than about the budget: after this cut, truncated means "the
+    # fence never closed", which is exactly the failure this fix exists to make
+    # visible. The measurement is kept on the particle (`fence_closed`) so the
+    # cut itself is auditable.
+    fence_closed = _closing_fence_end(raw)
+    res.fence_closed = fence_closed is not None
+    if fence_closed is not None and fence_closed < len(raw):
+        res.fence_truncated_chars = len(raw) - fence_closed
+        raw = raw[:fence_closed]
     res.raw_text = raw
     res.committed_tokens_per_step = [1] * len(vis)  # AR commits 1 token/step
     res.step_confidences = [round(c, 4) if math.isfinite(c) else None
@@ -357,19 +491,43 @@ def sample(
     for i in range(particles):
         r = QwenParticle(index=i, seed=seed_of[i], temperature=temps[i],
                          alg=AR_ALG_LABEL, rendered_prompt=rendered)
-        try:
-            r = _generate_one(
-                tokenizer, model, rendered,
-                max_new_tokens=canvas_len,
-                temperature=temps[i],
-                top_p=top_p,
-                seed=seed_of[i],
-                device=device,
-            )
-            r.index = i
-        except Exception as exc:  # keep remaining particles alive
-            r.index = i
-            r.error = f"{type(exc).__name__}: {exc}"
+        # ONE bounded retry, and only for the measured numerical failure
+        # (NONFINITE_MAX_RETRIES); every attempt is recorded on the particle so
+        # a retry can never look like a first-attempt success.
+        attempts: List[dict] = []
+        for attempt in range(NONFINITE_MAX_RETRIES + 1):
+            attempt_seed = seed_of[i] + attempt * NONFINITE_RETRY_SEED_OFFSET
+            try:
+                r = _generate_one(
+                    tokenizer, model, rendered,
+                    max_new_tokens=canvas_len,
+                    temperature=temps[i],
+                    top_p=top_p,
+                    seed=attempt_seed,
+                    device=device,
+                )
+                r.index = i
+                attempts.append({"attempt": attempt, "seed": attempt_seed,
+                                 "outcome": "ok"})
+                break
+            except NonFiniteLogitsError as exc:
+                attempts.append({"attempt": attempt, "seed": attempt_seed,
+                                 "outcome": "non_finite_logits",
+                                 "detail": str(exc)})
+                if attempt >= NONFINITE_MAX_RETRIES:
+                    r.index = i
+                    r.error = f"{type(exc).__name__}: {exc}"
+                    break
+            except Exception as exc:  # keep remaining particles alive
+                attempts.append({"attempt": attempt, "seed": attempt_seed,
+                                 "outcome": f"{type(exc).__name__}: {exc}"})
+                r.index = i
+                r.error = f"{type(exc).__name__}: {exc}"
+                break
+        r.attempts = attempts
+        r.n_attempts = len(attempts)
+        r.retried = len(attempts) > 1 and bool(r.error)
+        r.retry_succeeded = len(attempts) > 1 and not r.error
         if progress is not None:
             progress(i, r)
         results.append(r)

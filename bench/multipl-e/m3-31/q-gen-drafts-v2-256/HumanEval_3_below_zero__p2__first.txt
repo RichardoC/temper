@@ -1,0 +1,25 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::below_zero;
+
+pub const STRATEGY_DESC: &str = "A vector of isize representing bank account operations";
+
+// PART 1: the generator. Return a boxed Strategy for the TUPLE of the
+// function's arguments (a bare type if there is one argument). Give it the
+// EXACT type below; only the body is yours.
+fn strategy() -> BoxedStrategy<Vec<isize>> {
+    (0..100).prop_map(|n| {
+        let mut operations = vec![1; n];
+        operations.extend(vec![-1; n]);
+        operations.shuffle(&mut rand::thread_rng());
+        operations
+    }).boxed()
+}
+
+// PART 2: the checker. Call below_zero with the input and verify the contract
+// the documentation states. Return Ok(()) when it holds, and
+// Err(TestCaseError::fail("...")) when it does not.
+fn property(input: Vec<isize>) -> TestCaseResult {
+    let balance = input.iter().fold(0, |acc, &x| acc + x);
+    if balance

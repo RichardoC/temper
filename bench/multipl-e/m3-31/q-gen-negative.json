@@ -1,0 +1,109 @@
+{
+ "cell": "Q-gen-NEGATIVE (harness generator)",
+ "milestone": "M3.1",
+ "utc": "2026-10-24",
+ "headline": "execution-grade property selection at this model scale is BLOCKED AT THE HARNESS-GENERATOR LAYER: measured first-draft compile rates of 0% (the program's dLLM) and 16% (the best AR twin), against a program that needs one compiling harness per problem to rank canvases at all.",
+ "combos": [
+  {
+   "substrate": "Dream-org/Dream-Coder-v0-Instruct-7B",
+   "instruction": "v1",
+   "canvas": 512,
+   "steps": 256,
+   "compiled": 0,
+   "n": 12,
+   "note": "8 first drafts + 4 seed-2 replacements; every problem reproduced its own failure class across seeds (see p-gen-dream-negative.json)"
+  },
+  {
+   "substrate": "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "instruction": "v1",
+   "canvas": 256,
+   "steps": 0,
+   "compiled": 2,
+   "n": 25,
+   "nan": 2,
+   "truncated": 25,
+   "note": "answers need ~300 tokens; a 256 budget truncates every one"
+  },
+  {
+   "substrate": "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "instruction": "v1",
+   "canvas": 512,
+   "steps": 0,
+   "compiled": 4,
+   "n": 25,
+   "nan": 8,
+   "note": "guarded (fence-stop + non-finite error rows); every non-NaN answer closed its fence, so the fence-stop guard works and the 8 NaN rows are a separate class"
+  },
+  {
+   "substrate": "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "instruction": "v2 (skeleton)",
+   "canvas": 512,
+   "steps": 0,
+   "compiled": 0,
+   "n": 25,
+   "nan": 8,
+   "note": "decode-corrupting on some inputs; see nan_forensics below"
+  },
+  {
+   "substrate": "Qwen/Qwen2.5-Coder-7B-Instruct",
+   "instruction": "v2 (skeleton)",
+   "canvas": 256,
+   "steps": 0,
+   "compiled": 0,
+   "n": 25,
+   "truncated": 25,
+   "fence_closed": 0,
+   "note": "the package pilot at the ruled 256 canvas: 0/25 compiled, 25/25 truncated"
+  }
+ ],
+ "four_distinct_mechanisms": {
+  "1_capability": "the dLLM cannot write compiling proptest at all (0/12); its failures are prose/parse garbage, not near-misses",
+  "2_truncation": "a property file needs ~300 tokens; at 256 every draft is cut before its closing fence (25/25), so 320 is dead-on-arrival too",
+  "3_mps_degeneration": "the decode degenerates into random multi-script unicode tokens, the logits collapse to an all-zero vector, and the next step is non-finite",
+  "4_instruction_induced": "the v2 skeleton (SHORTER prompt than the working v1 one) triggers mechanism 3 reliably while v1 on the same problem completes cleanly"
+ },
+ "nan_forensics": {
+  "method": "replicated the decode loop with the frozen tail and recorded the first step whose logits were not finite, the abs-max of the last finite logit vector, and the decoded tail",
+  "v1_instruction": {
+   "prompt_tokens": 730,
+   "prompt_sha256": "714b725fa3db75b4b4741437da6087ebef0a395cd7c75758059c14196ef5babf",
+   "first_nonfinite_step": null,
+   "tokens_generated": 252,
+   "tail_text": "}\n\npub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(Vec<f64>, f64)>> {\n    runner.run(&strategy(), property)\n}\n```",
+   "last_ok_logits_absmax": 22.875,
+   "last_ok_logits_isfinite": true
+  },
+  "v2_skeleton": {
+   "prompt_tokens": 699,
+   "prompt_sha256": "9120f158a17a0a9baff2cd36bf9053bea868273f71323c82515d794fd4dc6543",
+   "first_nonfinite_step": 330,
+   "tokens_generated": 330,
+   "tail_text": "        }\n        Err(TestCaseError::fail(\"Expected true but found false\"))\n    } else {\n        for i in 0..numbers.len() {\n            for j in i@s\u7262\u7262\u05e0\u05d9\u05d9\u05dd\u044b\u0435 L\u00f6s",
+   "last_ok_logits_absmax": 0.0,
+   "last_ok_logits_isfinite": true
+  },
+  "reading": "on the v2 prompt the model stops writing Rust and emits random unicode; the last finite logit vector has abs-max EXACTLY 0.0 (a fully collapsed / uniform row) and the following step is non-finite. The failure is DECODE DEGENERATION reaching a numerical singularity, not a random bf16 rounding excursion.",
+  "determinism": "within one process the failing token is CONSTANT across seeds and across canvas 384/448/512 (problem 0: token 325; problem 1: token 357) \u2014 so a seed-offset retry fails at the identical token and cannot recover. Across processes the failing step varies (3 vs 330 at different GPU states), so process state also matters. Both facts are reported because they point at different remediations (retry: useless within a process; restart: untested)."
+ },
+ "retry_corollary": "a seed+1000 retry is measurably useless for this class (identical failing token), so the default is ONE attempt and a hard generation error; the retry path is retained and tested for a genuinely stochastic mode.",
+ "coverage_projection_at_measured_rate": {
+  "per_draft": 0.16,
+  "H": 6,
+  "coverage": 0.649,
+  "covered_problems_of_25": 16.2,
+  "G4a_needs": 23,
+  "conclusion": "~16/25 coverage against G4a's 23/25: the AR path misses the supply gate by ~7 problems. H=18 (~450 drafts) was CONSIDERED AND REJECTED by operator ruling: it fishes against 0.16 per-draft with vacuous-harness risk and a ~30% NaN tax, and coverage is not useful coverage."
+ },
+ "failure_classes_are_diverse": "at the best guarded setting (AR v1 @512) the non-NaN failures split across E0425 x5, E0271 x4, E0425+E0271 x3 and E0308 x1 \u2014 FOUR classes, not one mechanical defect, which is why no single prompt fix closes the gap.",
+ "artifacts": {
+  "dream_negative": "bench/multipl-e/m3-31/p-gen-dream-negative.json",
+  "first_drafts": [
+   "HumanEval_2_truncate_number",
+   "HumanEval_5_intersperse",
+   "HumanEval_14_all_prefixes",
+   "HumanEval_23_strlen"
+  ],
+  "pilot_256": "0/25 compiled, 25/25 truncated, 0/25 fence-closed"
+ },
+ "status": "LOCKED M3.1 SUB-FINDING. Nothing later may soften it: the diffusion canvases in every M3.1 cell are unchanged, but the property harnesses in the C-phase are HAND-AUTHORED, and that means the toot thesis's generated-at-inference-time claim lives in THIS negative, not in the selection result."
+}

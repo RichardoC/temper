@@ -1,0 +1,24 @@
+```rust
+use crate::candidate::factorize;
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "isize values";
+
+fn strategy() -> impl Strategy<Value = isize> {
+    -10000..=10000
+}
+
+fn property(input: isize) -> TestCaseResult {
+    let factors = factorize(input);
+    let product: isize = factors.iter().product();
+    if product != input {
+        return Err(TestCaseError::fail(format!("Product of factors ({}) does not equal input ({})", product, input)));
+    }
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<isize>> {
+    runner.run(&strategy(), property)
+}
+```

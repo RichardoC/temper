@@ -117,9 +117,21 @@ class TestVerdictConfigFreeze(unittest.TestCase):
         self.assertEqual(m31["r3"]["timeout_policy"], "abstain")
         self.assertEqual(m31["r3"]["requires"],
                          "completed, zero-hole, R1-clean canvas")
-        self.assertEqual(m31["harness_set"]["H"], 2)
-        self.assertEqual(m31["harness_set"]["seeds"], [0, 1])
+        # §7 A2/A3: H raised 2 -> 6 and the canvas frozen at 512, both labeled.
+        self.assertEqual(m31["harness_set"]["H"], 6)
+        self.assertEqual(m31["harness_set"]["seeds"], [0, 1, 2, 3, 4, 5])
         self.assertEqual(m31["harness_set"]["replacement_seed"], 2)
+        self.assertEqual(m31["harness_set"]["canvas"], 512)
+        self.assertEqual(m31["harness_set"]["instruction"]["version"], "v2")
+        # §7 A4: the retry default is ZERO (one attempt, hard error) because the
+        # measured non-finite class is deterministic.
+        self.assertIn("ZERO retries", m31["harness_set"]["decode_guards"]["bounded_retry"])
+        # §7 A5: the invented 90% gate is REMOVED and replaced by the supply gate.
+        self.assertIn("REMOVED", m31["m3_1"] if False else m31["gates"]["G4"]["old_bar_removed"])
+        self.assertIn(">=1 harness for >=23/25", m31["gates"]["G4"]["G4a_supply"])
+        # §7 A1/A6: the generator question is a LOCKED negative, not a soft finding.
+        self.assertIn("NEGATIVE", m31["harness_set"]["generator_status"]["verdict"])
+        self.assertIn("H=18", m31["harness_set"]["generator_status"]["H18_rejected"])
         # the demotion is NOT reversed by the property rung
         self.assertTrue(m31["r3"]["enabled"])
         self.assertIn("never kills or clones", m31["r3"]["kill_clone"])

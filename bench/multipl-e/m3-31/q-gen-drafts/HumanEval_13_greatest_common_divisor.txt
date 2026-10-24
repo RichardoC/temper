@@ -1,0 +1,26 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::greatest_common_divisor;
+
+pub const STRATEGY_DESC: &str = "Two integers a and b";
+
+fn strategy() -> impl Strategy<Value = (isize, isize)> {
+    (i32::MIN..=i32::MAX, i32::MIN..=i32::MAX)
+}
+
+fn property((a, b): (isize, isize)) -> TestCaseResult {
+    let result = greatest_common_divisor(a, b);
+    if result <= 0 {
+        return Err(TestCaseError::fail("The result must be a positive integer"));
+    }
+    if a % result != 0 || b % result != 0 {
+        return Err(TestCaseError::fail("The result must be a divisor of both a and b"));
+    }
+    Ok(())
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(isize, isize)>> {
+    runner.run(&strategy(), property)
+}
+```

@@ -1,0 +1,33 @@
+```rust
+use crate::candidate::strlen;
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "Strings of various lengths, including empty, single character, and large strings";
+
+fn strategy() -> impl Strategy<Value = String> {
+    prop_oneof![
+        Just(String::from("")),
+        Just(String::from("a")),
+        Just(String::from("abc")),
+        Just(String::from("a".repeat(1000))),
+        prop::collection::vec(any::<char>(), 0..100).prop_map(|v| v.into_iter().collect::<String>()),
+        prop::collection::vec(any::<char>(), 100..1000).prop_map(|v| v.into_iter().collect::<String>()),
+        prop::collection::vec(any::<char>(), 1000..10000).prop_map(|v| v.into_iter().collect::<String>()),
+    ]
+}
+
+fn property(input: String) -> TestCaseResult {
+    let result = strlen(input.clone());
+    let expected = input.len() as isize;
+    if result != expected {
+        Err(TestCaseError::fail(format!("Expected length of '{}' to be {}, but got {}", input, expected, result)))
+    } else {
+        Ok(())
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<String>> {
+    runner.run(&strategy(), property)
+}
+```

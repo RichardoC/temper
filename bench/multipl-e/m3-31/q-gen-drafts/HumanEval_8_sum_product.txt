@@ -1,0 +1,31 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A vector of isize integers";
+
+fn strategy() -> impl Strategy<Value = Vec<isize>> {
+    prop_oneof![
+        Just(vec![]),
+        Just(vec![0]),
+        Just(vec![1]),
+        Just(vec![1, 2, 3, 4]),
+        prop::collection::vec(-100..100, 0..10),
+    ]
+}
+
+fn property(input: Vec<isize>) -> TestCaseResult {
+    let (sum, product) = sum_product(input.clone());
+    let expected_sum: isize = input.iter().sum();
+    let expected_product: isize = input.iter().fold(1, |acc, &x| acc * x);
+    if sum == expected_sum && product == expected_product {
+        Ok(())
+    } else {
+        Err(TestCaseError::fail(format!("sum_product({:?}) = ({}, {}), expected ({}, {})", input, sum, product, expected_sum, expected_product)))
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<Vec<isize>>> {
+    runner.run(&strategy(), property)
+}
+```

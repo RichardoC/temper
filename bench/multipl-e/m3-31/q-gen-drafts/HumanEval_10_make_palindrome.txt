@@ -1,0 +1,33 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "Strings of various lengths, including empty, single characters, palindromes, and non-palindromes.";
+
+fn strategy() -> impl Strategy<Value = String> {
+    prop_oneof![
+        Just("".to_string()),
+        prop::char::any().prop_map(|c| c.to_string()),
+        ".*".prop_map(|s| s.to_string()),
+        ".*".prop_map(|s| s.chars().rev().collect::<String>() + &s),
+    ]
+}
+
+fn property(input: String) -> TestCaseResult {
+    let result = make_palindrome(input.clone());
+    let expected = {
+        let mut chars: Vec<char> = input.chars().collect();
+        chars.reverse();
+        input + &chars.into_iter().skip(input.len() - input.chars().rev().take(input.len()).count()).collect::<String>()
+    };
+    if result != expected {
+        Err(TestCaseError::fail(format!("make_palindrome({}) = {}, expected {}", input, result, expected)))
+    } else {
+        Ok(())
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<String>> {
+    runner.run(&strategy(), property)
+}
+```

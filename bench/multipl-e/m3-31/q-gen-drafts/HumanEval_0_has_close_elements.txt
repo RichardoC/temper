@@ -1,0 +1,24 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A vector of f64 numbers and a threshold f64";
+
+fn strategy() -> impl Strategy<Value = (Vec<f64>, f64)> {
+    (any::<Vec<f64>>(), any::<f64>()).prop_filter("Threshold must be non-negative", |(_, threshold)| *threshold >= 0.0)
+}
+
+fn property((numbers, threshold): (Vec<f64>, f64)) -> TestCaseResult {
+    let result = has_close_elements(numbers.clone(), threshold);
+    let expected = numbers.iter().any(|&x| numbers.iter().any(|&y| x != y && (x - y).abs() < threshold));
+    if result != expected {
+        Err(TestCaseError::fail(format!("Expected {:?} but got {:?}", expected, result)))
+    } else {
+        Ok(())
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(Vec<f64>, f64)>> {
+    runner.run(&strategy(), property)
+}
+```

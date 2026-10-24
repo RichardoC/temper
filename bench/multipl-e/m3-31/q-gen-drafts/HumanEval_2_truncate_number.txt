@@ -1,0 +1,24 @@
+```rust
+use crate::candidate::truncate_number;
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A positive floating point number";
+
+fn strategy() -> impl Strategy<Value = f64> {
+    (1.0..=f64::MAX).prop_map(|x| x.fract())
+}
+
+fn property(input: f64) -> TestCaseResult {
+    let result = truncate_number(input);
+    if (result - input.fract()).abs() < f64::EPSILON {
+        Ok(())
+    } else {
+        Err(TestCaseError::fail(format!("Expected {} to be equal to {}", result, input.fract())))
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<f64>> {
+    runner.run(&strategy(), property)
+}
+```

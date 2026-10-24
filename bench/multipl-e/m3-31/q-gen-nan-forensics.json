@@ -1,0 +1,20 @@
+{
+ "v1": {
+  "prompt_tokens": 730,
+  "prompt_sha256": "714b725fa3db75b4b4741437da6087ebef0a395cd7c75758059c14196ef5babf",
+  "first_nonfinite_step": null,
+  "tokens_generated": 252,
+  "tail_text": "}\n\npub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(Vec<f64>, f64)>> {\n    runner.run(&strategy(), property)\n}\n```",
+  "last_ok_logits_absmax": 22.875,
+  "last_ok_logits_isfinite": true
+ },
+ "v2": {
+  "prompt_tokens": 699,
+  "prompt_sha256": "9120f158a17a0a9baff2cd36bf9053bea868273f71323c82515d794fd4dc6543",
+  "first_nonfinite_step": 330,
+  "tokens_generated": 330,
+  "tail_text": "        }\n        Err(TestCaseError::fail(\"Expected true but found false\"))\n    } else {\n        for i in 0..numbers.len() {\n            for j in i@s\u7262\u7262\u05e0\u05d9\u05d9\u05dd\u044b\u0435 L\u00f6s",
+  "last_ok_logits_absmax": 0.0,
+  "last_ok_logits_isfinite": true
+ }
+}

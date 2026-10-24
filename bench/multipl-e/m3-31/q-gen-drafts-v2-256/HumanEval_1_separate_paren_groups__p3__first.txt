@@ -1,0 +1,27 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::separate_paren_groups;
+
+pub const STRATEGY_DESC: &str = "A string containing multiple groups of nested parentheses";
+
+fn strategy() -> BoxedStrategy<String> {
+    prop_oneof![
+        Just(String::from("")),
+        Just(String::from("()")),
+        Just(String::from("(())")),
+        Just(String::from("(()())")),
+        Just(String::from("((()))")),
+        Just(String::from("()()")),
+        Just(String::from("(()(()))")),
+        Just(String::from("((())())")),
+        Just(String::from("(((())))")),
+        Just(String::from("(()()())")),
+        Just(String::from("(((()))())")),
+        Just(String::from("(((()(()))))")),
+        Just(String::from("(()(()(())))")),
+        Just(String::from("(((()(())))))")),
+        Just(String::from("(((()(()(())))))")),
+        Just(String::from("(()(()(()(())))))")),
+        Just(String::from("(((()(()(())))))")),
+        Just(String::from("(()(()

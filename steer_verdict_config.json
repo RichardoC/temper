@@ -130,19 +130,71 @@
       "kill_clone": "OFF \u2014 R3 produces evidence for the emission ranking only; it never kills or clones."
     },
     "harness_set": {
-      "H": 2,
+      "H": 6,
       "temperature": 0.2,
-      "steps": 256,
+      "steps": 0,
       "seeds": [
         0,
-        1
+        1,
+        2,
+        3,
+        4,
+        5
       ],
       "replacement_seed": 2,
       "input": "prompt-only: the banked <problem>__prompt.txt sidecar (docstring + signature). The MultiPL-E tests string is never shown to any generator (design \u00a72.1).",
       "freeze_validation": "cargo-compile against a todo!() signature stub emitted via temper.harness.emit; runtime behaviour at freeze is recorded but NOT gated (only compile success is required, design \u00a72.2)",
-      "replacement_rule": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q2): a first draft that fails stub-compile is replaced once by a seed-2 draft; if the seed-2 draft also fails on a problem whose other harness survived, the survivor set stands with denominator 1 (logged, shown in the G4 table); if BOTH drafts and BOTH replacements fail (zero survivors) the lane STOPS and escalates rather than silently degrading that problem to confidence ranking. G4's >=90% compile-rate gate applies to the 50 FIRST drafts (5 failures is the ceiling); frozen-set and replacement rates are separate reported columns."
+      "replacement_rule": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q2): a first draft that fails stub-compile is replaced once by a seed-2 draft; if the seed-2 draft also fails on a problem whose other harness survived, the survivor set stands with denominator 1 (logged, shown in the G4 table); if BOTH drafts and BOTH replacements fail (zero survivors) the lane STOPS and escalates rather than silently degrading that problem to confidence ranking. G4's >=90% compile-rate gate applies to the 50 FIRST drafts (5 failures is the ceiling); frozen-set and replacement rates are separate reported columns. M3.1 C5: H raised 2 -> 6 because H=2 is structurally starved at ANY plausible compile rate; the replacement rule is unchanged (one seed-2 round per slot, no more).",
+      "canvas": 512,
+      "generator": "Qwen/Qwen2.5-Coder-7B-Instruct (the M2.4b B3 AR twin), the amendment C5 substrate; canvases remain diffusion-drawn in every cell",
+      "instruction": {
+        "version": "v2",
+        "v2_sha256": "dbfa1f496ba9911be475b4c4a537b86ed4fc1f87026ae36bd452efe269eb5706",
+        "v1_sha256": "78709afcd14281f56652e9d8d6ffcaafd7cecaa3cc33d6595ecd434a577da9ef",
+        "provenance": "\u00a77 C5 (operator ruling 2026-10-24): v1's prose requirement list produced the Dream negative (0/12) and 2/25 compiles on AR at canvas 256, with the import line omitted in 13/25 drafts and the Strategy/run_property shape wrong (E0271/E0308). v2 is a SKELETON TO FILL with the exact BoxedStrategy shape and a literal import line. Both shas are kept: every P-gen row records which one produced it."
+      },
+      "decode_guards": {
+        "nonfinite_logits": "a decode step whose logits are inf/nan raises NonFiniteLogitsError and becomes a GENERATION-ERROR row (measured: 2/25 at canvas 256, 11/25 at 384 on the harness-draft prompt; 0/100 on the canvas-prompt path)",
+        "bounded_retry": "AMENDED on measurement (operator ruling 2026-10-24): the dominant non-finite class is DETERMINISTIC (same failing token 325/357 across canvas 384/448/512 and across all seeds; a seed+1000 retry fails at the identical token because T=0.2 decode is near-deterministic). Default is now ZERO retries \u2014 one attempt, hard generation error. The retry path is retained and tested so a stochastic mode can be re-enabled on evidence by raising a constant.",
+        "fence_close_cut": "the completion is cut at its closing fence so `truncated` describes the ANSWER, not the token budget",
+        "provenance": "\u00a77 C5 (operator ruling 2026-10-24), labeled infra commit; the banked B3 pins stay green and never hit the guard"
+      },
+      "generator_status": {
+        "verdict": "NEGATIVE \u2014 blocked at the harness-generator layer",
+        "measured": {
+          "dLLM (Dream-Coder)": "0/12 first drafts compiled",
+          "AR v1 instruction @512 guarded": "4/25 compiled (16%), 8/25 NaN",
+          "AR v1 instruction @256": "2/25 compiled, 25/25 truncated",
+          "AR v2 skeleton instruction": "decode-corrupting \u2014 NonFiniteLogitsError at generated token 3 on a prompt SHORTER than the working v1 one"
+        },
+        "four_distinct_mechanisms": [
+          "capability (dLLM cannot write compiling proptest)",
+          "truncation (answers ~300 tokens; 256 starves them)",
+          "MPS numerics (non-finite logits at a per-problem constant token)",
+          "instruction-induced decode corruption (v2 skeleton)"
+        ],
+        "evidence": "bench/multipl-e/m3-31/ (dream negative + both AR pilots)",
+        "H18_rejected": "operator ruling 2026-10-24: H=18 (~450 drafts) was CONSIDERED and REJECTED \u2014 it fishes against a measured 0.16 per-draft rate with vacuous-harness risk and a ~30% NaN tax, and coverage is not useful coverage"
+      },
+      "canvas_note": "DEVIATION, LABELED (operator accepted 2026-10-24): ruling (a) specified 256 -> one 320 arm -> freeze the better. The 256 pilot measured 0/25 compiled with 25/25 TRUNCATED and 0/25 fence-closed, because v2-skeleton answers need ~300+ tokens against a 256-total budget; 320 was therefore judged dead-on-arrival and the ruled arm was NOT run. Canvas is 512 for every AR measurement in the evidence base.",
+      "steps_note": "AR has no denoise steps; 0 is the honest record value for a harness-draft run"
     },
-    "canvas_banking": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q3): the M3.1 engine seam writes every particle's final canvas to <out>.canvases/<problem>__p<i>.txt (text only; I/O, never NFE). This is what makes P-prop-engine's own oracle audit exact and the P-prop-screen-twin over the engine's own ensemble computable. The banked M3.0 C-full cell held only the emitted canvas, so its audit is reported as the R1-clean-ALTERNATE UPPER BOUND, a ceiling, never as 'oracle'."
+    "canvas_banking": "\u00a77 CLARIFICATION (operator ruling 2026-10-24, Q3): the M3.1 engine seam writes every particle's final canvas to <out>.canvases/<problem>__p<i>.txt (text only; I/O, never NFE). This is what makes P-prop-engine's own oracle audit exact and the P-prop-screen-twin over the engine's own ensemble computable. The banked M3.0 C-full cell held only the emitted canvas, so its audit is reported as the R1-clean-ALTERNATE UPPER BOUND, a ceiling, never as 'oracle'.",
+    "gates": {
+      "G4": {
+        "old_bar_removed": "the >=90% first-draft compile-rate bar was an invented pre-data proxy; it is REMOVED as a gate (\u00a77 C5) and is REPORTED instead as the measured generator-capability statistic",
+        "G4a_supply": "the frozen set covers >=1 harness for >=23/25 problems",
+        "G4b_correlation": "UNCHANGED: the properties-vs-confidence correlation table on R1-clean disagreements (the substantive honesty clause)",
+        "compile_rate_columns": [
+          "first drafts (50 -> now 150)",
+          "replacements",
+          "frozen set",
+          "the Dream 0/12 static negative column"
+        ]
+      },
+      "G1_denominator": "adjudicated on COVERED problems, stated openly in every table; if coverage <23/25 the lane STOPS before any expensive cell",
+      "coverage_watchlist": "the four measured forfeit problems {1, 9, 24, 25} must be covered"
+    }
   },
-  "sha256": "ec9085d749a7fe2e805baebbafbc8dbcb961780bb654b9cad957f42a377d5685"
+  "sha256": "5320c3df73088c58094662fc53a719df4826986297e9a5a1155d510a8571307b"
 }

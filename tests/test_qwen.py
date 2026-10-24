@@ -410,3 +410,176 @@ class TestDriverIntegrationQwen(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+# --------------------------------------------------------------------------
+# M3.1 (b): the non-finite guard, the bounded retry, the fence-close cut
+# --------------------------------------------------------------------------
+
+
+class _NonFiniteQwenCausalLM(FakeQwenCausalLM):
+    """Fake that emits non-finite logits after N decode steps.
+
+    Reproduces the MEASURED MPS failure exactly: sampling raises
+    ``RuntimeError: probability tensor contains either inf, nan or element < 0``
+    once the logits go inf/nan. ``n_bad`` is per-INSTANCE so a retry (which
+    builds no new model) can be scripted to succeed by clearing it.
+    """
+
+    def __init__(self, vocab_size, script_ids, eos_ids, *, n_bad=1):
+        super().__init__(vocab_size, script_ids, eos_ids)
+        self.n_bad = n_bad
+        self.decode_calls = 0
+
+    def _logits_for(self, next_token):
+        self.decode_calls += 1
+        if self.decode_calls > self.n_bad:
+            row = torch.full((1, 1, self.vocab_size), float("nan"))
+            return row
+        return super()._logits_for(next_token)
+
+
+@unittest.skipUnless(_load_tokenizer() is not None, "Qwen tokenizer not cached")
+class TestNonFiniteGuard(unittest.TestCase):
+    """M3.1 ruling (b): a numerical device failure is an ERROR ROW, never a
+    silently empty completion, and it gets exactly ONE retry."""
+
+    def setUp(self):
+        self.tok = _load_tokenizer()
+        self.V = self.tok.vocab_size + 8
+        self.user = build_prompt("/// doc\nfn f(x: i32) -> bool {\n")
+        self.script = self.tok.encode("fn f() -> bool {\n    true\n}",
+                                      add_special_tokens=False)
+        self.eos = [151645, 151643]
+
+    def _run(self, model, **kw):
+        qwen._RESIDENT["tokenizer"] = self.tok
+        qwen._RESIDENT["model"] = model
+        try:
+            return sample(self.user, canvas_len=64, steps=0, particles=1,
+                          temperatures=[0.2], base_seed=0, **kw)
+        finally:
+            qwen._RESIDENT["tokenizer"] = None
+            qwen._RESIDENT["model"] = None
+
+    def test_nonfinite_logits_raise_the_dedicated_error(self):
+        model = _NonFiniteQwenCausalLM(self.V, self.script, self.eos, n_bad=0)
+        with self.assertRaises(qwen.NonFiniteLogitsError):
+            qwen._generate_one(self.tok, model,
+                               "a prompt long enough to tokenize to more than "
+                               "one token so the fake treats it as a prefill",
+                               max_new_tokens=16, temperature=0.2, top_p=0.95,
+                               seed=0, device="cpu")
+
+    def test_a_nonfinite_failure_is_one_attempt_and_an_honest_error_row(self):
+        """AMENDED POLICY (operator ruling 2026-10-24): the measured class is
+        DETERMINISTIC — problem 0 fails at token 325 across canvas 384/448/512
+        and across every seed, and a seed+1000 retry fails at the same token —
+        so the default is ONE attempt and a hard error row, never a silent
+        empty string and never a retry spent for nothing."""
+        self.assertEqual(qwen.NONFINITE_MAX_RETRIES, 0)
+        model = _NonFiniteQwenCausalLM(self.V, self.script, self.eos, n_bad=0)
+        [p] = self._run(model)
+        self.assertTrue(p.error)
+        self.assertIn("NonFiniteLogitsError", p.error)
+        self.assertEqual(p.raw_text, "")
+        self.assertEqual(p.n_attempts, 1, "one attempt, by amended policy")
+        self.assertFalse(p.retried)
+        self.assertEqual([a["outcome"] for a in p.attempts],
+                         ["non_finite_logits"])
+
+    def test_the_retry_path_still_works_when_enabled(self):
+        """The retry logic is KEPT so a genuinely stochastic failure can be
+        re-enabled on evidence by raising the constant — not by rewriting the
+        loop. Pinned here so the path cannot rot."""
+        model = _NonFiniteQwenCausalLM(self.V, self.script, self.eos, n_bad=0)
+        orig = qwen._generate_one
+        calls = {"n": 0}
+
+        def flaky(*a, **kw):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise qwen.NonFiniteLogitsError("non-finite logits at 0")
+            return orig(*a, **kw)
+
+        qwen._generate_one = flaky
+        old = qwen.NONFINITE_MAX_RETRIES
+        qwen.NONFINITE_MAX_RETRIES = 1
+        try:
+            model.n_bad = 10 ** 6
+            [p] = self._run(model)
+        finally:
+            qwen._generate_one = orig
+            qwen.NONFINITE_MAX_RETRIES = old
+        self.assertFalse(p.error)
+        self.assertTrue(p.retry_succeeded)
+        self.assertEqual(p.attempts[0]["seed"], 0)
+        self.assertEqual(p.attempts[1]["seed"],
+                         qwen.NONFINITE_RETRY_SEED_OFFSET)
+        self.assertEqual([a["outcome"] for a in p.attempts],
+                         ["non_finite_logits", "ok"])
+
+    def test_a_non_numerical_failure_is_not_retried(self):
+        """The retry is narrowly scoped to the numerical artifact: any other
+        exception is an immediate error row, so a real bug cannot be masked by
+        a second roll of the dice."""
+        model = _NonFiniteQwenCausalLM(self.V, self.script, self.eos, n_bad=0)
+        orig = qwen._generate_one
+
+        def boom(*a, **kw):
+            raise RuntimeError("some other failure")
+
+        qwen._generate_one = boom
+        try:
+            [p] = self._run(model)
+        finally:
+            qwen._generate_one = orig
+        self.assertIn("some other failure", p.error)
+        self.assertEqual(p.n_attempts, 1, "non-numerical failures get no retry")
+
+
+@unittest.skipUnless(_load_tokenizer() is not None, "Qwen tokenizer not cached")
+class TestFenceCloseCut(unittest.TestCase):
+    """M3.1 ruling (b)(iii): cut at the closing fence at the driver level, so
+    `truncated` describes the ANSWER, not the token budget."""
+
+    def setUp(self):
+        self.tok = _load_tokenizer()
+        self.V = self.tok.vocab_size + 8
+        self.user = build_prompt("/// doc\nfn f(x: i32) -> bool {\n")
+        self.eos = [151645, 151643]
+
+    def _run(self, text, canvas_len=384):
+        script = self.tok.encode(text, add_special_tokens=False)
+        model = FakeQwenCausalLM(self.V, script, self.eos)
+        qwen._RESIDENT["tokenizer"] = self.tok
+        qwen._RESIDENT["model"] = model
+        try:
+            [p] = sample(self.user, canvas_len=canvas_len, steps=0,
+                         particles=1, temperatures=[0.2], base_seed=0)
+        finally:
+            qwen._RESIDENT["tokenizer"] = None
+            qwen._RESIDENT["model"] = None
+        return p
+
+    def test_prose_after_the_fence_is_cut(self):
+        p = self._run("```rust\nfn f() -> bool { true }\n```\n\n"
+                      "This code defines a function that returns true.")
+        self.assertTrue(p.fence_closed)
+        self.assertNotIn("This code defines", p.raw_text)
+        self.assertIn("fn f() -> bool", p.raw_text)
+        self.assertGreater(p.fence_truncated_chars, 0)
+
+    def test_an_unclosed_fence_is_reported_as_truncated(self):
+        """The class the Dream negative and the AR pilot both hit: the fence
+        never closes. The cut must NOT hide it."""
+        p = self._run("```rust\nfn f() -> bool {\n    let x = 1;")
+        self.assertFalse(p.fence_closed)
+        self.assertIn("let x", p.raw_text)
+
+    def test_a_clean_fenced_answer_is_untouched(self):
+        body = "```rust\nfn f() -> bool { true }\n```"
+        p = self._run(body)
+        self.assertTrue(p.fence_closed)
+        self.assertEqual(p.fence_truncated_chars, 0)
+        self.assertIn("fn f() -> bool", p.raw_text)

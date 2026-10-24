@@ -1,0 +1,26 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "Two strings of 1s and 0s, including empty, single-character, and large strings.";
+
+fn strategy() -> impl Strategy<Value = (String, String)> {
+    (any::<String>(), any::<String>())
+}
+
+fn property((a, b): (String, String)) -> TestCaseResult {
+    let result = string_xor(a.clone(), b.clone());
+    let expected = (a.chars().zip(b.chars())
+        .map(|(a, b)| if a == b { '0' } else { '1' })
+        .collect::<String>());
+    if result == expected {
+        Ok(())
+    } else {
+        Err(TestCaseError::fail(format!("string_xor({}, {}) = {}, expected {}", a, b, result, expected)))
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(String, String)>> {
+    runner.run(&strategy(), property)
+}
+```

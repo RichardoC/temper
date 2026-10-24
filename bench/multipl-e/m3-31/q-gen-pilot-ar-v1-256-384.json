@@ -1,0 +1,585 @@
+[
+ {
+  "canvas": 256,
+  "problem": "HumanEval_0_has_close_elements",
+  "wall_s": 21.2,
+  "chars": 908,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_1_separate_paren_groups",
+  "wall_s": 18.8,
+  "chars": 1020,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_2_truncate_number",
+  "wall_s": 14.2,
+  "chars": 715,
+  "err": "",
+  "compiled": true,
+  "codes": [],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_3_below_zero",
+  "wall_s": 18.8,
+  "chars": 954,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_4_mean_absolute_deviation",
+  "wall_s": 18.8,
+  "chars": 786,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_5_intersperse",
+  "wall_s": 18.7,
+  "chars": 1053,
+  "err": "",
+  "compiled": true,
+  "codes": [],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_6_parse_nested_parens",
+  "wall_s": 18.8,
+  "chars": 1058,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_7_filter_by_substring",
+  "wall_s": 16.0,
+  "chars": 903,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0308"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_8_sum_product",
+  "wall_s": 18.8,
+  "chars": 944,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_9_rolling_max",
+  "wall_s": 19.0,
+  "chars": 912,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_10_make_palindrome",
+  "wall_s": 18.9,
+  "chars": 1045,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_11_string_xor",
+  "wall_s": 16.9,
+  "chars": 878,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_12_longest",
+  "wall_s": 19.0,
+  "chars": 869,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_13_greatest_common_divisor",
+  "wall_s": 17.0,
+  "chars": 826,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_14_all_prefixes",
+  "wall_s": 18.7,
+  "chars": 786,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   "E0765"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_15_string_sequence",
+  "wall_s": 14.7,
+  "chars": 720,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_16_count_distinct_characters",
+  "wall_s": 18.7,
+  "chars": 980,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_17_parse_music",
+  "wall_s": 18.4,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_18_how_many_times",
+  "wall_s": 15.5,
+  "chars": 931,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_19_sort_numbers",
+  "wall_s": 18.8,
+  "chars": 1121,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   "E0765"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_20_find_closest_elements",
+  "wall_s": 18.7,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_21_rescale_to_unit",
+  "wall_s": 18.6,
+  "chars": 879,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_23_strlen",
+  "wall_s": 18.6,
+  "chars": 799,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "",
+   ""
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_24_largest_divisor",
+  "wall_s": 15.3,
+  "chars": 776,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 256,
+  "problem": "HumanEval_25_factorize",
+  "wall_s": 13.3,
+  "chars": 690,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_0_has_close_elements",
+  "wall_s": 18.6,
+  "chars": 908,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_1_separate_paren_groups",
+  "wall_s": 21.4,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_2_truncate_number",
+  "wall_s": 14.0,
+  "chars": 715,
+  "err": "",
+  "compiled": true,
+  "codes": [],
+  "has_import": true
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_3_below_zero",
+  "wall_s": 22.3,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_4_mean_absolute_deviation",
+  "wall_s": 22.0,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_5_intersperse",
+  "wall_s": 18.6,
+  "chars": 1053,
+  "err": "",
+  "compiled": true,
+  "codes": [],
+  "has_import": true
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_6_parse_nested_parens",
+  "wall_s": 22.2,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_7_filter_by_substring",
+  "wall_s": 15.8,
+  "chars": 903,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0308"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_8_sum_product",
+  "wall_s": 20.1,
+  "chars": 1008,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_9_rolling_max",
+  "wall_s": 20.4,
+  "chars": 1002,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_10_make_palindrome",
+  "wall_s": 20.8,
+  "chars": 1149,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_11_string_xor",
+  "wall_s": 16.8,
+  "chars": 878,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_12_longest",
+  "wall_s": 21.2,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_13_greatest_common_divisor",
+  "wall_s": 16.7,
+  "chars": 826,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_14_all_prefixes",
+  "wall_s": 25.4,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_15_string_sequence",
+  "wall_s": 14.6,
+  "chars": 720,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "has_import": true
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_16_count_distinct_characters",
+  "wall_s": 24.2,
+  "chars": 1305,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_17_parse_music",
+  "wall_s": 18.4,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_18_how_many_times",
+  "wall_s": 15.5,
+  "chars": 931,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_19_sort_numbers",
+  "wall_s": 23.0,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_20_find_closest_elements",
+  "wall_s": 18.5,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_21_rescale_to_unit",
+  "wall_s": 21.2,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_23_strlen",
+  "wall_s": 26.6,
+  "chars": 0,
+  "err": "RuntimeError: probability tensor contain",
+  "compiled": false,
+  "codes": [],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_24_largest_divisor",
+  "wall_s": 15.1,
+  "chars": 776,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0425",
+   "E0271"
+  ],
+  "has_import": false
+ },
+ {
+  "canvas": 384,
+  "problem": "HumanEval_25_factorize",
+  "wall_s": 13.3,
+  "chars": 690,
+  "err": "",
+  "compiled": false,
+  "codes": [
+   "E0271"
+  ],
+  "has_import": true
+ }
+]

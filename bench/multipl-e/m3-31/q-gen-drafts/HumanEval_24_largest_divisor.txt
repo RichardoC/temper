@@ -1,0 +1,31 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "isize values, including boundaries and edge cases";
+
+fn strategy() -> impl Strategy<Value = isize> {
+    -10000..=10000
+}
+
+fn property(input: isize) -> TestCaseResult {
+    if input <= 1 {
+        return Ok(());
+    }
+    let mut largest = 1;
+    for i in 2..input {
+        if input % i == 0 {
+            largest = i;
+        }
+    }
+    if largest_divisor(input) != largest {
+        Err(TestCaseError::fail(format!("largest_divisor({}) != {}", input, largest)))
+    } else {
+        Ok(())
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<isize>> {
+    runner.run(&strategy(), property)
+}
+```

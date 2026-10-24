@@ -1,0 +1,38 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A vector of isize values";
+
+fn strategy() -> impl Strategy<Value = Vec<isize>> {
+    prop_oneof![
+        Just(vec![]),
+        Just(vec![0]),
+        Just(vec![1, 2, 3, 2, 3, 4, 2]),
+        prop::collection::vec(-100..100, 0..100),
+    ]
+}
+
+fn property(input: Vec<isize>) -> TestCaseResult {
+    let result = rolling_max(input.clone());
+    let expected: Vec<isize> = input
+        .iter()
+        .scan(isize::MIN, |acc, &x| {
+            *acc = acc.max(x);
+            Some(*acc)
+        })
+        .collect();
+    if result == expected {
+        Ok(())
+    } else {
+        Err(TestCaseError::fail(format!(
+            "rolling_max({:?}) = {:?}, expected {:?}",
+            input, result, expected
+        )))
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<Vec<isize>>> {
+    runner.run(&strategy(), property)
+}
+```

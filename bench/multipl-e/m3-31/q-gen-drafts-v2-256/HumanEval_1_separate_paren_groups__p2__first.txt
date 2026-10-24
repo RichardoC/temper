@@ -1,0 +1,28 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::separate_paren_groups;
+
+pub const STRATEGY_DESC: &str = "A string containing multiple groups of nested parentheses";
+
+// PART 1: the generator. Return a boxed Strategy for the TUPLE of the
+// function's arguments (a bare type if there is one argument). Give it the
+// EXACT type below; only the body is yours.
+fn strategy() -> BoxedStrategy<String> {
+    prop_oneof![
+        Just(String::from("")),
+        Just(String::from("()")),
+        Just(String::from("(())")),
+        Just(String::from("(()())")),
+        Just(String::from("((()))")),
+        Just(String::from("((())())")),
+        Just(String::from("(((())))")),
+        Just(String::from("(((()())))")),
+        Just(String::from("(((()())(())))")),
+        Just(String::from("(((()())(()())(())))")),
+    ]
+    .boxed()
+}
+
+// PART 2: the checker. Call separate_paren_groups with the input and verify the contract
+// the documentation states. Return Ok(

@@ -1,0 +1,25 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::mean_absolute_deviation;
+
+pub const STRATEGY_DESC: &str = "A vector of f64 numbers";
+
+// PART 1: the generator. Return a boxed Strategy for the TUPLE of the
+// function's arguments (a bare type if there is one argument). Give it the
+// EXACT type below; only the body is yours.
+fn strategy() -> BoxedStrategy<Vec<f64>> {
+    (0..100).prop_map(|n| {
+        (0..=n).map(|i| i as f64).collect()
+    }).boxed()
+}
+
+// PART 2: the checker. Call mean_absolute_deviation with the input and verify the contract
+// the documentation states. Return Ok(()) when it holds, and
+// Err(TestCaseError::fail("...")) when it does not.
+fn property(input: Vec<f64>) -> TestCaseResult {
+    if input.is_empty() {
+        return Err(TestCaseError::fail("Empty input vector"));
+    }
+
+    let mean: f64 = input.iter().sum::<f6

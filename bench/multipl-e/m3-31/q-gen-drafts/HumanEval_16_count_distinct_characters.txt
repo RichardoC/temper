@@ -1,0 +1,31 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A string containing any combination of ASCII characters, including empty, single character, duplicate characters, and non-ASCII characters.";
+
+fn strategy() -> impl Strategy<Value = String> {
+    prop_oneof![
+        Just("".to_string()),
+        prop::string::string_regex(r"[a-zA-Z0-9]{1}").unwrap(),
+        prop::string::string_regex(r"[a-zA-Z0-9]{2,}").unwrap(),
+        prop::string::string_regex(r"[a-zA-Z0-9]*[a-zA-Z0-9]{1}[a-zA-Z0-9]*").unwrap(),
+        prop::string::string_regex(r"[^\x00-\x7F]").unwrap(), // Non-ASCII characters
+        prop::string::string_regex(r"\s+").unwrap(), // Whitespace-only string
+    ]
+}
+
+fn property(input: String) -> TestCaseResult {
+    let result = count_distinct_characters(input.clone());
+    let expected = input.to_lowercase().chars().collect::<std::collections::HashSet<_>>().len() as isize;
+    if result != expected {
+        Err(TestCaseError::fail(format!("count_distinct_characters({:?}) = {:?}, expected {:?}", input, result, expected)))
+    } else {
+        Ok(())
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<String>> {
+    runner.run(&strategy(), property)
+}
+```

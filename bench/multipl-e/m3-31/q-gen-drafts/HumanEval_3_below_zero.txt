@@ -1,0 +1,35 @@
+```rust
+use crate::candidate::below_zero;
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+
+pub const STRATEGY_DESC: &str = "A vector of isize representing bank account operations";
+
+fn strategy() -> impl Strategy<Value = Vec<isize>> {
+    prop_oneof![
+        Just(vec![]),
+        Just(vec![0]),
+        Just(vec![1]),
+        Just(vec![1, 2, 3]),
+        Just(vec![1, 2, -4, 5]),
+        prop::collection::vec(-1000..1000, 1..=100),
+    ]
+}
+
+fn property(operations: Vec<isize>) -> TestCaseResult {
+    let result = below_zero(operations.clone());
+    let expected = operations.iter().fold(0, |acc, &op| acc + op) < 0;
+    if result != expected {
+        Err(TestCaseError::fail(format!(
+            "below_zero({:?}) = {:?}, expected {:?}",
+            operations, result, expected
+        )))
+    } else {
+        Ok(())
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<Vec<isize>>> {
+    runner.run(&strategy(), property)
+}
+```

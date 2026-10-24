@@ -1,0 +1,25 @@
+```rust
+use proptest::prelude::*;
+use proptest::test_runner::{TestCaseError, TestCaseResult, TestError, TestRunner};
+use crate::candidate::filter_by_substring;
+
+pub const STRATEGY_DESC: &str = "A vector of strings and a substring to filter by";
+
+fn strategy() -> impl Strategy<Value = (Vec<String>, String)> {
+    (vec![any::<String>(), ..10], any::<String>())
+}
+
+fn property((strings, substring): (Vec<String>, String)) -> TestCaseResult {
+    let result = filter_by_substring(strings.clone(), substring.clone());
+    let expected: Vec<String> = strings.into_iter().filter(|s| s.contains(&substring)).collect();
+    if result == expected {
+        Ok(())
+    } else {
+        Err(TestCaseError::fail(format!("Expected {:?}, got {:?}", expected, result)))
+    }
+}
+
+pub fn run_property(runner: &mut TestRunner) -> Result<(), TestError<(Vec<String>, String)>> {
+    runner.run(&strategy(), property)
+}
+```
