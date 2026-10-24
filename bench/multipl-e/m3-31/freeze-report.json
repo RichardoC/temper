@@ -1,0 +1,3518 @@
+{
+ "schema": "harness-freeze/1",
+ "version": "m3.1-c-phase-v1",
+ "frozen_utc": "2026-10-24",
+ "note": "M3.1 C-phase freeze: HAND-AUTHORED harnesses (design \u00a77 A6). Authoring discipline: every harness was written from the problem's docstring and signature ONLY, before any canvas for that problem was inspected, and the whole set was committed before the first R3 call \u2014 so the freeze ORDER proves it was not fitted to observed canvases or to the watchlist problems {1, 9, 24, 25}. Validation is the TWO-CONTROL protocol: abort on the todo!() stub (negative) and separate a banked container-OK canvas from a banked container-rejected one (positive).",
+ "harness_origin": "hand-authored (not model-generated)",
+ "generator_status_reference": "bench/multipl-e/m3-31/q-gen-negative.json",
+ "verdict_config_sha256": "5320c3df73088c58094662fc53a719df4826986297e9a5a1155d510a8571307b",
+ "controls": {
+  "negative": "compiles against the todo!() signature stub and does not PASS it",
+  "positive": "PASSES a banked container-OK canvas; ground truth is the container's verdict, so this cannot contaminate the G4b correlation table",
+  "reject_side_amendment": "\u00a77 A7 (operator ruling 2026-10-24): the reject-side clause is NO LONGER GATED. Measured reason: the dominant not-validated class was correct-by-docstring harnesses passing near-miss reject canvases (HE_0/3/4/5/8/13), which is the intrinsic limitation of property evidence that G4b exists to measure \u2014 demanding a zero miss rate at freeze would only converge by fitting properties to the reject pool, the exact canvas-knowledge leak the docstring-only discipline forbids. The reject side is now REPORTED as a per-harness miss rate over the problem's compiled-but-rejected canvases, published here and carried into the G4b narrative."
+ },
+ "positive_control_pool": {
+  "definition": "GROUND TRUTH for the positive control = a canvas whose CONTAINER verdict is OK, drawn from the union of every BANKED diffusion (non-Qwen) ensemble named to this run. It is container evidence, never property evidence, so it cannot contaminate the G4b correlation table.",
+  "primary_pool": "the C-null ensemble (--run/--export/--results)",
+  "extra_pools": [
+   "bench/multipl-e/exports/20261019T100807Z-smoke",
+   "bench/multipl-e/exports/20261019T103020Z-b2pilot-norepair",
+   "bench/multipl-e/exports/20261019T103020Z-b2pilot-repair",
+   "bench/multipl-e/exports/20261020T082734Z-s128-norepair",
+   "bench/multipl-e/exports/20261020T082734Z-s128-repair",
+   "bench/multipl-e/exports/20261020T174500Z-s256-norepair",
+   "bench/multipl-e/exports/20261020T174500Z-s256-repair",
+   "bench/multipl-e/exports/20261021T134620Z-s512-norepair",
+   "bench/multipl-e/exports/20261021T134620Z-s512-repair",
+   "bench/multipl-e/exports/20261021T143854Z-s256fix-norepair",
+   "bench/multipl-e/exports/20261021T143854Z-s256fix-repair",
+   "bench/multipl-e/exports/20261021T144937Z-s96fix-norepair",
+   "bench/multipl-e/exports/20261021T144937Z-s96fix-repair",
+   "bench/multipl-e/exports/20261021T144937Z-s128fix-norepair",
+   "bench/multipl-e/exports/20261021T144937Z-s128fix-repair",
+   "bench/multipl-e/exports/20261021T144937Z-s512fix-norepair",
+   "bench/multipl-e/exports/20261021T144937Z-s512fix-repair",
+   "bench/multipl-e/exports/20261021T162000Z-c-hint-norepair",
+   "bench/multipl-e/exports/20261022T053000Z-p1-probe-norepair",
+   "bench/multipl-e/exports/20261023T130450Z-c-null-norepair",
+   "bench/multipl-e/exports/20261024T052127Z-c-full-norepair",
+   "bench/multipl-e/exports/20261024T082812Z-c-full-repl-norepair"
+  ],
+  "why_union": "9 of 25 problems have NO container-OK canvas in the C-null ensemble alone, so a C-null-only pool would cap coverage at 16/25 before any harness is judged. The union is the largest legitimate ground truth the program owns.",
+  "per_problem_ok_in_union": {
+   "HumanEval_0_has_close_elements": 0,
+   "HumanEval_10_make_palindrome": 8,
+   "HumanEval_11_string_xor": 4,
+   "HumanEval_12_longest": 8,
+   "HumanEval_13_greatest_common_divisor": 45,
+   "HumanEval_14_all_prefixes": 21,
+   "HumanEval_15_string_sequence": 35,
+   "HumanEval_16_count_distinct_characters": 35,
+   "HumanEval_17_parse_music": 10,
+   "HumanEval_18_how_many_times": 0,
+   "HumanEval_19_sort_numbers": 0,
+   "HumanEval_1_separate_paren_groups": 28,
+   "HumanEval_20_find_closest_elements": 1,
+   "HumanEval_21_rescale_to_unit": 0,
+   "HumanEval_23_strlen": 81,
+   "HumanEval_24_largest_divisor": 14,
+   "HumanEval_25_factorize": 11,
+   "HumanEval_2_truncate_number": 49,
+   "HumanEval_3_below_zero": 37,
+   "HumanEval_4_mean_absolute_deviation": 3,
+   "HumanEval_5_intersperse": 21,
+   "HumanEval_6_parse_nested_parens": 15,
+   "HumanEval_7_filter_by_substring": 49,
+   "HumanEval_8_sum_product": 27,
+   "HumanEval_9_rolling_max": 14
+  }
+ },
+ "coverage": {
+  "problems": 25,
+  "problems_with_ge1_harness": 19,
+  "frozen_harnesses": 33,
+  "G4a_supply_gate": "\u00a77 A8 (operator ruling 2026-10-24): >=19/21 CONTROL-AVAILABLE problems carry >=1 harness. Original >=23/25 was an invented threshold and is structurally unreachable \u2014 4 problems {0,18,19,21} have NO container-OK canvas in any diffusion cell (independently P1's unreachable-at-all-temps set). G1's own threshold stays ABSOLUTE: >=16/25 by container verdict.",
+  "control_available_problems": [
+   "HumanEval_10_make_palindrome",
+   "HumanEval_11_string_xor",
+   "HumanEval_12_longest",
+   "HumanEval_13_greatest_common_divisor",
+   "HumanEval_14_all_prefixes",
+   "HumanEval_15_string_sequence",
+   "HumanEval_16_count_distinct_characters",
+   "HumanEval_17_parse_music",
+   "HumanEval_1_separate_paren_groups",
+   "HumanEval_20_find_closest_elements",
+   "HumanEval_23_strlen",
+   "HumanEval_24_largest_divisor",
+   "HumanEval_25_factorize",
+   "HumanEval_2_truncate_number",
+   "HumanEval_3_below_zero",
+   "HumanEval_4_mean_absolute_deviation",
+   "HumanEval_5_intersperse",
+   "HumanEval_6_parse_nested_parens",
+   "HumanEval_7_filter_by_substring",
+   "HumanEval_8_sum_product",
+   "HumanEval_9_rolling_max"
+  ],
+  "n_control_available": 21,
+  "G4a_pass": true,
+  "watchlist": {
+   "HumanEval_1": 2,
+   "HumanEval_9": 2,
+   "HumanEval_24": 2,
+   "HumanEval_25": 1
+  },
+  "discriminating_harnesses": 14,
+  "controls_unavailable": 8
+ },
+ "problems": [
+  {
+   "name": "HumanEval_0_has_close_elements",
+   "harnesses": []
+  },
+  {
+   "name": "HumanEval_10_make_palindrome",
+   "harnesses": []
+  },
+  {
+   "name": "HumanEval_11_string_xor",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "2a2068ab5eec5ad53f904a3e1589532f62a59eeeed6753b85882a84942585f6a",
+     "source_path": "harnesses/m3-31/cases/HumanEval_11_string_xor__h0.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_12_longest",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "204212b8ee4c9774d5ef77f3b3847c6a8f16ee1c366b82a11354d97b83fcf185",
+     "source_path": "harnesses/m3-31/cases/HumanEval_12_longest__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "21efd4b43463b35359ad57d33e1929ec7d8d25072398697631cd18148f738359",
+     "source_path": "harnesses/m3-31/cases/HumanEval_12_longest__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_13_greatest_common_divisor",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "0a792ecdc5ae295b1f0d73ff6ab5e00e5250d9528d16035b88dbcdd6f948c341",
+     "source_path": "harnesses/m3-31/cases/HumanEval_13_greatest_common_divisor__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "c2113e120cb35d2e52b955921fec8daaf5562c9cf9982bae20b9c11cd886fb57",
+     "source_path": "harnesses/m3-31/cases/HumanEval_13_greatest_common_divisor__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_14_all_prefixes",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "c29620a14a98e3c76a8f421340577c6df51c0539806b4bc5fe1363c9729c681c",
+     "source_path": "harnesses/m3-31/cases/HumanEval_14_all_prefixes__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "47bfd7040c0c72f33500207a1dc40e948cfe6941f5ee27c11cf86c77d20d67c2",
+     "source_path": "harnesses/m3-31/cases/HumanEval_14_all_prefixes__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_15_string_sequence",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "10d0b539cb231f68269d2f6f3e7a80363d4e936d3ea9cb0e17b6676e026e0c84",
+     "source_path": "harnesses/m3-31/cases/HumanEval_15_string_sequence__h0.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_16_count_distinct_characters",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "f79599c30d1448a6d5858971602003b91c7bba882f35f9afb3337983ae10b461",
+     "source_path": "harnesses/m3-31/cases/HumanEval_16_count_distinct_characters__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "b7b2e888a91d4e9a51348205dcd07914cbe64a61103fd2aaf03eb869c7f420f2",
+     "source_path": "harnesses/m3-31/cases/HumanEval_16_count_distinct_characters__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_17_parse_music",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "64f124d7576c2cdeb2a867c8704a1e21b2897d141d33bf077b7d76c77e3b7f09",
+     "source_path": "harnesses/m3-31/cases/HumanEval_17_parse_music__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "1c256cd3f6ac3b2050e9f1ace0ab2fe70c9a4f63c01fb66ce401c8379ca8e8f4",
+     "source_path": "harnesses/m3-31/cases/HumanEval_17_parse_music__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_18_how_many_times",
+   "harnesses": []
+  },
+  {
+   "name": "HumanEval_19_sort_numbers",
+   "harnesses": []
+  },
+  {
+   "name": "HumanEval_1_separate_paren_groups",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "25157ef3048c861af2f6ef35d714127c38eb8f5481dbfd91f87c182f74cd5229",
+     "source_path": "harnesses/m3-31/cases/HumanEval_1_separate_paren_groups__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "8a3393f54caf28a2e8593c7370adab4db813744973114c23109d5372b218a952",
+     "source_path": "harnesses/m3-31/cases/HumanEval_1_separate_paren_groups__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_20_find_closest_elements",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "8a149e6dc1b09faa34972f601fee32d5a942a92f0996706fc2f95e7a99f3667a",
+     "source_path": "harnesses/m3-31/cases/HumanEval_20_find_closest_elements__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "d9ac3fb5aac49b78ae8ae3f64eb01a372c1d9e86cf556e69fe62e90a463ad918",
+     "source_path": "harnesses/m3-31/cases/HumanEval_20_find_closest_elements__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_21_rescale_to_unit",
+   "harnesses": []
+  },
+  {
+   "name": "HumanEval_23_strlen",
+   "harnesses": []
+  },
+  {
+   "name": "HumanEval_24_largest_divisor",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "7f207a41f28501ba6f0cf166506509ec1a521d56d94158bfeebe05aa93fd5d1c",
+     "source_path": "harnesses/m3-31/cases/HumanEval_24_largest_divisor__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "029db2bc6ac5700a99579276157682886b8d54e9c1e6b29633fc9c154b998ba2",
+     "source_path": "harnesses/m3-31/cases/HumanEval_24_largest_divisor__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_25_factorize",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "a43ace2d3fbe2c8c15cf1dfa0e366fbaf5ba9f27485770de1bab451013419672",
+     "source_path": "harnesses/m3-31/cases/HumanEval_25_factorize__h0.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_2_truncate_number",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "c4f1d2ffcb731996b37b7668718b94cb38fda7f744e24a83c03e1ff282ec7874",
+     "source_path": "harnesses/m3-31/cases/HumanEval_2_truncate_number__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "5f1245d44a9438f59c40527caf50550345782426afefba1b8875a0f06342be08",
+     "source_path": "harnesses/m3-31/cases/HumanEval_2_truncate_number__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_3_below_zero",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "5530bb5829552e649f5e2f616a9cb8d1981b26c3128f478feac2ee450e966bb2",
+     "source_path": "harnesses/m3-31/cases/HumanEval_3_below_zero__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "79908fc9756cb041307e66490622656d952ee1302b1fc4adc53047c9e9d1183a",
+     "source_path": "harnesses/m3-31/cases/HumanEval_3_below_zero__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_4_mean_absolute_deviation",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "1f80e90351b81003398e962db6560a2071e4e6470a8663d82604bb81c1106041",
+     "source_path": "harnesses/m3-31/cases/HumanEval_4_mean_absolute_deviation__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "fdf1b6f178c99a93ab2da89d98ab8f2adbbb06aa012f442ba13c7f8b820299a5",
+     "source_path": "harnesses/m3-31/cases/HumanEval_4_mean_absolute_deviation__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_5_intersperse",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "85c042d7d8a44ca3bd8cf09cb39c473d13becf1efef68552487e8db9bf135dae",
+     "source_path": "harnesses/m3-31/cases/HumanEval_5_intersperse__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "bea3a6b8bd9e2c2dfd9e0f69a2a263d6fa683ace3147d722ac5326a32a30083e",
+     "source_path": "harnesses/m3-31/cases/HumanEval_5_intersperse__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_6_parse_nested_parens",
+   "harnesses": [
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "4dc65ca79de93c59954ecadb1046fef0b7b7a563783f532cd3309f6c1b705407",
+     "source_path": "harnesses/m3-31/cases/HumanEval_6_parse_nested_parens__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_7_filter_by_substring",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "5f4495b6e46380f9baeaf9cd1c37250af6378d29dd7a44123531086c08e21455",
+     "source_path": "harnesses/m3-31/cases/HumanEval_7_filter_by_substring__h0.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_8_sum_product",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "f65d3cb88a5685654d30ca7f1808ed40a578a285e38e5f43bc7c8b53c6c02504",
+     "source_path": "harnesses/m3-31/cases/HumanEval_8_sum_product__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "b4931901175c690120c3a52c39e914b3c5e0e4c8fa94e63578ac2861508b238a",
+     "source_path": "harnesses/m3-31/cases/HumanEval_8_sum_product__h1.rs",
+     "replaced": false
+    }
+   ]
+  },
+  {
+   "name": "HumanEval_9_rolling_max",
+   "harnesses": [
+    {
+     "slot": 0,
+     "seed": 0,
+     "strategy_hash": "f4777dc0c29f35831978960afff43d6d4b01629002d2189cee8707102a5c2e32",
+     "source_path": "harnesses/m3-31/cases/HumanEval_9_rolling_max__h0.rs",
+     "replaced": false
+    },
+    {
+     "slot": 1,
+     "seed": 1,
+     "strategy_hash": "f701ad28249b063db3219253b26646ae72ce59805712d86a96890be0522a0846",
+     "source_path": "harnesses/m3-31/cases/HumanEval_9_rolling_max__h1.rs",
+     "replaced": false
+    }
+   ]
+  }
+ ],
+ "rejects_miss_rate": {
+  "per_harness": [
+   {
+    "problem": "HumanEval_0_has_close_elements",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_0_has_close_elements",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_1_separate_paren_groups",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 2,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_1_separate_paren_groups",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 2,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_2_truncate_number",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_2_truncate_number",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_3_below_zero",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_3_below_zero",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_4_mean_absolute_deviation",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_4_mean_absolute_deviation",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_5_intersperse",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_5_intersperse",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_6_parse_nested_parens",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_6_parse_nested_parens",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_7_filter_by_substring",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_7_filter_by_substring",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_8_sum_product",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_8_sum_product",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_9_rolling_max",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 2,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_9_rolling_max",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 2,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_10_make_palindrome",
+    "slot": 0,
+    "miss_rate": 1.0,
+    "n_judged": 2,
+    "n_missed": 2,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_10_make_palindrome",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 2,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_11_string_xor",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 26,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_11_string_xor",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_12_longest",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 9,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_12_longest",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 9,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_13_greatest_common_divisor",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_13_greatest_common_divisor",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_14_all_prefixes",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_14_all_prefixes",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_15_string_sequence",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_15_string_sequence",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_16_count_distinct_characters",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_16_count_distinct_characters",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_17_parse_music",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 1,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_17_parse_music",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 1,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_18_how_many_times",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 23,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_18_how_many_times",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 23,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_19_sort_numbers",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_19_sort_numbers",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_20_find_closest_elements",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 9,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_20_find_closest_elements",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 9,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_21_rescale_to_unit",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_21_rescale_to_unit",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_23_strlen",
+    "slot": 0,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_23_strlen",
+    "slot": 1,
+    "miss_rate": null,
+    "n_judged": 0,
+    "n_missed": 0,
+    "validated": false
+   },
+   {
+    "problem": "HumanEval_24_largest_divisor",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 35,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_24_largest_divisor",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 35,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_25_factorize",
+    "slot": 0,
+    "miss_rate": 0.0,
+    "n_judged": 5,
+    "n_missed": 0,
+    "validated": true
+   },
+   {
+    "problem": "HumanEval_25_factorize",
+    "slot": 1,
+    "miss_rate": 0.0,
+    "n_judged": 5,
+    "n_missed": 0,
+    "validated": false
+   }
+  ],
+  "mean": 0.0526
+ },
+ "divergence_rows": [
+  {
+   "problem": "HumanEval_10_make_palindrome",
+   "what": "a container-OK canvas implements make_palindrome as 'cca' -> 'ccac' (not a palindrome) and 'cata' -> 'catatac' (the docstring's own worked example says 'catac'); the docstring-derived properties REJECT it.",
+   "status": "direction-neutral: either emission-rule pick is a finding about docstring-vs-benchmark truth"
+  },
+  {
+   "problem": "HumanEval_23_strlen",
+   "what": "a container-OK canvas returns strlen of the single non-ASCII char U+00A1 as 2 (byte count) while the docstring says 'length of given string'; the docstring-derived property counts characters and REJECTS it.",
+   "status": "direction-neutral: the property is truer to the contract and may cost the benchmark score"
+  }
+ ],
+ "rewrite_counts": {
+  "per_problem": {
+   "HumanEval_0_has_close_elements": 1,
+   "HumanEval_1_separate_paren_groups": 1,
+   "HumanEval_2_truncate_number": 1,
+   "HumanEval_3_below_zero": 1,
+   "HumanEval_4_mean_absolute_deviation": 1,
+   "HumanEval_5_intersperse": 1,
+   "HumanEval_6_parse_nested_parens": 1,
+   "HumanEval_7_filter_by_substring": 1,
+   "HumanEval_8_sum_product": 1,
+   "HumanEval_9_rolling_max": 1,
+   "HumanEval_10_make_palindrome": 1,
+   "HumanEval_11_string_xor": 1,
+   "HumanEval_12_longest": 1,
+   "HumanEval_13_greatest_common_divisor": 1,
+   "HumanEval_14_all_prefixes": 1,
+   "HumanEval_15_string_sequence": 1,
+   "HumanEval_16_count_distinct_characters": 1,
+   "HumanEval_17_parse_music": 1,
+   "HumanEval_18_how_many_times": 1,
+   "HumanEval_19_sort_numbers": 1,
+   "HumanEval_20_find_closest_elements": 1,
+   "HumanEval_21_rescale_to_unit": 1,
+   "HumanEval_23_strlen": 1,
+   "HumanEval_24_largest_divisor": 1,
+   "HumanEval_25_factorize": 1
+  },
+  "note": "counts are 1 (as-first-written) plus each rewrite, with the reason for every rewrite in `rewrite_log`"
+ },
+ "rewrite_log": [],
+ "validation_report": [
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "slot": 0,
+   "harness_sha": "4572188c54cadaf2809302cd07aa1f16bfad2c70b1a55ace0f13eb0c478f8aea",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "([], 0.0)"
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "slot": 1,
+   "harness_sha": "2eb4e0ff32f506d3f18445b9b1e8f02e9930db36d27fe37f3d934eaa9ad11eea",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "([1.0, 2.0, 3.0], 0.5)"
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "slot": 0,
+   "harness_sha": "25157ef3048c861af2f6ef35d714127c38eb8f5481dbfd91f87c182f74cd5229",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 2,
+    "n_judged": 2,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 2
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "slot": 1,
+   "harness_sha": "8a3393f54caf28a2e8593c7370adab4db813744973114c23109d5372b218a952",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"( ) (( )) (( )( ))\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 2,
+    "n_judged": 2,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 2
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "slot": 0,
+   "harness_sha": "c4f1d2ffcb731996b37b7668718b94cb38fda7f744e24a83c03e1ff282ec7874",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "0.001"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "slot": 1,
+   "harness_sha": "5f1245d44a9438f59c40527caf50550345782426afefba1b8875a0f06342be08",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "3.5"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "slot": 0,
+   "harness_sha": "5530bb5829552e649f5e2f616a9cb8d1981b26c3128f478feac2ee450e966bb2",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "slot": 1,
+   "harness_sha": "79908fc9756cb041307e66490622656d952ee1302b1fc4adc53047c9e9d1183a",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[1, 2, 3]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_4_mean_absolute_deviation",
+   "slot": 0,
+   "harness_sha": "1f80e90351b81003398e962db6560a2071e4e6470a8663d82604bb81c1106041",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[0.0]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 11,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_4_mean_absolute_deviation",
+   "slot": 1,
+   "harness_sha": "fdf1b6f178c99a93ab2da89d98ab8f2adbbb06aa012f442ba13c7f8b820299a5",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[1.0, 2.0, 3.0, 4.0]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 11,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_5_intersperse",
+   "slot": 0,
+   "harness_sha": "85c042d7d8a44ca3bd8cf09cb39c473d13becf1efef68552487e8db9bf135dae",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "([], 0)"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_5_intersperse",
+   "slot": 1,
+   "harness_sha": "bea3a6b8bd9e2c2dfd9e0f69a2a263d6fa683ace3147d722ac5326a32a30083e",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "([], 4)"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_6_parse_nested_parens",
+   "slot": 0,
+   "harness_sha": "3ac9397d86f99ae57e1711e43ef6f854faf58be8d48981986e8ba2a7b94ff7a9",
+   "negative_control": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": false,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 2,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_6_parse_nested_parens",
+   "slot": 1,
+   "harness_sha": "4dc65ca79de93c59954ecadb1046fef0b7b7a563783f532cd3309f6c1b705407",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"(()()) ((())) () ((())()())\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 2,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_7_filter_by_substring",
+   "slot": 0,
+   "harness_sha": "5f4495b6e46380f9baeaf9cd1c37250af6378d29dd7a44123531086c08e21455",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "([], \"a\")"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_7_filter_by_substring",
+   "slot": 1,
+   "harness_sha": "dc9427e4b5a26c81d0506844a872d1d77f0daed236a83b74d2b114b4483a039e",
+   "negative_control": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": false,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_8_sum_product",
+   "slot": 0,
+   "harness_sha": "f65d3cb88a5685654d30ca7f1808ed40a578a285e38e5f43bc7c8b53c6c02504",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_8_sum_product",
+   "slot": 1,
+   "harness_sha": "b4931901175c690120c3a52c39e914b3c5e0e4c8fa94e63578ac2861508b238a",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_9_rolling_max",
+   "slot": 0,
+   "harness_sha": "f4777dc0c29f35831978960afff43d6d4b01629002d2189cee8707102a5c2e32",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 2,
+    "n_judged": 2,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 1,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 2
+  },
+  {
+   "problem": "HumanEval_9_rolling_max",
+   "slot": 1,
+   "harness_sha": "f701ad28249b063db3219253b26646ae72ce59805712d86a96890be0522a0846",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[1, 2, 3, 2, 3, 4, 2]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 2,
+    "n_judged": 2,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 1,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 2
+  },
+  {
+   "problem": "HumanEval_10_make_palindrome",
+   "slot": 0,
+   "harness_sha": "7f0df58ee8ce22f1cc3118f28c5284dc7f665500cff46626d0a186d52736e254",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "make_palindrome(\"cca\") = \"ccac\" is not a palindrome",
+    "minimal_input": "\"cca\""
+   },
+   "reject_side": {
+    "n_reject_canvases": 2,
+    "n_judged": 2,
+    "n_missed": 2,
+    "miss_rate": 1.0,
+    "outcomes": [
+     {
+      "runtime_status": "pass"
+     },
+     {
+      "runtime_status": "pass"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 100,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 2
+  },
+  {
+   "problem": "HumanEval_10_make_palindrome",
+   "slot": 1,
+   "harness_sha": "fe690946d08940ee75af01393bd4eea62a56738159211541f436179db2cb3d38",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "documented example make_palindrome(\"cata\") = \"catatac\" expected \"catac\"",
+    "minimal_input": "\"cata\""
+   },
+   "reject_side": {
+    "n_reject_canvases": 2,
+    "n_judged": 2,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": true,
+   "validated_ok_canvas_index": 100,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 2
+  },
+  {
+   "problem": "HumanEval_11_string_xor",
+   "slot": 0,
+   "harness_sha": "2a2068ab5eec5ad53f904a3e1589532f62a59eeeed6753b85882a84942585f6a",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "(\"\", \"\")"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 26,
+    "n_judged": 26,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 104,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 26
+  },
+  {
+   "problem": "HumanEval_11_string_xor",
+   "slot": 1,
+   "harness_sha": "415b956abd504616484a594ab6a3664f0849f7e29eb2f1f81b0f277c7520a262",
+   "negative_control": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 26,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": [
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     },
+     {
+      "runtime_status": null
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": false,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 104,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 26
+  },
+  {
+   "problem": "HumanEval_12_longest",
+   "slot": 0,
+   "harness_sha": "204212b8ee4c9774d5ef77f3b3847c6a8f16ee1c366b82a11354d97b83fcf185",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 9,
+    "n_judged": 9,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 100,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 9
+  },
+  {
+   "problem": "HumanEval_12_longest",
+   "slot": 1,
+   "harness_sha": "21efd4b43463b35359ad57d33e1929ec7d8d25072398697631cd18148f738359",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 9,
+    "n_judged": 9,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 100,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 9
+  },
+  {
+   "problem": "HumanEval_13_greatest_common_divisor",
+   "slot": 0,
+   "harness_sha": "0a792ecdc5ae295b1f0d73ff6ab5e00e5250d9528d16035b88dbcdd6f948c341",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "(1, 1)"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_13_greatest_common_divisor",
+   "slot": 1,
+   "harness_sha": "c2113e120cb35d2e52b955921fec8daaf5562c9cf9982bae20b9c11cd886fb57",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "(3, 5)"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_14_all_prefixes",
+   "slot": 0,
+   "harness_sha": "c29620a14a98e3c76a8f421340577c6df51c0539806b4bc5fe1363c9729c681c",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_14_all_prefixes",
+   "slot": 1,
+   "harness_sha": "47bfd7040c0c72f33500207a1dc40e948cfe6941f5ee27c11cf86c77d20d67c2",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"abc\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_15_string_sequence",
+   "slot": 0,
+   "harness_sha": "10d0b539cb231f68269d2f6f3e7a80363d4e936d3ea9cb0e17b6676e026e0c84",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "0"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_15_string_sequence",
+   "slot": 1,
+   "harness_sha": "0f85e1e1e5f8c3046b9a96587514a93f36f622daa619fd45cca3991a8f9ee426",
+   "negative_control": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": false,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_16_count_distinct_characters",
+   "slot": 0,
+   "harness_sha": "f79599c30d1448a6d5858971602003b91c7bba882f35f9afb3337983ae10b461",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_16_count_distinct_characters",
+   "slot": 1,
+   "harness_sha": "b7b2e888a91d4e9a51348205dcd07914cbe64a61103fd2aaf03eb869c7f420f2",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"xyzXYZ\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_17_parse_music",
+   "slot": 0,
+   "harness_sha": "64f124d7576c2cdeb2a867c8704a1e21b2897d141d33bf077b7d76c77e3b7f09",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"o\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 1,
+    "n_judged": 1,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 1,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 1
+  },
+  {
+   "problem": "HumanEval_17_parse_music",
+   "slot": 1,
+   "harness_sha": "1c256cd3f6ac3b2050e9f1ace0ab2fe70c9a4f63c01fb66ce401c8379ca8e8f4",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"o o| .| o| o| .| .| .| .| o o\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 1,
+    "n_judged": 1,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 1,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 1
+  },
+  {
+   "problem": "HumanEval_18_how_many_times",
+   "slot": 0,
+   "harness_sha": "b8f549ef7a84ae1608212276264f16fc18abb46f688b16561357dc8a5dd3f994",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "(\"\", \"a\")"
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 23,
+    "n_judged": 23,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": true,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 23
+  },
+  {
+   "problem": "HumanEval_18_how_many_times",
+   "slot": 1,
+   "harness_sha": "71770c02a523f28decd6628a740e63618d78d96086422075ce77ce1e27a87ab9",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "(\"\", \"a\")"
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 23,
+    "n_judged": 23,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": true,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 23
+  },
+  {
+   "problem": "HumanEval_19_sort_numbers",
+   "slot": 0,
+   "harness_sha": "2a4fa62ba7f68ff375977aac1e328b86f6c901c8e113697e6c0bead46fdd65c4",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"zero\""
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_19_sort_numbers",
+   "slot": 1,
+   "harness_sha": "9365688f16335cb3ef726167dadbf078500192adc897859de7f48528aa9a5b85",
+   "negative_control": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": false,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_20_find_closest_elements",
+   "slot": 0,
+   "harness_sha": "8a149e6dc1b09faa34972f601fee32d5a942a92f0996706fc2f95e7a99f3667a",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[0.0, 0.0]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 9,
+    "n_judged": 9,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 9,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 9
+  },
+  {
+   "problem": "HumanEval_20_find_closest_elements",
+   "slot": 1,
+   "harness_sha": "d9ac3fb5aac49b78ae8ae3f64eb01a372c1d9e86cf556e69fe62e90a463ad918",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[1.0, 2.0, 3.0, 4.0, 5.0, 2.2]"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 9,
+    "n_judged": 9,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 9,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 9
+  },
+  {
+   "problem": "HumanEval_21_rescale_to_unit",
+   "slot": 0,
+   "harness_sha": "10e8be7aa81a129a6df11d399b996098e0ef47ed20de217f9503b2fefaaa1599",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[0.0, -81.58563443265064]"
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_21_rescale_to_unit",
+   "slot": 1,
+   "harness_sha": "6ee90891522cadd8344441ca710e370d0753dc8ba6484f3f687951fa729a97d3",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "[1.0, 2.0, 3.0, 4.0, 5.0]"
+   },
+   "positive_control_ok_canvas": null,
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": null
+   },
+   "controls_available": {
+    "ok_canvas": false
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": null,
+   "validated_ok_canvas_status": null,
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_23_strlen",
+   "slot": 0,
+   "harness_sha": "97760f7d2183c9c7d113dad81f3f03399af380d0751a5bc28bdb27f8fda69446",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "\"\""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "strlen(\"\u00a1\") = 2 expected 1",
+    "minimal_input": "\"\u00a1\""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_23_strlen",
+   "slot": 1,
+   "harness_sha": "4d81c74ed485de6c091993fbbd937efc58f76e35d36368fc1284be2b5fe46e47",
+   "negative_control": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "positive_control_ok_canvas": {
+    "compiled": false,
+    "status": "compile_error",
+    "runtime_status": null,
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 0,
+    "n_judged": 0,
+    "n_missed": 0,
+    "miss_rate": null,
+    "outcomes": []
+   },
+   "checks": {
+    "compiles_against_stub": false,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": false,
+   "validated_ok_canvas_index": 0,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 0
+  },
+  {
+   "problem": "HumanEval_24_largest_divisor",
+   "slot": 0,
+   "harness_sha": "7f207a41f28501ba6f0cf166506509ec1a521d56d94158bfeebe05aa93fd5d1c",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "2"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 35,
+    "n_judged": 35,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 1,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 35
+  },
+  {
+   "problem": "HumanEval_24_largest_divisor",
+   "slot": 1,
+   "harness_sha": "029db2bc6ac5700a99579276157682886b8d54e9c1e6b29633fc9c154b998ba2",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "15"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 35,
+    "n_judged": 35,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 1,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 35
+  },
+  {
+   "problem": "HumanEval_25_factorize",
+   "slot": 0,
+   "harness_sha": "a43ace2d3fbe2c8c15cf1dfa0e366fbaf5ba9f27485770de1bab451013419672",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "2"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "pass",
+    "runtime_status": "pass",
+    "runtime_reason": "",
+    "minimal_input": ""
+   },
+   "reject_side": {
+    "n_reject_canvases": 5,
+    "n_judged": 5,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": true
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": true,
+   "discriminating": true,
+   "validated_ok_canvas_index": 3,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 5
+  },
+  {
+   "problem": "HumanEval_25_factorize",
+   "slot": 1,
+   "harness_sha": "ee645dace6004d87f3e01f6dcad61bc1fd5675871465fd946430130f9eefc394",
+   "negative_control": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "not yet implemented",
+    "minimal_input": "8"
+   },
+   "positive_control_ok_canvas": {
+    "compiled": true,
+    "status": "fail",
+    "runtime_status": "fail",
+    "runtime_reason": "factorize(16) = [2, 2, 2, 2] expected [4, 4]",
+    "minimal_input": "16"
+   },
+   "reject_side": {
+    "n_reject_canvases": 5,
+    "n_judged": 5,
+    "n_missed": 0,
+    "miss_rate": 0.0,
+    "outcomes": [
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     },
+     {
+      "runtime_status": "fail"
+     }
+    ]
+   },
+   "checks": {
+    "compiles_against_stub": true,
+    "does_not_pass_the_stub": true,
+    "passes_a_container_ok_canvas": false
+   },
+   "controls_available": {
+    "ok_canvas": true
+   },
+   "validated": false,
+   "discriminating": true,
+   "validated_ok_canvas_index": 3,
+   "validated_ok_canvas_status": "OK",
+   "validated_reject_canvas_count": 5
+  }
+ ],
+ "sha256": "c48c69ccc2c7da40d45196dacd533f033bcc9d49786ed59734726c38fca86bf2"
+}

@@ -46,6 +46,7 @@ from temper.steer.property import (  # noqa: E402
     Harness,
     compute_harness_freeze_sha256,
     load_harness_freeze,
+    make_pub_program,
     strategy_hash_of,
 )
 from temper.steer.view import SteerProblemView  # noqa: E402
@@ -417,6 +418,133 @@ def build_freeze_payload(
             for name, hs in sorted(frozen.items())
         ],
         "first_draft_results": first_draft_results,
+    }
+
+
+def validate_two_controls(
+    view: SteerProblemView,
+    harness_source: str,
+    *,
+    ok_canvas: Optional[str],
+    reject_canvases: Optional[List[str]] = None,
+    workdir: Path | str | None = None,
+    cases: int = 64,
+    timeout_ms: int = 1000,
+) -> dict:
+    """Freeze validation with BOTH controls (§7 step 2b, branch C).
+
+    NEGATIVE control — against the ``todo!()`` signature stub the harness must
+    COMPILE (that is the freeze criterion) and must NOT report ``pass``: a
+    harness that happily passes ``todo!()`` is measuring nothing.
+
+    POSITIVE control — against a BANKED container-OK canvas it must report
+    ``pass``. Ground truth is the container's verdict, which is legitimate
+    evidence to validate an instrument with (it is not property evidence, so the
+    G4b correlation table's honesty is unaffected).
+
+    **REJECT-SIDE AMENDMENT (operator ruling 2026-10-24, §7 A7).** Requiring a
+    harness to FAIL every container-rejected canvas is over-strict and would
+    force fitting properties to the reject pool — exactly the canvas-knowledge
+    leak the docstring-only discipline forbids. A property that passes a
+    near-miss reject canvas is not a harness defect; it is the intrinsic
+    limitation of property evidence, which G4b exists to MEASURE on the primary's
+    data. So the reject side is no longer gated: it is reported as a per-harness
+    MISS RATE over the problem's compiled-but-rejected canvases.
+
+    Returns a record; ``validated`` is True when the stub-compile control and the
+    positive control both hold (clauses 1+2). ``discriminating`` still reports
+    whether the harness also caught at least one rejected canvas — a datapoint,
+    never a requirement.
+    """
+    from temper.harness.runner import run_candidate
+
+    stub = signature_stub(view)
+    # A FROZEN harness set must reproduce identical control verdicts run to run.
+    # proptest's default is a random seed, so every control run is pinned to a
+    # fixed seed: the same sha then yields the same verdicts by construction, and
+    # a property that only passes on SOME seeds shows up as a nonzero miss rate
+    # rather than as flapping between freeze runs.
+    neg = _run_harness(view, harness_source, stub, cases=4, timeout_ms=300,
+                       workdir=workdir, seed_hex=CONTROL_SEED_HEX)
+    pos_ok = None
+    if ok_canvas:
+        try:
+            program = make_pub_program(view, ok_canvas)
+            pos_ok = _run_harness(view, harness_source, program.text, cases=cases,
+                                 timeout_ms=timeout_ms, workdir=workdir,
+                                 seed_hex=CONTROL_SEED_HEX)
+        except Exception as exc:
+            pos_ok = {"status": "error", "error": f"{type(exc).__name__}: {exc}"}
+    # REJECT SIDE (reported, not gated): one outcome per compiled-but-rejected
+    # canvas, so the miss rate is a fraction over the problem's own reject pool.
+    rej_outcomes: List[dict] = []
+    for rc in (reject_canvases or []):
+        try:
+            program = make_pub_program(view, rc)
+            out = _run_harness(view, harness_source, program.text, cases=cases,
+                               timeout_ms=timeout_ms, workdir=workdir,
+                               seed_hex=CONTROL_SEED_HEX)
+            rej_outcomes.append({"runtime_status": out.get("runtime_status")})
+        except Exception as exc:
+            rej_outcomes.append({"runtime_status": None,
+                                 "error": f"{type(exc).__name__}: {exc}"})
+    judged = [o for o in rej_outcomes if o.get("runtime_status") is not None]
+    n_missed = sum(1 for o in judged if o["runtime_status"] == "pass")
+    reject_miss_rate = (round(n_missed / len(judged), 4) if judged else None)
+    # A control that CANNOT be run is recorded as None ("not applicable"), never
+    # as False: a SyntaxError canvas cannot even link, so it cannot discriminate
+    # and its absence must not read as a harness defect.
+    ran_ok = ok_canvas is not None
+    checks = {
+        "compiles_against_stub": bool(neg.get("compiled")),
+        "does_not_pass_the_stub": neg.get("runtime_status") != "pass",
+        "passes_a_container_ok_canvas": (
+            (pos_ok or {}).get("runtime_status") == "pass" if ran_ok else None),
+    }
+    # GATED under the amendment: stub-compile (1) + positive control (2).
+    validated = (checks["compiles_against_stub"]
+                 and checks["does_not_pass_the_stub"]
+                 and checks["passes_a_container_ok_canvas"] is True)
+    discriminating = (reject_miss_rate is not None and reject_miss_rate < 1.0)
+    return {
+        "harness_sha": strategy_hash_of(harness_source),
+        "negative_control": neg,
+        "positive_control_ok_canvas": pos_ok,
+        "reject_side": {
+            "n_reject_canvases": len(rej_outcomes),
+            "n_judged": len(judged),
+            "n_missed": n_missed,
+            "miss_rate": reject_miss_rate,
+            "outcomes": rej_outcomes,
+        },
+        "checks": checks,
+        "controls_available": {"ok_canvas": ran_ok},
+        "validated": validated,
+        "discriminating": discriminating,
+    }
+
+
+# Frozen control seed (a plain hex u64 for proptest's RngSeed::Fixed).
+CONTROL_SEED_HEX = "6d332e31"   # "m3.1"
+
+
+def _run_harness(view, harness_source, candidate_program, *, cases,
+                 timeout_ms, workdir, seed_hex=None) -> dict:
+    from temper.harness.runner import run_candidate
+    try:
+        out = run_candidate(candidate_program, harness_source, cases=cases,
+                            timeout_ms=timeout_ms, workdir=workdir,
+                            seed_hex=seed_hex)
+    except Exception as exc:
+        return {"compiled": False, "status": "error",
+                "runtime_status": None,
+                "error": f"{type(exc).__name__}: {exc}"}
+    return {
+        "compiled": bool(out.compile.ok),
+        "status": out.status,
+        "runtime_status": (out.test.status if out.test is not None else None),
+        "runtime_reason": (out.test.reason if out.test is not None else ""),
+        "minimal_input": (out.test.minimal_input if out.test is not None else ""),
     }
 
 
