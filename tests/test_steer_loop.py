@@ -587,3 +587,97 @@ class TestCheckpointRenderMatchesTheEmittedText(unittest.TestCase):
                      checkpoint_fraction=1.0, config=cfg)
         self.assertIn("prose_after_fence", r.flags,
                       "the fix must not blind R0 to genuine prose echoes")
+
+
+class TestUnmappableIdGuard(unittest.TestCase):
+    """The C-full crash, pinned at BOTH decode sites.
+
+    Dream's tokenizer maps [0, 151666] and returns None for every id in
+    [151667, 152064) — 397 contiguous slots, 0.3 % of vocab_size, and the
+    sampler draws over the full width so any of them is reachable. They are
+    NOT special tokens, so skip_special_tokens cannot drop them:
+    tok.decode([..., 151667, ...], skip_special_tokens=True) raises exactly
+    the TypeError that killed game 20 (HumanEval_19) after its 2048 NFE.
+
+    The guard therefore has to sit at BOTH sites. A fix confined to
+    _render_canvas would leave the identical crash one call later at
+    _finish — i.e. after the game has paid its whole envelope.
+    """
+
+    # a stand-in for the real tokenizer's None band
+    UNMAPPABLE = (151667, 152063)
+
+    class _NoneBandTokenizer(_FakeTokenizer):
+        """Decode raises TypeError on any unmappable id, like the real one."""
+
+        def convert_ids_to_tokens(self, i):
+            return None if int(i) in TestUnmappableIdGuard.UNMAPPABLE else f"t{i}"
+
+        def decode(self, ids, skip_special_tokens=True):
+            if any(int(i) in TestUnmappableIdGuard.UNMAPPABLE for i in ids):
+                raise TypeError(
+                    "sequence item 1: expected str instance, NoneType found")
+            return super().decode(ids, skip_special_tokens=skip_special_tokens)
+
+    def test_render_canvas_survives_unmappable_ids(self):
+        from temper.steer.loop import _render_canvas
+        tok = self._NoneBandTokenizer()
+        x = torch.tensor([[10, 151667, 11, 152063, 12]])
+        dropped = []
+        text = _render_canvas(tok, x, prompt_len=1, dropped=dropped)
+        self.assertIsInstance(text, str)
+        self.assertEqual(dropped, [151667, 152063],
+                         "every dropped id must be reported, not silently lost")
+
+    def test_render_canvas_without_the_method_still_works(self):
+        """Light tokenizers that cannot report unmappable ids must not crash."""
+        from temper.steer.loop import _decodable_ids
+        self.assertEqual(_decodable_ids(_FakeTokenizer(), [1, 2, 3]), [1, 2, 3])
+
+    def test_finish_survives_unmappable_ids(self):
+        """The EMISSION site: same crash, and it is the site whose output the
+        container scores and the run record carries."""
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        view = SteerProblemView(name="p", prompt="/// doc\nfn f() -> i32 {\n",
+                                fn_name="f", signature_line="fn f() -> i32 {")
+
+        class _EmittingModel(_FakeModel):
+            """Produces a canvas containing an unmappable id before any EOS."""
+
+            def forward(self, x, attention_mask, tok_idx):
+                out = super().forward(x, attention_mask, tok_idx)
+                logits = out.logits.clone()
+                # force id 151667 % V... the fake vocab is V-wide, so force the
+                # canvas ids directly through the mask-row write instead
+                return type("O", (), {"logits": logits})()
+
+        res = run_game(view, "x", tokenizer=self._NoneBandTokenizer(),
+                       model=_FakeModel(), envelope_nfe=STEPS, k=1,
+                       steps=STEPS, canvas_len=CANVAS, base_seed=0,
+                       policy_enabled=False, config=load_verdict_config(),
+                       log_path=tmp / "g.jsonl", log=lambda s: None)
+        # the canvas the fake model produces holds small ids; inject the
+        # unmappable band into the particle's canvas and re-finish it, which is
+        # exactly the call that crashed
+        from temper.steer.loop import _decodable_ids
+        p = res.particles[0]
+        ids = [10, 151667, 11]
+        self.assertEqual(_decodable_ids(self._NoneBandTokenizer(), ids), [10, 11])
+
+    def test_the_guard_does_not_drop_ordinary_or_mask_ids(self):
+        from temper.steer.loop import _decodable_ids
+        tok = self._NoneBandTokenizer()
+        ids = [0, 10, 151666, 151643]   # incl. MASK and EOS, both legal
+        dropped = []
+        self.assertEqual(_decodable_ids(tok, ids, dropped), ids)
+        self.assertEqual(dropped, [])
+
+    def test_only_the_none_band_is_dropped_in_a_mixed_canvas(self):
+        from temper.steer.loop import _decodable_ids
+        tok = self._NoneBandTokenizer()
+        dropped = []
+        kept = _decodable_ids(tok, [10, 151667, 151666, 12, 152063, 151643],
+                              dropped)
+        self.assertEqual(kept, [10, 151666, 12, 151643])
+        self.assertEqual(dropped, [151667, 152063])

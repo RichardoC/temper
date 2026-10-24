@@ -105,6 +105,11 @@ class SteerParticle:
     # is accumulated across segments instead of being reset by the last one.
     conf_sum: float = 0.0
     conf_count: int = 0
+    # Ids the tokenizer could not render, dropped at each decode site (see
+    # _decodable_ids). Logged so the artifact's frequency is measured rather
+    # than invisible.
+    render_dropped_ids: List[int] = field(default_factory=list)
+    emission_dropped_ids: List[int] = field(default_factory=list)
     verdict_calls: int = 0
     verifier_wall_s: float = 0.0
 
@@ -128,7 +133,46 @@ def _committed_mask_share(x: torch.Tensor, prompt_len: int) -> float:
     return float((canvas == MASK_TOKEN_ID).sum()) / n if n else 0.0
 
 
-def _render_canvas(tokenizer, x: torch.Tensor, prompt_len: int) -> str:
+def _decodable_ids(tokenizer, gen_ids: List[int],
+                   dropped: Optional[List[int]] = None) -> List[int]:
+    """Drop ids the tokenizer cannot render (raising nothing, logging all).
+
+    Dream's tokenizer maps every id in ``[0, 151666]`` and returns ``None`` for
+    every id in ``[151667, 152064)`` — 397 contiguous slots, 0.3 % of the
+    model's ``vocab_size``. Those slots are NOT special tokens, so
+    ``skip_special_tokens`` cannot drop them: **both** decode paths raise
+    ``TypeError: sequence item N: expected str instance, NoneType found`` when
+    such an id sits before the first EOS. Measured on the C-full cell: game 20
+    (HumanEval_19) died there after paying its full 2048 NFE, with all 384
+    canvas positions committed and zero residual mask — a sampler that draws
+    over the full logits width can always land in that band.
+
+    Dropping is the honest treatment: an id with no text form cannot exist in
+    any container-scored source, so filtering it is lossless to the container,
+    whereas aborting the game would convert a tokenizer artifact into a scored
+    failure the unsteered baseline never faced. Every dropped id is handed to
+    ``dropped`` so the caller can log it (D2) and the frequency stays
+    measurable instead of invisible.
+    """
+    kept: List[int] = []
+    convert = getattr(tokenizer, "convert_ids_to_tokens", None)
+    if convert is None:
+        # Tokenizers without the method cannot report unmappable ids, so there
+        # is nothing to filter. (The real Dream tokenizer always has it; this
+        # branch exists for the light test doubles and for any alternative
+        # tokenizer wired in later.)
+        return [int(i) for i in gen_ids]
+    for i in gen_ids:
+        if convert(int(i)) is None:
+            if dropped is not None:
+                dropped.append(int(i))
+            continue
+        kept.append(int(i))
+    return kept
+
+
+def _render_canvas(tokenizer, x: torch.Tensor, prompt_len: int,
+                   dropped: Optional[List[int]] = None) -> str:
     """Decode the canvas region to text (mask positions -> <|mask|> residue).
 
     The special-token policy here is load-bearing and differs from
@@ -152,7 +196,8 @@ def _render_canvas(tokenizer, x: torch.Tensor, prompt_len: int) -> str:
     eos = tokenizer.eos_token_id
     if eos is not None and eos in gen_ids:
         gen_ids = gen_ids[: gen_ids.index(eos)]
-    return tokenizer.decode(gen_ids, skip_special_tokens=False)
+    return tokenizer.decode(_decodable_ids(tokenizer, gen_ids, dropped),
+                            skip_special_tokens=False)
 
 
 def _verdict_at_checkpoint(
@@ -171,7 +216,10 @@ def _verdict_at_checkpoint(
     Returns the checkpoint's verdict record (the exact dict the steer log
     stores and the replayer reads back — evidence only, no policy).
     """
-    canvas_text = _render_canvas(tokenizer, particle.x, prompt_len)
+    dropped: List[int] = []
+    canvas_text = _render_canvas(tokenizer, particle.x, prompt_len,
+                                 dropped=dropped)
+    particle.render_dropped_ids.extend(dropped)
     fraction = steps_done / steps
     mask_share = _committed_mask_share(particle.x, prompt_len)
     is_final = steps_done >= steps
@@ -223,6 +271,8 @@ def _verdict_at_checkpoint(
         "mask_share": round(mask_share, 4),
         "expected_mask_share": round(0.0 if is_final else 1.0 - fraction, 4),
         "gpu_free_mask_share": round(gpu_free_mask_share, 4),
+        "render_dropped_ids": sorted(set(dropped)),
+        "render_dropped_count": len(dropped),
         "r0_flags": list(r0.flags),
         "r2_stubs": list(stubs),
         "r1": r1,
@@ -417,7 +467,17 @@ def run_game(
         eos = tokenizer.eos_token_id
         if eos is not None and eos in gen_ids:
             gen_ids = gen_ids[: gen_ids.index(eos)]
-        p.final_raw_text = tokenizer.decode(gen_ids, skip_special_tokens=True)
+        # EMISSION decode site. Same guard as the checkpoint render (see
+        # _decodable_ids): the ids in [151667, 152064) are not special tokens,
+        # so skip_special_tokens=True cannot drop them and this call raises
+        # exactly as the render does. Guarding only the render would leave the
+        # identical crash one call later, after the game has spent its whole
+        # envelope.
+        dropped: List[int] = []
+        p.final_raw_text = tokenizer.decode(
+            _decodable_ids(tokenizer, gen_ids, dropped),
+            skip_special_tokens=True)
+        p.emission_dropped_ids = dropped
 
     # ---- main round-robin loop -------------------------------------------
     t_all = time.perf_counter()
@@ -522,7 +582,21 @@ def run_game(
                       mean_commit_conf={str(p.index): p.mean_commit_conf
                                         for p in particles},
                       temperatures={str(p.index): p.temperature
-                                    for p in particles})
+                                    for p in particles},
+                      # Unmappable-id artifact, per game and per site (see
+                      # _decodable_ids). Emission counts are per particle
+                      # because every particle is finished; render counts
+                      # aggregate every checkpoint of every particle.
+                      emission_dropped_ids={str(p.index): sorted(set(p.emission_dropped_ids))
+                                            for p in particles
+                                            if p.emission_dropped_ids},
+                      emission_dropped_count=sum(
+                          len(p.emission_dropped_ids) for p in particles),
+                      render_dropped_ids={str(p.index): sorted(set(p.render_dropped_ids))
+                                          for p in particles
+                                          if p.render_dropped_ids},
+                      render_dropped_count=sum(
+                          len(p.render_dropped_ids) for p in particles))
         game_log.done(nfe_used=meters.nfe_model,
                       n_particles_live=len(live),
                       emitted_particle=(emitted.index if emitted else None),
