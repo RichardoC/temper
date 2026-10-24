@@ -1,0 +1,112 @@
+[
+ {
+  "run": "bench/multipl-e/runs/20261019T100807Z-smoke.jsonl",
+  "export": "bench/multipl-e/exports/20261019T100807Z-smoke",
+  "results": "bench/multipl-e/results/20261019T101143Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl",
+  "export": "bench/multipl-e/exports/20261019T103020Z-b2pilot-norepair",
+  "results": "bench/multipl-e/results/20261019T165244Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl",
+  "export": "bench/multipl-e/exports/20261019T103020Z-b2pilot-repair",
+  "results": "bench/multipl-e/results/20261019T165450Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T183015Z-s128.jsonl",
+  "export": "bench/multipl-e/exports/20261020T082734Z-s128-norepair",
+  "results": "bench/multipl-e/results/20261020T082805Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T183015Z-s128.jsonl",
+  "export": "bench/multipl-e/exports/20261020T082734Z-s128-repair",
+  "results": "bench/multipl-e/results/20261020T082819Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T100251Z-s256.jsonl",
+  "export": "bench/multipl-e/exports/20261020T174500Z-s256-norepair",
+  "results": "bench/multipl-e/results/20261020T221305Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T100251Z-s256.jsonl",
+  "export": "bench/multipl-e/exports/20261020T174500Z-s256-repair",
+  "results": "bench/multipl-e/results/20261020T221334Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T225623Z-s512.jsonl",
+  "export": "bench/multipl-e/exports/20261021T134620Z-s512-norepair",
+  "results": "bench/multipl-e/results/20261021T134652Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T225623Z-s512.jsonl",
+  "export": "bench/multipl-e/exports/20261021T134620Z-s512-repair",
+  "results": "bench/multipl-e/results/20261021T134717Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T100251Z-s256.jsonl",
+  "export": "bench/multipl-e/exports/20261021T143854Z-s256fix-norepair",
+  "results": "bench/multipl-e/results/20261021T144401Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T100251Z-s256.jsonl",
+  "export": "bench/multipl-e/exports/20261021T143854Z-s256fix-repair",
+  "results": "bench/multipl-e/results/20261021T144459Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl",
+  "export": "bench/multipl-e/exports/20261021T144937Z-s96fix-norepair",
+  "results": "bench/multipl-e/results/20261021T144931Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T103020Z-b2pilot.jsonl",
+  "export": "bench/multipl-e/exports/20261021T144937Z-s96fix-repair",
+  "results": "bench/multipl-e/results/20261021T145004Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T183015Z-s128.jsonl",
+  "export": "bench/multipl-e/exports/20261021T144937Z-s128fix-norepair",
+  "results": "bench/multipl-e/results/20261021T145038Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261019T183015Z-s128.jsonl",
+  "export": "bench/multipl-e/exports/20261021T144937Z-s128fix-repair",
+  "results": "bench/multipl-e/results/20261021T145111Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T225623Z-s512.jsonl",
+  "export": "bench/multipl-e/exports/20261021T144937Z-s512fix-norepair",
+  "results": "bench/multipl-e/results/20261021T145224Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261020T225623Z-s512.jsonl",
+  "export": "bench/multipl-e/exports/20261021T144937Z-s512fix-repair",
+  "results": "bench/multipl-e/results/20261021T145337Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261021T160000Z-c-hint.jsonl",
+  "export": "bench/multipl-e/exports/20261021T162000Z-c-hint-norepair",
+  "results": "bench/multipl-e/results/20261021T201746Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261021T213000Z-p1-probe.jsonl",
+  "export": "bench/multipl-e/exports/20261022T053000Z-p1-probe-norepair",
+  "results": "bench/multipl-e/results/20261022T043551Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261022T220753Z-c-null.jsonl",
+  "export": "bench/multipl-e/exports/20261023T130450Z-c-null-norepair",
+  "results": "bench/multipl-e/results/20261023T130739Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261023T133243Z-c-full.jsonl",
+  "export": "bench/multipl-e/exports/20261024T052127Z-c-full-norepair",
+  "results": "bench/multipl-e/results/20261024T052248Z.json"
+ },
+ {
+  "run": "bench/multipl-e/runs/20261024T052649Z-c-full-repl.jsonl",
+  "export": "bench/multipl-e/exports/20261024T082812Z-c-full-repl-norepair",
+  "results": "bench/multipl-e/results/20261024T082834Z.json"
+ }
+]

@@ -1,0 +1,477 @@
+{
+ "type": "multipl-e-results",
+ "created_utc": "2026-10-23T13:07:39.589183+00:00",
+ "input_dir": "/Users/richardf/temper/bench/multipl-e/exports/20261023T130450Z-c-null-norepair",
+ "versions": [
+  "official"
+ ],
+ "emission_cell": "P-prop-screen-screen",
+ "note": "EMISSION-RULE CELL: one emitted canvas per problem, so each problem contributes exactly one scored row (or one honest exclusion). This is design 4.1's per-problem binary.",
+ "per_problem": [
+  {
+   "name": "HumanEval_0_has_close_elements",
+   "statuses_official": [
+    "SyntaxError"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 7,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.72,
+   "emitted_clean": false,
+   "emitted_r1_codes": [
+    "E0277"
+   ],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_10_make_palindrome",
+   "statuses_official": [
+    "Exception"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 6,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.6089,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_11_string_xor",
+   "statuses_official": [
+    "Exception"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 4,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 1.1,
+   "emitted_conf": 0.5833,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 0.0,
+   "emitted_property_statuses": [
+    "fail"
+   ]
+  },
+  {
+   "name": "HumanEval_12_longest",
+   "statuses_official": [
+    "Exception"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 2,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.7944,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 0.0,
+   "emitted_property_statuses": [
+    "fail",
+    "fail"
+   ]
+  },
+  {
+   "name": "HumanEval_13_greatest_common_divisor",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 1,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.8337,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_14_all_prefixes",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.2,
+   "emitted_conf": 0.8688,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_15_string_sequence",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.2,
+   "emitted_conf": 0.7436,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_16_count_distinct_characters",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 0,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.2,
+   "emitted_conf": 0.7127,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_17_parse_music",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 6,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.6953,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_18_how_many_times",
+   "statuses_official": [
+    "Exception"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 3,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 1.0,
+   "emitted_conf": 0.755,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_19_sort_numbers",
+   "statuses_official": [
+    "SyntaxError"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 1,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.8295,
+   "emitted_clean": false,
+   "emitted_r1_codes": [
+    "E0615"
+   ],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_1_separate_paren_groups",
+   "statuses_official": [
+    "Exception"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 1,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.2016,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 0.0,
+   "emitted_property_statuses": [
+    "fail",
+    "fail"
+   ]
+  },
+  {
+   "name": "HumanEval_20_find_closest_elements",
+   "statuses_official": [
+    "SyntaxError"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 6,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.5947,
+   "emitted_clean": false,
+   "emitted_r1_codes": [
+    "E0061",
+    "E0308"
+   ],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_21_rescale_to_unit",
+   "statuses_official": [
+    "SyntaxError"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 3,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 1.0,
+   "emitted_conf": 0.615,
+   "emitted_clean": false,
+   "emitted_r1_codes": [
+    "E0277",
+    "E0277"
+   ],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_23_strlen",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 1,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.983,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_24_largest_divisor",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 6,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.8316,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_25_factorize",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 3,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 1.0,
+   "emitted_conf": 0.6625,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_2_truncate_number",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 2,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.9823,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_3_below_zero",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 5,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 1.2,
+   "emitted_conf": 0.8431,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_4_mean_absolute_deviation",
+   "statuses_official": [
+    "SyntaxError"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 2,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.6992,
+   "emitted_clean": false,
+   "emitted_r1_codes": [
+    "E0382"
+   ],
+   "emitted_property_pass_rate": null,
+   "emitted_property_statuses": []
+  },
+  {
+   "name": "HumanEval_5_intersperse",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 4,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 1.1,
+   "emitted_conf": 0.6988,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_6_parse_nested_parens",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 2,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.5145,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_7_filter_by_substring",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 2,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.9344,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_8_sum_product",
+   "statuses_official": [
+    "OK"
+   ],
+   "n_scored": 1,
+   "n_excluded": 0,
+   "emitted": 6,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.8,
+   "emitted_conf": 0.8077,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  },
+  {
+   "name": "HumanEval_9_rolling_max",
+   "statuses_official": [],
+   "n_scored": 0,
+   "n_excluded": 1,
+   "emitted": 2,
+   "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+   "emitted_temp": 0.95,
+   "emitted_conf": 0.2684,
+   "emitted_clean": true,
+   "emitted_r1_codes": [],
+   "emitted_property_pass_rate": 1.0,
+   "emitted_property_statuses": [
+    "pass",
+    "pass"
+   ]
+  }
+ ],
+ "aggregate": {
+  "official": {
+   "pass@1": 0.56
+  },
+  "honest-official": {
+   "pass@1": 0.56,
+   "n_excluded_rows": 1
+  }
+ }
+}

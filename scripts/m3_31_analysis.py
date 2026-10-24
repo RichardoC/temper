@@ -281,27 +281,56 @@ def gate_g3(engine: dict, cfull: Optional[dict], oracle: Optional[dict]) -> dict
 
 
 def gate_g4(detail: dict, freeze_summary: Optional[dict]) -> dict:
+    """G4 AS AMENDED (§7 A5 + A8).
+
+    The original §4 G4 text gated on "harness compile rate at freeze >= 90 %".
+    That bar was an invented pre-data proxy and was REMOVED (A5) because the
+    measured rates are 0 % (dLLM) and 16 % (best AR): a 90 % bar that no observed
+    configuration reaches is unfalsifiable, not strict. G4 is now:
+
+      **G4a SUPPLY** — >=19/21 CONTROL-AVAILABLE problems carry >=1 harness (A8;
+      the 4 problems with no container-OK canvas in any diffusion cell are
+      structurally unreachable, so 21 is the ceiling, not 25).
+
+      **G4b CORRELATION** — on R1-clean canvases with a container verdict,
+      properties are right more often than wrong. UNCHANGED from the original
+      clause: this is the substantive honesty clause and it is reported as a
+      table either way.
+
+    The compile rate is REPORTED as the measured generator-capability statistic
+    and, per A5, no longer rescues or sinks the gate.
+    """
     g4 = (detail.get("gates") or {}).get("G4") or {}
     compile_rate = (freeze_summary or {}).get("compile_rate") or {}
-    first_rate = compile_rate.get("first_draft_rate")
-    proxy = first_rate if first_rate is not None else 1.0
     measured = g4.get("n_measured") or 0
     agrees = g4.get("property_agrees_with_container") or 0
     rate = (agrees / measured) if measured else None
+    coverage = (freeze_summary or {}).get("coverage") or {}
+    covered = coverage.get("problems_with_ge1_harness")
+    n_ctrl = coverage.get("n_control_available")
     checks = {
-        "harness_first_draft_compile_rate_ge_90pct": (proxy or 0.0) >= 0.90,
-        "property_right_more_often_than_wrong": (rate is not None and rate > 0.5),
+        "G4a_supply_ge_19_of_21_control_available": (
+            covered is not None and n_ctrl is not None
+            and covered >= 19 and covered >= n_ctrl - 2),
+        "G4b_property_right_more_often_than_wrong": (
+            rate is not None and rate > 0.5),
     }
     return {
-        "gate": "G4 PROPERTY-QUALITY",
-        "criterion": ("on the frozen set: harness compile rate at freeze >= 90 %; "
-                      "and on canvases where properties and confidence disagree "
-                      "(R1-clean, one says OK-candidate by container verdict), "
-                      "properties are right more often — reported as a table "
-                      "either way."),
-        "first_draft_compile_rate": first_rate,
+        "gate": "G4 PROPERTY-QUALITY (as amended, §7 A5 + A8)",
+        "criterion": ("G4a SUPPLY: >=19/21 control-available problems carry >=1 "
+                      "harness. G4b CORRELATION: on R1-clean canvases with a "
+                      "container verdict, properties are right more often than "
+                      "wrong — reported as a table either way."),
+        "old_bar_removed": ("the >=90% first-draft compile-rate bar was an invented "
+                            "pre-data proxy, REMOVED as a gate (A5); compile rate "
+                            "is reported as the measured generator-capability "
+                            "statistic instead"),
+        "first_draft_compile_rate_reported": compile_rate.get("first_draft_rate"),
         "replacement_count": compile_rate.get("replacements_used"),
-        "frozen_harnesses": compile_rate.get("frozen_harnesses"),
+        "frozen_harnesses": coverage.get("frozen_harnesses"),
+        "covered_problems": covered,
+        "n_control_available": n_ctrl,
+        "discriminating_harnesses": coverage.get("discriminating_harnesses"),
         "n_r1_clean_canvases": g4.get("n_r1_clean_with_verdict"),
         "n_measured": measured,
         "n_abstained": g4.get("n_abstained"),
@@ -312,7 +341,8 @@ def gate_g4(detail: dict, freeze_summary: Optional[dict]) -> dict:
         "property_agreement_rate": rate,
         "disagreements": g4.get("disagreements"),
         "checks": checks, "pass": all(checks.values()),
-        "note": "reported as a table either way (§4 G4)",
+        "note": ("reported as a table either way; the abstention counts are the §7 "
+                 "Q1 measurement that lets a future rev re-tier abstention on data"),
     }
 
 
@@ -398,7 +428,8 @@ def main(argv=None) -> int:
     freeze_summary = None
     if args.freeze:
         fr = json.loads(Path(args.freeze).read_text(encoding="utf-8"))
-        freeze_summary = {"compile_rate": fr.get("compile_rate")}
+        freeze_summary = {"compile_rate": fr.get("compile_rate"),
+                          "coverage": fr.get("coverage")}
     oracle = (json.loads(Path(args.oracle).read_text(encoding="utf-8"))
               if args.oracle else None)
     re25 = (json.loads(Path(args.re25).read_text(encoding="utf-8"))

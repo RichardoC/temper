@@ -161,31 +161,56 @@ class TestG3CanFail(unittest.TestCase):
 
 
 class TestG4CanFail(unittest.TestCase):
+    """G4 AS AMENDED (§7 A5 + A8): the supply gate is >=19/21 control-available
+    and the 90% compile bar is GONE. These pins make the amendment itself
+    testable: the old bar must not silently return, and the new gate must be able
+    to fail."""
+
     def _detail(self, agree, disagree):
         return {"gates": {"G4": {"n_measured": agree + disagree,
                                  "property_agrees_with_container": agree,
                                  "property_disagrees_with_container": disagree,
                                  "n_abstained": 0}}}
 
-    def test_properties_right_less_often_than_wrong_fails(self):
-        g = gate_g4(self._detail(2, 5), {"compile_rate": {
-            "first_draft_rate": 0.98}})
-        self.assertFalse(g["checks"]["property_right_more_often_than_wrong"])
+    def _freeze(self, covered, n_ctrl=21, first_rate=0.16):
+        return {"compile_rate": {"first_draft_rate": first_rate},
+                "coverage": {"problems_with_ge1_harness": covered,
+                             "n_control_available": n_ctrl}}
+
+    def test_the_removed_90pct_bar_cannot_sink_the_gate(self):
+        """A5: the compile rate is reported, never gated. A 16% rate — the
+        measured reality — must NOT fail G4 when supply and correlation hold."""
+        g = gate_g4(self._detail(64, 0), self._freeze(19, first_rate=0.16))
+        self.assertEqual(g["first_draft_compile_rate_reported"], 0.16)
+        self.assertNotIn("harness_first_draft_compile_rate_ge_90pct", g["checks"])
+        self.assertTrue(g["pass"])
+
+    def test_supply_below_19_fails(self):
+        g = gate_g4(self._detail(64, 0), self._freeze(18))
+        self.assertFalse(g["checks"]["G4a_supply_ge_19_of_21_control_available"])
         self.assertFalse(g["pass"])
 
-    def test_a_compile_rate_below_90pct_fails(self):
-        g = gate_g4(self._detail(5, 2), {"compile_rate": {
-            "first_draft_rate": 0.88}})
-        self.assertTrue(g["checks"]["property_right_more_often_than_wrong"])
-        self.assertFalse(g["checks"]["harness_first_draft_compile_rate_ge_90pct"])
+    def test_correlation_failing_still_fails_the_gate(self):
+        g = gate_g4(self._detail(2, 5), self._freeze(19))
+        self.assertFalse(g["checks"]["G4b_property_right_more_often_than_wrong"])
         self.assertFalse(g["pass"])
 
-    def test_the_compile_gate_reads_FIRST_drafts_only(self):
-        """§7 C2: replacements cannot rescue the gate."""
-        g = gate_g4(self._detail(5, 2), {"compile_rate": {
-            "first_draft_rate": 0.80, "replacements_used": 10,
-            "replacements_compiled": 10}})
-        self.assertFalse(g["pass"])
+    def test_the_supply_gate_tracks_the_measured_ceiling(self):
+        """A8: the ceiling is the CONTROL-AVAILABLE count, not 25. A cell whose
+        ceiling is 21 is judged out of 21."""
+        g = gate_g4(self._detail(64, 0), self._freeze(19, n_ctrl=21))
+        self.assertEqual(g["n_control_available"], 21)
+        self.assertTrue(g["pass"])
+        # the gate is RELATIVE to the ceiling as well as absolute: with a full
+        # pool of 25 control-available problems, 19 covered is NOT enough
+        # (n_ctrl - 2 = 23), which is exactly the original strict behaviour
+        # returning for a cell that could actually supply it.
+        g2 = gate_g4(self._detail(64, 0), self._freeze(19, n_ctrl=25))
+        self.assertFalse(g2["pass"],
+                         "with 25 control-available problems the ceiling clause "
+                         "must still demand near-full coverage")
+        g3 = gate_g4(self._detail(64, 0), self._freeze(23, n_ctrl=25))
+        self.assertTrue(g3["pass"])
 
 
 class TestG5CanFail(unittest.TestCase):

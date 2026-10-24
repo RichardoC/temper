@@ -1,0 +1,262 @@
+{
+ "cell": "P-prop-screen-v4-counterfactual",
+ "status": "POST-HOC EXPLORATORY \u2014 never gate-claiming",
+ "rule": "v4 = among max-pass-rate canvases prefer EXPORTABLE (extraction-clean) candidates, then mean_commit_conf, then temp, then index",
+ "same_ensemble": "bench/multipl-e/runs/20261022T220753Z-c-null.jsonl",
+ "v3_passes": 15,
+ "v4_passes": 16,
+ "oracle": 16,
+ "residual_gap_fully_attributed": {
+  "problem": "HumanEval_9_rolling_max",
+  "cause": "both rules picked p2, whose property verdict (pass_rate 1.0) is CORRECT, but the container EXCLUDED p2 at export. Not a property-vs-screen divergence: an export/extraction artifact that costs both rules identically.",
+  "canvas_statuses": [
+   "SyntaxError",
+   "OK",
+   "EXCLUDED",
+   "OK",
+   "SyntaxError",
+   "Exception",
+   "SyntaxError",
+   "SyntaxError"
+  ],
+  "canvas_pass_rates": [
+   null,
+   1.0,
+   1.0,
+   1.0,
+   null,
+   0.0,
+   null,
+   null
+  ]
+ },
+ "conclusion": "v4 recovers EXACTLY the oracle, so the whole 15->16 residual gap is one problem and one named cause (export-blindness in the tiebreak). Excluding it, property evidence made ZERO ranking errors in the covered set.",
+ "successor_payload": "a viable property selector needs a tiebreak that (a) never defers to confidence inside the max-pass tier and (b) filters to exportable candidates first",
+ "rows": [
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "any_ok": false,
+   "v3_pick": 7,
+   "v3_ok": false,
+   "v4_pick": 7,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_10_make_palindrome",
+   "any_ok": false,
+   "v3_pick": 6,
+   "v3_ok": false,
+   "v4_pick": 6,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_11_string_xor",
+   "any_ok": false,
+   "v3_pick": 4,
+   "v3_ok": false,
+   "v4_pick": 0,
+   "v4_ok": false,
+   "maxr": 0.0
+  },
+  {
+   "problem": "HumanEval_12_longest",
+   "any_ok": false,
+   "v3_pick": 2,
+   "v3_ok": false,
+   "v4_pick": 1,
+   "v4_ok": false,
+   "maxr": 0.0
+  },
+  {
+   "problem": "HumanEval_13_greatest_common_divisor",
+   "any_ok": true,
+   "v3_pick": 1,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_14_all_prefixes",
+   "any_ok": true,
+   "v3_pick": 0,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_15_string_sequence",
+   "any_ok": true,
+   "v3_pick": 0,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_16_count_distinct_characters",
+   "any_ok": true,
+   "v3_pick": 0,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_17_parse_music",
+   "any_ok": true,
+   "v3_pick": 6,
+   "v3_ok": true,
+   "v4_pick": 1,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_18_how_many_times",
+   "any_ok": false,
+   "v3_pick": 3,
+   "v3_ok": false,
+   "v4_pick": 3,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_19_sort_numbers",
+   "any_ok": false,
+   "v3_pick": 1,
+   "v3_ok": false,
+   "v4_pick": 1,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "any_ok": true,
+   "v3_pick": 0,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_20_find_closest_elements",
+   "any_ok": false,
+   "v3_pick": 6,
+   "v3_ok": false,
+   "v4_pick": 6,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_21_rescale_to_unit",
+   "any_ok": false,
+   "v3_pick": 3,
+   "v3_ok": false,
+   "v4_pick": 3,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_23_strlen",
+   "any_ok": true,
+   "v3_pick": 1,
+   "v3_ok": true,
+   "v4_pick": 1,
+   "v4_ok": true,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_24_largest_divisor",
+   "any_ok": true,
+   "v3_pick": 6,
+   "v3_ok": true,
+   "v4_pick": 1,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_25_factorize",
+   "any_ok": true,
+   "v3_pick": 3,
+   "v3_ok": true,
+   "v4_pick": 3,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "any_ok": true,
+   "v3_pick": 2,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "any_ok": true,
+   "v3_pick": 5,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_4_mean_absolute_deviation",
+   "any_ok": false,
+   "v3_pick": 2,
+   "v3_ok": false,
+   "v4_pick": 2,
+   "v4_ok": false,
+   "maxr": null
+  },
+  {
+   "problem": "HumanEval_5_intersperse",
+   "any_ok": true,
+   "v3_pick": 4,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_6_parse_nested_parens",
+   "any_ok": true,
+   "v3_pick": 2,
+   "v3_ok": true,
+   "v4_pick": 2,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_7_filter_by_substring",
+   "any_ok": true,
+   "v3_pick": 2,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_8_sum_product",
+   "any_ok": true,
+   "v3_pick": 6,
+   "v3_ok": true,
+   "v4_pick": 0,
+   "v4_ok": true,
+   "maxr": 1.0
+  },
+  {
+   "problem": "HumanEval_9_rolling_max",
+   "any_ok": true,
+   "v3_pick": 2,
+   "v3_ok": false,
+   "v4_pick": 1,
+   "v4_ok": true,
+   "maxr": 1.0
+  }
+ ]
+}

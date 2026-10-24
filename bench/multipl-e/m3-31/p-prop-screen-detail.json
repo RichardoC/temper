@@ -1,0 +1,4581 @@
+{
+ "cell": "P-prop-screen",
+ "source": {
+  "run": "bench/multipl-e/runs/20261022T220753Z-c-null.jsonl",
+  "export": "bench/multipl-e/exports/20261023T130450Z-c-null-norepair",
+  "results": "bench/multipl-e/results/20261023T130739Z.json"
+ },
+ "verdict_config_sha256": "5320c3df73088c58094662fc53a719df4826986297e9a5a1155d510a8571307b",
+ "verdict_config_version": "v3",
+ "emission_rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+ "r3_totals": {
+  "calls": 111,
+  "measured": 111,
+  "passed": 87,
+  "abstained": 0,
+  "all_abstained_canvases": 0,
+  "wall_s": 394.83,
+  "canvases_r3ed": 65,
+  "problems_zero_harness": [
+   "HumanEval_0_has_close_elements",
+   "HumanEval_10_make_palindrome",
+   "HumanEval_18_how_many_times",
+   "HumanEval_19_sort_numbers",
+   "HumanEval_21_rescale_to_unit",
+   "HumanEval_23_strlen"
+  ],
+  "verdict_config_sha256": "5320c3df73088c58094662fc53a719df4826986297e9a5a1155d510a8571307b",
+  "r3_cases": 256
+ },
+ "rules": {
+  "structural": {
+   "passers": 14,
+   "rows": [
+    {
+     "name": "HumanEval_0_has_close_elements",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 7,
+     "rule": "structural",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.72,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0277"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_10_make_palindrome",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "structural",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6089,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_11_string_xor",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.3938,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_12_longest",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "structural",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6422,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_13_greatest_common_divisor",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.1895,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_14_all_prefixes",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.8688,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_15_string_sequence",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7436,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_16_count_distinct_characters",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7127,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_17_parse_music",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "structural",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6915,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_18_how_many_times",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.5491,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_19_sort_numbers",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "structural",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8295,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0615"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_1_separate_paren_groups",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.1944,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_20_find_closest_elements",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "structural",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.5947,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0061",
+      "E0308"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_21_rescale_to_unit",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "structural",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.615,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0277",
+      "E0277"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_23_strlen",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.9813,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_24_largest_divisor",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.673,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_25_factorize",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "structural",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.3761,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_2_truncate_number",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.8301,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_3_below_zero",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7889,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_4_mean_absolute_deviation",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "structural",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.6992,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0382"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_5_intersperse",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.5514,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_6_parse_nested_parens",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "structural",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.5145,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_7_filter_by_substring",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.8789,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_8_sum_product",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "structural",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.5979,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_9_rolling_max",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "structural",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.2337,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    }
+   ]
+  },
+  "best_r1_clean_by_mean_commit_conf_ties_lowest_temp": {
+   "passers": 14,
+   "rows": [
+    {
+     "name": "HumanEval_0_has_close_elements",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 7,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.72,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0277"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_10_make_palindrome",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6089,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_11_string_xor",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 4,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.1,
+     "emitted_conf": 0.5833,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_12_longest",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.7944,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_13_greatest_common_divisor",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8337,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_14_all_prefixes",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.8688,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_15_string_sequence",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7436,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_16_count_distinct_characters",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7127,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_17_parse_music",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6953,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_18_how_many_times",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.755,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_19_sort_numbers",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8295,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0615"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_1_separate_paren_groups",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.2016,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_20_find_closest_elements",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.5947,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0061",
+      "E0308"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_21_rescale_to_unit",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.615,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0277",
+      "E0277"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_23_strlen",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.983,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_24_largest_divisor",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8316,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_25_factorize",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.6625,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_2_truncate_number",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.9823,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_3_below_zero",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 5,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.2,
+     "emitted_conf": 0.8431,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_4_mean_absolute_deviation",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.6992,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0382"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_5_intersperse",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 4,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.1,
+     "emitted_conf": 0.6988,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_6_parse_nested_parens",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.5145,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_7_filter_by_substring",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.9344,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_8_sum_product",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8077,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_9_rolling_max",
+     "statuses_official": [],
+     "n_scored": 0,
+     "n_excluded": 1,
+     "emitted": 2,
+     "rule": "best_r1_clean_by_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.2684,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    }
+   ]
+  },
+  "property_pass_rate_then_mean_commit_conf_ties_lowest_temp": {
+   "passers": 15,
+   "rows": [
+    {
+     "name": "HumanEval_0_has_close_elements",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 7,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.72,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0277"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_10_make_palindrome",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6089,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_11_string_xor",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 4,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.1,
+     "emitted_conf": 0.5833,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_12_longest",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.7944,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 0.0,
+     "emitted_property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "name": "HumanEval_13_greatest_common_divisor",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8337,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_14_all_prefixes",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.8688,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_15_string_sequence",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7436,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_16_count_distinct_characters",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.7127,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_17_parse_music",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.6953,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_18_how_many_times",
+     "statuses_official": [
+      "Exception"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.755,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_19_sort_numbers",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8295,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0615"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_1_separate_paren_groups",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 0,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.2,
+     "emitted_conf": 0.1944,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_20_find_closest_elements",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.5947,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0061",
+      "E0308"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_21_rescale_to_unit",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.615,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0277",
+      "E0277"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_23_strlen",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 1,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.983,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_24_largest_divisor",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8316,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_25_factorize",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 3,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.0,
+     "emitted_conf": 0.6625,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_2_truncate_number",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.9823,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_3_below_zero",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 5,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.2,
+     "emitted_conf": 0.8431,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_4_mean_absolute_deviation",
+     "statuses_official": [
+      "SyntaxError"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.6992,
+     "emitted_clean": false,
+     "emitted_r1_codes": [
+      "E0382"
+     ],
+     "emitted_property_pass_rate": null,
+     "emitted_property_statuses": []
+    },
+    {
+     "name": "HumanEval_5_intersperse",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 4,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 1.1,
+     "emitted_conf": 0.6988,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_6_parse_nested_parens",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.5145,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_7_filter_by_substring",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 2,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.9344,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_8_sum_product",
+     "statuses_official": [
+      "OK"
+     ],
+     "n_scored": 1,
+     "n_excluded": 0,
+     "emitted": 6,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.8,
+     "emitted_conf": 0.8077,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "name": "HumanEval_9_rolling_max",
+     "statuses_official": [],
+     "n_scored": 0,
+     "n_excluded": 1,
+     "emitted": 2,
+     "rule": "property_pass_rate_then_mean_commit_conf_ties_lowest_temp",
+     "emitted_temp": 0.95,
+     "emitted_conf": 0.2684,
+     "emitted_clean": true,
+     "emitted_r1_codes": [],
+     "emitted_property_pass_rate": 1.0,
+     "emitted_property_statuses": [
+      "pass",
+      "pass"
+     ]
+    }
+   ]
+  }
+ },
+ "oracle": 16,
+ "attribution": [
+  {
+   "problem": "HumanEval_0_has_close_elements",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 7,
+   "screen_temp": 0.95,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.72,
+   "screen_property_pass_rate": null,
+   "prop_pick": 7,
+   "prop_temp": 0.95,
+   "prop_status": "SyntaxError",
+   "prop_conf": 0.72,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_10_make_palindrome",
+   "n_canvases": 8,
+   "n_r1_clean": 1,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 6,
+   "screen_temp": 0.8,
+   "screen_status": "Exception",
+   "screen_conf": 0.6089,
+   "screen_property_pass_rate": null,
+   "prop_pick": 6,
+   "prop_temp": 0.8,
+   "prop_status": "Exception",
+   "prop_conf": 0.6089,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "Exception",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_11_string_xor",
+   "n_canvases": 8,
+   "n_r1_clean": 4,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 4,
+   "screen_temp": 1.1,
+   "screen_status": "Exception",
+   "screen_conf": 0.5833,
+   "screen_property_pass_rate": 0.0,
+   "prop_pick": 4,
+   "prop_temp": 1.1,
+   "prop_status": "Exception",
+   "prop_conf": 0.5833,
+   "prop_pass_rate": 0.0,
+   "prop_statuses": [
+    "fail"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "Exception",
+    "Exception",
+    null,
+    "SyntaxError",
+    "Exception",
+    "SyntaxError",
+    "Exception",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false
+   ],
+   "canvas_pass_rates": [
+    0.0,
+    0.0,
+    null,
+    null,
+    0.0,
+    null,
+    0.0,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "fail"
+    ],
+    [
+     "fail"
+    ],
+    [],
+    [],
+    [
+     "fail"
+    ],
+    [],
+    [
+     "fail"
+    ],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_12_longest",
+   "n_canvases": 8,
+   "n_r1_clean": 4,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 2,
+   "screen_temp": 0.95,
+   "screen_status": "Exception",
+   "screen_conf": 0.7944,
+   "screen_property_pass_rate": 0.0,
+   "prop_pick": 2,
+   "prop_temp": 0.95,
+   "prop_status": "Exception",
+   "prop_conf": 0.7944,
+   "prop_pass_rate": 0.0,
+   "prop_statuses": [
+    "fail",
+    "fail"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "Exception",
+    "Exception",
+    "Exception",
+    "SyntaxError",
+    "SyntaxError",
+    "Exception",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    0.0,
+    0.0,
+    0.0,
+    null,
+    null,
+    0.0,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [
+     "fail",
+     "fail"
+    ],
+    [
+     "fail",
+     "fail"
+    ],
+    [
+     "fail",
+     "fail"
+    ],
+    [],
+    [],
+    [
+     "fail",
+     "fail"
+    ],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_13_greatest_common_divisor",
+   "n_canvases": 8,
+   "n_r1_clean": 6,
+   "n_container_ok": 6,
+   "ok_indices": [
+    0,
+    1,
+    2,
+    3,
+    6,
+    7
+   ],
+   "any_ok": true,
+   "screen_pick": 1,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.8337,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 1,
+   "prop_temp": 0.8,
+   "prop_status": "OK",
+   "prop_conf": 0.8337,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    true
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    null,
+    null,
+    1.0,
+    1.0
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "problem": "HumanEval_14_all_prefixes",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 2,
+   "ok_indices": [
+    0,
+    7
+   ],
+   "any_ok": true,
+   "screen_pick": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_conf": 0.8688,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 0,
+   "prop_temp": 0.2,
+   "prop_status": "OK",
+   "prop_conf": 0.8688,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1.0
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+     "pass",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "problem": "HumanEval_15_string_sequence",
+   "n_canvases": 8,
+   "n_r1_clean": 1,
+   "n_container_ok": 1,
+   "ok_indices": [
+    0
+   ],
+   "any_ok": true,
+   "screen_pick": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_conf": 0.7436,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 0,
+   "prop_temp": 0.2,
+   "prop_status": "OK",
+   "prop_conf": 0.7436,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_16_count_distinct_characters",
+   "n_canvases": 8,
+   "n_r1_clean": 1,
+   "n_container_ok": 1,
+   "ok_indices": [
+    0
+   ],
+   "any_ok": true,
+   "screen_pick": 0,
+   "screen_temp": 0.2,
+   "screen_status": "OK",
+   "screen_conf": 0.7127,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 0,
+   "prop_temp": 0.2,
+   "prop_status": "OK",
+   "prop_conf": 0.7127,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    null,
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_17_parse_music",
+   "n_canvases": 8,
+   "n_r1_clean": 3,
+   "n_container_ok": 3,
+   "ok_indices": [
+    1,
+    2,
+    6
+   ],
+   "any_ok": true,
+   "screen_pick": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.6953,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 6,
+   "prop_temp": 0.8,
+   "prop_status": "OK",
+   "prop_conf": 0.6953,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    null,
+    "OK",
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    null
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    1.0,
+    1.0,
+    null,
+    null,
+    null,
+    1.0,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_18_how_many_times",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 3,
+   "screen_temp": 1.0,
+   "screen_status": "Exception",
+   "screen_conf": 0.755,
+   "screen_property_pass_rate": null,
+   "prop_pick": 3,
+   "prop_temp": 1.0,
+   "prop_status": "Exception",
+   "prop_conf": 0.755,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "Exception",
+    "SyntaxError",
+    "SyntaxError",
+    "Exception",
+    null,
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_19_sort_numbers",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 1,
+   "screen_temp": 0.8,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.8295,
+   "screen_property_pass_rate": null,
+   "prop_pick": 1,
+   "prop_temp": 0.8,
+   "prop_status": "SyntaxError",
+   "prop_conf": 0.8295,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    null,
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_1_separate_paren_groups",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 1,
+   "ok_indices": [
+    0
+   ],
+   "any_ok": true,
+   "screen_pick": 1,
+   "screen_temp": 0.8,
+   "screen_status": "Exception",
+   "screen_conf": 0.2016,
+   "screen_property_pass_rate": 0.0,
+   "prop_pick": 0,
+   "prop_temp": 0.2,
+   "prop_status": "OK",
+   "prop_conf": 0.1944,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": true,
+   "flip_direction": "up",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": true,
+   "canvas_statuses": [
+    "OK",
+    "Exception",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "fail",
+     "fail"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_20_find_closest_elements",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 6,
+   "screen_temp": 0.8,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.5947,
+   "screen_property_pass_rate": null,
+   "prop_pick": 6,
+   "prop_temp": 0.8,
+   "prop_status": "SyntaxError",
+   "prop_conf": 0.5947,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_21_rescale_to_unit",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 3,
+   "screen_temp": 1.0,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.615,
+   "screen_property_pass_rate": null,
+   "prop_pick": 3,
+   "prop_temp": 1.0,
+   "prop_status": "SyntaxError",
+   "prop_conf": 0.615,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_23_strlen",
+   "n_canvases": 8,
+   "n_r1_clean": 8,
+   "n_container_ok": 8,
+   "ok_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "any_ok": true,
+   "screen_pick": 1,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.983,
+   "screen_property_pass_rate": null,
+   "prop_pick": 1,
+   "prop_temp": 0.8,
+   "prop_status": "OK",
+   "prop_conf": 0.983,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_24_largest_divisor",
+   "n_canvases": 8,
+   "n_r1_clean": 7,
+   "n_container_ok": 4,
+   "ok_indices": [
+    1,
+    5,
+    6,
+    7
+   ],
+   "any_ok": true,
+   "screen_pick": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.8316,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 6,
+   "prop_temp": 0.8,
+   "prop_status": "OK",
+   "prop_conf": 0.8316,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "Exception",
+    "OK",
+    "Exception",
+    "Exception",
+    "SyntaxError",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true
+   ],
+   "canvas_pass_rates": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    null,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "canvas_property_statuses": [
+    [
+     "fail",
+     "fail"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "fail",
+     "fail"
+    ],
+    [
+     "fail",
+     "fail"
+    ],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "problem": "HumanEval_25_factorize",
+   "n_canvases": 8,
+   "n_r1_clean": 3,
+   "n_container_ok": 1,
+   "ok_indices": [
+    3
+   ],
+   "any_ok": true,
+   "screen_pick": 3,
+   "screen_temp": 1.0,
+   "screen_status": "OK",
+   "screen_conf": 0.6625,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 3,
+   "prop_temp": 1.0,
+   "prop_status": "OK",
+   "prop_conf": 0.6625,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    null,
+    "Exception",
+    "OK",
+    "SyntaxError",
+    "Exception",
+    null,
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    0.0,
+    1.0,
+    null,
+    0.0,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [
+     "fail"
+    ],
+    [
+     "pass"
+    ],
+    [],
+    [
+     "fail"
+    ],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_2_truncate_number",
+   "n_canvases": 8,
+   "n_r1_clean": 8,
+   "n_container_ok": 8,
+   "ok_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "any_ok": true,
+   "screen_pick": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_conf": 0.9823,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 2,
+   "prop_temp": 0.95,
+   "prop_status": "OK",
+   "prop_conf": 0.9823,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "problem": "HumanEval_3_below_zero",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 2,
+   "ok_indices": [
+    0,
+    5
+   ],
+   "any_ok": true,
+   "screen_pick": 5,
+   "screen_temp": 1.2,
+   "screen_status": "OK",
+   "screen_conf": 0.8431,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 5,
+   "prop_temp": 1.2,
+   "prop_status": "OK",
+   "prop_conf": 0.8431,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    null,
+    "OK",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    null,
+    null,
+    null,
+    null,
+    1.0,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_4_mean_absolute_deviation",
+   "n_canvases": 8,
+   "n_r1_clean": 0,
+   "n_container_ok": 0,
+   "ok_indices": [],
+   "any_ok": false,
+   "screen_pick": 2,
+   "screen_temp": 0.95,
+   "screen_status": "SyntaxError",
+   "screen_conf": 0.6992,
+   "screen_property_pass_rate": null,
+   "prop_pick": 2,
+   "prop_temp": 0.95,
+   "prop_status": "SyntaxError",
+   "prop_conf": 0.6992,
+   "prop_pass_rate": null,
+   "prop_statuses": [],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": false,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    null,
+    "SyntaxError",
+    null,
+    null,
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_5_intersperse",
+   "n_canvases": 8,
+   "n_r1_clean": 2,
+   "n_container_ok": 2,
+   "ok_indices": [
+    0,
+    4
+   ],
+   "any_ok": true,
+   "screen_pick": 4,
+   "screen_temp": 1.1,
+   "screen_status": "OK",
+   "screen_conf": 0.6988,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 4,
+   "prop_temp": 1.1,
+   "prop_status": "OK",
+   "prop_conf": 0.6988,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    null,
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    null,
+    null,
+    null,
+    1.0,
+    null,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_6_parse_nested_parens",
+   "n_canvases": 8,
+   "n_r1_clean": 3,
+   "n_container_ok": 3,
+   "ok_indices": [
+    2,
+    3,
+    5
+   ],
+   "any_ok": true,
+   "screen_pick": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_conf": 0.5145,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 2,
+   "prop_temp": 0.95,
+   "prop_status": "OK",
+   "prop_conf": 0.5145,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "SyntaxError",
+    "OK",
+    "OK",
+    "SyntaxError",
+    "OK",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    null,
+    1.0,
+    1.0,
+    null,
+    1.0,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [],
+    [
+     "pass"
+    ],
+    [],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_7_filter_by_substring",
+   "n_canvases": 8,
+   "n_r1_clean": 8,
+   "n_container_ok": 8,
+   "ok_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "any_ok": true,
+   "screen_pick": 2,
+   "screen_temp": 0.95,
+   "screen_status": "OK",
+   "screen_conf": 0.9344,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 2,
+   "prop_temp": 0.95,
+   "prop_status": "OK",
+   "prop_conf": 0.9344,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK",
+    "OK"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ],
+    [
+     "pass"
+    ]
+   ]
+  },
+  {
+   "problem": "HumanEval_8_sum_product",
+   "n_canvases": 8,
+   "n_r1_clean": 5,
+   "n_container_ok": 5,
+   "ok_indices": [
+    0,
+    2,
+    4,
+    5,
+    6
+   ],
+   "any_ok": true,
+   "screen_pick": 6,
+   "screen_temp": 0.8,
+   "screen_status": "OK",
+   "screen_conf": 0.8077,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 6,
+   "prop_temp": 0.8,
+   "prop_status": "OK",
+   "prop_conf": 0.8077,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": false,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": true,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "OK",
+    "SyntaxError",
+    "OK",
+    "SyntaxError",
+    "OK",
+    "OK",
+    "OK",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    true,
+    false,
+    true,
+    false,
+    true,
+    true,
+    true,
+    false
+   ],
+   "canvas_pass_rates": [
+    1.0,
+    null,
+    1.0,
+    null,
+    1.0,
+    1.0,
+    1.0,
+    null
+   ],
+   "canvas_property_statuses": [
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    []
+   ]
+  },
+  {
+   "problem": "HumanEval_9_rolling_max",
+   "n_canvases": 8,
+   "n_r1_clean": 4,
+   "n_container_ok": 2,
+   "ok_indices": [
+    1,
+    3
+   ],
+   "any_ok": true,
+   "screen_pick": 2,
+   "screen_temp": 0.95,
+   "screen_status": null,
+   "screen_conf": 0.2684,
+   "screen_property_pass_rate": 1.0,
+   "prop_pick": 2,
+   "prop_temp": 0.95,
+   "prop_status": null,
+   "prop_conf": 0.2684,
+   "prop_pass_rate": 1.0,
+   "prop_statuses": [
+    "pass",
+    "pass"
+   ],
+   "flip": false,
+   "flip_direction": "",
+   "g2_a_same_pool": true,
+   "g2_b_screen_emitted_rejected": true,
+   "g2_c_ok_canvas_existed": true,
+   "g2_d_property_emitted_ok": false,
+   "g2_attributed": false,
+   "canvas_statuses": [
+    "SyntaxError",
+    "OK",
+    null,
+    "OK",
+    "SyntaxError",
+    "Exception",
+    "SyntaxError",
+    "SyntaxError"
+   ],
+   "canvas_temps": [
+    0.2,
+    0.8,
+    0.95,
+    1.0,
+    1.1,
+    1.2,
+    0.8,
+    0.95
+   ],
+   "canvas_clean": [
+    false,
+    true,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "canvas_pass_rates": [
+    null,
+    1.0,
+    1.0,
+    1.0,
+    null,
+    0.0,
+    null,
+    null
+   ],
+   "canvas_property_statuses": [
+    [],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [
+     "pass",
+     "pass"
+    ],
+    [],
+    [
+     "fail",
+     "fail"
+    ],
+    [],
+    []
+   ]
+  }
+ ],
+ "gates": {
+  "G1": {
+   "gate": "G1 RECOVER",
+   "variant": "P-prop-screen",
+   "criterion": "P-prop-screen >= 16/25 on the C-null ensemble",
+   "passers": 15,
+   "n_problems": 25,
+   "oracle": 16,
+   "pass": false,
+   "margin_vs_v2_screen": 1,
+   "power": "at n=25 with ~2-4 discordant pairs conventional alpha=0.05 is unreachable; the pre-registered decision quantity is the +2 net-flip margin WITH attribution (\u00a74 G1)"
+  },
+  "G2": {
+   "gate": "G2 ATTRIBUTED-SELECTION",
+   "criterion": "every flip counts only if (a) both rules ranked the same canvases, (b) the confidence rule emitted a container-rejected canvas, (c) an OK canvas existed, (d) the property rule emitted one of them",
+   "attributed_flips": [
+    "HumanEval_1_separate_paren_groups"
+   ],
+   "n_attributed": 1,
+   "flips_up": [
+    "HumanEval_1_separate_paren_groups"
+   ],
+   "flips_down": [],
+   "unattributed_ups": [],
+   "pass": false,
+   "margin_net_flips": 1
+  },
+  "G4": {
+   "n_r1_clean_with_verdict": 75,
+   "n_measured": 64,
+   "n_abstained": 11,
+   "property_agrees_with_container": 64,
+   "property_disagrees_with_container": 0,
+   "property_agreement_rate": 1.0,
+   "disagreements": [],
+   "abstained_canvases": 11,
+   "abstained_container_ok": 8,
+   "abstained_container_rejected": 3,
+   "note": "\u00a77 Q1: the all-abstain counts are reported so a future rev can argue re-tiering them as negative evidence from data; until then \u00a72.3's abstention semantics stand.",
+   "canvases": [
+    {
+     "problem": "HumanEval_10_make_palindrome",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_11_string_xor",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_11_string_xor",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_11_string_xor",
+     "index": 4,
+     "temperature": 1.1,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_11_string_xor",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_12_longest",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_12_longest",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_12_longest",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_12_longest",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "index": 7,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_14_all_prefixes",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_14_all_prefixes",
+     "index": 7,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_15_string_sequence",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_16_count_distinct_characters",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_17_parse_music",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_17_parse_music",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_17_parse_music",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_18_how_many_times",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_18_how_many_times",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_1_separate_paren_groups",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_1_separate_paren_groups",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 4,
+     "temperature": 1.1,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "index": 7,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": null,
+     "property_tier": 1,
+     "property_statuses": []
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "index": 7,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_25_factorize",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_25_factorize",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_25_factorize",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 4,
+     "temperature": 1.1,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "index": 7,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_3_below_zero",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_3_below_zero",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_5_intersperse",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_5_intersperse",
+     "index": 4,
+     "temperature": 1.1,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_6_parse_nested_parens",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_6_parse_nested_parens",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_6_parse_nested_parens",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 4,
+     "temperature": 1.1,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "index": 7,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "index": 0,
+     "temperature": 0.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "index": 2,
+     "temperature": 0.95,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "index": 4,
+     "temperature": 1.1,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "index": 6,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_9_rolling_max",
+     "index": 1,
+     "temperature": 0.8,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_9_rolling_max",
+     "index": 3,
+     "temperature": 1.0,
+     "status": "OK",
+     "container_ok": true,
+     "property_pass_rate": 1.0,
+     "property_tier": 0,
+     "property_statuses": [
+      "pass",
+      "pass"
+     ]
+    },
+    {
+     "problem": "HumanEval_9_rolling_max",
+     "index": 5,
+     "temperature": 1.2,
+     "status": "Exception",
+     "container_ok": false,
+     "property_pass_rate": 0.0,
+     "property_tier": 2,
+     "property_statuses": [
+      "fail",
+      "fail"
+     ]
+    }
+   ]
+  }
+ }
+}

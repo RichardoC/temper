@@ -1,0 +1,585 @@
+{
+ "cells": {
+  "cnull": {
+   "passers": 14,
+   "honest_p1": 0.56,
+   "jeffreys_reporting_only": {
+    "x": 14,
+    "n": 25,
+    "mean": 0.5577,
+    "P>0.44": 0.887,
+    "P>0.56": 0.497,
+    "P>0.64": 0.2,
+    "P>0.68": 0.101
+   }
+  },
+  "cscreen": {
+   "passers": 14,
+   "honest_p1": 0.56,
+   "jeffreys_reporting_only": {
+    "x": 14,
+    "n": 25,
+    "mean": 0.5577,
+    "P>0.44": 0.887,
+    "P>0.56": 0.497,
+    "P>0.64": 0.2,
+    "P>0.68": 0.101
+   }
+  },
+  "propscreen": {
+   "passers": 15,
+   "honest_p1": 0.6,
+   "jeffreys_reporting_only": {
+    "x": 15,
+    "n": 25,
+    "mean": 0.5961,
+    "P>0.44": 0.946,
+    "P>0.56": 0.653,
+    "P>0.64": 0.332,
+    "P>0.68": 0.193
+   }
+  }
+ },
+ "paired": {
+  "primary": {
+   "a": "cscreen",
+   "b": "propscreen",
+   "a_passers": 14,
+   "b_passers": 15,
+   "delta": 1,
+   "table": {
+    "pass_pass": 14,
+    "pass_fail": 0,
+    "fail_pass": 1,
+    "fail_fail": 10
+   },
+   "sign_test_p_one_sided": 0.5,
+   "n_discordant": 1,
+   "flips_up": [
+    "HumanEval_1_separate_paren_groups"
+   ],
+   "flips_down": [],
+   "detectable_effect": "one-sided alpha 0.05 at n=25 paired draws needs >=~5 discordant problems all in one direction; fewer flips, or flips split between directions, cannot clear the sign test",
+   "rows": [
+    {
+     "problem": "HumanEval_0_has_close_elements",
+     "number": 0,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_10_make_palindrome",
+     "number": 10,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_11_string_xor",
+     "number": 11,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "semantic_trio"
+    },
+    {
+     "problem": "HumanEval_12_longest",
+     "number": 12,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "number": 13,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_14_all_prefixes",
+     "number": 14,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_15_string_sequence",
+     "number": 15,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_16_count_distinct_characters",
+     "number": 16,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_17_parse_music",
+     "number": 17,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_18_how_many_times",
+     "number": 18,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "semantic_trio"
+    },
+    {
+     "problem": "HumanEval_19_sort_numbers",
+     "number": 19,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_1_separate_paren_groups",
+     "number": 1,
+     "a": false,
+     "b": true,
+     "transition": "fail_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_20_find_closest_elements",
+     "number": 20,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_21_rescale_to_unit",
+     "number": 21,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "number": 23,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "number": 24,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "semantic_trio"
+    },
+    {
+     "problem": "HumanEval_25_factorize",
+     "number": 25,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "number": 2,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_3_below_zero",
+     "number": 3,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_4_mean_absolute_deviation",
+     "number": 4,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_5_intersperse",
+     "number": 5,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_6_parse_nested_parens",
+     "number": 6,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "number": 7,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "number": 8,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_9_rolling_max",
+     "number": 9,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    }
+   ]
+  },
+  "cnull->propscreen": {
+   "a": "cnull",
+   "b": "propscreen",
+   "a_passers": 14,
+   "b_passers": 15,
+   "delta": 1,
+   "table": {
+    "pass_pass": 13,
+    "pass_fail": 1,
+    "fail_pass": 2,
+    "fail_fail": 9
+   },
+   "sign_test_p_one_sided": 0.5,
+   "n_discordant": 3,
+   "flips_up": [
+    "HumanEval_24_largest_divisor",
+    "HumanEval_25_factorize"
+   ],
+   "flips_down": [
+    "HumanEval_9_rolling_max"
+   ],
+   "detectable_effect": "one-sided alpha 0.05 at n=25 paired draws needs >=~5 discordant problems all in one direction; fewer flips, or flips split between directions, cannot clear the sign test",
+   "rows": [
+    {
+     "problem": "HumanEval_0_has_close_elements",
+     "number": 0,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_10_make_palindrome",
+     "number": 10,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_11_string_xor",
+     "number": 11,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "semantic_trio"
+    },
+    {
+     "problem": "HumanEval_12_longest",
+     "number": 12,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_13_greatest_common_divisor",
+     "number": 13,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_14_all_prefixes",
+     "number": 14,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_15_string_sequence",
+     "number": 15,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_16_count_distinct_characters",
+     "number": 16,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_17_parse_music",
+     "number": 17,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_18_how_many_times",
+     "number": 18,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "semantic_trio"
+    },
+    {
+     "problem": "HumanEval_19_sort_numbers",
+     "number": 19,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_1_separate_paren_groups",
+     "number": 1,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_20_find_closest_elements",
+     "number": 20,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_21_rescale_to_unit",
+     "number": 21,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_23_strlen",
+     "number": 23,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_24_largest_divisor",
+     "number": 24,
+     "a": false,
+     "b": true,
+     "transition": "fail_pass",
+     "cohort": "semantic_trio"
+    },
+    {
+     "problem": "HumanEval_25_factorize",
+     "number": 25,
+     "a": false,
+     "b": true,
+     "transition": "fail_pass",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_2_truncate_number",
+     "number": 2,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_3_below_zero",
+     "number": 3,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_4_mean_absolute_deviation",
+     "number": 4,
+     "a": false,
+     "b": false,
+     "transition": "fail_fail",
+     "cohort": "type_quartet"
+    },
+    {
+     "problem": "HumanEval_5_intersperse",
+     "number": 5,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_6_parse_nested_parens",
+     "number": 6,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "other"
+    },
+    {
+     "problem": "HumanEval_7_filter_by_substring",
+     "number": 7,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_8_sum_product",
+     "number": 8,
+     "a": true,
+     "b": true,
+     "transition": "pass_pass",
+     "cohort": "structural_base"
+    },
+    {
+     "problem": "HumanEval_9_rolling_max",
+     "number": 9,
+     "a": true,
+     "b": false,
+     "transition": "pass_fail",
+     "cohort": "other"
+    }
+   ]
+  }
+ },
+ "gates": {
+  "G1": {
+   "gate": "G1 RECOVER (primary)",
+   "criterion": "P-prop-screen >= 16/25 on the C-null ensemble \u2014 the property rule must recover the measured headroom on its own turf. Primary sign test over the same ensemble; ALSO margin-based: net flips-up >= +2.",
+   "passers": 15,
+   "screen_passers": 14,
+   "margin": 1,
+   "sign_test_p_one_sided": 0.5,
+   "n_discordant": 1,
+   "flips_up": [
+    "HumanEval_1_separate_paren_groups"
+   ],
+   "flips_down": [],
+   "checks": {
+    "passers_ge_16": false,
+    "net_flips_up_ge_2": false
+   },
+   "pass": false,
+   "honest_power": "one-sided alpha 0.05 at n=25 paired draws needs >=~5 discordant problems all in one direction; fewer flips, or flips split between directions, cannot clear the sign test"
+  },
+  "G2": {
+   "gate": "G2 ATTRIBUTED-SELECTION",
+   "criterion": "every flip counts only if (a) both rules ranked the same canvases, (b) the confidence rule emitted a container-rejected canvas, (c) an OK canvas existed in that ensemble, (d) the property rule emitted one of the OK canvases",
+   "attributed_flips": [
+    "HumanEval_1_separate_paren_groups"
+   ],
+   "n_attributed": 1,
+   "flips_up": [
+    "HumanEval_1_separate_paren_groups"
+   ],
+   "flips_down": [],
+   "unattributed_ups": [],
+   "measured_targets_hit": [
+    1
+   ],
+   "measured_targets": [
+    1,
+    9
+   ],
+   "checks": {
+    "attributed_flips_ge_2": false,
+    "no_flips_down": true,
+    "no_unattributed_ups": true
+   },
+   "pass": false
+  },
+  "G4": {
+   "gate": "G4 PROPERTY-QUALITY (as amended, \u00a77 A5 + A8)",
+   "criterion": "G4a SUPPLY: >=19/21 control-available problems carry >=1 harness. G4b CORRELATION: on R1-clean canvases with a container verdict, properties are right more often than wrong \u2014 reported as a table either way.",
+   "old_bar_removed": "the >=90% first-draft compile-rate bar was an invented pre-data proxy, REMOVED as a gate (A5); compile rate is reported as the measured generator-capability statistic instead",
+   "first_draft_compile_rate_reported": null,
+   "replacement_count": null,
+   "frozen_harnesses": 33,
+   "covered_problems": 19,
+   "n_control_available": 21,
+   "discriminating_harnesses": 14,
+   "n_r1_clean_canvases": 75,
+   "n_measured": 64,
+   "n_abstained": 11,
+   "abstained_container_ok": 8,
+   "abstained_container_rejected": 3,
+   "property_agrees": 64,
+   "property_disagrees": 0,
+   "property_agreement_rate": 1.0,
+   "disagreements": [],
+   "checks": {
+    "G4a_supply_ge_19_of_21_control_available": true,
+    "G4b_property_right_more_often_than_wrong": true
+   },
+   "pass": true,
+   "note": "reported as a table either way; the abstention counts are the \u00a77 Q1 measurement that lets a future rev re-tier abstention on data"
+  },
+  "G5": {
+   "gate": "G5 H-25 CLASSIFICATION",
+   "criterion": "(not run)",
+   "pass": null,
+   "skipped": true
+  }
+ },
+ "verdict": {
+  "SHIP": {
+   "definition": "G1 + G2 (selection mechanism established on held-fixed draws)",
+   "pass": false,
+   "G1": false,
+   "G2": false
+  },
+  "STRONG": {
+   "definition": "SHIP + G3 (engine >= 18, strictly better than the program best 17) + G5 in the engine's favor",
+   "pass": false,
+   "G3": false,
+   "G5": false
+  }
+ }
+}
